@@ -1,16 +1,41 @@
 #include <window/window.hpp>
-#include <SDL.h>
+#include <imgui.h>
+#include <imgui_impl_sdl_gl3.h>
+#include <cstdio>
 #include <GL/glew.h>
+#include <SDL.h>
 #include <iostream>
 
 namespace loki
 {
-    class window::window_impl
+    class window::impl
     {
         SDL_Window* window;
         SDL_GLContext gl_context;
+        bool running;
     public:
-        window_impl(const std::string& title, window_flags flags)
+        signal<> exit;
+
+        void end_frame(game_time delta_time) const
+        {
+            ImGui_ImplSdlGL3_NewFrame(window);
+
+            ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
+
+            bool show = true;
+            ImGui::ShowDemoWindow(&show);
+
+            // Rendering
+            glViewport(0, 0, static_cast<int>(ImGui::GetIO().DisplaySize.x), static_cast<int>(ImGui::GetIO().DisplaySize.y));
+            glClearColor(0.6f, 0.2f, 0.2f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            ImGui::Render();
+            ImGui_ImplSdlGL3_RenderDrawData(ImGui::GetDrawData());
+            SDL_GL_SwapWindow(window);
+        }
+
+        impl(const std::string& title)
+            : running(true)
         {
             // Setup SDL
             if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
@@ -35,6 +60,16 @@ namespace loki
                     std::cout << "Fatal Error: GLEW not initialized correctly." << std::endl;
                     std::abort();
                 }
+
+                // Setup Dear ImGui binding
+                IMGUI_CHECKVERSION();
+                ImGui::CreateContext();
+                ImGuiIO& io = ImGui::GetIO(); (void)io;
+                //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+                ImGui_ImplSdlGL3_Init(window);
+
+                // Setup style
+                ImGui::StyleColorsDark();
             }
             else
             {
@@ -42,16 +77,49 @@ namespace loki
             }
         }
 
-        ~window_impl()
+        ~impl()
         {
+            ImGui_ImplSdlGL3_Shutdown();
+            ImGui::DestroyContext();
+
             SDL_GL_DeleteContext(gl_context);
             SDL_DestroyWindow(window);
             SDL_Quit();
         }
+
+        void update(game_time delta_time)
+        {
+            SDL_Event event;
+            while (SDL_PollEvent(&event))
+            {
+                ImGui_ImplSdlGL3_ProcessEvent(&event);
+                if (event.type == SDL_QUIT)
+                {
+                    running = false;
+                    exit();
+                }
+            }
+        }
     };
     
-    window::window(const std::string& title, window_flags flags)
-        : impl_(std::make_unique<window_impl>(title, flags))
+    window::window(const std::string& title)
+    : impl_(new impl(title))
     {
+        impl_->exit.connect([this]()
+        {
+            exit();
+        });
+    }
+
+    window::~window() = default;
+
+    void window::end_frame(game_time delta_time) const
+    {
+        impl_->end_frame(delta_time);
+    }
+
+    void window::update(game_time delta_time) const
+    {
+        impl_->update(delta_time);
     }
 }

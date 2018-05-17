@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <game_loop/game_loop.hpp>
 
 namespace loki
 {
@@ -34,10 +35,13 @@ namespace loki
     class window
     {
     public:
-        window(const std::string& title, window_flags flags);
-        ~window() = default;
+        signal<> exit;
+        window(const std::string& title);
+        ~window();
+        void end_frame(game_time delta_time) const;
+        void update(game_time delta_time) const;
     private:
-        class window_impl;
-        std::unique_ptr<window_impl> impl_;
+        class impl;
+        std::unique_ptr<impl> impl_;
     };
 }
