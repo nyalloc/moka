@@ -237,6 +237,7 @@ bool ImGui_ImplSdlGL3_ProcessEvent(SDL_Event* event)
             io.KeySuper = ((SDL_GetModState() & KMOD_GUI) != 0);
             return true;
         }
+    default: ;
     }
     return false;
 }
