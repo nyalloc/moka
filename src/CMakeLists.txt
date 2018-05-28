@@ -1,26 +1,29 @@
 
 set(LOKI_INCLUDES
     "./includes/"
-    "./deps/imgui/")
+    "./deps/imgui/"
+    "./deps/boost/"
+)
 
 include_directories(${LOKI_INCLUDES})
 
 add_executable(
     loki 
     main.cpp
-    window/window.cpp
-	application/application.cpp
+    window/window.cpp 
+    application/application.cpp
+    deps/boost/di.hpp
     deps/imgui/imgui.cpp
     deps/imgui/imgui_draw.cpp
     deps/imgui/imgui_impl_sdl_gl3.cpp
     deps/imgui/imgui_demo.cpp
-	includes/application/mvp/model.hpp
-	includes/game_loop/game_loop.hpp
+    includes/application/mvp/model.hpp
+    includes/game_loop/game_loop.hpp
     includes/type_traits/is_any_of.hpp
     includes/type_traits/is_either.hpp
     includes/type_traits/size.hpp
-	includes/application/application.hpp
-	includes/application/signal.hpp
+    includes/application/application.hpp
+    includes/application/signal.hpp
     includes/window/window.hpp
 )
 
