@@ -14,6 +14,7 @@ add_executable(
     deps/imgui/imgui_draw.cpp
     deps/imgui/imgui_impl_sdl_gl3.cpp
     deps/imgui/imgui_demo.cpp
+	includes/application/mvp/model.hpp
 	includes/game_loop/game_loop.hpp
     includes/type_traits/is_any_of.hpp
     includes/type_traits/is_either.hpp
