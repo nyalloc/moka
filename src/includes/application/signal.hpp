@@ -17,18 +17,18 @@ namespace loki
     public:
         signal();
 
-        signal_id connect(const std::function<void(Args ...)>& slot) const;
+        signal_id connect(std::function<void(Args ...)>&& slot) const;
 
         void disconnect(signal_id id) const;
 
         void clear() const;
 
-        void operator()(Args ... args) const;
-    private:
+        void operator()(Args... args) const;
+
+        void notify(Args... args) const;
+    protected:
         mutable std::map<signal_id, std::function<void(Args...)>> slots;
         mutable signal_id id;
-
-        void notify(Args ... args) const;
     };
 
     template <typename ... Args>
@@ -36,7 +36,7 @@ namespace loki
     {}
 
     template <typename ... Args>
-    signal_id signal<Args...>::connect(const std::function<void(Args ...)>& slot) const
+    signal_id signal<Args...>::connect(std::function<void(Args ...)>&& slot) const
     {
         slots.emplace(++id, slot);
         return id;
