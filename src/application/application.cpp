@@ -24,17 +24,11 @@ namespace loki
             running = false;
         });
 
-        auto update([this](game_time time)
+        while(running)
         {
-            m_window.update(time);
-        });
-
-        auto draw([this](game_time time)
-        {
-            m_window.end_frame(time);
-        });
-
-        game_loop game_loop(draw, update, running);
+            m_window.update(16.0f);
+            m_window.end_frame(16.0f);
+        }
 
         return 0;
     }

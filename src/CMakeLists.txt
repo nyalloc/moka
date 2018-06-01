@@ -2,7 +2,7 @@
 set(LOKI_INCLUDES
     "./includes/"
     "./deps/imgui/"
-    "./deps/boost/"
+    "./deps/"
 )
 
 include_directories(${LOKI_INCLUDES})

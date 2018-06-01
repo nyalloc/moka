@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <application/application.hpp>
 #include <memory>
 #include <iostream>
 #include <application/signal.hpp>
@@ -36,10 +36,22 @@ namespace loki
             }
         }
 
-        property(const T& value)
+        void set_value(T&& value, const bool notify_this = true)
+        {
+            if (this->value != value)
+            {
+                this->value = value;
+                if (notify_this)
+                {
+                    changed_signal.notify(value);
+                }
+            }
+        }
+
+        property(T&& value)
             : value(value)
         {
-            changed_signal.notify(value);
+            changed_signal.notify(std::move(value));
         }
 
         property<T>& operator=(const T& value) noexcept
@@ -96,14 +108,22 @@ namespace loki
 
     class concrete_model : public base_model
     {
+        base_application& application;
+
+    public:
+        concrete_model(base_application& application)
+            : application(application)
+        {}
     };
 
     class concrete_view : public base_view
     {
         base_presenter* presenter = nullptr;
+        base_application& application;
+
     public:
-        concrete_view()
-            : base_view()
+        concrete_view(base_application& application)
+            : base_view(), application(application)
         {}
 
         void set_presenter(base_presenter* presenter) override;
@@ -115,11 +135,12 @@ namespace loki
 
     class concrete_presenter : public base_presenter
     {
+        base_application& application;
         base_model& model;
         base_view& view;
     public:
-        concrete_presenter(base_model& model, base_view& view)
-            : model(model), view(view)
+        concrete_presenter(base_application& application, base_model& model, base_view& view)
+            : application(application), model(model), view(view)
         {
             this->view.set_presenter(this);
 
@@ -151,27 +172,5 @@ namespace loki
     inline void concrete_view::draw() const
     {
         std::cout << count.get_value() << std::endl;
-    }
-
-    inline void test()
-    {
-        concrete_model model;
-
-        concrete_view view;
-
-        concrete_presenter presenter{ model, view };
-
-        const auto running = true;
-
-        while (running)
-        {
-            view.update();
-            view.draw();
-
-            if (model.count.get_value() == 5)
-            {
-                model.count.set_value(0);
-            }
-        }
     }
 }
