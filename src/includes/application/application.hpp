@@ -10,14 +10,14 @@
 
 namespace loki
 {
-    class event_subscriber
+    class subscriber
     {
         static std::atomic<size_t> m_available_ids;
     public:
-        virtual ~event_subscriber() = default;
+        virtual ~subscriber() = default;
         size_t m_id;
 
-        event_subscriber()
+        subscriber()
         {
             m_id = ++m_available_ids;
         }
@@ -25,10 +25,28 @@ namespace loki
         virtual void notify(event* event) = 0;
     };
 
+    template<typename T>
+    class safe_subscriber
+    {
+    public:
+        std::shared_ptr<subscriber> ptr;
+
+        template<typename... Args, typename = std::enable_if<std::is_base_of_v<subscriber, T>>>
+        explicit safe_subscriber(Args&&... args)
+            : ptr(std::make_shared<T>(std::forward<Args>(args)...))
+        {}
+    }
+    ;
+    template<typename T, typename... Args, typename = std::enable_if<std::is_base_of_v<subscriber, T>>>
+    safe_subscriber<T> make_safe_subscriber(Args&&... args)
+    {
+        return safe_subscriber<T>{ std::forward<Args>(args)... };
+    }
+
     class event_dispatcher
     {
         event_queue m_events;
-        std::unordered_map<size_t, event_subscriber*> m_subscribers;
+        std::unordered_map<size_t, std::shared_ptr<subscriber>> m_subscribers;
         std::thread m_thread;
         std::mutex m_mutex;
         std::condition_variable c;
@@ -70,20 +88,20 @@ namespace loki
             m_thread.join();
         }
 
-        bool registered(event_subscriber* subscriber)
+        bool registered(std::shared_ptr<subscriber> subscriber)
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             return m_subscribers.find(subscriber->m_id) != m_subscribers.end();
         }
 
-        void register_subscribers(event_subscriber* subscriber)
+        void register_subscribers(std::shared_ptr<subscriber> subscriber)
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             m_subscribers[subscriber->m_id] = subscriber;
         }
 
         template<typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(event_subscriber* recipient, event_type&& event)
+        void post_event(std::shared_ptr<subscriber> recipient, event_type&& event)
         {
             if (!registered(recipient))
             {
@@ -95,16 +113,16 @@ namespace loki
 
     class application
     {
-        static event_dispatcher m_dispatcher;
+        event_dispatcher m_dispatcher;
 
         window m_window;
 
         bool running = true;
     public:
-        template<typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        static void post_event(event_subscriber* recipient, event_type&& event)
+        template<typename T, typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
+        void post_event(safe_subscriber<T>& recipient, event_type&& event)
         {
-            m_dispatcher.post_event(recipient, std::move(event));
+            m_dispatcher.post_event(recipient.ptr, std::move(event));
         }
 
         application(int argc, char* argv[]);
@@ -112,7 +130,7 @@ namespace loki
         int run();
     };
 
-    class test_class : public event_subscriber
+    class test_class : public subscriber
     {
     public:
         ~test_class()

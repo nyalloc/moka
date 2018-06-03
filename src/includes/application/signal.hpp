@@ -3,6 +3,7 @@
 #include <map>
 #include <functional>
 #include <mutex>
+#include <unordered_map>
 
 namespace loki
 {
@@ -29,7 +30,7 @@ namespace loki
         void notify(const Args&... args) const;
     protected:
         mutable std::mutex m_mutex;
-        mutable std::map<signal_id, std::function<void(Args...)>> m_slots;
+        mutable std::unordered_map<signal_id, std::function<void(Args...)>> m_slots;
         mutable signal_id m_id;
     };
 
@@ -41,7 +42,7 @@ namespace loki
     signal_id signal<Args...>::connect(std::function<void(Args...)>&& slot) const
     {
         std::lock_guard<std::mutex> lock(m_mutex);
-        m_slots.emplace(++m_id, slot);
+        m_slots.emplace(++m_id, std::move(slot));
         return m_id;
     }
 
