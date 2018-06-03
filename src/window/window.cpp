@@ -5,9 +5,23 @@
 #include <GL/glew.h>
 #include <SDL.h>
 #include <iostream>
+#include <imgui_internal.h>
 
 namespace loki
 {
+    static void ShowHelpMarker(const char* desc)
+    {
+        ImGui::TextDisabled("(?)");
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(desc);
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+    }
+
     class window::impl
     {
         SDL_Window* window;
@@ -22,7 +36,8 @@ namespace loki
 
             ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
 
-            bool show = true;
+            static bool show = true;
+
             ImGui::ShowDemoWindow(&show);
 
             // Rendering

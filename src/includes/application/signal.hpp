@@ -28,33 +28,33 @@ namespace loki
         
         void notify(const Args&... args) const;
     protected:
-        mutable std::mutex mutex;
-        mutable std::map<signal_id, std::function<void(Args...)>> slots;
-        mutable signal_id id;
+        mutable std::mutex m_mutex;
+        mutable std::map<signal_id, std::function<void(Args...)>> m_slots;
+        mutable signal_id m_id;
     };
 
     template <typename... Args>
-    signal<Args...>::signal() : id{0}
+    signal<Args...>::signal() : m_id{0}
     {}
 
     template <typename... Args>
     signal_id signal<Args...>::connect(std::function<void(Args...)>&& slot) const
     {
-        std::lock_guard<std::mutex> lock(mutex);
-        slots.emplace(++id, slot);
-        return id;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_slots.emplace(++m_id, slot);
+        return m_id;
     }
 
     template <typename... Args>
     void signal<Args...>::disconnect(signal_id id) const
     {
-        slots.erase(id);
+        m_slots.erase(id);
     }
 
     template <typename... Args>
     void signal<Args...>::clear() const
     {
-        slots.clear();
+        m_slots.clear();
     }
 
     template <typename... Args>
@@ -66,7 +66,7 @@ namespace loki
     template <typename... Args>
     void signal<Args...>::notify(const Args&... args) const
     {
-        for (auto it : slots)
+        for (auto it : m_slots)
         {
             it.second(args...);
         }

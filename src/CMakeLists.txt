@@ -21,6 +21,7 @@ add_executable(
     includes/game_loop/game_loop.hpp
     includes/type_traits/is_any_of.hpp
     includes/type_traits/is_either.hpp
+	includes/safe_queue.hpp
     includes/type_traits/size.hpp
     includes/application/application.hpp
     includes/application/signal.hpp

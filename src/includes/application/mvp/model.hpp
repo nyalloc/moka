@@ -108,10 +108,10 @@ namespace loki
 
     class concrete_model : public base_model
     {
-        base_application& application;
+        application& application;
 
     public:
-        concrete_model(base_application& application)
+        concrete_model(loki::application& application)
             : application(application)
         {}
     };
@@ -119,10 +119,10 @@ namespace loki
     class concrete_view : public base_view
     {
         base_presenter* presenter = nullptr;
-        base_application& application;
+        application& application;
 
     public:
-        concrete_view(base_application& application)
+        concrete_view(loki::application& application)
             : base_view(), application(application)
         {}
 
@@ -135,11 +135,11 @@ namespace loki
 
     class concrete_presenter : public base_presenter
     {
-        base_application& application;
+        application& application;
         base_model& model;
         base_view& view;
     public:
-        concrete_presenter(base_application& application, base_model& model, base_view& view)
+        concrete_presenter(loki::application& application, base_model& model, base_view& view)
             : application(application), model(model), view(view)
         {
             this->view.set_presenter(this);

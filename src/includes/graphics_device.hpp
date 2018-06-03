@@ -1,9 +1,15 @@
 #pragma once
 
-namespace loki
+class opengl
 {
-    class graphics_device
+    
+};
+
+template<typename api>
+class graphics_device
+{
+    graphics_device()
     {
         
-    };
-}
+    }
+};
