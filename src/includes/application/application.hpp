@@ -115,6 +115,9 @@ namespace loki
     class test_class : public event_subscriber
     {
     public:
+        ~test_class()
+        {}
+
         test_class()
         {}
 
