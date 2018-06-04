@@ -12,14 +12,25 @@ namespace loki
 {
     class subscriber
     {
+        std::vector<event_category> m_supported_types;
         static std::atomic<size_t> m_available_ids;
     public:
+        subscriber(std::initializer_list<event_category> types)
+            : m_supported_types{types}, m_id(0)
+        {}
+
         virtual ~subscriber() = default;
+
         size_t m_id;
 
         subscriber()
         {
             m_id = ++m_available_ids;
+        }
+
+        bool supports_type(const event_category event) const
+        {
+            return std::find(m_supported_types.begin(), m_supported_types.end(), event) != m_supported_types.end();
         }
 
         virtual void notify(event* event) = 0;
@@ -35,12 +46,18 @@ namespace loki
         explicit safe_subscriber(Args&&... args)
             : ptr(std::make_shared<T>(std::forward<Args>(args)...))
         {}
-    }
-    ;
+    };
+
     template<typename T, typename... Args, typename = std::enable_if<std::is_base_of_v<subscriber, T>>>
     safe_subscriber<T> make_safe_subscriber(Args&&... args)
     {
         return safe_subscriber<T>{ std::forward<Args>(args)... };
+    }
+
+    template<typename Ty1, typename Ty2>
+    bool find_subscriber(const Ty1& vector, const Ty2& value)
+    {
+        return std::find(vector.begin(), vector.end(), value) != vector.end();
     }
 
     class event_dispatcher
@@ -52,29 +69,49 @@ namespace loki
         std::condition_variable c;
         bool dispatch_events = true;
     public:
+        static void try_notify(subscriber* s, event* c)
+        {
+            // the event has an event attatched to it!
+            // does the subscriber support this event?
+            if (s->supports_type(c->type))
+            {
+                // the subscriber supports the type!
+                // notify the subscriber!
+                s->notify(c);
+            }
+        }
+
         event_dispatcher()
         {
             m_thread = std::thread
             {
                 [this]
                 {
+                    std::cout << "Starting message dispatcher thread: " << std::this_thread::get_id() << std::endl;
+
                     while (dispatch_events)
                     {
-                        // blocking call until event is enqueued
-                        const auto event = m_events.dequeue();
+                        // blocking call until next event is enqueued
+                        const auto& queue_item = m_events.dequeue();
 
-                        const auto event_ptr = event.get();
+                        // get event and subscriber objects
+                        const auto&& q_event = std::move(queue_item.event);
+                        const auto& q_subscriber = queue_item.subscriber;
 
-                        // todo: if an event is registered against a specific recipient, only notify them
-                        // otherwise, loop over all subscribers and notify them all if they are interested in that event type
-
-                        // loop over all subscribers
-                        for (const auto& subscribers : m_subscribers)
+                        // does the event have a subscriber attatched to it?
+                        if(q_subscriber)
                         {
-                            // notify events
-                            if (subscribers.second)
+                            // notify the specific subscriber
+                            try_notify(q_subscriber, q_event.get());
+                        }
+                        // this event has no subscriber attatched to it.
+                        else
+                        {
+                            // broadcast the message!
+                            for(const auto& subscriber : m_subscribers)
                             {
-                                subscribers.second->notify(event_ptr);
+                                // notify the next subscriber
+                                try_notify(subscriber.second.get(), q_event.get());
                             }
                         }
                     }
@@ -100,14 +137,22 @@ namespace loki
             m_subscribers[subscriber->m_id] = subscriber;
         }
 
+        void try_register(std::shared_ptr<subscriber> subscriber)
+        {
+            if (!registered(subscriber))
+            {
+                register_subscribers(subscriber);
+            }
+        }
+
         template<typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(std::shared_ptr<subscriber> recipient, event_type&& event)
+        void post_event(event_type&& event, std::shared_ptr<subscriber> recipient = nullptr)
         {
             if (!registered(recipient))
             {
                 register_subscribers(recipient);
             }
-            m_events.enqueue(std::make_unique<event_type>(std::move(event)));
+            m_events.enqueue(event_queue_item{ std::make_unique<event_type>(std::move(event)), recipient.get() });
         }
     };
 
@@ -122,7 +167,7 @@ namespace loki
         template<typename T, typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
         void post_event(safe_subscriber<T>& recipient, event_type&& event)
         {
-            m_dispatcher.post_event(recipient.ptr, std::move(event));
+            m_dispatcher.post_event(std::move(event), recipient.ptr);
         }
 
         application(int argc, char* argv[]);
@@ -137,12 +182,14 @@ namespace loki
         {}
 
         test_class()
+            : subscriber{ event_category::test }
         {}
 
         void notify(event* event) override
         {
-            if(event->type == event_types::test)
+            if(event->type == event_category::test)
             {
+                std::cout << "Message handled on thread: " << std::this_thread::get_id() << std::endl;
                 const auto e = static_cast<test_event*>(event);
                 std::cout << e->string << std::endl;
             }

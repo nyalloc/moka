@@ -3,6 +3,8 @@
 
 int main(int argc, char* argv[])
 {
+    std::cout << "Starting main thread: " << std::this_thread::get_id() << std::endl;
+
     auto test_1 = loki::make_safe_subscriber<loki::test_class>();
     auto test_2 = loki::make_safe_subscriber<loki::test_class>();
 

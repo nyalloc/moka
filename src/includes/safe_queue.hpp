@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-enum class event_types
+enum class event_category
 {
     window,
     keyboard,
@@ -14,18 +14,18 @@ enum class event_types
 class event
 {
 public:
-    explicit event(const event_types type)
+    explicit event(const event_category type)
         : type(type)
     {}
 
-    event_types type;
+    event_category type;
 };
 
 class window_event : public event
 {
 public:
     explicit window_event()
-        : event(event_types::window)
+        : event(event_category::window)
     {}
 };
 
@@ -35,10 +35,9 @@ public:
     std::string string;
 
     explicit test_event(std::string&& string)
-        : event(event_types::test), string(string)
+        : event(event_category::test), string(string)
     {}
 };
-
 
 using event_ptr = std::unique_ptr<event>;
 
@@ -85,17 +84,27 @@ private:
     std::condition_variable c;
 };
 
+namespace loki
+{
+    class subscriber;
+}
+
+struct event_queue_item
+{
+    event_ptr event;
+    loki::subscriber* subscriber;
+};
+
 class event_queue
 {
-    safe_queue<event_ptr> m_queues;
+    safe_queue<event_queue_item> m_queues;
 public:
-    template<typename T>
-    void enqueue(std::unique_ptr<T>&& e)
+    void enqueue(event_queue_item&& e)
     {
         m_queues.enqueue(std::move(e));
     }
 
-    event_ptr dequeue()
+    event_queue_item dequeue()
     {
         auto result = std::move(m_queues.dequeue());
         return result;

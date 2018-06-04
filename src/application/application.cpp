@@ -9,6 +9,8 @@ namespace loki
     application::application(int argc, char* argv[])
         : m_window("Loki Editor")
     {
+        std::cout << "Starting main thread: " << std::this_thread::get_id() << std::endl;
+
         for (auto i = 1; i < argc; ++i)
         {   
             // simply print command line arguments (for now)
