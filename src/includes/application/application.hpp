@@ -10,6 +10,12 @@
 
 namespace loki
 {
+    template<typename Derived, typename Base>
+    std::unique_ptr<Derived>static_unique_ptr_cast(std::unique_ptr<Base>&& p)
+    {
+        return std::unique_ptr<Derived>(static_cast<Derived *>(p.release()));
+    }
+
     class subscriber
     {
         std::vector<event_category> m_supported_types;
@@ -20,6 +26,8 @@ namespace loki
         {}
 
         virtual ~subscriber() = default;
+
+        virtual void update() = 0;
 
         size_t m_id;
 
@@ -33,7 +41,7 @@ namespace loki
             return std::find(m_supported_types.begin(), m_supported_types.end(), event) != m_supported_types.end();
         }
 
-        virtual void notify(event* event) = 0;
+        virtual void notify(event_ptr&& event) = 0;
     };
 
     template<typename T>
@@ -69,7 +77,7 @@ namespace loki
         std::condition_variable c;
         bool dispatch_events = true;
     public:
-        static void try_notify(subscriber* s, event* c)
+        static void try_notify(subscriber* s, event_ptr&& c)
         {
             // the event has an event attatched to it!
             // does the subscriber support this event?
@@ -77,52 +85,55 @@ namespace loki
             {
                 // the subscriber supports the type!
                 // notify the subscriber!
-                s->notify(c);
+                s->notify(std::move(c));
             }
         }
 
         event_dispatcher()
-        {
-            m_thread = std::thread
-            {
-                [this]
-                {
-                    std::cout << "Starting message dispatcher thread: " << std::this_thread::get_id() << std::endl;
-
-                    while (dispatch_events)
-                    {
-                        // blocking call until next event is enqueued
-                        const auto& queue_item = m_events.dequeue();
-
-                        // get event and subscriber objects
-                        const auto&& q_event = std::move(queue_item.event);
-                        const auto& q_subscriber = queue_item.subscriber;
-
-                        // does the event have a subscriber attatched to it?
-                        if(q_subscriber)
-                        {
-                            // notify the specific subscriber
-                            try_notify(q_subscriber, q_event.get());
-                        }
-                        // this event has no subscriber attatched to it.
-                        else
-                        {
-                            // broadcast the message!
-                            for(const auto& subscriber : m_subscribers)
-                            {
-                                // notify the next subscriber
-                                try_notify(subscriber.second.get(), q_event.get());
-                            }
-                        }
-                    }
-                }
-            };
-        }
+        {}
 
         ~event_dispatcher()
         {
             dispatch_events = false;
             m_thread.join();
+        }
+
+        void run()
+        {
+            m_thread = std::thread
+            {
+            [this]
+            {
+                std::cout << "Starting message dispatcher thread: " << std::this_thread::get_id() << std::endl;
+
+                while (dispatch_events)
+                {
+                    // blocking call until next event is enqueued
+                    auto&& queue_item = m_events.dequeue();
+
+                    // get event and subscriber objects
+                    auto&& q_event = std::move(queue_item.event);
+                    const auto& q_subscriber = queue_item.subscriber;
+
+                    // does the event have a subscriber attatched to it?
+                    if (q_subscriber)
+                    {
+                        // notify the specific subscriber
+                        try_notify(q_subscriber, std::move(q_event));
+                    }
+                    // this event has no subscriber attatched to it.
+                    else
+                    {
+                        // broadcast the message!
+                        for (const auto& subscriber : m_subscribers)
+                        {
+                            // notify the next subscriber
+                            try_notify(subscriber.second.get(), std::move(q_event));
+                        }
+                    }
+                }
+            }
+            };
         }
 
         bool registered(std::shared_ptr<subscriber> subscriber)
@@ -165,7 +176,7 @@ namespace loki
         bool running = true;
     public:
         template<typename T, typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(safe_subscriber<T>& recipient, event_type&& event)
+        void post_event(event_type&& event, safe_subscriber<T>& recipient)
         {
             m_dispatcher.post_event(std::move(event), recipient.ptr);
         }
@@ -175,23 +186,36 @@ namespace loki
         int run();
     };
 
-    class test_class : public subscriber
+    class graphics_device : public subscriber
     {
+        std::queue<std::unique_ptr<asset_loaded>> m_assets_pending;
     public:
-        ~test_class()
+        ~graphics_device()
         {}
 
-        test_class()
-            : subscriber{ event_category::test }
+        graphics_device()
+            : subscriber{ event_category::asset_loaded }
         {}
 
-        void notify(event* event) override
+        static void submit_to_gpu(std::unique_ptr<asset_loaded>&& event)
         {
-            if(event->type == event_category::test)
+            std::cout << event->string << " Submitted to GPU on thread " << std::this_thread::get_id() << std::endl;
+        }
+
+        void update() override
+        {
+            while(!m_assets_pending.empty())
             {
-                std::cout << "Message handled on thread: " << std::this_thread::get_id() << std::endl;
-                const auto e = static_cast<test_event*>(event);
-                std::cout << e->string << std::endl;
+                submit_to_gpu(std::move(m_assets_pending.front()));
+                m_assets_pending.pop();
+            }
+        }
+
+        void notify(event_ptr&& event) override
+        {
+            if(event->type == event_category::asset_loaded)
+            {
+                m_assets_pending.emplace(static_unique_ptr_cast<asset_loaded>(std::move(event)));
             }
         }
     };

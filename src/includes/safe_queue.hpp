@@ -8,7 +8,7 @@ enum class event_category
     window,
     keyboard,
     mouse,
-    test
+    asset_loaded
 };
 
 class event
@@ -29,13 +29,13 @@ public:
     {}
 };
 
-class test_event : public event
+class asset_loaded : public event
 {
 public:
     std::string string;
 
-    explicit test_event(std::string&& string)
-        : event(event_category::test), string(string)
+    explicit asset_loaded(std::string&& string)
+        : event(event_category::asset_loaded), string(string)
     {}
 };
 
@@ -106,7 +106,6 @@ public:
 
     event_queue_item dequeue()
     {
-        auto result = std::move(m_queues.dequeue());
-        return result;
+        return m_queues.dequeue();
     }
 };
