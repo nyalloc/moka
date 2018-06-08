@@ -11,12 +11,19 @@ int main(int argc, char* argv[])
 
     constexpr loki::vector3 position3 = loki::cross(position, position2);
 
-    constexpr loki::matrix4 matrix
+    constexpr loki::matrix4 mat4
     {
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
+    };
+
+    constexpr loki::matrix3 mat3
+    {
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
     };
 
     loki::application app{ argc, argv };

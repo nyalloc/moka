@@ -53,6 +53,13 @@ namespace loki
         }
     };
 
+    template<typename T, size_t row, size_t column, typename T2, size_t row2, size_t column2>
+    constexpr auto operator * (const matrix<T, row, column>& lhs, const matrix<T2, row2, column2>& rhs)
+    {
+        static_assert(column == row2, "Cannot multiply these matrices. Please ensure the number of columns in the first matrix == the number of rows in the second matrix.");
+        return lhs;
+    }
+
     using matrix3 = matrix<float, 3, 3>;
     using matrix3x3 = matrix3;
     using mat3 = matrix3;
