@@ -57,6 +57,9 @@ namespace loki
     constexpr auto operator * (const matrix<T, row, column>& lhs, const matrix<T2, row2, column2>& rhs)
     {
         static_assert(column == row2, "Cannot multiply these matrices. Please ensure the number of columns in the first matrix == the number of rows in the second matrix.");
+
+
+
         return lhs;
     }
 
