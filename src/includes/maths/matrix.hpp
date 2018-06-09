@@ -80,18 +80,19 @@ namespace loki
     }
 
     using matrix3 = matrix<float, 3, 3>;
-    using matrix3x3 = matrix3;
-    using mat3 = matrix3;
-    using mat3x3 = matrix3;
 
     using matrix4 = matrix<float, 4, 4>;
-    using matrix4x4 = matrix4;
-    using mat4 = matrix4;
-    using mat4x4 = matrix4;
 
     using matrix2x3 = matrix<float, 2, 3>;
-    using mat2x3 = matrix2x3;
 
     using matrix3x2 = matrix<float, 3, 2>;
-    using mat3x2 = matrix3x2;
+
+    //constexpr matrix3 operator * (const matrix3& lhs, const matrix3& rhs)
+    //{
+    //    return matrix3
+    //    {
+    //        lhs[0][0] * rhs[0][0] + lhs[0][1] * rhs[1][0] + lhs[0][2] * rhs[2][0] + lhs[0][3] * rhs[3][0],
+    //        lhs[0][0] * rhs[0][1] + lhs[0][1] * rhs[1][1] + lhs[0][2] * rhs[2][1] + lhs[0][3] * rhs[3][1],
+    //    };
+    //}
 }
