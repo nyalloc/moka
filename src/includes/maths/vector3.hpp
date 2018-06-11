@@ -56,6 +56,13 @@ namespace loki
              */
             constexpr const T& operator[](const size_t index) const;
 
+            /**
+             * \brief Access the element indicated by the index. { 0, 1, 2 } == { X, Y, Z }
+             * \param index The index [0-2] that specifies which element you wish to access.
+             * \return The element indicated by the index.
+             */
+            constexpr T& operator[](const size_t index);
+
             /*----Member operators-------------------------------*/
 
             /**
@@ -359,6 +366,12 @@ namespace loki
 
         template <typename T>
         constexpr const T& vector3<T>::operator[](const size_t index) const
+        {
+            return components[index];
+        }
+
+        template <typename T>
+        constexpr T& vector3<T>::operator[](const size_t index)
         {
             return components[index];
         }
