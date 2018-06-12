@@ -5,7 +5,7 @@
 
 namespace loki
 {
-    std::atomic<size_t> subscriber::m_available_ids = {};
+    std::atomic<size_t> event_subscriber::m_available_ids = {};
 
     application::application(int argc, char* argv[])
         : m_window("Loki Editor")

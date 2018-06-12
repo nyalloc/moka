@@ -41,9 +41,9 @@ namespace loki
 
     /**
      * \brief A subscriber is composed of multiple event handlers. Each event handler deals with a concrete type of event.
-     * Being a child class of subscriber gives you access to the event system, and allows you to subscribe to events from the application-wide event loop.
+     * Being a child class of subscriber allows you to subscribe to the application-wide event loop.
      */
-    class subscriber
+    class event_subscriber
     {
         std::unordered_map<event_category, std::shared_ptr<base_event_handler>> m_notifiers;
 
@@ -56,7 +56,7 @@ namespace loki
             notifier->notify(e);
         }
 
-        subscriber()
+        event_subscriber()
         {
             m_id = ++m_available_ids;
         }
@@ -69,7 +69,7 @@ namespace loki
             return notifier->on_notify.connect(std::move(slot));
         }
 
-        virtual ~subscriber() = default;
+        virtual ~event_subscriber() = default;
 
         size_t m_id;
     };
@@ -77,20 +77,11 @@ namespace loki
     class event_dispatcher
     {
         event_queue m_events;
-        std::unordered_map<size_t, subscriber*> m_subscribers;
         std::thread m_thread;
         std::mutex m_mutex;
         std::condition_variable c;
         bool dispatch_events = true;
     public:
-        static void try_notify(subscriber* s, event* e)
-        {
-            if(s)
-            {
-                s->notify(e);
-            }
-        }
-
         event_dispatcher()
         = default;
 
@@ -113,48 +104,22 @@ namespace loki
                         // blocking call until next event is enqueued
                         auto&& queue_item = m_events.dequeue();
 
-                        // get event and subscriber objects
-                        auto&& q_event = std::move(queue_item.event);
-                        const auto& q_subscriber = queue_item.subscriber;
+                        // get event
+                        auto&& event = std::move(queue_item.event);
 
-                        // does the event have a subscriber attatched to it?
-                        if (q_subscriber)
-                        {
-                            // notify the specific subscriber
-                            try_notify(q_subscriber, q_event.get());
-                        }
+                        // get subscriber
+                        auto& event_subscriber = queue_item.subscriber;
+
+                        // notify the subscriber
+                        event_subscriber.notify(event.get());
                     }
                 }
             };
         }
 
-        bool registered(subscriber* recipient)
-        {
-            std::lock_guard<std::mutex> lock(m_mutex);
-            return m_subscribers.find(recipient->m_id) != m_subscribers.end();
-        }
-
-        void register_subscribers(subscriber* recipient)
-        {
-            std::lock_guard<std::mutex> lock(m_mutex);
-            m_subscribers[recipient->m_id] = recipient;
-        }
-
-        void try_register(subscriber* recipient)
-        {
-            if (!registered(recipient))
-            {
-                register_subscribers(recipient);
-            }
-        }
-
         template<typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(event_type&& event, subscriber* recipient = nullptr)
+        void post_event(event_type&& event, event_subscriber& recipient)
         {
-            if (!registered(recipient))
-            {
-                register_subscribers(recipient);
-            }
             m_events.enqueue(event_queue_item{ std::make_unique<event_type>(std::forward<event_type>(event)), recipient });
         }
     };
@@ -168,7 +133,7 @@ namespace loki
         bool running = true;
     public:
         template<typename T, typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(event_type&& event, subscriber* recipient)
+        void post_event(event_type&& event, event_subscriber& recipient)
         {
             m_dispatcher.post_event(std::move(event), recipient);
         }
@@ -178,7 +143,7 @@ namespace loki
         int run();
     };
 
-    class graphics_device : public subscriber
+    class graphics_device : public event_subscriber
     {
     public:
         graphics_device()

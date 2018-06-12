@@ -97,13 +97,18 @@ private:
 
 namespace loki
 {
-    class subscriber;
+    class event_subscriber;
 }
 
 struct event_queue_item
 {
+    event_queue_item(event_ptr&& event, loki::event_subscriber& subscriber)
+        : event(std::move(event)),
+          subscriber(subscriber)
+    {}
+
     event_ptr event;
-    loki::subscriber* subscriber;
+    loki::event_subscriber& subscriber;
 };
 
 class event_queue
