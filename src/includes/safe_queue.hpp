@@ -8,35 +8,46 @@ enum class event_category
     window,
     keyboard,
     mouse,
-    asset_loaded
+    asset_loaded,
+    invalid_event
 };
 
 class event
 {
 public:
     explicit event(const event_category type)
-        : type(type)
+        : category(type)
     {}
 
-    event_category type;
+    event_category category;
 };
 
 class window_event : public event
 {
 public:
     explicit window_event()
-        : event(event_category::window)
+        : event(category())
     {}
+
+    constexpr static event_category category() noexcept
+    {
+        return event_category::window;
+    }
 };
 
-class asset_loaded : public event
+class asset_loaded_event : public event
 {
 public:
     std::string string;
 
-    explicit asset_loaded(std::string&& string)
-        : event(event_category::asset_loaded), string(string)
+    explicit asset_loaded_event(std::string&& string)
+        : event(category()), string(string)
     {}
+     
+    constexpr static event_category category() noexcept
+    {
+        return event_category::window;
+    }
 };
 
 using event_ptr = std::unique_ptr<event>;
@@ -86,13 +97,18 @@ private:
 
 namespace loki
 {
-    class subscriber;
+    class event_subscriber;
 }
 
 struct event_queue_item
 {
+    event_queue_item(event_ptr&& event, loki::event_subscriber& subscriber)
+        : event(std::move(event)),
+          subscriber(subscriber)
+    {}
+
     event_ptr event;
-    loki::subscriber* subscriber;
+    loki::event_subscriber& subscriber;
 };
 
 class event_queue
