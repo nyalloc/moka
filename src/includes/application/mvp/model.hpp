@@ -31,7 +31,7 @@ namespace loki
                 this->value = value;
                 if (notify_this)
                 {
-                    changed_signal.notify(value);
+                    changed_signal.event_handler(value);
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace loki
                 this->value = value;
                 if (notify_this)
                 {
-                    changed_signal.notify(value);
+                    changed_signal.event_handler(value);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace loki
         property(T&& value)
             : value(value)
         {
-            changed_signal.notify(std::move(value));
+            changed_signal.event_handler(std::move(value));
         }
 
         property<T>& operator=(const T& value) noexcept
@@ -59,7 +59,7 @@ namespace loki
             if (this->value != value)
             {
                 this->value = value;
-                changed_signal.notify(value);
+                changed_signal.event_handler(value);
             }
             return *this;
         }
@@ -69,7 +69,7 @@ namespace loki
             if (this->value != value)
             {
                 this->value = std::move(value);
-                changed_signal.notify(value);
+                changed_signal.event_handler(value);
             }
             return *this;
         }

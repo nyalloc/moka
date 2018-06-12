@@ -11,13 +11,13 @@ namespace loki
         template<typename T, typename = std::enable_if_t<std::is_floating_point_v<T>>>
         constexpr byte float_to_byte(const T val) noexcept
         {
-            return static_cast<byte>(std::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * std::numeric_limits<byte>::max());
+            return static_cast<byte>(loki::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * std::numeric_limits<byte>::max());
         }
 
         template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
         constexpr byte int_to_byte(const T val) noexcept
         {
-            return static_cast<byte>(std::clamp(val, static_cast<T>(0), static_cast<T>(255)));
+            return static_cast<byte>(loki::clamp(val, static_cast<T>(0), static_cast<T>(255)));
         }
 
         constexpr float byte_to_float(const byte val) noexcept
