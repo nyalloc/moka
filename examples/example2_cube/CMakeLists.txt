@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(example1_2d_triangle)
+project(example2_cube)
 
 set(Example_Includes 
 	"./"
@@ -13,7 +13,7 @@ set(Example_Includes
 
 include_directories(${Example_Includes})
 
-add_executable(example1_2d_triangle main.cpp)
+add_executable(example2_cube main.cpp)
 
 foreach(_source IN ITEMS ${NEON_SRC})
     get_filename_component(_source_path "${_source}" PATH)
@@ -22,4 +22,4 @@ foreach(_source IN ITEMS ${NEON_SRC})
 endforeach()
 
 set_target_properties(neon PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(example1_2d_triangle PUBLIC neon)
+target_link_libraries(example2_cube PUBLIC neon)
