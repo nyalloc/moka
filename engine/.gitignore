@@ -1,0 +1,10 @@
+.ninja_deps
+.ninja_log
+.vscode
+build
+install
+bin
+/.vs/
+_install/
+_builds/
+_logs/
