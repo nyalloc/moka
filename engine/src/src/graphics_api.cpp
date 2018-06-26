@@ -5,7 +5,8 @@
 
 namespace neon
 {
-    std::unique_ptr<graphics_api_impl> create(const graphics_backend backend)
+    std::unique_ptr<graphics_api_impl> create(
+        const graphics_backend backend)
     {
         switch (backend)
         {
@@ -22,48 +23,77 @@ namespace neon
         }
     }
 
-    graphics_api::graphics_api(const graphics_backend backend)
-        : implementor_{ create(backend) }
+    graphics_api::graphics_api(
+        const graphics_backend backend)
+        : impl_{ create(backend) }
     {}
 
-    vertex_buffer_handle graphics_api::create_vertex()
+    vertex_buffer_handle graphics_api::create_vertex_buffer(
+        const float* vertices
+        , const size_t sizev
+        , const attribute* attributes
+        , const size_t sizea) const
     {
-        return {};
+        return impl_->create_vertex_buffer(vertices, sizev, attributes, sizea);
     }
 
-    shader_handle graphics_api::create_shader(const std::string& source)
+    shader_handle graphics_api::create_shader(
+        const shader_type type
+        , const std::string& source) const
     {
-        return {};
+        return impl_->create_shader(type, source);
     }
 
-    void graphics_api::destroy(const shader_handle handle) const
+    void graphics_api::destroy(
+        const shader_handle handle) const
     {
-        implementor_->destroy(handle);
+        impl_->destroy(handle);
     }
 
-    program_handle graphics_api::create_program(shader_handle vertex_handle, shader_handle fragment_handle) const
+    program_handle graphics_api::create_program(
+        const shader_handle vertex_handle
+        , const shader_handle fragment_handle) const
     {
-        return implementor_->create_program(vertex_handle, fragment_handle);
+        return impl_->create_program(vertex_handle, fragment_handle);
     }
 
-    program_handle graphics_api::create_program(shader_handle compute_handle)
+    program_handle graphics_api::create_program(
+        shader_handle compute_handle)
     {
 		return {};
     }
 
-    void graphics_api::destroy(program_handle handle)
+    void graphics_api::destroy(
+        program_handle handle)
     {}
 
-	void graphics_api::destroy(vertex_buffer_handle handle)
+	void graphics_api::destroy(
+        vertex_buffer_handle handle)
 	{}
 
-	void graphics_api::clear_colour(const colour& colour) const
+	void graphics_api::clear_colour(
+        const colour& colour) const
 	{
-		implementor_->clear_colour(colour);
+		impl_->clear_colour(colour);
 	}
 
-	void graphics_api::clear(const bool color, const bool depth, const bool stencil, const byte stencil_value, const colour& colour) const
+	void graphics_api::clear(
+        const bool color
+        , const bool depth
+        , const bool stencil
+        , const byte stencil_value
+        , const colour& colour) const
 	{
-		implementor_->clear(color, depth, stencil, stencil_value, colour);
+		impl_->clear(color, depth, stencil, stencil_value, colour);
 	}
+
+	void graphics_api::check_errors() const
+	{
+		impl_->check_errors();
+	}
+
+    void graphics_api::submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program)
+    {
+        impl_->submit(vertex_buffer, program);
+    }
 }

@@ -7,15 +7,103 @@
 
 namespace neon
 {
-    struct rectangle
+    enum class attribute_type
     {
-        int x{}, y{}, width{}, height{};
+        int_attr,
+        uint_attr,
+        float_attr
     };
+
+    struct attribute
+    {
+        size_t index;
+        size_t size;
+        attribute_type type;
+        bool normalized;
+        size_t stride;
+        size_t offset;
+    };
+
+    template<typename T>
+    constexpr attribute make_attribute(
+        size_t index, 
+        size_t size, 
+        bool normalized, 
+        size_t stride, 
+        size_t offset) = delete;
+
+    template<>
+    constexpr attribute make_attribute<float>(
+        const size_t index, 
+        const size_t size, 
+        const bool normalized, 
+        const size_t stride, 
+        const size_t offset)
+    {
+        return { index, size, attribute_type::float_attr, normalized, stride, offset };
+    }
+
+    template<>
+    constexpr attribute make_attribute<int>(
+        const size_t index, 
+        const size_t size, 
+        const bool normalized, 
+        const size_t stride, 
+        const size_t offset)
+    {
+        return { index, size, attribute_type::int_attr, normalized, stride, offset };
+    }
+
+    template<>
+    constexpr attribute make_attribute<unsigned>(
+        const size_t index,
+        const size_t size, 
+        const bool normalized, 
+        const size_t stride, 
+        const size_t offset)
+    {
+        return { index, size, attribute_type::uint_attr, normalized, stride, offset };
+    }
+
+    template<typename T>
+    class basic_rectangle
+    {
+        T x_, y_, width_, height_;
+    public:
+        constexpr basic_rectangle(const T x, const T y, const T width, const T height) noexcept
+            : x_{ x }, y_{ y }, width_{ width }, height_{ height }
+        {}
+
+        constexpr T x() const noexcept
+        {
+            return x_;
+        }
+
+        constexpr T y() const noexcept
+        {
+            return y_;
+        }
+
+        constexpr T width() const noexcept
+        {
+            return width_;
+        }
+
+        constexpr T height() const noexcept
+        {
+            return height_;
+        }
+    };
+
+    using rectangle = basic_rectangle<int>;
 
     struct vertex
     {
         vector3 position{ 0.0f, 0.0f, 0.0f };
-        vector2 texture_coordinates{ 0.0f, 0.0f };
+
+        constexpr vertex(const float x, const float y, const float z) noexcept
+            : position{ x, y, z }
+        {}
     };
 
     enum class primitive_type
@@ -89,64 +177,71 @@ namespace neon
         mat4_uniform,  //!< 4x4 matrix uniform
     };
 
+    enum class shader_type
+    {
+        vertex,
+        fragment,
+        compute
+    };
+
     using handle = uint16_t;
-    
+
     struct dynamic_index_buffer_handle
     {
         handle id;
     };
 
-    struct dynamic_vertex_buffer_handle 
+    struct dynamic_vertex_buffer_handle
     {
         handle id;
     };
 
-    struct frame_buffer_handle 
+    struct frame_buffer_handle
     {
         handle id;
     };
 
-    struct index_buffer_handle 
+    struct index_buffer_handle
     {
         handle id;
     };
 
-    struct indirect_buffer_handle 
+    struct indirect_buffer_handle
     {
         handle id;
     };
 
-    struct occlusion_query_handle 
+    struct occlusion_query_handle
     {
         handle id;
     };
 
-    struct program_handle 
+    struct program_handle
     {
         handle id;
     };
 
-    struct shader_handle 
+    struct shader_handle
     {
         handle id;
     };
 
-    struct texture_handle 
+    struct texture_handle
     {
         handle id;
     };
 
-    struct uniform_handle 
+    struct uniform_handle
     {
         handle id;
     };
 
-    struct vertex_buffer_handle 
+    struct vertex_buffer_handle
     {
         handle id;
     };
 
-    struct vertex_decl_handle 
+    struct vertex_decl_handle
     {
         handle id;
     };
@@ -166,8 +261,6 @@ namespace neon
         virtual void clear(bool color, bool depth, bool stencil, byte stencilValue, const colour& colour) const = 0;
         virtual void depth_bounds_test(float zmin, float zmax) const = 0;
         virtual void polygon_offset(float scale, float bias) const = 0;
-        virtual void viewport(const rectangle& rectangle) const = 0;
-        virtual void scissor(const rectangle& rectangle) const = 0;
         virtual void check_errors() const = 0;
         virtual void clear_colour(const colour& colour) const = 0;
         virtual void set_scissor(const rectangle& bounds) const = 0;
@@ -182,5 +275,8 @@ namespace neon
         virtual void blend_function(blend_function_factor lhs, blend_function_factor rhs) const = 0;
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
+        virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute* attributes, size_t sizea) = 0;
+        virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

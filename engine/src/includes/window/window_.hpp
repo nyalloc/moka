@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <game_loop/game_loop.hpp>
+#include "maths/vector2.hpp"
 
 namespace neon
 {
@@ -40,6 +41,7 @@ namespace neon
         ~window();
         void end_frame(game_time delta_time) const;
         void update(game_time delta_time) const;
+        void set_size(int width, int height);
     private:
         class impl;
         std::unique_ptr<impl> impl_;

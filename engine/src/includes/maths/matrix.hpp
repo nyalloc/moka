@@ -12,6 +12,8 @@ namespace neon
         {
             std::array<vector2<T>, 2> components_;
         public:
+            constexpr matrix2() noexcept;
+
             constexpr static size_t size() noexcept;
 
             constexpr matrix2(matrix2<T>&& rhs) noexcept;
@@ -58,6 +60,11 @@ namespace neon
 
             constexpr const vector2<T>& operator[](const size_t index) const;
         };
+
+        template <typename T>
+        constexpr matrix2<T>::matrix2() noexcept
+            : matrix2{ 1, 0, 0, 1 }
+        {}
 
         template <typename T>
         constexpr size_t matrix2<T>::size() noexcept

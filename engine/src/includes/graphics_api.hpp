@@ -32,14 +32,14 @@ namespace neon
      */
     class graphics_api
     {
-        std::unique_ptr<graphics_api_impl> implementor_;
+        std::unique_ptr<graphics_api_impl> impl_;
     public:
         graphics_api(graphics_backend backend = graphics_backend::opengl);
 
-        vertex_buffer_handle create_vertex();
-        
-        shader_handle create_shader(const std::string& source);
-        
+        vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute* attributes, size_t sizea) const;
+
+        shader_handle create_shader(const shader_type type, const std::string& source) const;
+
         void destroy(shader_handle handle) const;
 
         /**
@@ -49,28 +49,32 @@ namespace neon
          * \return Program handle if vertex shader output and fragment shader input are matching, otherwise returns invalid program handle.
          */
         program_handle create_program(shader_handle vertex_handle, shader_handle fragment_handle) const;
-        
+
         /**
          * \brief Create program with compute shader.
          * \param compute_handle Compute shader.
          * \return Program handle.
          */
         program_handle create_program(shader_handle compute_handle);
-        
+
         /**
          * \brief Destroy program.
          * \param handle Program handle.
          */
         void destroy(program_handle handle);
 
-		/**
-	 	 * \brief Destroy vertex buffer.
-		 * \param handle Vertex buffer handle.
-		 */
-		void destroy(vertex_buffer_handle handle);
+        /**
+         * \brief Destroy vertex buffer.
+         * \param handle Vertex buffer handle.
+         */
+        void destroy(vertex_buffer_handle handle);
 
-	    void clear_colour(const colour& colour) const;
+        void clear_colour(const colour& colour) const;
 
-		void clear(bool color, bool depth, bool stencil, byte stencil_value, const colour& colour) const;
+        void clear(bool color, bool depth, bool stencil, byte stencil_value, const colour& colour) const;
+
+        void check_errors() const;
+
+        void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program);
     };
 }
