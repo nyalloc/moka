@@ -62,7 +62,7 @@ namespace neon
         };
     }
 
-    application::application(int argc, char* argv[])
+    application::application(const int argc, char* argv[])
         : log_{ filesystem::current_path() / "application.log" }, window_("Neon Editor")
     {
         std::stringstream msg;
@@ -88,35 +88,5 @@ namespace neon
     void application::update(const game_time delta_time)
     {
         window_.update(delta_time);
-    }
-
-    int application::run()
-    {
-        dispatcher_.run();
-
-        window_.exit.connect([this]()
-        {
-            log_.log(level::info, "Exiting application");
-            running_ = false;
-        });
-
-        while (running_)
-        {
-            update(16.0f);
-            draw(16.0f);
-        }
-
-        return 0;
-    }
-
-    graphics_device::graphics_device()
-    {
-        connect<asset_loaded_event>([](asset_loaded_event& event)
-        {
-        });
-
-        connect<window_event>([](window_event& event)
-        {
-        });
     }
 }
