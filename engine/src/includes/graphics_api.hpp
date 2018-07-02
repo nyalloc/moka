@@ -36,7 +36,7 @@ namespace neon
     public:
         graphics_api(graphics_backend backend = graphics_backend::opengl);
 
-        vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute_decl* attributes, size_t sizea) const;
+        vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const vertex_decl& decl) const;
 
         shader_handle create_shader(const shader_type type, const std::string& source) const;
 

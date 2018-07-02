@@ -2,8 +2,8 @@
 
 #include <ostream>
 #include <maths/colour.hpp>
-#include <maths/vector2.hpp>
 #include <maths/vector3.hpp>
+#include <vector>
 
 namespace neon
 {
@@ -31,7 +31,7 @@ namespace neon
 
     enum class attribute_type
     {
-        int8,
+        int8,   
         int16,
         int32,
         int64,
@@ -44,55 +44,89 @@ namespace neon
         float64,
     };
 
-    struct attribute_decl
+    struct vertex_decl;
+
+    struct attribute_element
     {
-        size_t index;
-        size_t size;
-        attribute_type type;
-        bool normalized;
-        size_t stride;
-        size_t offset;
+        attribute attr;
+        size_t element_count;
+        attribute_type attr_type;
+        bool normalised;
+
+        constexpr attribute_element(
+            const attribute attr,
+            const size_t element_count,
+            const attribute_type attr_type,
+            const bool normalised) noexcept
+            : attr(attr),
+            element_count(element_count),
+            attr_type(attr_type),
+            normalised(normalised)
+        {}
     };
 
-    template<typename T>
-    constexpr attribute_decl make_attribute(
-        size_t index,
-        size_t size,
-        bool normalized,
-        size_t stride,
-        size_t offset) = delete;
+    struct vertex_decl_builder;
 
-    template<>
-    constexpr attribute_decl make_attribute<float>(
-        const size_t index,
-        const size_t size,
-        const bool normalized,
-        const size_t stride,
-        const size_t offset)
+    struct vertex_decl
     {
-        return { index, size, attribute_type::float32, normalized, stride, offset };
+    private:
+        std::vector<attribute_element> attributes_;
+    public:
+        void emplace(attribute attr, size_t size, attribute_type attr_type, bool normalised)
+        {
+            attributes_.emplace_back(attr, size, attr_type, normalised);
+        }
+
+        static vertex_decl_builder builder() noexcept;
+
+        auto begin() noexcept
+        {
+            return attributes_.begin();
+        }
+
+        auto end() noexcept
+        {
+            return attributes_.end();
+        }
+
+        auto begin() const noexcept
+        {
+            return attributes_.begin();
+        }
+
+        auto end() const noexcept
+        {
+            return attributes_.end();
+        }
+    };
+
+    struct vertex_decl_builder
+    {
+    private:
+        vertex_decl attr;
+    public:
+        vertex_decl_builder& add_attribute(attribute attr, size_t size, attribute_type attr_type, bool normalised);
+        vertex_decl build();
+    };
+
+    inline vertex_decl_builder vertex_decl::builder() noexcept
+    {
+        return {};
     }
 
-    template<>
-    constexpr attribute_decl make_attribute<int>(
-        const size_t index,
+    inline vertex_decl_builder& vertex_decl_builder::add_attribute(
+        const attribute attr, 
         const size_t size,
-        const bool normalized,
-        const size_t stride,
-        const size_t offset)
+        const attribute_type attr_type,
+        const bool normalised)
     {
-        return { index, size, attribute_type::int32, normalized, stride, offset };
+        this->attr.emplace(attr, size, attr_type, normalised);
+        return *this;
     }
 
-    template<>
-    constexpr attribute_decl make_attribute<unsigned>(
-        const size_t index,
-        const size_t size,
-        const bool normalized,
-        const size_t stride,
-        const size_t offset)
+    inline vertex_decl vertex_decl_builder::build()
     {
-        return { index, size, attribute_type::uint32, normalized, stride, offset };
+        return attr;
     }
 
     template<typename T>
@@ -306,7 +340,7 @@ namespace neon
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute_decl* attributes, size_t sizea) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const vertex_decl& decl) = 0;
         virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

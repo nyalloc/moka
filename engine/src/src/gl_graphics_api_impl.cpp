@@ -288,8 +288,7 @@ namespace neon
     vertex_buffer_handle gl_graphics_api_impl::create_vertex_buffer(
         const float* vertices, 
         const size_t vertex_count, 
-        const attribute_decl* attributes, 
-        const size_t attribute_count)
+        const vertex_decl& decl)
     {
         auto neon_to_gl = [](const attribute_type type)
         {
@@ -320,19 +319,17 @@ namespace neon
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertex_count, vertices, GL_STATIC_DRAW);
         
-        for (size_t i = 0; i < attribute_count; i++)
+        for (const auto& attribute : decl)
         {
-            auto attribute = attributes[i];
+            //glVertexAttribPointer(
+            //    attribute.index,
+            //    attribute.size,
+            //    neon_to_gl(attribute.type),
+            //    attribute.normalized,
+            //    attribute.stride,
+            //    reinterpret_cast<void*>(attribute.offset * sizeof(float)));
 
-            glVertexAttribPointer(
-                attribute.index,
-                attribute.size,
-                neon_to_gl(attribute.type),
-                attribute.normalized,
-                attribute.stride,
-                reinterpret_cast<void*>(attribute.offset * sizeof(float)));
-
-            glEnableVertexAttribArray(attribute.index);
+            //glEnableVertexAttribArray(attribute.index);
         }
 
         glEnableVertexAttribArray(0);

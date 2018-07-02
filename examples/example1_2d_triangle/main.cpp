@@ -15,12 +15,10 @@ class triangle_application : public application
         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
     };
 
-    // define vertex attributes
-    constexpr static std::array<attribute_decl, 2> attributes =
-    {
-        make_attribute<float>(0, 3, false, 6 * sizeof(float), 0),
-        make_attribute<float>(1, 3, false, 6 * sizeof(float), 3)
-    };
+    vertex_decl vertex_decl_ = vertex_decl::builder()
+        .add_attribute(attribute::position, 3, attribute_type::float32, false)
+        .add_attribute(attribute::color0, 3, attribute_type::float32, false)
+        .build();
 
     // glsl vertex shader source
     constexpr static char* vertex_source = 
@@ -52,8 +50,7 @@ class triangle_application : public application
         return graphics_.create_vertex_buffer(
             vertices.data(), 
             vertices.size(), 
-            attributes.data(), 
-            attributes.size());
+            vertex_decl_);
     }
 
     program_handle create_program() const
