@@ -49,7 +49,6 @@ class triangle_application : public application
     {
         return graphics_.create_vertex_buffer(
             vertices.data(), 
-            vertices.size(), 
             vertex_decl_);
     }
 

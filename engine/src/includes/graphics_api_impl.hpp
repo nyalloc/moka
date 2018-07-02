@@ -340,7 +340,7 @@ namespace neon
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const vertex_decl& decl) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, const vertex_decl& decl) = 0;
         virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

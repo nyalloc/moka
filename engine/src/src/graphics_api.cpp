@@ -29,11 +29,10 @@ namespace neon
     {}
 
     vertex_buffer_handle graphics_api::create_vertex_buffer(
-        const float* vertices
-        , const size_t size
+        const void* vertices
         , const vertex_decl& decl) const
     {
-        return impl_->create_vertex_buffer(vertices, size, decl);
+        return impl_->create_vertex_buffer(vertices, decl);
     }
 
     shader_handle graphics_api::create_shader(
