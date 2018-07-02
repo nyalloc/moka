@@ -7,14 +7,44 @@
 
 namespace neon
 {
-    enum class attribute_type
+    enum class attribute
     {
-        int_attr,
-        uint_attr,
-        float_attr
+        position,  
+        normal,    
+        tangent,   
+        bitangent, 
+        color0,    
+        color1,  
+        color2,    
+        color3,    
+        indices,   
+        weight,    
+        tex_coord0, 
+        tex_coord1, 
+        tex_coord2, 
+        tex_coord3, 
+        tex_coord4, 
+        tex_coord5, 
+        tex_coord6, 
+        tex_coord7
     };
 
-    struct attribute
+    enum class attribute_type
+    {
+        int8,
+        int16,
+        int32,
+        int64,
+        uint8,
+        uint16,
+        uint32,
+        uint64,
+        float16,
+        float32,
+        float64,
+    };
+
+    struct attribute_decl
     {
         size_t index;
         size_t size;
@@ -25,44 +55,44 @@ namespace neon
     };
 
     template<typename T>
-    constexpr attribute make_attribute(
-        size_t index, 
-        size_t size, 
-        bool normalized, 
-        size_t stride, 
+    constexpr attribute_decl make_attribute(
+        size_t index,
+        size_t size,
+        bool normalized,
+        size_t stride,
         size_t offset) = delete;
 
     template<>
-    constexpr attribute make_attribute<float>(
-        const size_t index, 
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
-        const size_t offset)
-    {
-        return { index, size, attribute_type::float_attr, normalized, stride, offset };
-    }
-
-    template<>
-    constexpr attribute make_attribute<int>(
-        const size_t index, 
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
-        const size_t offset)
-    {
-        return { index, size, attribute_type::int_attr, normalized, stride, offset };
-    }
-
-    template<>
-    constexpr attribute make_attribute<unsigned>(
+    constexpr attribute_decl make_attribute<float>(
         const size_t index,
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
+        const size_t size,
+        const bool normalized,
+        const size_t stride,
         const size_t offset)
     {
-        return { index, size, attribute_type::uint_attr, normalized, stride, offset };
+        return { index, size, attribute_type::float32, normalized, stride, offset };
+    }
+
+    template<>
+    constexpr attribute_decl make_attribute<int>(
+        const size_t index,
+        const size_t size,
+        const bool normalized,
+        const size_t stride,
+        const size_t offset)
+    {
+        return { index, size, attribute_type::int32, normalized, stride, offset };
+    }
+
+    template<>
+    constexpr attribute_decl make_attribute<unsigned>(
+        const size_t index,
+        const size_t size,
+        const bool normalized,
+        const size_t stride,
+        const size_t offset)
+    {
+        return { index, size, attribute_type::uint32, normalized, stride, offset };
     }
 
     template<typename T>
@@ -276,7 +306,7 @@ namespace neon
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute* attributes, size_t sizea) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute_decl* attributes, size_t sizea) = 0;
         virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

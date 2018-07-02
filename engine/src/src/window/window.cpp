@@ -1,4 +1,4 @@
-#include <window/window_.hpp>
+#include <window/window.hpp>
 #include <GL/glew.h>
 #include <SDL.h>
 #include <logger/logger.hpp>

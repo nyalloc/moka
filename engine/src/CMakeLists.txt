@@ -9,7 +9,7 @@ include_directories(${NEON_INCLUDES})
 
 set(NEON_SRC 
     "src/main.cpp"
-    "src/window/window.cpp "
+    "src/window/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp"
     "src/gl_graphics_api_impl.cpp"

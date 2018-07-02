@@ -31,7 +31,7 @@ namespace neon
     vertex_buffer_handle graphics_api::create_vertex_buffer(
         const float* vertices
         , const size_t sizev
-        , const attribute* attributes
+        , const attribute_decl* attributes
         , const size_t sizea) const
     {
         return impl_->create_vertex_buffer(vertices, sizev, attributes, sizea);

@@ -16,7 +16,7 @@ class triangle_application : public application
     };
 
     // define vertex attributes
-    constexpr static std::array<attribute, 2> attributes =
+    constexpr static std::array<attribute_decl, 2> attributes =
     {
         make_attribute<float>(0, 3, false, 6 * sizeof(float), 0),
         make_attribute<float>(1, 3, false, 6 * sizeof(float), 3)

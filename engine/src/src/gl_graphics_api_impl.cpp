@@ -288,16 +288,24 @@ namespace neon
     vertex_buffer_handle gl_graphics_api_impl::create_vertex_buffer(
         const float* vertices, 
         const size_t vertex_count, 
-        const attribute* attributes, 
+        const attribute_decl* attributes, 
         const size_t attribute_count)
     {
         auto neon_to_gl = [](const attribute_type type)
         {
             switch(type)
             {
-            case attribute_type::int_attr: return GL_INT;
-            case attribute_type::uint_attr: return GL_UNSIGNED_INT;
-            case attribute_type::float_attr: return GL_FLOAT;
+                case attribute_type::int8: return GL_BYTE;
+                case attribute_type::int16: return GL_SHORT;
+                case attribute_type::int32: return GL_INT;
+
+                case attribute_type::uint8: return GL_UNSIGNED_BYTE;
+                case attribute_type::uint16: return GL_UNSIGNED_SHORT;
+                case attribute_type::uint32: return GL_UNSIGNED_INT;
+
+                case attribute_type::float16: return GL_SHORT;
+                case attribute_type::float32: return GL_FLOAT;
+                case attribute_type::float64: return GL_DOUBLE;
             default: ;
             }
         };
