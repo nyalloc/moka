@@ -1,6 +1,6 @@
 #pragma once
 
-namespace neon
+namespace moka
 {
     template<class _Ty1, class _Ty2, class _Ty3>
     struct is_either

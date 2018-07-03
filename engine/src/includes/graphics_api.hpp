@@ -4,12 +4,10 @@
 #include <graphics_api_impl.hpp>
 #include <vector>
 
-namespace neon
+namespace moka
 {
-    using memory = std::vector<std::byte>;
-
     /**
-     * \brief Specifies what native rendering API to use as the \p neon::graphics_api backend.
+     * \brief Specifies what native rendering API to use as the \p moka::graphics_api backend.
      */
     enum class graphics_backend
     {
@@ -25,10 +23,10 @@ namespace neon
     };
 
     /**
-     * \brief The \p neon::graphics_api class presents a common rendering API and owns a pointer to the implementation.
-     * An example of the bridge design pattern, \p neon::graphics_api allows neon rendering code to operate without being coupled to the native rendering API.
-     * The client interacts with this class and it in turn delegates all requests to the \p neon::graphics_api_impl class internally.
-     * \p graphics_api is the handle known and used by the client, while \p neon::graphics_api_impl is safely encapsulated to ensure that it may continue to evolve, or be entirely replaced.
+     * \brief The \p moka::graphics_api class presents a common rendering API and owns a pointer to the implementation.
+     * An example of the bridge design pattern, \p moka::graphics_api allows moka rendering code to operate without being coupled to the native rendering API.
+     * The client interacts with this class and it in turn delegates all requests to the \p moka::graphics_api_impl class internally.
+     * \p graphics_api is the handle known and used by the client, while \p moka::graphics_api_impl is safely encapsulated to ensure that it may continue to evolve, or be entirely replaced.
      */
     class graphics_api
     {
@@ -36,7 +34,7 @@ namespace neon
     public:
         graphics_api(graphics_backend backend = graphics_backend::opengl);
 
-        vertex_buffer_handle create_vertex_buffer(const void* vertices, const vertex_decl& decl) const;
+        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) const;
 
         shader_handle create_shader(const shader_type type, const std::string& source) const;
 

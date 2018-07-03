@@ -4,7 +4,7 @@
 #include <mutex>
 #include <unordered_map>
 
-namespace neon
+namespace moka
 {
     using signal_id = size_t;
 

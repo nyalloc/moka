@@ -1,7 +1,7 @@
 #include <application/application.hpp>
 #include <SDL.h>
 
-namespace neon
+namespace moka
 {
     void sdl_events(application& app, logger& log)
     {

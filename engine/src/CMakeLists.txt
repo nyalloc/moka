@@ -1,13 +1,13 @@
 
-set(NEON_INCLUDES
+set(moka_INCLUDES
     "./includes/"
     "./deps/imgui/"
     "./deps/"
 )
 
-include_directories(${NEON_INCLUDES})
+include_directories(${moka_INCLUDES})
 
-set(NEON_SRC 
+set(MOKA_SRC 
     "src/main.cpp"
     "src/window/window.cpp"
     "src/application/application.cpp"
@@ -42,15 +42,15 @@ set(NEON_SRC
     "includes/window/window.hpp"
 )
 
-add_library(neon STATIC ${NEON_SRC})
+add_library(moka STATIC ${MOKA_SRC})
 
-foreach(_source IN ITEMS ${NEON_SRC})
+foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
     string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
     source_group("${_source_path_msvc}" FILES "${_source}")
 endforeach()
 
-target_link_libraries(neon
+target_link_libraries(moka
     glew::glew
     SDL2::SDL2
 )

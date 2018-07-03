@@ -4,7 +4,7 @@
 #include <atomic>
 #include "application/signal.hpp"
 
-namespace neon
+namespace moka
 {
     class base_event_handler
     {

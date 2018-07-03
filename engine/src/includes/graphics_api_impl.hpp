@@ -5,8 +5,22 @@
 #include <maths/vector3.hpp>
 #include <vector>
 
-namespace neon
+namespace moka
 {
+    struct memory
+    {
+        const std::byte* data;
+        size_t size;
+    };
+
+    inline memory make_buffer(const void* buffer, const size_t size)
+    {
+        memory result;
+        result.size = size;
+        result.data = static_cast<const std::byte*>(buffer);
+        return result;
+    }
+
     enum class attribute
     {
         position,  
@@ -26,7 +40,8 @@ namespace neon
         tex_coord4, 
         tex_coord5, 
         tex_coord6, 
-        tex_coord7
+        tex_coord7,
+        extension
     };
 
     enum class attribute_type
@@ -42,16 +57,46 @@ namespace neon
         float16,
         float32,
         float64,
+        boolean,
     };
+
+    inline size_t attr_type_size(const attribute_type attr_type)
+    {
+        switch (attr_type)
+        {
+        case attribute_type::int8:
+            return sizeof(int8_t);
+        case attribute_type::int16:
+            return sizeof(int16_t);
+        case attribute_type::int32:
+            return sizeof(int32_t);
+        case attribute_type::int64:
+            return sizeof(int64_t);
+        case attribute_type::uint8:
+            return sizeof(uint8_t);
+        case attribute_type::uint16:
+            return sizeof(uint16_t);
+        case attribute_type::uint32:
+            return sizeof(uint32_t);
+        case attribute_type::uint64:
+            return sizeof(int64_t);
+        case attribute_type::float32:
+            return sizeof(float);
+        case attribute_type::float64:
+            return sizeof(double);
+        default:
+            return 0;
+        }
+    }
 
     struct vertex_decl;
 
     struct attribute_element
     {
         attribute attr;
-        size_t element_count;
-        attribute_type attr_type;
-        bool normalised;
+        size_t size;
+        attribute_type type;
+        bool normalized;
 
         constexpr attribute_element(
             const attribute attr,
@@ -59,9 +104,9 @@ namespace neon
             const attribute_type attr_type,
             const bool normalised) noexcept
             : attr(attr),
-            element_count(element_count),
-            attr_type(attr_type),
-            normalised(normalised)
+            size(element_count),
+            type(attr_type),
+            normalized(normalised)
         {}
     };
 
@@ -78,6 +123,10 @@ namespace neon
         }
 
         static vertex_decl_builder builder() noexcept;
+
+        size_t size() const noexcept;
+
+        size_t stride() const noexcept;
 
         auto begin() noexcept
         {
@@ -100,13 +149,23 @@ namespace neon
         }
     };
 
+    inline size_t vertex_decl::stride() const noexcept
+    {
+        size_t stride = 0;
+        for (const auto& element : attributes_)
+        {
+            stride += attr_type_size(element.type) * element.size;
+        }
+        return stride;
+    }
+
     struct vertex_decl_builder
     {
     private:
         vertex_decl attr;
     public:
         vertex_decl_builder& add_attribute(attribute attr, size_t size, attribute_type attr_type, bool normalised);
-        vertex_decl build();
+        vertex_decl build() const;
     };
 
     inline vertex_decl_builder vertex_decl::builder() noexcept
@@ -114,17 +173,27 @@ namespace neon
         return {};
     }
 
+    inline size_t vertex_decl::size() const noexcept
+    {
+        size_t result = 0;
+        for (const auto& element : attributes_)
+        {
+            result += element.size;
+        }
+        return result;
+    }
+
     inline vertex_decl_builder& vertex_decl_builder::add_attribute(
         const attribute attr, 
         const size_t size,
         const attribute_type attr_type,
-        const bool normalised)
+        const bool normalised = false)
     {
         this->attr.emplace(attr, size, attr_type, normalised);
         return *this;
     }
 
-    inline vertex_decl vertex_decl_builder::build()
+    inline vertex_decl vertex_decl_builder::build() const
     {
         return attr;
     }
@@ -160,15 +229,6 @@ namespace neon
     };
 
     using rectangle = basic_rectangle<int>;
-
-    struct vertex
-    {
-        vector3 position{ 0.0f, 0.0f, 0.0f };
-
-        constexpr vertex(const float x, const float y, const float z) noexcept
-            : position{ x, y, z }
-        {}
-    };
 
     enum class primitive_type
     {
@@ -340,7 +400,7 @@ namespace neon
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, const vertex_decl& decl) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) = 0;
         virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

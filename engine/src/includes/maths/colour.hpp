@@ -3,7 +3,7 @@
 #include <maths/vector4.hpp>
 #include <maths/vector3.hpp>
 
-namespace neon
+namespace moka
 {
     using byte = uint8_t;
 
@@ -12,13 +12,13 @@ namespace neon
         template<typename T, typename = std::enable_if_t<std::is_floating_point_v<T>>>
         constexpr byte float_to_byte(const T val) noexcept
         {
-            return static_cast<byte>(neon::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * std::numeric_limits<byte>::max());
+            return static_cast<byte>(moka::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * std::numeric_limits<byte>::max());
         }
 
         template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
         constexpr byte int_to_byte(const T val) noexcept
         {
-            return static_cast<byte>(neon::clamp(val, static_cast<T>(0), static_cast<T>(255)));
+            return static_cast<byte>(moka::clamp(val, static_cast<T>(0), static_cast<T>(255)));
         }
 
         constexpr float byte_to_float(const byte val) noexcept
@@ -113,6 +113,11 @@ namespace neon
         constexpr float a() const noexcept
         {
             return detail::byte_to_float(rgba_bytes_[3]);
+        }
+
+        constexpr vector4 to_vector4() const noexcept
+        {
+            return { r(), g(), b(), a() };
         }
 
         /**

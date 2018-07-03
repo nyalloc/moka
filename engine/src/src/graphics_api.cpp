@@ -3,7 +3,7 @@
 #include <logger/logger.hpp>
 #include <gl_graphics_api_impl.hpp>
 
-namespace neon
+namespace moka
 {
     std::unique_ptr<graphics_api_impl> create(
         const graphics_backend backend)
@@ -29,7 +29,7 @@ namespace neon
     {}
 
     vertex_buffer_handle graphics_api::create_vertex_buffer(
-        const void* vertices
+        const memory& vertices
         , const vertex_decl& decl) const
     {
         return impl_->create_vertex_buffer(vertices, decl);

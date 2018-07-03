@@ -5,7 +5,7 @@
 #include <logger/logger.hpp>
 #include <gl_graphics_api_impl.hpp>
 
-namespace neon
+namespace moka
 {
     void gl_graphics_api_impl::check_errors() const
     {
@@ -146,7 +146,7 @@ namespace neon
 
     void gl_graphics_api_impl::blend_function(const blend_function_factor lhs, const blend_function_factor rhs) const
     {
-        auto neon_to_gl = [](const blend_function_factor type)
+        auto moka_to_gl = [](const blend_function_factor type)
         {
             switch (type)
             {
@@ -182,7 +182,7 @@ namespace neon
             }
         };
 
-        glBlendFunc(neon_to_gl(lhs), neon_to_gl(rhs));
+        glBlendFunc(moka_to_gl(lhs), moka_to_gl(rhs));
     }
 
     program_handle gl_graphics_api_impl::create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
@@ -229,7 +229,7 @@ namespace neon
 
     shader_handle gl_graphics_api_impl::create_shader(const shader_type type, const std::string& source)
     {
-        auto neon_to_gl = [](const shader_type type)
+        auto moka_to_gl = [](const shader_type type)
         {
             switch (type)
             {
@@ -250,7 +250,7 @@ namespace neon
         // vertex shader
         auto string = source.c_str();
 
-        const unsigned int id = glCreateShader(neon_to_gl(type));
+        const unsigned int id = glCreateShader(moka_to_gl(type));
         const shader_handle handle{ id };
 
         glShaderSource(id, 1, &string, nullptr);
@@ -286,23 +286,24 @@ namespace neon
     }
 
     vertex_buffer_handle gl_graphics_api_impl::create_vertex_buffer(
-        const void* vertices, 
+        const memory& vertices,
         const vertex_decl& decl)
     {
-        auto neon_to_gl = [](const attribute_type type)
+        auto moka_to_gl = [](const attribute_type type)
         {
-            switch(type)
+            switch (type)
             {
-                case attribute_type::int8: return GL_BYTE;
-                case attribute_type::int16: return GL_SHORT;
-                case attribute_type::int32: return GL_INT;
-                case attribute_type::uint8: return GL_UNSIGNED_BYTE;
-                case attribute_type::uint16: return GL_UNSIGNED_SHORT;
-                case attribute_type::uint32: return GL_UNSIGNED_INT;
-                case attribute_type::float16: return GL_SHORT;
-                case attribute_type::float32: return GL_FLOAT;
-                case attribute_type::float64: return GL_DOUBLE;
-            default: ;
+            case attribute_type::boolean: return GL_BOOL;
+            case attribute_type::int8: return GL_BYTE;
+            case attribute_type::int16: return GL_SHORT;
+            case attribute_type::int32: return GL_INT;
+            case attribute_type::uint8: return GL_UNSIGNED_BYTE;
+            case attribute_type::uint16: return GL_UNSIGNED_SHORT;
+            case attribute_type::uint32: return GL_UNSIGNED_INT;
+            case attribute_type::float16: return GL_SHORT;
+            case attribute_type::float32: return GL_FLOAT;
+            case attribute_type::float64: return GL_DOUBLE;
+            default:;
             }
         };
 
@@ -314,19 +315,33 @@ namespace neon
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertex_count, vertices, GL_STATIC_DRAW);
-        
-        for (const auto& attribute : decl)
-        {
-            //glVertexAttribPointer(
-            //    attribute.index,
-            //    attribute.size,
-            //    neon_to_gl(attribute.type),
-            //    attribute.normalized,
-            //    attribute.stride,
-            //    reinterpret_cast<void*>(attribute.offset * sizeof(float)));
+        glBufferData(GL_ARRAY_BUFFER, vertices.size, vertices.data, GL_STATIC_DRAW);
 
-            //glEnableVertexAttribArray(attribute.index);
+        size_t size_offset = 0;
+        for (const attribute_element& attribute : decl)
+        {
+            const auto index = static_cast<size_t>(attribute.attr);
+            const auto type = moka_to_gl(attribute.type);
+            const auto size = attribute.size;
+            const auto normalized = attribute.normalized;
+            const auto stride = decl.stride();
+
+            const auto offset = reinterpret_cast<void*>(
+                size_offset * attr_type_size(attribute.type));
+
+            glVertexAttribPointer(
+                index,
+                size,
+                type,
+                normalized,
+                stride,
+                offset);
+
+            glEnableVertexAttribArray(index);
+
+            size_offset += size;
+
+            // todo: investigate cleaning up attribute_element void* memory
         }
 
         glEnableVertexAttribArray(0);
@@ -337,7 +352,7 @@ namespace neon
         // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         glBindVertexArray(0);
-        
+
         const vertex_buffer_handle handle{ vao };
 
         vertex_buffers_.emplace_back(handle);
@@ -392,7 +407,8 @@ namespace neon
         return reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
     }
 
-    void gl_graphics_api_impl::clear(const bool color, const bool depth, const bool stencil, const byte stencil_value, const colour& colour) const
+    void gl_graphics_api_impl::clear(const bool color, const bool depth, const bool stencil,
+        const byte stencil_value, const colour& colour) const
     {
         auto clear_flags = 0;
         if (color)

@@ -3,7 +3,7 @@
 #include <array>
 #include <maths/vector2.hpp>
 
-namespace neon
+namespace moka
 {
     namespace detail
     {

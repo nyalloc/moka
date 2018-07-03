@@ -5,7 +5,7 @@
 #include <logger/logger.hpp>
 #include "graphics_api.hpp"
 
-namespace neon
+namespace moka
 {
     std::atomic<size_t> event_subscriber::available_ids_ = {};
 
@@ -63,7 +63,7 @@ namespace neon
     }
 
     application::application(const int argc, char* argv[])
-        : log_{ filesystem::current_path() / "application.log" }, window_("Neon Editor")
+        : log_{ filesystem::current_path() / "application.log" }, window_("moka Editor")
     {
         std::stringstream msg;
         msg << "Starting main thread: " << std::this_thread::get_id();

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <application/signal.hpp>
 
-namespace neon
+namespace moka
 {
     template<class T>
     class property
@@ -111,7 +111,7 @@ namespace neon
         application& application;
 
     public:
-        concrete_model(neon::application& application)
+        concrete_model(moka::application& application)
             : application(application)
         {}
     };
@@ -122,7 +122,7 @@ namespace neon
         application& application;
 
     public:
-        concrete_view(neon::application& application)
+        concrete_view(moka::application& application)
             : base_view(), application(application)
         {}
 
@@ -139,7 +139,7 @@ namespace neon
         base_model& model;
         base_view& view;
     public:
-        concrete_presenter(neon::application& application, base_model& model, base_view& view)
+        concrete_presenter(moka::application& application, base_model& model, base_view& view)
             : application(application), model(model), view(view)
         {
             this->view.set_presenter(this);

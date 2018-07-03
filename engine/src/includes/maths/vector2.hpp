@@ -6,13 +6,13 @@
 #undef max
 #undef min
 
-namespace neon
+namespace moka
 {
     namespace detail
     {
         /**
          * \brief Representation of 2D vectors and points.
-         *        This structure is used throughout neon to pass 2D positions and directions around.
+         *        This structure is used throughout moka to pass 2D positions and directions around.
          *        It also contains functions for doing common vector operations.
          * \tparam T Type used to represent the vector's XY properties.
          */
@@ -235,7 +235,7 @@ namespace neon
         template<class T>
         constexpr T angle(const vector2<T>& from, const vector2<T>& to)
         {
-            return std::acos(neon::clamp(dot(from.normalize(), to.normalize()), -1.0f, 1.0f)) * maths::radians_to_degrees;
+            return std::acos(moka::clamp(dot(from.normalize(), to.normalize()), -1.0f, 1.0f)) * maths::radians_to_degrees;
         }
 
         template<class T>

@@ -13,7 +13,7 @@
 
 using namespace std::experimental;
 
-namespace neon
+namespace moka
 {
     struct application_traits
     {

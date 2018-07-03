@@ -7,7 +7,7 @@
 #include <graphics_api.hpp>
 #include <entry.hpp>
 
-namespace neon
+namespace moka
 {
     class application
     {
