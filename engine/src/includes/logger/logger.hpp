@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include <filesystem>
+#include <asset_importer/filesystem.hpp>
 #include <windows.h>
 #include <wincon.h>
 #include <iomanip>
@@ -38,7 +38,7 @@ namespace moka
         constexpr static int yellow_ = 14;
         constexpr static int white_ = 15;
         bool print_to_console_;
-		filesystem::path log_path_;
+		fs::path log_path_;
 
         template<typename T>
         static void log(std::ostream& file, const level level, const T& message) 
@@ -81,7 +81,7 @@ namespace moka
         }
     public:
 
-        logger(const filesystem::path& log_path, const bool print_to_console = true)
+        logger(const fs::path& log_path, const bool print_to_console = true)
             : print_to_console_(print_to_console), log_path_(log_path)
         {
         }

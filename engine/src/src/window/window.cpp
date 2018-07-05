@@ -10,7 +10,7 @@ namespace moka
         SDL_Window* window_;
         SDL_GLContext context_;
         bool running_;
-        logger log_{ filesystem::current_path() / "window.log" };
+        logger log_{ fs::current_path() / "window.log" };
     public:
         signal<> exit;
 
