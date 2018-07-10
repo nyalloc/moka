@@ -2,4 +2,4 @@
 
 #include <filesystem>
 
-namespace fs = std::experimental::filesystem;
+namespace filesystem = std::experimental::filesystem;

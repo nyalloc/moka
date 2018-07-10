@@ -367,7 +367,7 @@ namespace moka
     }
 
     gl_graphics_api_impl::gl_graphics_api_impl()
-        : log_{ fs::current_path() }
+        : log_{ filesystem::current_path() }
     {
     }
 

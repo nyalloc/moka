@@ -26,7 +26,7 @@ namespace moka
         virtual void draw(const game_time delta_time);
         virtual void update(const game_time delta_time);
         int run();
-        static fs::path data_path();
+        static filesystem::path data_path();
     };
 
     template <typename T, typename event_type, typename>

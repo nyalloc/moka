@@ -1,5 +1,4 @@
 #include <asset_importer/asset_database.hpp>
-#include <asset_importer/filesystem.hpp>
 #include <nlohmann/json.hpp>
 
 namespace moka
@@ -13,11 +12,6 @@ namespace moka
 
         ~impl() = default;
 
-        texture_import_settings get_import_settings(const fs::path& path) const
-        {
-            auto value = json_[""];
-            return {};
-        }
     };
 
     asset_database::asset_database()
@@ -26,9 +20,4 @@ namespace moka
     }
 
     asset_database::~asset_database() = default;
-
-    texture_import_settings asset_database::get_import_settings(const fs::path& path) const
-    {
-        return impl_->get_import_settings(path);
-    }
 }

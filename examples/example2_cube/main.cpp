@@ -1,34 +1,27 @@
 
-#include <asset_importer/asset_importer.hpp>
-#include <asset_importer/mesh_importer/mesh_importer.hpp>
+#include <asset_importer/resource_manager.hpp>
 #include <application/application.hpp>
 #include <asset_importer/filesystem.hpp>
+#include <asset_importer/texture_importer/texture_importer.hpp>
 
 int main()
 {
-    const auto path = moka::application::data_path() 
+    const auto path = moka::application::data_path()
         / ".." / ".." / ".." / "examples" / "resources";
 
-    moka::asset_importer importer{ path };
+    moka::resource_manager manager{ path };
 
-    moka::safe_queue<moka::texture_data> queue;
-
-    for (size_t i = 0; i < 10; i++)
     {
-        importer.load_asset_async<moka::texture_data>("tile.png", [&](moka::texture_data texture)
-        {
-            queue.enqueue(std::move(texture));
-        });
+        // texture is alive
+        auto texture = manager.load_asset<moka::texture_2d>("tile.png");
+        std::cout << manager.size<moka::texture_2d>() << std::endl;
+        std::cout << "loading texture" << std::endl;
+        std::cout << "texture size: " << texture.size() << std::endl;
     }
 
-    for (size_t i = 0; i < 10; i++)
-    {
-        auto texture = queue.dequeue();
+    // texture has gone out of scope, resource_manager should automatically deallocate any shared resources
 
-        std::cout << "loading texture " << i << std::endl;
-        std::cout << "x: " << texture.size.x() << std::endl;
-        std::cout << "y: " << texture.size.y() << std::endl;
-    }
+    std::cout << manager.size<moka::texture_2d>() << std::endl;
 
     return 0;
 }

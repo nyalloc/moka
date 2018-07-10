@@ -36,7 +36,7 @@ namespace moka
         {
             [this]
             {
-                logger event_logger{fs::current_path() / "event.log"};
+                logger event_logger{filesystem::current_path() / "event.log"};
 
                 std::stringstream msg;
                 msg << "Starting message dispatcher thread: " << std::this_thread::get_id();
@@ -63,7 +63,7 @@ namespace moka
     }
 
     application::application(const int argc, char* argv[])
-        : log_{ fs::current_path() / "application.log" }, window_("moka Editor")
+        : log_{ filesystem::current_path() / "application.log" }, window_("moka Editor")
     {
         std::stringstream msg;
         msg << "Starting main thread: " << std::this_thread::get_id();
