@@ -11,8 +11,6 @@
 #include <iostream>
 #include <mutex>
 
-using namespace std::experimental;
-
 namespace moka
 {
     struct application_traits

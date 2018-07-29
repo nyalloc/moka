@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(moka_example_cube)
+project(moka_example_1_concurrency)
 
 set(Example_Includes 
 	"./"
@@ -13,7 +13,7 @@ set(Example_Includes
 
 include_directories(${Example_Includes})
 
-add_executable(moka_example_cube main.cpp)
+add_executable(moka_example_1_concurrency main.cpp)
 
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
@@ -22,4 +22,4 @@ foreach(_source IN ITEMS ${MOKA_SRC})
 endforeach()
 
 set_target_properties(moka PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(moka_example_cube PUBLIC moka)
+target_link_libraries(moka_example_1_concurrency PUBLIC moka)

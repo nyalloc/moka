@@ -40,6 +40,20 @@ set(MOKA_SRC
     "includes/maths/vector3.hpp"
     "includes/maths/vector4.hpp"
     "includes/window/window.hpp"
+	"includes/asset_importer/resource_manager.hpp"
+	"includes/asset_importer/resource_manager.cpp"
+	"includes/asset_importer/texture_importer.hpp"
+	"includes/asset_importer/texture_importer.cpp"
+	"includes/asset_importer/asset_database.hpp"
+	"includes/asset_importer/asset_database.cpp"
+	"includes/asset_importer/asset_importer.hpp"
+	"includes/asset_importer/asset_importer.cpp"
+	"includes/asset_importer/basic_importer.hpp"
+	"includes/asset_importer/basic_importer.cpp"
+	"includes/asset_importer/filesystem.hpp"
+	"includes/asset_importer/importer_specialisations.hpp"
+	"includes/asset_importer/mesh_importer.hpp"
+	"includes/asset_importer/mesh_importer.cpp"
 )
 
 add_library(moka STATIC ${MOKA_SRC})
