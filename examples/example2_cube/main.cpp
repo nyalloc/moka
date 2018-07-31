@@ -9,6 +9,7 @@
 #include <queue>
 #include <memory>
 #include <iostream>
+#include <future>
 
 namespace messaging 
 {
@@ -53,6 +54,18 @@ namespace messaging
             q.pop();
             return res;
         }
+
+        std::shared_ptr<message_base> try_and_pop()
+        {
+            std::unique_lock<std::mutex> lk(m);
+            if(q.empty())
+            {
+                return nullptr;
+            }
+            auto res = q.front();
+            q.pop();
+            return res;
+        }
     };
 
     class sender 
@@ -79,27 +92,41 @@ namespace messaging
         }
     };
 
-    template <typename PreviousDispatcher, typename Msg, typename Func>
-    class TemplateDispatcher 
+    class blocking {};
+    class non_blocking {};
+
+    template <typename BlockingPolicy, typename PreviousDispatcher, typename Msg, typename Func>
+    class chained_dispatcher 
     {
         queue *q;
         PreviousDispatcher *prev;
         Func f;
         bool chained;
 
-        TemplateDispatcher(TemplateDispatcher const &) = delete;
-        TemplateDispatcher& operator=(TemplateDispatcher const &) = delete;
+        chained_dispatcher(chained_dispatcher const &) = delete;
+        chained_dispatcher& operator=(chained_dispatcher const &) = delete;
 
-        template <typename Dispatcher, typename OtherMsg, typename OtherFunc>
-        friend class TemplateDispatcher;
+        template <typename = BlockingPolicy, typename Dispatcher, typename OtherMsg, typename OtherFunc>
+        friend class chained_dispatcher;
 
         void wait_and_dispatch() 
         {
             for (;;) 
             {
-                auto msg = q->wait_and_pop();
+                const auto msg = q->wait_and_pop();
                 if (dispatch(msg))
+                {
                     break;
+                }
+            }
+        }
+
+        void try_and_dispatch()
+        {
+            const auto msg = q->try_and_pop();
+            if (msg)
+            {
+                dispatch(msg);
             }
         }
 
@@ -110,36 +137,43 @@ namespace messaging
                 f(wrapper->contents);
                 return true;
             }
-            else 
-            {
-                return prev->dispatch(msg);
-            }
+            return prev->dispatch(msg);
         }
     public:
-        TemplateDispatcher(TemplateDispatcher &&other) :
+        chained_dispatcher(chained_dispatcher &&other) noexcept :
             q(other.q), prev(other.prev), f(std::move(other.f)), chained(other.chained)
         {
             other.chained = true;
         }
 
-        TemplateDispatcher(queue *q_, PreviousDispatcher *prev_, Func &&f_) :
+        chained_dispatcher(queue *q_, PreviousDispatcher *prev_, Func &&f_) :
             q(q_), prev(prev_), f(std::forward<Func>(f_)), chained(false) 
         {
             prev_->chained = true;
         }
 
         template <typename OtherMsg, typename OtherFunc>
-        TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>
+        chained_dispatcher<BlockingPolicy, chained_dispatcher, OtherMsg, OtherFunc>
             handle(OtherFunc &&of) 
         {
-            return TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>(q, this, std::forward<OtherFunc>(of));
+            return chained_dispatcher<BlockingPolicy, chained_dispatcher, OtherMsg, OtherFunc>(q, this, std::forward<OtherFunc>(of));
         }
 
-        ~TemplateDispatcher() noexcept(false) 
+        ~chained_dispatcher() noexcept(false)
         {
-            if (!chained) 
+            if constexpr(std::is_same<blocking, BlockingPolicy>::value)
             {
-                wait_and_dispatch();
+                if (!chained)
+                {
+                    wait_and_dispatch();
+                }
+            }
+            if constexpr(std::is_same<non_blocking, BlockingPolicy>::value)
+            {
+                if (!chained)
+                {
+                    try_and_dispatch();
+                }
             }
         }
     };
@@ -148,6 +182,7 @@ namespace messaging
     {
     };
 
+    template<typename BlockingPolicy>
     class dispatcher 
     {
         queue *q;
@@ -156,28 +191,37 @@ namespace messaging
         dispatcher(dispatcher const &) = delete;
         dispatcher& operator=(dispatcher const &) = delete;
 
-        template <typename Dispatcher, typename Msg, typename Func>
-        friend class TemplateDispatcher;
+        template <typename = BlockingPolicy, typename Dispatcher, typename Msg, typename Func>
+        friend class chained_dispatcher;
 
-        void wait_and_dispatch() 
+        void wait_and_dispatch() const
         {
             for (;;) 
             {
-                auto msg = q->wait_and_pop();
+                const auto msg = q->wait_and_pop();
                 dispatch(msg);
             }
         }
 
-        bool dispatch(std::shared_ptr<message_base> const &msg) 
+        void try_and_dispatch() const
+        {
+            const auto msg = q->try_and_pop();
+            if (msg)
+            {
+                dispatch(msg);
+            }
+        }
+
+        static bool dispatch(std::shared_ptr<message_base> const &msg) 
         {
             if (dynamic_cast<wrapped_message<close_queue>*>(msg.get())) 
             {
-                throw close_queue();
+                return true;
             }
             return false;
         }
     public:
-        dispatcher(dispatcher &&other) :
+        dispatcher(dispatcher &&other) noexcept :
             q(other.q), chained(other.chained) 
         {
             other.chained = true;
@@ -189,16 +233,26 @@ namespace messaging
         }
 
         template <typename Message, typename Func>
-        TemplateDispatcher<dispatcher, Message, Func>
-            handle(Func &&f) 
+        chained_dispatcher<BlockingPolicy, dispatcher, Message, Func> handle(Func &&f) 
         {
-            return TemplateDispatcher<dispatcher, Message, Func>(q, this, std::forward<Func>(f));
+            return chained_dispatcher<BlockingPolicy, dispatcher, Message, Func>(q, this, std::forward<Func>(f));
         }
 
-        ~dispatcher() noexcept(false) 
+        ~dispatcher() noexcept(false)
         {
-            if (!chained) {
-                wait_and_dispatch();
+            if constexpr(std::is_same<blocking, BlockingPolicy>::value)
+            {
+                if (!chained)
+                {
+                    wait_and_dispatch();
+                }
+            }
+            if constexpr(std::is_same<non_blocking, BlockingPolicy>::value)
+            {
+                if (!chained)
+                {
+                    try_and_dispatch();
+                }
             }
         }
     };
@@ -207,22 +261,32 @@ namespace messaging
     {
         queue q;
     public:
-        operator sender() 
+        sender make_sender()
         {
             return sender(&q);
         }
-        dispatcher wait() 
+
+        dispatcher<blocking> wait() 
         {
-            return dispatcher(&q);
+            return dispatcher<blocking>(&q);
+        }
+
+        dispatcher<non_blocking> poll()
+        {
+            return dispatcher<non_blocking>(&q);
         }
     };
-
-};
-
+}
 
 struct mouse_motion
 {
-    moka::point2 positon{ 0, 0 };
+    moka::point2 position{ 0, 0 };
+    moka::point2 motion{ 0, 0 };
+};
+
+struct key_down
+{
+    
 };
 
 class test_application
@@ -230,36 +294,63 @@ class test_application
     
 };
 
+bool running = true;
+
 void run_native_event_loop(messaging::sender& sender)
 {
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
+    SDL_Event e;
+    while (SDL_PollEvent(&e))
     {
-        switch (event.type)
+        switch (e.type)
         {
         case SDL_QUIT:
-        {
-            sender.send(messaging::close_queue{});
-            break;
-        }
+            {
+                sender.send(messaging::close_queue{});
+                running = false;
+            }
         case SDL_MOUSEMOTION:
-        {
-            std::cout << "SDL mouse motion" << std::endl;
-            mouse_motion motion;
-            motion.positon = moka::point2{ event.motion.x, event.motion.y };
-            sender.send(motion);
-            break;
-        }
+            {
+                mouse_motion event;
+                event.position = moka::point2{ e.motion.x, e.motion.y };
+                event.motion = moka::point2{ e.motion.xrel, e.motion.yrel };
+                sender.send(event);
+                break;
+            }
+        case SDL_KEYDOWN:
+            {
+                key_down event;
+                sender.send(event);
+                break;
+            }
         default:;
         }
     }
+}
+
+void run(messaging::receiver& receiver)
+{
+    auto sender = receiver.make_sender();
+
+    run_native_event_loop(sender);
+
+    receiver.poll()
+    .handle<mouse_motion>([&](const mouse_motion& e)
+    {
+        std::cout << "Mouse motion event. Motion:" << e.motion << ", Position: " << e.position << std::endl;
+    })
+    .handle<key_down>([&](const key_down& e)
+    {
+        std::cout << "Key down" << std::endl;
+    });
+
+    std::cout << "Rendering..." << std::endl;
 }
 
 int main()
 {
     SDL_Init(SDL_INIT_VIDEO);
 
-    auto window = SDL_CreateWindow("bgfx"
+    auto window = SDL_CreateWindow("moka"
         , SDL_WINDOWPOS_UNDEFINED
         , SDL_WINDOWPOS_UNDEFINED
         , 1280
@@ -268,27 +359,12 @@ int main()
         | SDL_WINDOW_RESIZABLE
     );
 
-    messaging::receiver receiver;
-    messaging::sender sender = receiver;
+    messaging::receiver gameplay_receiver;
 
-    std::thread thread([&receiver]
+    while (running)
     {
-        while (true)
-        {
-            receiver.wait()
-            .handle<mouse_motion>([&](const mouse_motion& e)
-            {
-                std::cout << "Moka mouse motion" << std::endl;
-            });
-        }
-    });
-
-    while (true)
-    {
-        run_native_event_loop(sender);
+        run(gameplay_receiver);
     }
 
     SDL_Quit();
-
-    thread.join();
 }
