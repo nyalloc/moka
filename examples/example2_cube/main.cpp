@@ -244,6 +244,7 @@ void run_native_event_loop(messaging::sender& sender)
         }
         case SDL_MOUSEMOTION:
         {
+            std::cout << "SDL mouse motion" << std::endl;
             mouse_motion motion;
             motion.positon = moka::point2{ event.motion.x, event.motion.y };
             sender.send(motion);
@@ -256,19 +257,38 @@ void run_native_event_loop(messaging::sender& sender)
 
 int main()
 {
+    SDL_Init(SDL_INIT_VIDEO);
+
+    auto window = SDL_CreateWindow("bgfx"
+        , SDL_WINDOWPOS_UNDEFINED
+        , SDL_WINDOWPOS_UNDEFINED
+        , 1280
+        , 720
+        , SDL_WINDOW_SHOWN
+        | SDL_WINDOW_RESIZABLE
+    );
+
     messaging::receiver receiver;
     messaging::sender sender = receiver;
 
-    std::thread thread{ [&sender]()
+    std::thread thread([&receiver]
+    {
+        while (true)
+        {
+            receiver.wait()
+            .handle<mouse_motion>([&](const mouse_motion& e)
+            {
+                std::cout << "Moka mouse motion" << std::endl;
+            });
+        }
+    });
+
+    while (true)
     {
         run_native_event_loop(sender);
-    }};
+    }
 
-    receiver.wait()
-        .handle<mouse_motion>([&](const mouse_motion& e) 
-        {
-            std::cout << e.positon << std::endl;
-        });
+    SDL_Quit();
 
     thread.join();
 }
