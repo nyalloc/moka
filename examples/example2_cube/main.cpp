@@ -1,137 +1,61 @@
 
-#include <asset_importer/resource_manager.hpp>
-#include <application/application.hpp>
-#include <asset_importer/texture_importer/texture_importer.hpp>
-#include <optional>
-#include <atomic>
-#include <functional>
-#include <thread>
-#include <vector>
-#include <condition_variable>
-#include <queue>
- 
+#include <SDL.h>
+#include <messaging/sender.hpp>
+#include <messaging/dispatcher.hpp>
+#include "maths/vector2.hpp"
+#include "messaging/receiver.hpp"
 
-namespace messaging
+#undef main
+
+struct mouse_motion
 {
-    struct message_base
+    moka::point2 positon{ 0, 0 };
+};
+
+class test_application
+{
+    
+};
+
+void run_native_event_loop(moka::sender& sender)
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
     {
-        virtual ~message_base() = default;
-    };
-
-    template<typename T>
-    struct wrapped_message
-    {
-        T content;
-
-        template<typename... Args>
-        explicit wrapped_message(Args&&... content)
-            : content(std::forward<T>(content)...)
-        {}
-    };
-
-    template<typename T>
-    class queue
-    {
-        mutable std::mutex _mutex;
-        std::queue<T> _data;
-        std::condition_variable _data_condition;
-    public:
-        queue() noexcept = default;
-        queue(const queue& rhs) noexcept = default;
-        queue(queue&& rhs) noexcept = default;
-        queue& operator = (queue&& rhs) noexcept = default;
-        queue& operator = (const queue& rhs) noexcept = default;
-
-        T wait_and_pop()
+        switch (event.type)
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            _data_condition.wait(lock, [this] { return !_data.empty(); });
-            T front = std::move(_data.front());
-            _data.pop();
-            return front;
-        }
-
-        std::optional<T> try_pop()
+        case SDL_QUIT:
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            if (_data.empty())
-            {
-                return std::nullopt;
-            }
-            T front = std::move(_data.front());
-            _data.pop();
-            return front;
+            sender.send(moka::close_queue{});
+            break;
         }
-
-        void push(const T& element)
+        case SDL_MOUSEMOTION:
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            _data.push(element);
-            _data_condition.notify_one();
+            mouse_motion motion;
+            motion.positon = moka::point2{ event.motion.x, event.motion.y };
+            sender.send(motion);
+            break;
         }
-
-        template<typename... Args>
-        void emplace(Args&&... args)
-        {
-            std::unique_lock<std::mutex> lock(_mutex);
-            _data.emplace(std::forward<Args>(args)...);
-            _data_condition.notify_one();
+        default:;
         }
-
-        bool empty() const
-        {
-            std::unique_lock<std::mutex> lock(_mutex);
-            return _data.empty();
-        }
-
-        void clear() const
-        {
-            std::unique_lock<std::mutex> lock(_mutex);
-            _data.clear();
-        }
-    };
-
-    using message_queue = queue<std::shared_ptr<message_base>>;
-
-    class sender
-    {
-        message_queue* _q;
-    public:
-        sender() : _q(nullptr) {}
-        explicit sender(message_queue* q) : _q(q) {}
-
-        template<typename T>
-        void send(T&& msg)
-        {
-            if(_q)
-            {
-                _q->push(std::make_shared<wrapped_message<T>>(std::forward<T>(msg)));
-            }
-        }
-    };
+    }
 }
-
 
 int main()
 {
-    std::optional<int> test;
+    moka::receiver receiver;
+    moka::sender sender = receiver;
 
-    const auto path = moka::application::data_path()
-        / ".." / ".." / ".." / "examples" / "resources";
-
-    moka::resource_manager manager{ path };
-
+    std::thread thread{ [&sender]()
     {
-        // texture is alive
-        auto texture = manager.load_asset<moka::texture_2d>("tile.png");
-        std::cout << manager.size<moka::texture_2d>() << std::endl;
-        std::cout << "loading texture" << std::endl;
-        std::cout << "texture size: " << texture.size() << std::endl;
-    }
+        run_native_event_loop(sender);
+    }};
 
-    // texture has gone out of scope, resource_manager should automatically deallocate any shared resources
+    receiver.wait()
+    .handle<mouse_motion>([&](const mouse_motion& event)
+    {
+        
+    });
 
-    std::cout << manager.size<moka::texture_2d>() << std::endl;
-
-    return 0;
+    thread.join();
 }
