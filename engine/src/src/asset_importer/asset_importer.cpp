@@ -3,9 +3,5 @@
 
 namespace moka
 {
-    asset_importer::asset_importer(const fs::path& path)
-        : path_(path)
-    {
-        register_loader<texture_data>();
-    }
+
 }

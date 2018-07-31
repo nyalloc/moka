@@ -51,7 +51,6 @@ set(MOKA_SRC
 	"includes/asset_importer/filesystem.hpp"
 	"includes/asset_importer/importer_specialisations.hpp"
 	"includes/asset_importer/mesh_importer/mesh_importer.hpp"
-	#"src/asset_importer/mesh_importer/mesh_importer.cpp"
 )
 
 add_library(moka STATIC ${MOKA_SRC})
