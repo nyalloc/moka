@@ -9,6 +9,7 @@
 #include <queue>
 #include <memory>
 #include <future>
+#include "logger/logger.hpp"
 
 namespace moka
 {
@@ -384,6 +385,8 @@ namespace moka
         }
     }
 
+    logger log { filesystem::current_path(), true };
+
     void run(receiver& receiver)
     {
         auto sender = receiver.make_sender();
@@ -393,9 +396,12 @@ namespace moka
         receiver.poll()
         .handle<mouse_motion>([&](const mouse_motion& e)
         {
+            log.log(level::debug, e.position);
+            log.log(level::debug, e.motion);
         })
         .handle<key_down>([&](const key_down& e)
         {
+            log.log(level::debug, "Key down");
         });
     }
 }
