@@ -6,8 +6,6 @@
 
 namespace moka
 {
-    using memory = std::vector<byte>;
-
     /**
      * \brief Specifies what native rendering API to use as the \p moka::graphics_api backend.
      */

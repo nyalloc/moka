@@ -5,9 +5,7 @@
 
 namespace moka
 {
-    enum class byte : uint8_t
-    {
-    };
+    using byte = uint8_t;
 
     namespace detail
     {

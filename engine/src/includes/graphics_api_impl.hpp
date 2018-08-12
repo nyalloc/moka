@@ -60,7 +60,6 @@ namespace moka
         boolean,
     };
 
-    struct vertex_declaration
     inline size_t attr_type_size(const attribute_type attr_type)
     {
         switch (attr_type)
