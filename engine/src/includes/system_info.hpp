@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-namespace neon
+namespace moka
 {
     /**
      * \brief The processor architecture of the installed operating system. 

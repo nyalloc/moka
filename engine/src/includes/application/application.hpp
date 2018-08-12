@@ -6,8 +6,9 @@
 #include <logger/logger.hpp>
 #include <graphics_api.hpp>
 #include <entry.hpp>
+#include <asset_importer/filesystem.hpp>
 
-namespace neon
+namespace moka
 {
     class application
     {
@@ -25,6 +26,7 @@ namespace neon
         virtual void draw(const game_time delta_time);
         virtual void update(const game_time delta_time);
         int run();
+        static filesystem::path data_path();
     };
 
     template <typename T, typename event_type, typename>

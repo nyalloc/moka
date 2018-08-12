@@ -5,7 +5,7 @@
 #include <future>
 #include <atlstr.h>
 
-namespace neon
+namespace moka
 {
 
     CString get_string_from_reg(const HKEY key_parent, const CString& key_name, const CString& key_val_name)

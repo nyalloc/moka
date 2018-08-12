@@ -3,7 +3,7 @@
 #include <chrono>
 #include <application/signal.hpp>
 
-namespace neon
+namespace moka
 {
     using namespace std::chrono_literals;
     using namespace std::chrono;

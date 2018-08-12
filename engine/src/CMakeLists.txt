@@ -1,15 +1,15 @@
 
-set(NEON_INCLUDES
+set(moka_INCLUDES
     "./includes/"
     "./deps/imgui/"
     "./deps/"
 )
 
-include_directories(${NEON_INCLUDES})
+include_directories(${moka_INCLUDES})
 
-set(NEON_SRC 
+set(MOKA_SRC 
     "src/main.cpp"
-    "src/window/window.cpp "
+    "src/window/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp"
     "src/gl_graphics_api_impl.cpp"
@@ -40,17 +40,29 @@ set(NEON_SRC
     "includes/maths/vector3.hpp"
     "includes/maths/vector4.hpp"
     "includes/window/window.hpp"
+	"includes/asset_importer/resource_manager.hpp"
+	"src/asset_importer/resource_manager.cpp"
+	"includes/asset_importer/texture_importer/texture_importer.hpp"
+	"src/asset_importer/texture_importer/texture_importer.cpp"
+	"includes/asset_importer/asset_database.hpp"
+	"src/asset_importer/asset_database.cpp"
+	"includes/asset_importer/asset_importer.hpp"
+	"src/asset_importer/asset_importer.cpp"
+	"includes/asset_importer/filesystem.hpp"
+	"includes/asset_importer/importer_specialisations.hpp"
+	"includes/asset_importer/mesh_importer/mesh_importer.hpp"
+	#"src/asset_importer/mesh_importer/mesh_importer.cpp"
 )
 
-add_library(neon STATIC ${NEON_SRC})
+add_library(moka STATIC ${MOKA_SRC})
 
-foreach(_source IN ITEMS ${NEON_SRC})
+foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
     string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
     source_group("${_source_path_msvc}" FILES "${_source}")
 endforeach()
 
-target_link_libraries(neon
+target_link_libraries(moka
     glew::glew
     SDL2::SDL2
 )

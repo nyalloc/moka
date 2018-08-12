@@ -2,11 +2,11 @@
 
 #include <graphics_api_impl.hpp>
 
-namespace neon
+namespace moka
 {
     /**
-     * \brief Convert the interface of OpenGL into the neon rendring API.
-     * Allows neon rendering functionality to work at a higher level without being coupled to an OpenGL backend.
+     * \brief Convert the interface of OpenGL into the moka rendring API.
+     * Allows moka rendering functionality to work at a higher level without being coupled to an OpenGL backend.
      */
     class gl_graphics_api_impl : public graphics_api_impl
     {
@@ -39,7 +39,7 @@ namespace neon
         program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
         void destroy(const shader_handle& handle) override;
         shader_handle create_shader(shader_type type, const std::string& source) override;
-        vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute* attributes, size_t sizea) override;
+        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) override;
         void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) override;
     };
 }

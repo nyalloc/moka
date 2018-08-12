@@ -1,7 +1,7 @@
 #include <application/application.hpp>
 #include <SDL.h>
 
-namespace neon
+namespace moka
 {
     void sdl_events(application& app, logger& log)
     {
@@ -228,5 +228,10 @@ namespace neon
         }
 
         return 0;
+    }
+
+    filesystem::path application::data_path()
+    {
+        return filesystem::current_path();
     }
 }

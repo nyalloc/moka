@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-namespace neon
+namespace moka
 {
     enum class event_category
     {
@@ -117,13 +117,13 @@ namespace neon
 
     struct event_queue_item
     {
-        event_queue_item(event_ptr&& event, neon::event_subscriber& subscriber)
+        event_queue_item(event_ptr&& event, moka::event_subscriber& subscriber)
             : event(std::move(event)),
             subscriber(subscriber)
         {}
 
-        event_ptr event{};
-        neon::event_subscriber& subscriber;
+        event_ptr event;
+        moka::event_subscriber& subscriber;
     };
 
     class event_queue

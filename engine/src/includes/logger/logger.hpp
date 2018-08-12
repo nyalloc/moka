@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include <filesystem>
+#include <asset_importer/filesystem.hpp>
 #include <windows.h>
 #include <wincon.h>
 #include <iomanip>
@@ -11,9 +11,7 @@
 #include <iostream>
 #include <mutex>
 
-using namespace std::experimental;
-
-namespace neon
+namespace moka
 {
     struct application_traits
     {

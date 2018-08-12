@@ -2,60 +2,72 @@
 #include <application/application.hpp>
 #include <graphics_api.hpp>
 
-using namespace neon;
+using namespace moka;
+
+struct vertex
+{
+    vector3 position{ 0.0f };
+    vector4 color1{ 0.0f };
+
+    constexpr vertex(const vector3& position,
+        const color& color1) noexcept
+        : position(position),
+        color1(color1.to_vector4())
+    {}
+
+    constexpr vertex(vertex&& rhs) noexcept
+        : position(std::move(rhs.position)),
+        color1(std::move(rhs.color1))
+    {}
+};
 
 class triangle_application : public application
 {
     // triangle vertex positions
-    constexpr static std::array<float, 18> vertices =
+    constexpr static std::array<vertex, 3> vertices =
     {
-        // positions        // colors
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-       -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+        vertex{ vector3{  0.5f, -0.5f, 0.0f }, color::dark_red() },
+        vertex{ vector3{ -0.5f, -0.5f, 0.0f }, color::dark_green() },
+        vertex{ vector3{  0.0f,  0.5f, 0.0f }, color::azure() },
     };
 
-    // define vertex attributes
-    constexpr static std::array<attribute, 2> attributes =
-    {
-        make_attribute<float>(0, 3, false, 6 * sizeof(float), 0),
-        make_attribute<float>(1, 3, false, 6 * sizeof(float), 3)
-    };
+    // vertex decl describes the memory layout of the vertex buffer
+    vertex_decl vertex_decl_ = vertex_decl::builder()
+        .add_attribute(attribute::position, 3, attribute_type::float32)
+        .add_attribute(attribute::color0,   4, attribute_type::float32)
+        .build();
 
     // glsl vertex shader source
     constexpr static char* vertex_source = 
-        "#version 330 core\n"
-        "layout (location = 0) in vec3 aPos;\n"
-        "layout (location = 1) in vec3 aColor;\n"
-        "out vec3 ourColor;\n"
-        "void main()\n"
-        "{\n"
-        "   gl_Position = vec4(aPos, 1.0);\n"
-        "   ourColor = aColor;\n"
-        "}\0";
+    "    #version 330 core                        \n"
+    "    layout (location = 0) in vec3 position;  \n"
+    "    layout (location = 4) in vec4 color0;    \n"
+    "    out vec3 out_color0;                     \n"
+    "    void main()                              \n"
+    "    {                                        \n"
+    "        gl_Position = vec4(position, 1.0);   \n"
+    "        out_color0 = color0.xyz;             \n"
+    "    }                                        \0";
 
     // glsl fragment shader source
     constexpr static char* fragment_source = 
-        "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "in vec3 ourColor;\n"
-        "void main()\n"
-        "{\n"
-        "   FragColor = vec4(ourColor, 1.0f);\n"
-        "}\n\0";
+    "    #version 330 core                        \n"
+    "    out vec4 FragColor;                      \n"
+    "    in vec3 out_color0;                      \n"
+    "    void main()                              \n"
+    "    {                                        \n"
+    "        FragColor = vec4(out_color0, 1.0f);  \n"
+    "    }                                        \0";
 
     vertex_buffer_handle vertex_buffer_;
-    program_handle program_;
-
     vertex_buffer_handle create_vertex_buffer() const
     {
         return graphics_.create_vertex_buffer(
-            vertices.data(), 
-            vertices.size(), 
-            attributes.data(), 
-            attributes.size());
+            make_buffer(vertices.data(), sizeof vertices),
+            vertex_decl_);
     }
 
+    program_handle program_;
     program_handle create_program() const
     {
         return graphics_.create_program(
@@ -78,9 +90,7 @@ public:
     void draw(const game_time delta_time) override
     {
         graphics_.clear_colour(colour::cornflower_blue());
-
         graphics_.submit(vertex_buffer_, program_);
-
         application::draw(delta_time);
     }
 

@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(neon_example_triangle)
+project(moka_example_triangle)
 
 set(Example_Includes 
 	"./"
@@ -13,13 +13,13 @@ set(Example_Includes
 
 include_directories(${Example_Includes})
 
-add_executable(neon_example_triangle main.cpp)
+add_executable(moka_example_triangle main.cpp)
 
-foreach(_source IN ITEMS ${NEON_SRC})
+foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
     string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
     source_group("${_source_path_msvc}" FILES "${_source}")
 endforeach()
 
-set_target_properties(neon PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(neon_example_triangle PUBLIC neon)
+set_target_properties(moka PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(moka_example_triangle PUBLIC moka)

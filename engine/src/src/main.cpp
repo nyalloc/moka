@@ -3,6 +3,6 @@
 
 int main(int argc, char* argv[])
 {
-    neon::application app{ argc, argv };
+    moka::application app{ argc, argv };
     return app.run();
 }

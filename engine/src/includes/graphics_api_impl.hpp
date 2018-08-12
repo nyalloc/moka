@@ -2,51 +2,203 @@
 
 #include <ostream>
 #include <maths/colour.hpp>
-#include <maths/vector2.hpp>
 #include <maths/vector3.hpp>
+#include <vector>
 
-namespace neon
+namespace moka
 {
+    struct memory
+    {
+        const std::byte* data;
+        size_t size;
+    };
+
+    inline memory make_buffer(const void* buffer, const size_t size)
+    {
+        memory result;
+        result.size = size;
+        result.data = static_cast<const std::byte*>(buffer);
+        return result;
+    }
+
     enum class attribute
     {
-        position,
-        color,
-        tangent,
-        bitangent,
-        color0,
-        color1,
-        color2,
-        color3,
-        indices,
-        weights,
-        tex_coord0,
-        tex_coord1,
-        tex_coord2,
-        tex_coord3,
-        tex_coord4,
-        tex_coord5,
-        tex_coord6,
-        tex_coord7
+        position,  
+        normal,    
+        tangent,   
+        bitangent, 
+        color0,    
+        color1,  
+        color2,    
+        color3,    
+        indices,   
+        weight,    
+        tex_coord0, 
+        tex_coord1, 
+        tex_coord2, 
+        tex_coord3, 
+        tex_coord4, 
+        tex_coord5, 
+        tex_coord6, 
+        tex_coord7,
+        extension
     };
 
     enum class attribute_type
     {
-        int_attr,
-        uint_attr,
-        float_attr
+        int8,   
+        int16,
+        int32,
+        int64,
+        uint8,
+        uint16,
+        uint32,
+        uint64,
+        float16,
+        float32,
+        float64,
+        boolean,
     };
 
     struct vertex_declaration
+    inline size_t attr_type_size(const attribute_type attr_type)
     {
-        size_t index;
+        switch (attr_type)
+        {
+        case attribute_type::int8:
+            return sizeof(int8_t);
+        case attribute_type::int16:
+            return sizeof(int16_t);
+        case attribute_type::int32:
+            return sizeof(int32_t);
+        case attribute_type::int64:
+            return sizeof(int64_t);
+        case attribute_type::uint8:
+            return sizeof(uint8_t);
+        case attribute_type::uint16:
+            return sizeof(uint16_t);
+        case attribute_type::uint32:
+            return sizeof(uint32_t);
+        case attribute_type::uint64:
+            return sizeof(int64_t);
+        case attribute_type::float32:
+            return sizeof(float);
+        case attribute_type::float64:
+            return sizeof(double);
+        default:
+            return 0;
+        }
+    }
+
+    struct vertex_decl;
+
+    struct attribute_element
+    {
+        attribute attr;
         size_t size;
         attribute_type type;
         bool normalized;
-        size_t stride;
-        size_t offset;
+
+        constexpr attribute_element(
+            const attribute attr,
+            const size_t element_count,
+            const attribute_type attr_type,
+            const bool normalised) noexcept
+            : attr(attr),
+            size(element_count),
+            type(attr_type),
+            normalized(normalised)
+        {}
     };
 
     
+    struct vertex_decl_builder;
+
+    struct vertex_decl
+    {
+    private:
+        std::vector<attribute_element> attributes_;
+    public:
+        void emplace(attribute attr, size_t size, attribute_type attr_type, bool normalised)
+        {
+            attributes_.emplace_back(attr, size, attr_type, normalised);
+        }
+
+        static vertex_decl_builder builder() noexcept;
+
+        size_t size() const noexcept;
+
+        size_t stride() const noexcept;
+
+        auto begin() noexcept
+        {
+            return attributes_.begin();
+        }
+
+        auto end() noexcept
+        {
+            return attributes_.end();
+        }
+
+        auto begin() const noexcept
+        {
+            return attributes_.begin();
+        }
+
+        auto end() const noexcept
+        {
+            return attributes_.end();
+        }
+    };
+
+    inline size_t vertex_decl::stride() const noexcept
+    {
+        size_t stride = 0;
+        for (const auto& element : attributes_)
+        {
+            stride += attr_type_size(element.type) * element.size;
+        }
+        return stride;
+    }
+
+    struct vertex_decl_builder
+    {
+    private:
+        vertex_decl attr;
+    public:
+        vertex_decl_builder& add_attribute(attribute attr, size_t size, attribute_type attr_type, bool normalised);
+        vertex_decl build() const;
+    };
+
+    inline vertex_decl_builder vertex_decl::builder() noexcept
+    {
+        return {};
+    }
+
+    inline size_t vertex_decl::size() const noexcept
+    {
+        size_t result = 0;
+        for (const auto& element : attributes_)
+        {
+            result += element.size;
+        }
+        return result;
+    }
+
+    inline vertex_decl_builder& vertex_decl_builder::add_attribute(
+        const attribute attr, 
+        const size_t size,
+        const attribute_type attr_type,
+        const bool normalised = false)
+    {
+        this->attr.emplace(attr, size, attr_type, normalised);
+        return *this;
+    }
+
+    inline vertex_decl vertex_decl_builder::build() const
+    {
+        return attr;
+    }
 
     template<typename T>
     class basic_rectangle
@@ -79,15 +231,6 @@ namespace neon
     };
 
     using rectangle = basic_rectangle<int>;
-
-    struct vertex
-    {
-        vector3 position{ 0.0f, 0.0f, 0.0f };
-
-        constexpr vertex(const float x, const float y, const float z) noexcept
-            : position{ x, y, z }
-        {}
-    };
 
     enum class primitive_type
     {
@@ -259,7 +402,7 @@ namespace neon
         virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual void destroy(const shader_handle& handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const float* vertices, size_t sizev, const attribute* attributes, size_t sizea) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) = 0;
         virtual void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) = 0;
     };
 }

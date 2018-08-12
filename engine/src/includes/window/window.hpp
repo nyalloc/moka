@@ -5,7 +5,7 @@
 #include <game_loop/game_loop.hpp>
 #include "maths/vector2.hpp"
 
-namespace neon
+namespace moka
 {
     enum class window_args
     {
