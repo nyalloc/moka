@@ -12,6 +12,7 @@
 #include "logger/logger.hpp"
 #include <GL/glew.h>
 #include "maths/colour.hpp"
+#include "graphics_api_impl.hpp"
 
 namespace moka
 {
@@ -110,6 +111,7 @@ namespace moka
     class key_down;
     class close_queue;
     class clear_color;
+    class create_program;
 
     // visitor pattern
     class base_dispatcher
@@ -120,6 +122,7 @@ namespace moka
         virtual bool dispatch(const key_down&) { return false; }
         virtual bool dispatch(const close_queue&) { return false; }
         virtual bool dispatch(const clear_color&) { return false; }
+        virtual bool dispatch(const create_program&) { return false; }
     };
 
     // templated concrete visitor. Dispatches a specific message type, T.
@@ -197,6 +200,27 @@ namespace moka
                 return true;
             }
         };
+
+        bool dispatch(base_dispatcher& visitor) override
+        {
+            return visitor.dispatch(*this);
+        }
+    };
+
+    class create_program : public message_base
+    {
+        std::function<void(program_handle)> completion_handler;
+    public:
+        explicit create_program(std::function<void(program_handle)>&& completion_handler)
+            : completion_handler(move(completion_handler))
+        {}
+
+        void operator()(const program_handle& handle) const
+        {
+            completion_handler(handle);
+        }
+
+        using dispatcher = basic_dispatcher<create_program>;
 
         bool dispatch(base_dispatcher& visitor) override
         {
@@ -520,6 +544,38 @@ namespace moka
         }
     }
 
+    program_handle create_shader(sender& sender)
+    {
+        std::cout << "Create program invoked by " << std::this_thread::get_id() << std::endl;
+
+        std::mutex m;
+        std::condition_variable cv;
+        auto ready = false;
+
+        program_handle handle;
+
+        // register handler to get the program handle from render thread.
+        const create_program event([&](program_handle h)
+        {
+            std::cout << "Program handle callback invoked from " << std::this_thread::get_id() << std::endl;
+
+            handle = h;
+            ready = true;
+            cv.notify_one();
+        });
+
+        // send request to render thread.
+        sender.send(event);
+
+        // wait for render thread to complete its work.
+        std::unique_lock<std::mutex> lk(m);
+        cv.wait(lk, [&] { return ready; });
+
+        std::cout << "Program handle returned from " << std::this_thread::get_id() << std::endl;
+
+        return handle;
+    }
+
     void run(receiver& receiver, sender& sender)
     {
         logger log{ filesystem::current_path(), true };
@@ -536,18 +592,40 @@ namespace moka
         })
         .handle<key_down>([&](const key_down& e)
         {
-            log.log(level::debug, "Key down");
+            switch(e.val) 
+            { 
+                case key::none: break;
+                case key::esc: break;
+                case key::enter: 
+                {
+                    auto program = create_shader(sender);
+                    break;
+                }
+                case key::tab: break;
+                case key::space: break;
+                case key::backspace: break;
+                case key::up: break;
+                case key::down: break;
+                case key::left: 
+                {
+                    log.log(level::debug, "left key down");
 
-            clear_color event;
-            if(e.val == key::left)
-            {
-                event.val = color::alice_blue();
+                    clear_color event;
+                    event.val = color::blue();
+                    sender.send(event);
+                    break;
+                }
+                case key::right: 
+                {
+                    log.log(level::debug, "right key down");
+
+                    clear_color event;
+                    event.val = color::dark_green();
+                    sender.send(event);
+                    break;
+                }
+                default: ;
             }
-            else if (e.val == key::right)
-            {
-                event.val = color::dark_green();
-            }
-            sender.send(event);
         });
     }
 }
@@ -589,6 +667,10 @@ int main()
             .handle<moka::clear_color>([&](const moka::clear_color& e)
             {
                 bg = e.val;
+            })
+            .handle<moka::create_program>([&](const moka::create_program& e)
+            {
+                e({});
             });
 
             glClearColor(bg.r(), bg.g(), bg.b(), bg.a());
