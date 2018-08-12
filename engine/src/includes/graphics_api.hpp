@@ -6,7 +6,7 @@
 
 namespace neon
 {
-    using memory = std::vector<std::byte>;
+    using memory = std::vector<byte>;
 
     /**
      * \brief Specifies what native rendering API to use as the \p neon::graphics_api backend.

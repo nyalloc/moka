@@ -1,6 +1,6 @@
 #pragma once
 
-#include <window/window_.hpp>
+#include <window/window.hpp>
 #include <safe_queue.hpp>
 #include <atomic>
 #include <logger/logger.hpp>

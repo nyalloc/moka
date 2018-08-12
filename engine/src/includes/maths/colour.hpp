@@ -5,7 +5,9 @@
 
 namespace neon
 {
-    using byte = uint8_t;
+    enum class byte : uint8_t
+    {
+    };
 
     namespace detail
     {
@@ -23,7 +25,7 @@ namespace neon
 
         constexpr float byte_to_float(const byte val) noexcept
         {
-            return static_cast<float>(val) / std::numeric_limits<byte>::max();
+            return static_cast<float>(val) / std::numeric_limits<uint8_t>::max();
         }
     }
 
@@ -31,7 +33,7 @@ namespace neon
     {
         detail::vector4<byte> rgba_bytes_;
     public:
-        constexpr colour(const byte r, const byte g, const byte b, const byte a = 255) noexcept
+        constexpr colour(const byte r, const byte g, const byte b, const byte a = static_cast<byte>(255)) noexcept
             : rgba_bytes_{ r, g, b, a }
         {}
 
@@ -39,8 +41,8 @@ namespace neon
             : colour{ detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255) }
         {}
 
-        constexpr colour(const vector3& colour, const float alpha = 1.0f) noexcept
-            : colour{ detail::float_to_byte(colour.x()), detail::float_to_byte(colour.y()), detail::float_to_byte(colour.z()), detail::float_to_byte(alpha) }
+        constexpr colour(const vector3& colour) noexcept
+            : colour{ detail::float_to_byte(colour.x()), detail::float_to_byte(colour.y()), detail::float_to_byte(colour.z()) }
         {}
 
         constexpr colour(const vector4& colour) noexcept

@@ -58,44 +58,60 @@ namespace neon
     class safe_queue
     {
     public:
-        safe_queue()
-            : q_()
-            , m_()
-            , c_()
-        {}
+        safe_queue();
 
-        ~safe_queue()
-        {}
+        ~safe_queue();
 
-        bool empty() const
-        {
-            return q_.empty();
-        }
+        bool empty() const;
 
-        void enqueue(T&& t)
-        {
-            std::lock_guard<std::mutex> lock(m_);
-            q_.emplace(std::move(t));
-            c_.notify_one();
-        }
+        void enqueue(T&& t);
 
-        T dequeue()
-        {
-            std::unique_lock<std::mutex> lock(m_);
-            while (q_.empty())
-            {
-                c_.wait(lock);
-            }
-            auto val = std::move(q_.front());
-            q_.pop();
-            return val;
-        }
+        T dequeue();
 
     private:
         std::queue<T> q_;
         mutable std::mutex m_;
         std::condition_variable c_;
     };
+
+    template <class T>
+    safe_queue<T>::safe_queue(): q_()
+                                 , m_()
+                                 , c_()
+    {
+    }
+
+    template <class T>
+    safe_queue<T>::~safe_queue()
+    {
+    }
+
+    template <class T>
+    bool safe_queue<T>::empty() const
+    {
+        return q_.empty();
+    }
+
+    template <class T>
+    void safe_queue<T>::enqueue(T&& t)
+    {
+        std::lock_guard<std::mutex> lock(m_);
+        q_.emplace(std::move(t));
+        c_.notify_one();
+    }
+
+    template <class T>
+    T safe_queue<T>::dequeue()
+    {
+        std::unique_lock<std::mutex> lock(m_);
+        while (q_.empty())
+        {
+            c_.wait(lock);
+        }
+        auto val = std::move(q_.front());
+        q_.pop();
+        return val;
+    }
 
     class event_subscriber;
 
@@ -106,7 +122,7 @@ namespace neon
             subscriber(subscriber)
         {}
 
-        event_ptr event;
+        event_ptr event{};
         neon::event_subscriber& subscriber;
     };
 

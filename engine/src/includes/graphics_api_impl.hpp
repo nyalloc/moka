@@ -7,6 +7,28 @@
 
 namespace neon
 {
+    enum class attribute
+    {
+        position,
+        color,
+        tangent,
+        bitangent,
+        color0,
+        color1,
+        color2,
+        color3,
+        indices,
+        weights,
+        tex_coord0,
+        tex_coord1,
+        tex_coord2,
+        tex_coord3,
+        tex_coord4,
+        tex_coord5,
+        tex_coord6,
+        tex_coord7
+    };
+
     enum class attribute_type
     {
         int_attr,
@@ -14,7 +36,7 @@ namespace neon
         float_attr
     };
 
-    struct attribute
+    struct vertex_declaration
     {
         size_t index;
         size_t size;
@@ -24,46 +46,7 @@ namespace neon
         size_t offset;
     };
 
-    template<typename T>
-    constexpr attribute make_attribute(
-        size_t index, 
-        size_t size, 
-        bool normalized, 
-        size_t stride, 
-        size_t offset) = delete;
-
-    template<>
-    constexpr attribute make_attribute<float>(
-        const size_t index, 
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
-        const size_t offset)
-    {
-        return { index, size, attribute_type::float_attr, normalized, stride, offset };
-    }
-
-    template<>
-    constexpr attribute make_attribute<int>(
-        const size_t index, 
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
-        const size_t offset)
-    {
-        return { index, size, attribute_type::int_attr, normalized, stride, offset };
-    }
-
-    template<>
-    constexpr attribute make_attribute<unsigned>(
-        const size_t index,
-        const size_t size, 
-        const bool normalized, 
-        const size_t stride, 
-        const size_t offset)
-    {
-        return { index, size, attribute_type::uint_attr, normalized, stride, offset };
-    }
+    
 
     template<typename T>
     class basic_rectangle
