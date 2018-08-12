@@ -76,9 +76,9 @@ class triangle_application : public application
     }
 public:
     triangle_application(const int argc, char* argv[])
-        : application{ argc, argv }
-        , vertex_buffer_{ create_vertex_buffer() }
-        , program_{ create_program() }
+        : application(argc, argv)
+        , vertex_buffer_(create_vertex_buffer())
+        , program_(create_program())
     {}
 
     ~triangle_application()
