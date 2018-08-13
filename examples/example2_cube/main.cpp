@@ -13,6 +13,7 @@
 #include <GL/glew.h>
 #include "maths/colour.hpp"
 #include "graphics_api_impl.hpp"
+#include <unordered_map>
 
 namespace moka
 {
@@ -112,6 +113,7 @@ namespace moka
     class close_queue;
     class clear_color;
     class create_program;
+    class frame;
 
     // visitor pattern
     class base_dispatcher
@@ -123,6 +125,7 @@ namespace moka
         virtual bool dispatch(const close_queue&) { return false; }
         virtual bool dispatch(const clear_color&) { return false; }
         virtual bool dispatch(const create_program&) { return false; }
+        virtual bool dispatch(const frame&) { return false; }
     };
 
     // templated concrete visitor. Dispatches a specific message type, T.
@@ -188,6 +191,17 @@ namespace moka
         }
 
         key val;
+    };
+
+    class frame : public message_base
+    {
+    public:
+        using dispatcher = basic_dispatcher<frame>;
+
+        bool dispatch(base_dispatcher& visitor) override
+        {
+            return visitor.dispatch(*this);
+        }
     };
 
     class close_queue : public message_base
@@ -262,6 +276,12 @@ namespace moka
             _q.pop();
             return res;
         }
+
+        void clear()
+        {
+            std::unique_lock<std::mutex> lk(_m);
+            _q = {};
+        }
     };
 
     class sender
@@ -308,13 +328,10 @@ namespace moka
 
         void wait_and_dispatch()
         {
-            for (;;)
+            while(true)
             {
                 const auto msg = _q->wait_and_pop();
-                if (dispatch(msg))
-                {
-                    break;
-                }
+                dispatch(msg);
             }
         }
 
@@ -398,7 +415,7 @@ namespace moka
 
         void wait_and_dispatch() const
         {
-            for (;;)
+            while(true)
             {
                 const auto msg = _q->wait_and_pop();
                 dispatch(msg);
@@ -464,6 +481,11 @@ namespace moka
     {
         queue _q;
     public:
+        void clear()
+        {
+            _q.clear();
+        }
+
         sender make_sender()
         {
             return sender(&_q);
@@ -535,8 +557,13 @@ namespace moka
             {
                 key_down event;
                 const auto& scancode = e.key.keysym.scancode;
-                event.val = sdl_to_moka.at(scancode);
-                sender.send(event);
+
+                if(sdl_to_moka.find(scancode) != sdl_to_moka.end())
+                {
+                    event.val = sdl_to_moka.at(scancode);
+                    sender.send(event);
+                }
+
                 break;
             }
             default:;
@@ -544,20 +571,26 @@ namespace moka
         }
     }
 
+    void create_shader(sender& sender, std::function<void(program_handle)>&& handler)
+    {
+        const create_program event(std::move(handler));
+        sender.send(event);
+    }
+
     program_handle create_shader(sender& sender)
     {
-        std::cout << "Create program invoked by " << std::this_thread::get_id() << std::endl;
+        std::cout << "Create program invoked by " << std::this_thread::get_id() << "\n";
 
         std::mutex m;
         std::condition_variable cv;
         auto ready = false;
 
-        program_handle handle;
+        program_handle handle{};
 
         // register handler to get the program handle from render thread.
         const create_program event([&](program_handle h)
         {
-            std::cout << "Program handle callback invoked from " << std::this_thread::get_id() << std::endl;
+            std::cout << "Program handle callback invoked from " << std::this_thread::get_id() << "\n";
 
             handle = h;
             ready = true;
@@ -571,7 +604,7 @@ namespace moka
         std::unique_lock<std::mutex> lk(m);
         cv.wait(lk, [&] { return ready; });
 
-        std::cout << "Program handle returned from " << std::this_thread::get_id() << std::endl;
+        std::cout << "Program handle returned from " << std::this_thread::get_id() << "\n";
 
         return handle;
     }
@@ -592,41 +625,15 @@ namespace moka
         })
         .handle<key_down>([&](const key_down& e)
         {
-            switch(e.val) 
-            { 
-                case key::none: break;
-                case key::esc: break;
-                case key::enter: 
-                {
-                    auto program = create_shader(sender);
-                    break;
-                }
-                case key::tab: break;
-                case key::space: break;
-                case key::backspace: break;
-                case key::up: break;
-                case key::down: break;
-                case key::left: 
-                {
-                    log.log(level::debug, "left key down");
 
-                    clear_color event;
-                    event.val = color::blue();
-                    sender.send(event);
-                    break;
-                }
-                case key::right: 
-                {
-                    log.log(level::debug, "right key down");
-
-                    clear_color event;
-                    event.val = color::dark_green();
-                    sender.send(event);
-                    break;
-                }
-                default: ;
-            }
         });
+
+        clear_color color;
+        color.val = color::blue();
+        sender.send(color);
+
+        const frame frame;
+        sender.send(frame);
     }
 }
 
@@ -644,7 +651,7 @@ int main()
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-    auto window = SDL_CreateWindow("SDL Sucks", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_OPENGL);
+    auto window = SDL_CreateWindow("Moka", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_OPENGL);
 
     moka::receiver gameplay_receiver;
     moka::receiver graphics_receiver;
@@ -657,32 +664,59 @@ int main()
 
     std::thread t([&graphics_receiver, &window, &sdl_gl_context]()
     {
-        // steal context
+        // borrow context from main thread
         SDL_GL_MakeCurrent(window, sdl_gl_context);
+
+        // set black bg color
         auto bg = moka::color::black();
 
-        while(true)
+        // wait on incoming events
+        // todo: investigate more efficient means of dispatching events
+        // this method uses a visitor pattern to determine the concrete type of the event
+        // it essentially iterates over each handler and checks if it is able to handle the current event type
+        graphics_receiver.wait()
+        .handle<moka::clear_color>([&](const moka::clear_color& e)
         {
-            graphics_receiver.poll()
-            .handle<moka::clear_color>([&](const moka::clear_color& e)
-            {
-                bg = e.val;
-            })
-            .handle<moka::create_program>([&](const moka::create_program& e)
-            {
-                e({});
-            });
+            // set bg clear color
+            bg = e.val;
+        })
+        .handle<moka::create_program>([&](const moka::create_program& e)
+        {
+            // create the program
+            moka::program_handle handle{};
+            // return the program handle using the event's callback
+            e(handle);
+        })
+        .handle<moka::frame>([&](const moka::frame& e)
+        {
+            // increment frame count
+            static size_t frame_count;
 
+            // clear remaining items in queue (is this wise?)
+            graphics_receiver.clear();
+
+            std::cout << "RECIEVE FRAME: " << ++frame_count << "\n";
+
+            // clear colour
             glClearColor(bg.r(), bg.g(), bg.b(), bg.a());
             glClear(GL_COLOR_BUFFER_BIT);
+            
+            // swap buffer
             SDL_GL_SwapWindow(window);
-        }
+        });
     });
+
+    auto sender = graphics_receiver.make_sender();
+    auto handle = moka::create_shader(sender);
 
     while (moka::running)
     {
-        auto graphics_sender = graphics_receiver.make_sender();
-        run(gameplay_receiver, graphics_sender);
+        run(gameplay_receiver, sender);
+    }
+
+    if (t.joinable())
+    {
+        t.join();
     }
 
     SDL_Quit();

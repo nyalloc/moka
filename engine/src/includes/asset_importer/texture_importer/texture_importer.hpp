@@ -6,6 +6,7 @@
 #include <asset_importer/asset_importer.hpp>
 #include "maths/colour.hpp"
 #include <atomic>
+#include <unordered_map>
 
 namespace moka
 {
