@@ -110,7 +110,6 @@ namespace moka
     class mouse_motion;
     class key_down;
     class close_queue;
-    class clear_color;
     class create_program;
 
     // visitor pattern
@@ -121,7 +120,6 @@ namespace moka
         virtual bool dispatch(const mouse_motion&) { return false; }
         virtual bool dispatch(const key_down&) { return false; }
         virtual bool dispatch(const close_queue&) { return false; }
-        virtual bool dispatch(const clear_color&) { return false; }
         virtual bool dispatch(const create_program&) { return false; }
     };
 
@@ -162,19 +160,6 @@ namespace moka
 
         point2 position{ 0, 0 };
         point2 motion{ 0, 0 };
-    };
-
-    class clear_color : public message_base
-    {
-    public:
-        using dispatcher = basic_dispatcher<clear_color>;
-
-        bool dispatch(base_dispatcher& visitor) override
-        {
-            return visitor.dispatch(*this);
-        }
-
-        color val;
     };
 
     class key_down : public message_base
@@ -609,19 +594,11 @@ namespace moka
                 case key::left: 
                 {
                     log.log(level::debug, "left key down");
-
-                    clear_color event;
-                    event.val = color::blue();
-                    sender.send(event);
                     break;
                 }
                 case key::right: 
                 {
                     log.log(level::debug, "right key down");
-
-                    clear_color event;
-                    event.val = color::dark_green();
-                    sender.send(event);
                     break;
                 }
                 default: ;
@@ -659,22 +636,39 @@ int main()
     {
         // steal context
         SDL_GL_MakeCurrent(window, sdl_gl_context);
-        auto bg = moka::color::black();
+        auto bg = moka::color::blue();
+        
+        std::array<std::uint64_t, 2048> buffer;
 
         while(true)
         {
+            // execute commands for creating graphics resources
             graphics_receiver.poll()
-            .handle<moka::clear_color>([&](const moka::clear_color& e)
-            {
-                bg = e.val;
-            })
             .handle<moka::create_program>([&](const moka::create_program& e)
             {
-                e({});
+                // create shader program from args, return it via callback
+                moka::program_handle h;
+                e(h);
             });
+
+			// sort all render items to minimise state changes
+            // http://realtimecollisiondetection.net/blog/?p=86
+            std::sort(buffer.begin(), buffer.end());
+
+            // clear the render target 
+            // (investigate how these non-draw commands are submitted and sorted)
 
             glClearColor(bg.r(), bg.g(), bg.b(), bg.a());
             glClear(GL_COLOR_BUFFER_BIT);
+
+			// render sorted lists of items
+
+            for(const auto& renderable : buffer)
+            {
+                
+            }
+
+			// swap the buffer
             SDL_GL_SwapWindow(window);
         }
     });
