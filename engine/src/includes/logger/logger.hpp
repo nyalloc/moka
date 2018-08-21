@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include <asset_importer/filesystem.hpp>
-#include <windows.h>
+#include <Windows.h>
 #include <wincon.h>
 #include <iomanip>
 #include <sstream>

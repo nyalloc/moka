@@ -9,15 +9,15 @@ namespace moka
 {
     struct memory
     {
-        const std::byte* data;
+        const uint8_t* data;
         size_t size;
     };
 
     inline memory make_buffer(const void* buffer, const size_t size)
     {
-        memory result;
+        memory result{};
         result.size = size;
-        result.data = static_cast<const std::byte*>(buffer);
+        result.data = static_cast<const uint8_t*>(buffer);
         return result;
     }
 

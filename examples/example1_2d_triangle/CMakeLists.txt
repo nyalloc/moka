@@ -15,6 +15,8 @@ include_directories(${Example_Includes})
 
 add_executable(moka_example_triangle main.cpp)
 
+add_compile_options("/std:c++latest")
+
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
     string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
