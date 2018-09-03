@@ -1,6 +1,6 @@
 
 #include <application/application.hpp>
-#include <graphics_api.hpp>
+#include <graphics/graphics_device.hpp>
 
 using namespace moka;
 
@@ -90,7 +90,11 @@ public:
     void draw(const game_time delta_time) override
     {
         graphics_.clear_colour(colour::cornflower_blue());
-        graphics_.submit(vertex_buffer_, program_);
+
+		graphics_.bind(vertex_buffer_);
+		graphics_.bind(program_);
+        graphics_.draw_indexed(primitive_type::triangles, 0, 3);
+
         application::draw(delta_time);
     }
 

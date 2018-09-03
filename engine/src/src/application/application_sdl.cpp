@@ -212,8 +212,6 @@ namespace moka
 
     int application::run()
     {
-        dispatcher_.run();
-
         window_.exit.connect([this]()
         {
             log_.log(level::info, "Exiting application");

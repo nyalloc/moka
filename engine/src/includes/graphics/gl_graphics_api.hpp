@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics_api_impl.hpp>
+#include <graphics/graphics_api.hpp>
 
 namespace moka
 {
@@ -8,14 +8,14 @@ namespace moka
      * \brief Convert the interface of OpenGL into the moka rendring API.
      * Allows moka rendering functionality to work at a higher level without being coupled to an OpenGL backend.
      */
-    class gl_graphics_api_impl : public graphics_api_impl
+    class gl_graphics_api : public graphics_api
     {
         logger log_;
         std::vector<shader_handle> shaders_;
         std::vector<program_handle> programs_;
         std::vector<vertex_buffer_handle> vertex_buffers_;
     public:
-        gl_graphics_api_impl();
+        gl_graphics_api();
         std::string version() const override;
         std::string vendor() const override;
         std::string renderer() const override;
@@ -40,6 +40,9 @@ namespace moka
         void destroy(const shader_handle& handle) override;
         shader_handle create_shader(shader_type type, const std::string& source) override;
         vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) override;
-        void submit(const vertex_buffer_handle& vertex_buffer, const program_handle& program) override;
-    };
+
+		void draw_indexed(const primitive_type type, size_t first, size_t count) const override;
+		void bind(const vertex_buffer_handle& program) const override;
+		void bind(const program_handle& program) const override;
+	};
 }
