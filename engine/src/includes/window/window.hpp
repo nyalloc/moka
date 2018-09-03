@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 #include <game_loop/game_loop.hpp>
-#include "maths/vector2.hpp"
+#include "graphics/graphics_api.hpp"
 
 namespace moka
 {
@@ -33,15 +33,21 @@ namespace moka
 
     using window_flags = size_t;
 
+    struct context_handle
+    {
+		handle id;
+    };
+
     class window
     {
     public:
         signal<> exit;
         window(const std::string& title);
         ~window();
-        void end_frame(game_time delta_time) const;
-        void update(game_time delta_time) const;
+        void swap_buffer() const;
         void set_size(int width, int height);
+		context_handle make_context() const;
+		void make_current(const context_handle handle);
     private:
         class impl;
         std::unique_ptr<impl> impl_;

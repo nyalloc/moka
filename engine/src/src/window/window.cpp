@@ -2,96 +2,79 @@
 #include <GL/glew.h>
 #include <SDL.h>
 #include <logger/logger.hpp>
+#include <atomic>
 
 namespace moka
 {
     class window::impl
     {
         SDL_Window* window_;
-        SDL_GLContext context_;
         bool running_;
         logger log_{ filesystem::current_path() / "window.log" };
+		std::unordered_map<handle, SDL_GLContext> contexts_;
     public:
         signal<> exit;
 
-        void end_frame(game_time delta_time) const;
+        void swap_buffer() const;
 
         explicit impl(const std::string& title);
 
         ~impl();
 
-        void update(game_time delta_time);
-
         void set_size(int width, int height);
+
+		context_handle make_context();
+
+		void make_current(const context_handle handle);
     };
 
-    void window::impl::end_frame(const game_time delta_time) const
+	context_handle window::impl::make_context()
+	{
+		static std::atomic<handle> current_id;
+		contexts_.emplace(current_id, SDL_GL_CreateContext(window_));
+		const context_handle handle{ current_id };
+		++current_id;
+		return handle;
+	}
+
+	void window::impl::make_current(const context_handle handle)
+	{
+		const auto pos = contexts_.find(handle.id);
+		if(pos != contexts_.end())
+		{
+			SDL_GL_MakeCurrent(window_, contexts_[handle.id]);
+		}
+	}
+
+    void window::impl::swap_buffer() const
     {
         SDL_GL_SwapWindow(window_);
     }
 
     window::impl::impl(const std::string& title): running_(true)
     {
-        log_.log(level::info, "Initializing main Window, creating OpenGL context.");
+		if (SDL_Init(SDL_INIT_VIDEO) < 0)
+		{
+			std::cout << "REEEE";
+		}
 
-        // Setup SDL
-        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
-        {
-            SDL_DisplayMode current;
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-            // Setup window
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-            SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-            SDL_GetCurrentDisplayMode(0, &current);
-
-            window_ = SDL_CreateWindow(
-                title.c_str(), 
-                SDL_WINDOWPOS_CENTERED,
-                SDL_WINDOWPOS_CENTERED, 
-                1280,
-                720,                          
-                SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-
-            context_ = SDL_GL_CreateContext(window_);
-
-            SDL_GL_SetSwapInterval(1); // Enable vsync
-
-            glewExperimental = GL_TRUE;
-            if (glewInit() != GLEW_OK)
-            {
-                log_.log(level::fatal, "Failed to initialize GLEW");
-                std::abort();
-            }
-        }
-        else
-        {
-            log_.log(level::error, SDL_GetError());
-        }
+		window_ = SDL_CreateWindow("Moka", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_OPENGL);
     }
 
     window::impl::~impl()
     {
-        SDL_GL_DeleteContext(context_);
+		for(const auto& item : contexts_)
+		{
+			SDL_GL_DeleteContext(item.second);
+		}
         SDL_DestroyWindow(window_);
         SDL_Quit();
-    }
-
-    void window::impl::update(const game_time delta_time)
-    {
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
-                running_ = false;
-                exit();
-            }
-        }
     }
 
     void window::impl::set_size(const int width, const int height)
@@ -110,18 +93,23 @@ namespace moka
 
     window::~window() = default;
 
-    void window::end_frame(const game_time delta_time) const
+    void window::swap_buffer() const
     {
-        impl_->end_frame(delta_time);
-    }
-
-    void window::update(const game_time delta_time) const
-    {
-        impl_->update(delta_time);
+        impl_->swap_buffer();
     }
 
     void window::set_size(const int width, const int height)
     {
         impl_->set_size(width, height);
     }
+
+	context_handle window::make_context() const
+	{
+		return impl_->make_context();
+	}
+
+	void window::make_current(const context_handle handle)
+	{
+		impl_->make_current(handle);
+	}
 }

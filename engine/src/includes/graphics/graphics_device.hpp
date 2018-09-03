@@ -3,6 +3,7 @@
 #include <memory>
 #include <graphics/graphics_api.hpp>
 #include <vector>
+#include "messaging/receiver.hpp"
 
 namespace moka
 {
@@ -28,7 +29,7 @@ namespace moka
      * The client interacts with this class and it in turn delegates all requests to the \p moka::graphics_api class internally.
      * \p graphics_api is the handle known and used by the client, while \p moka::graphics_api_impl is safely encapsulated to ensure that it may continue to evolve, or be entirely replaced.
      */
-    class graphics_device
+    class graphics_device : public receiver
     {
         std::unique_ptr<graphics_api> impl_;
     public:

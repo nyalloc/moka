@@ -29,8 +29,8 @@ set(MOKA_SRC
 	"includes/messaging/dispatcher.hpp"
 	"includes/messaging/message_base.hpp"
 	"includes/messaging/message_queue.hpp"
-	"includes/messaging/sender.hpp"
-	
+    "includes/messaging/receiver.hpp"
+
     "includes/application/mvp/model.hpp"
 	"includes/logger/logger.hpp"
     "includes/system_info.hpp"

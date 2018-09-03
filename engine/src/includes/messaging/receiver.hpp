@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <messaging/dispatcher.hpp>
-#include <messaging/sender.hpp>
 
 namespace moka
 {
@@ -9,9 +8,10 @@ namespace moka
 	{
 		message_queue _q;
 	public:
-		sender make_sender()
+		template <typename Message>
+		void send(const Message& msg)
 		{
-			return sender(&_q);
+			_q.push(msg);
 		}
 
 		dispatcher<blocking> wait()

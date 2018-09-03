@@ -27,11 +27,10 @@ namespace moka
     void application::draw(const game_time delta_time)
     {
         graphics_.check_errors();
-        window_.end_frame(delta_time);
+		window_.swap_buffer();
     }
 
     void application::update(const game_time delta_time)
     {
-        window_.update(delta_time);
     }
 }
