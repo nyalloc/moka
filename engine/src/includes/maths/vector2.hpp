@@ -23,6 +23,8 @@ namespace moka
         public:
             /*----Constructors-----------------------------------*/
 
+			constexpr vector2() noexcept;
+
             constexpr vector2(const vector2<T>& rhs) noexcept;
             constexpr vector2(vector2<T>&& rhs) noexcept;
 
@@ -187,7 +189,7 @@ namespace moka
         template<class T>
         constexpr bool operator == (const vector2<T>& lhs, const vector2<T>& rhs) noexcept
         {
-            return vector2<T>::squared_magnitude(lhs - rhs) < vector2<T>::epsilon * vector2<T>::epsilon;
+            return vector2<T>::squared_magnitude(lhs - rhs) < std::numeric_limits<T>::epsilon() * std::numeric_limits<T>::epsilon();
         }
 
         template<>
@@ -300,6 +302,11 @@ namespace moka
         constexpr vector2<T>::vector2(const T val)
             : components_{ val, val }
         {}
+
+		template <typename T>
+		constexpr vector2<T>::vector2() noexcept
+			: vector2{ static_cast<T>(0) }
+		{}
 
         template <typename T>
         constexpr vector2<T>::vector2(const T x, const T y)

@@ -4,6 +4,10 @@
 #include <graphics/graphics_api.hpp>
 #include <vector>
 #include "messaging/receiver.hpp"
+#include "uniform_buffer.hpp"
+#include "application/window.hpp"
+#include "draw_call.hpp"
+#include "draw_call_builder.hpp"
 
 namespace moka
 {
@@ -23,6 +27,15 @@ namespace moka
         null         //!< No rendering API specified
     };
 
+	struct uniform_data
+	{
+		std::string name;
+		uniform_type type;
+		size_t count;
+		size_t buffer_start;
+		size_t buffer_end;
+	};
+
     /**
      * \brief The \p moka::graphics_device class presents a common rendering API and owns a pointer to the implementation.
      * An example of the bridge design pattern, \p moka::graphics_api allows moka rendering code to operate without being coupled to the native rendering API.
@@ -31,15 +44,37 @@ namespace moka
      */
     class graphics_device : public receiver
     {
-        std::unique_ptr<graphics_api> impl_;
+		constexpr static size_t max_uniforms = 64;
+		constexpr static size_t max_draw_calls = 2048;
+
+		window& window_;					//<! window that owns the rendering context
+		context_handle worker_context_;		//<! rendering context of the renderer worker thread
+		context_handle main_context_;		//<! rendering context of the main thread
+		graphics_backend graphics_backend_; //<! renderer backend type enum
+
+		std::thread worker_;					     //<! rendering thread (only thread to interact with the backend API)
+		std::unique_ptr<graphics_api> graphics_api_; //<! polymorphic abstraction of the native rendering API
+
+		size_t draw_call_buffer_pos_ = 0;
+		std::array<draw_call, max_draw_calls> draw_call_buffer_;
+
+		size_t uniform_count_;
+		uniform_buffer uniform_buffer_;
+    	std::array<uniform_data, max_uniforms> uniform_data_;
+
+    	void worker_thread();
     public:
-        graphics_device(graphics_backend backend = graphics_backend::opengl);
+        graphics_device(window& window, const graphics_backend graphics_backend = graphics_backend::opengl);
 
-        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) const;
+        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_layout& decl);
 
-        shader_handle create_shader(const shader_type type, const std::string& source) const;
+		void submit(draw_call&& call);
 
         void destroy(shader_handle handle) const;
+
+		shader_handle create_shader(const shader_type type, const std::string& source);
+
+		draw_call_builder draw();
 
         /**
          * \brief Create program with vertex and fragment shaders.
@@ -47,7 +82,7 @@ namespace moka
          * \param fragment_handle Fragment shader.
          * \return Program handle if vertex shader output and fragment shader input are matching, otherwise returns invalid program handle.
          */
-        program_handle create_program(shader_handle vertex_handle, shader_handle fragment_handle) const;
+        program_handle create_program(shader_handle vertex_handle, shader_handle fragment_handle);
 
         /**
          * \brief Create program with compute shader.
@@ -68,16 +103,10 @@ namespace moka
          */
         void destroy(vertex_buffer_handle handle);
 
-        void clear_colour(const colour& colour) const;
+		void frame();
 
-        void clear(bool color, bool depth, bool stencil, byte stencil_value, const colour& colour) const;
+		uniform_handle create_uniform(const char* name, const uniform_type& type, size_t size = 1);
 
-        void check_errors() const;
-	    void bind(const vertex_buffer_handle& vertex_buffer) const;
-	    void bind(const texture_handle& texture) const;
-	    void bind(const program_handle& program) const;
-		void draw_indexed(const primitive_type type, size_t first, size_t count) const;
-
-	    void set_face_culling(face_culling face_culling) const;
+	    const uniform_data& set_uniform(const uniform_handle& uniform, const void* data);
     };
 }

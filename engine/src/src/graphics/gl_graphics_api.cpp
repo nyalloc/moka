@@ -2,11 +2,91 @@
 #include <GL/glew.h>
 #include <string>
 #include <sstream>
-#include <logger/logger.hpp>
+#include <application/logger.hpp>
 #include <graphics/gl_graphics_api.hpp>
 
 namespace moka
 {
+	constexpr GLenum moka_to_gl(const primitive_type type) 
+	{
+		switch (type)
+		{
+		case primitive_type::lines: return GL_LINES;
+		case primitive_type::line_strip: return GL_LINE_STRIP;
+		case primitive_type::triangles: return GL_TRIANGLES;
+		case primitive_type::triangle_strip: return GL_TRIANGLE_STRIP;
+		default: return 0;
+		}
+	};
+
+	constexpr GLenum moka_to_gl(const attribute_type type)
+	{
+		switch (type)
+		{
+		case attribute_type::boolean: return GL_BOOL;
+		case attribute_type::int8: return GL_BYTE;
+		case attribute_type::int16: return GL_SHORT;
+		case attribute_type::int32: return GL_INT;
+		case attribute_type::uint8: return GL_UNSIGNED_BYTE;
+		case attribute_type::uint16: return GL_UNSIGNED_SHORT;
+		case attribute_type::uint32: return GL_UNSIGNED_INT;
+		case attribute_type::float16: return GL_SHORT;
+		case attribute_type::float32: return GL_FLOAT;
+		case attribute_type::float64: return GL_DOUBLE;
+		default: return 0;
+		}
+	};
+
+	constexpr GLenum moka_to_gl(const shader_type type)
+	{
+		switch (type)
+		{
+		case shader_type::vertex:
+			return GL_VERTEX_SHADER;
+		case shader_type::fragment:
+			return GL_FRAGMENT_SHADER;
+		case shader_type::compute:
+			return GL_COMPUTE_SHADER;
+		default: return 0;
+		}
+	};
+
+	constexpr GLenum moka_to_gl(const blend_function_factor type)
+	{
+		switch (type)
+		{
+		case blend_function_factor::zero:
+			return GL_ZERO;
+		case blend_function_factor::one:
+			return GL_ONE;
+		case blend_function_factor::src_colour:
+			return GL_SRC_COLOR;
+		case blend_function_factor::one_minus_src_colour:
+			return GL_ONE_MINUS_SRC_COLOR;
+		case blend_function_factor::dst_colour:
+			return GL_DST_COLOR;
+		case blend_function_factor::one_minus_dst_colour:
+			return GL_ONE_MINUS_DST_COLOR;
+		case blend_function_factor::src_alpha:
+			return GL_SRC_ALPHA;
+		case blend_function_factor::one_minus_src_alpha:
+			return GL_ONE_MINUS_SRC_ALPHA;
+		case blend_function_factor::dst_alpha:
+			return GL_DST_ALPHA;
+		case blend_function_factor::one_minus_dst_alpha:
+			return GL_ONE_MINUS_DST_ALPHA;
+		case blend_function_factor::constant_colour:
+			return GL_CONSTANT_COLOR;
+		case blend_function_factor::one_minus_constant_colour:
+			return GL_ONE_MINUS_CONSTANT_COLOR;
+		case blend_function_factor::constant_alpha:
+			return GL_CONSTANT_ALPHA;
+		case blend_function_factor::one_minus_constant_alpha:
+			return GL_ONE_MINUS_CONSTANT_ALPHA;
+		default: return 0;
+		}
+	};
+
     void gl_graphics_api::check_errors() const
     {
         std::string error;
@@ -64,14 +144,6 @@ namespace moka
     void gl_graphics_api::set_viewport(const rectangle& bounds) const
     {
         glViewport(bounds.x(), bounds.y(), bounds.width(), bounds.height());
-    }
-
-    void gl_graphics_api::draw_indexed_primitives(const primitive_type primitive_type, const size_t index_count) const
-    {
-    }
-
-    void gl_graphics_api::draw_primatives(const primitive_type primitive_type, const size_t vertex_count) const
-    {
     }
 
     void gl_graphics_api::scissor_test(const toggle toggle) const
@@ -146,49 +218,13 @@ namespace moka
 
     void gl_graphics_api::blend_function(const blend_function_factor lhs, const blend_function_factor rhs) const
     {
-        auto moka_to_gl = [](const blend_function_factor type)
-        {
-            switch (type)
-            {
-            case blend_function_factor::zero:
-                return GL_ZERO;
-            case blend_function_factor::one:
-                return GL_ONE;
-            case blend_function_factor::src_colour:
-                return GL_SRC_COLOR;
-            case blend_function_factor::one_minus_src_colour:
-                return GL_ONE_MINUS_SRC_COLOR;
-            case blend_function_factor::dst_colour:
-                return GL_DST_COLOR;
-            case blend_function_factor::one_minus_dst_colour:
-                return GL_ONE_MINUS_DST_COLOR;
-            case blend_function_factor::src_alpha:
-                return GL_SRC_ALPHA;
-            case blend_function_factor::one_minus_src_alpha:
-                return GL_ONE_MINUS_SRC_ALPHA;
-            case blend_function_factor::dst_alpha:
-                return GL_DST_ALPHA;
-            case blend_function_factor::one_minus_dst_alpha:
-                return GL_ONE_MINUS_DST_ALPHA;
-            case blend_function_factor::constant_colour:
-                return GL_CONSTANT_COLOR;
-            case blend_function_factor::one_minus_constant_colour:
-                return GL_ONE_MINUS_CONSTANT_COLOR;
-            case blend_function_factor::constant_alpha:
-                return GL_CONSTANT_ALPHA;
-            case blend_function_factor::one_minus_constant_alpha:
-                return GL_ONE_MINUS_CONSTANT_ALPHA;
-            default:;
-            }
-        };
-
         glBlendFunc(moka_to_gl(lhs), moka_to_gl(rhs));
     }
 
     program_handle gl_graphics_api::create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
     {
         const auto id = glCreateProgram();
-        const program_handle result{ id };
+		const program_handle result{ static_cast<handle_id>(id) };
 
         // Attach shaders as necessary.
         glAttachShader(id, vertex_handle.id);
@@ -227,22 +263,8 @@ namespace moka
     {
     }
 
-    shader_handle gl_graphics_api::create_shader(const shader_type type, const std::string& source)
+	shader_handle gl_graphics_api::create_shader(const shader_type type, const std::string& source)
     {
-        auto moka_to_gl = [](const shader_type type)
-        {
-            switch (type)
-            {
-            case shader_type::vertex:
-                return GL_VERTEX_SHADER;
-            case shader_type::fragment:
-                return GL_FRAGMENT_SHADER;
-            case shader_type::compute:
-                return GL_COMPUTE_SHADER;
-            default:;
-            }
-        };
-
         int success;
 
         char info_log[512];
@@ -251,7 +273,7 @@ namespace moka
         auto string = source.c_str();
 
         const unsigned int id = glCreateShader(moka_to_gl(type));
-        const shader_handle handle{ id };
+		const shader_handle handle{ static_cast<handle_id>(id) };
 
         glShaderSource(id, 1, &string, nullptr);
 
@@ -287,26 +309,8 @@ namespace moka
 
     vertex_buffer_handle gl_graphics_api::create_vertex_buffer(
         const memory& vertices,
-        const vertex_decl& decl)
+        const vertex_layout& decl)
     {
-        auto moka_to_gl = [](const attribute_type type)
-        {
-            switch (type)
-            {
-            case attribute_type::boolean: return GL_BOOL;
-            case attribute_type::int8: return GL_BYTE;
-            case attribute_type::int16: return GL_SHORT;
-            case attribute_type::int32: return GL_INT;
-            case attribute_type::uint8: return GL_UNSIGNED_BYTE;
-            case attribute_type::uint16: return GL_UNSIGNED_SHORT;
-            case attribute_type::uint32: return GL_UNSIGNED_INT;
-            case attribute_type::float16: return GL_SHORT;
-            case attribute_type::float32: return GL_FLOAT;
-            case attribute_type::float64: return GL_DOUBLE;
-            default:;
-            }
-        };
-
         unsigned int vbo, vao;
         glGenVertexArrays(1, &vao);
         glGenBuffers(1, &vbo);
@@ -353,28 +357,21 @@ namespace moka
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         glBindVertexArray(0);
 
-        const vertex_buffer_handle handle{ vao };
+		const vertex_buffer_handle handle{ static_cast<handle_id>(vao) };
 
         vertex_buffers_.emplace_back(handle);
         return handle;
     }
 
-	void gl_graphics_api::draw_indexed(const primitive_type type, const size_t first, const size_t count) const
+	void gl_graphics_api::draw_arrays(primitive_type type, size_t first, size_t count) const
 	{
-		static auto moka_to_gl = [](const primitive_type type)
-		{
-			switch(type) 
-			{ 
-				case primitive_type::lines: return GL_LINES;
-				case primitive_type::line_strip: return GL_LINE_STRIP;
-				case primitive_type::triangles: return GL_TRIANGLES;
-				case primitive_type::triangle_strip: return GL_TRIANGLE_STRIP;
-				default: ;
-			}
-		};
-
 		glDrawArrays(moka_to_gl(type), first, count);
-    }
+	}
+
+	void gl_graphics_api::draw_indexed(primitive_type type, size_t count) const
+	{
+		glDrawElements(moka_to_gl(type), count, GL_UNSIGNED_SHORT, (void*)0);
+	}
 
 	void gl_graphics_api::bind(const vertex_buffer_handle& vertex_buffer) const
 	{
@@ -388,7 +385,13 @@ namespace moka
 
     gl_graphics_api::gl_graphics_api()
         : log_{ filesystem::current_path() }
-    {}
+    {
+		glewExperimental = GL_TRUE;
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << glewGetErrorString(glewInit()) << std::endl;
+		}
+    }
 
     std::string gl_graphics_api::version() const
     {
@@ -413,7 +416,7 @@ namespace moka
 
         std::stringstream string;
 
-        for (size_t i = 0; i < count; i++)
+        for (auto i = 0; i < count; i++)
         {
             string << glGetStringi(GL_EXTENSIONS, i) << std::endl;
         }

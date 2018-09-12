@@ -1,6 +1,7 @@
 #pragma once
 
 #include <graphics/graphics_api.hpp>
+#include <application/logger.hpp>
 
 namespace moka
 {
@@ -28,20 +29,21 @@ namespace moka
         void clear_colour(const colour& colour) const override;
         void set_scissor(const rectangle& bounds) const override;
         void set_viewport(const rectangle& bounds) const override;
-        void draw_indexed_primitives(primitive_type primitive_type, size_t index_count) const override;
-        void draw_primatives(primitive_type primitive_type, size_t vertex_count) const override;
         void scissor_test(toggle toggle) const override;
         void depth_mask(toggle toggle) const override;
         void depth_test(toggle toggle) const override;
         void face_culling(toggle toggle) const override;
         void blend(toggle toggle) const override;
         void blend_function(blend_function_factor lhs, blend_function_factor rhs) const override;
-        program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
         void destroy(const shader_handle& handle) override;
-        shader_handle create_shader(shader_type type, const std::string& source) override;
-        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_decl& decl) override;
 
-		void draw_indexed(const primitive_type type, size_t first, size_t count) const override;
+		program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
+        shader_handle create_shader(const shader_type type, const std::string& source) override;
+        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_layout& decl) override;
+
+		void draw_arrays(primitive_type type, size_t first, size_t count) const override;
+		void draw_indexed(primitive_type type, size_t count) const override;
+
 		void bind(const vertex_buffer_handle& program) const override;
 		void bind(const program_handle& program) const override;
 	};

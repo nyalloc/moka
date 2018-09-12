@@ -31,29 +31,71 @@ namespace moka
     {
         detail::vector4<byte> rgba_bytes_;
     public:
-        constexpr colour(const byte r, const byte g, const byte b, const byte a = static_cast<byte>(255)) noexcept
+
+		constexpr operator vector4() const noexcept
+		{
+			return to_vector4();
+		}
+
+		constexpr operator vector3() const noexcept
+		{
+			return to_vector3();
+		}
+
+        constexpr colour(
+			  const byte r
+			, const byte g
+			, const byte b
+			, const byte a = static_cast<byte>(255)) noexcept
             : rgba_bytes_{ r, g, b, a }
         {}
 
         constexpr colour() noexcept
-            : colour{ detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255) }
+            : colour{ detail::int_to_byte(255)
+			, detail::int_to_byte(255)
+			, detail::int_to_byte(255)
+			, detail::int_to_byte(255) }
         {}
 
         constexpr colour(const vector3& colour) noexcept
-            : colour{ detail::float_to_byte(colour.x()), detail::float_to_byte(colour.y()), detail::float_to_byte(colour.z()) }
+            : colour{ detail::float_to_byte(colour.x())
+			, detail::float_to_byte(colour.y())
+			, detail::float_to_byte(colour.z()) }
         {}
 
         constexpr colour(const vector4& colour) noexcept
-            : colour{ detail::float_to_byte(colour.x()), detail::float_to_byte(colour.y()), detail::float_to_byte(colour.z()), detail::float_to_byte(colour.w()) }
+            : colour{ detail::float_to_byte(colour.x())
+			, detail::float_to_byte(colour.y())
+			, detail::float_to_byte(colour.z())
+			, detail::float_to_byte(colour.w()) }
         {}
 
-        constexpr colour(const int r, const int g, const int b, const int a = 255) noexcept
-            : colour{ detail::int_to_byte(r), detail::int_to_byte(g), detail::int_to_byte(b), detail::int_to_byte(a) }
+        constexpr colour(
+			const int r, 
+			const int g, 
+			const int b,
+			const int a = 255) noexcept
+            : colour{ detail::int_to_byte(r)
+			, detail::int_to_byte(g)
+			, detail::int_to_byte(b)
+			, detail::int_to_byte(a) }
         {}
 
-        constexpr colour(const float r, const float g, const float b, const float a = 1.0f) noexcept
-            : colour{ detail::float_to_byte(r), detail::float_to_byte(g), detail::float_to_byte(b), detail::float_to_byte(a) }
+        constexpr colour(
+			const float r,
+			const float g, 
+			const float b, 
+			const float a = 1.0f) noexcept
+            : colour{ detail::float_to_byte(r)
+			, detail::float_to_byte(g)
+			, detail::float_to_byte(b)
+			, detail::float_to_byte(a) }
         {}
+
+		constexpr float operator [](const size_t pos) const noexcept
+		{
+			return detail::byte_to_float(rgba_bytes_[pos]);
+		}
 
         constexpr void r(const int val) noexcept
         {
@@ -120,10 +162,11 @@ namespace moka
             return { r(), g(), b(), a() };
         }
 
-        /**
-         * \brief Create an Alice Blue colour.
-         * \return R: 240, G: 248, B: 255.
-         */
+		constexpr vector3 to_vector3() const noexcept
+		{
+			return { r(), g(), b() };
+		}
+
         constexpr static colour alice_blue() noexcept
         {
             return { 240, 248, 255 };
@@ -289,121 +332,575 @@ namespace moka
             return { 139, 0, 0 };
         }
 
-        //    dark_salmon 233 150 122
-        //    dark_sea_green 143 188 142
-        //    dark_slate_blue 72 61 139
-        //    dark_slate_gray 47 79 79
-        //    dark_slate_grey 47 79 79
-        //    dark_turquoise 0 206 209
-        //    dark_violet 148 0 211
-        //    deep_pink 255 20 147
-        //    deep_sky_blue 0 191 255
-        //    dim_gray 105 105 105
-        //    dim_grey 105 105 105
-        //    dodger_blue 30 144 255
-        //    firebrick 178 34 34
-        //    floral_white 255 250 240
-        //    forest_green 34 139 34
-        //    fuchsia 255 0 255
-        //    gainsboro 220 220 220
-        //    ghost_white 248 248 248
-        //    gold 255 215 0
-        //    goldenrod 218 165 32
-        //    gray 128 128 128
-        //    green 0 128 0
-        //    green_yellow 173 255 47
-        //    grey 128 128 128
-        //    honeydew 240 255 240
-        //    hot_pink 255 105 180
-        //    indian_red 205 92 92
-        //    indigo 75 0 130
-        //    ivory 255 255 240
-        //    khaki 240 230 140
-        //    lavender 230 230 250
-        //    lavender_blush 255 240 245
-        //    lawn_green 124 252 0
-        //    lemon_chiffon 255 250 205
-        //    light_blue 173 216 230
-        //    light_coral 240 128 128
-        //    light_cyan 224 255 255
-        //    light_goldenrod_yellow 250 250 210
-        //    light_gray 211 211 211
-        //    light_green 144 238 144
-        //    light_grey 211 211 211
-        //    light_pink 255 182 193
-        //    light_salmon 255 160 122
-        //    light_sea_green 32 178 170
-        //    light_sky_blue 135 206 250
-        //    light_slate_gray 119 136 153
-        //    light_slate_grey 119 136 153
-        //    light_steel_blue 176 196 222
-        //    light_yellow 255 255 224
-        //    lime 0 255 0
-        //    lime_green 50 205 50
-        //    linen 250 240 230
-        //    magenta 255 0 255
-        //    maroon 128 0 0
-        //    medium_aquamarine 102 205 170
-        //    medium_blue 0 0 205
-        //    medium_orchid 186 85 211
-        //    medium_purple 147 112 219
-        //    medium_sea_green 60 179 113
-        //    medium_slate_blue 123 104 238
-        //    medium_spring_green 0 250 154
-        //    medium_turquoise 72 209 204
-        //    medium_violet_red 199 21 133
-        //    midnight_blue 25 25 112
-        //    mint_cream 245 255 250
-        //    misty_rose 255 228 225
-        //    moccasin 255 228 181
-        //    navajo_white 255 222 173
-        //    navy 0 0 128
-        //    old_lace 253 245 230
-        //    olive 128 128 0
-        //    olive_drab 107 142 35
-        //    orange 255 69 0
-        //    orange_red 255 69 0
-        //    orchid 218 112 214
-        //    pale_goldenrod 238 232 170
-        //    pale_green 152 251 152
-        //    pale_turquoise 175 238 238
-        //    pale_violet_red 219 112 147
-        //    papaya_whip 255 239 213
-        //    peach_puff 255 218 185
-        //    peru 205 133 63
-        //    pink 255 192 203
-        //    plum 221 160 221
-        //    powder_blue 176 224 230
-        //    purple 128 0 128
-        //    red 255 0 0
-        //    rosy_brown 188 143 143
-        //    royal_blue 65 105 225
-        //    saddle_brown 139 69 19
-        //    salmon 250 128 114
-        //    sandy_brown 244 164 96
-        //    sea_green 46 139 87
-        //    sea_shell 255 245 238
-        //    sienna 160 82 45
-        //    silver 192 192 192
-        //    sky_blue 135 206 235
-        //    slate_blue 106 90 205
-        //    slate_gray 112 128 144
-        //    slate_grey 112 128 144
-        //    snow 255 250 250
-        //    spring_green 0 255 127
-        //    steel_blue 70 130 180
-        //    tan 210 180 140
-        //    teal 0 128 128
-        //    thistle 216 191 216
-        //    tomato 255 99 71
-        //    transparent_black 0 0 0
-        //        turquoise 64 244 208
-        //        violet 238 130 238
-        //        wheat 245 222 179
-        //        white 255 255 255
-        //        white_smoke 245 245 245
-        //        yellow 255 255 0
-        //        yellow_green 154 205 50
+		constexpr static colour dark_salmon() noexcept
+		{
+			return { 233, 150, 122 };
+		}
+
+		constexpr static colour dark_sea_green() noexcept
+		{
+			return { 143, 188, 142 };
+		}
+
+		constexpr static colour dark_slate_blue() noexcept
+		{
+			return { 72, 61, 139 };
+		}
+
+		constexpr static colour dark_slate_gray() noexcept
+		{
+			return { 47, 79, 79 };
+		}
+
+		constexpr static colour dark_turquoise() noexcept
+		{
+			return { 0, 206, 209 };
+		}
+
+		constexpr static colour dark_violet() noexcept
+		{
+			return { 148, 0, 211 };
+		}
+
+		constexpr static colour deep_pink() noexcept
+		{
+			return { 255, 20, 147 };
+		}
+
+		constexpr static colour deep_sky_blue() noexcept
+		{
+			return { 0, 191, 255 };
+		}
+
+		constexpr static colour dim_gray() noexcept
+		{
+			return { 105, 105, 105 };
+		}
+
+		constexpr static colour dim_grey() noexcept
+		{
+			return { 105, 105, 105 };
+		}
+
+		constexpr static colour dodger_blue() noexcept
+		{
+			return { 30, 144, 255 };
+		}
+
+		constexpr static colour firebrick() noexcept
+		{
+			return { 178, 34, 34 };
+		}
+
+		constexpr static colour floral_white() noexcept
+		{
+			return { 255, 250, 240 };
+		}
+
+		constexpr static colour forest_green() noexcept
+		{
+			return { 34, 139, 34 };
+		}
+
+		constexpr static colour fuchsia() noexcept
+		{
+			return { 255, 0, 255 };
+		}
+
+		constexpr static colour gainsboro() noexcept
+		{
+			return { 220, 220, 220 };
+		}
+
+		constexpr static colour ghost_white() noexcept
+		{
+			return { 248, 248, 248 };
+		}
+
+		constexpr static colour gold() noexcept
+		{
+			return { 255, 215, 0 };
+		}
+
+		constexpr static colour goldenrod() noexcept
+		{
+			return { 218, 165, 32 };
+		}
+
+		constexpr static colour gray() noexcept
+		{
+			return { 128, 128, 128 };
+		}
+
+		constexpr static colour green() noexcept
+		{
+			return { 0, 128, 0 };
+		}
+
+		constexpr static colour green_yellow() noexcept
+		{
+			return { 173, 255, 47 };
+		}
+
+		constexpr static colour grey() noexcept
+		{
+			return { 128, 128, 128 };
+		}
+
+		constexpr static colour honeydew() noexcept
+		{
+			return { 240, 255, 240 };
+		}
+
+		constexpr static colour hot_pink() noexcept
+		{
+			return { 255, 105, 180 };
+		}
+
+		constexpr static colour indian_red() noexcept
+		{
+			return { 205, 92, 92 };
+		}
+
+		constexpr static colour indigo() noexcept
+		{
+			return { 75, 0, 130 };
+		}
+
+		constexpr static colour ivory() noexcept
+		{
+			return { 255, 255, 240 };
+		}
+
+		constexpr static colour khaki() noexcept
+		{
+			return { 240, 230, 140 };
+		}
+
+		constexpr static colour lavender() noexcept
+		{
+			return { 230, 230, 250 };
+		}
+
+		constexpr static colour lavender_blush() noexcept
+		{
+			return { 255, 240, 245 };
+		}
+
+		constexpr static colour lawn_green() noexcept
+		{
+			return { 124, 252, 0 };
+		}
+
+		constexpr static colour lemon_chiffon() noexcept
+		{
+			return { 255, 250, 205 };
+		}
+
+		constexpr static colour light_blue() noexcept
+		{
+			return { 173, 216, 230 };
+		}
+
+		constexpr static colour light_coral() noexcept
+		{
+			return { 240, 128, 128 };
+		}
+
+		constexpr static colour light_cyan() noexcept
+		{
+			return { 224, 255, 255 };
+		}
+
+		constexpr static colour light_goldenrod_yellow() noexcept
+		{
+			return { 250, 250, 210 };
+		}
+		
+		constexpr static colour light_gray() noexcept
+		{
+			return { 211, 211, 211 };
+		}
+
+		constexpr static colour light_green() noexcept
+		{
+			return { 144, 238, 144 };
+		}
+
+		constexpr static colour light_grey() noexcept
+		{
+			return { 211, 211, 211 };
+		}
+
+		constexpr static colour light_pink() noexcept
+		{
+			return { 255, 182, 193 };
+		}
+
+		constexpr static colour light_salmon() noexcept
+		{
+			return { 255, 160, 122 };
+		}
+
+		constexpr static colour light_sea_green() noexcept
+		{
+			return { 32, 178, 170 };
+		}
+
+		constexpr static colour light_sky_blue() noexcept
+		{
+			return { 135, 206, 250 };
+		}
+
+		constexpr static colour light_slate_gray() noexcept
+		{
+			return { 119, 136, 153 };
+		}
+
+		constexpr static colour light_slate_grey() noexcept
+		{
+			return { 119, 136, 153 };
+		}
+		
+		constexpr static colour light_steel_blue() noexcept
+		{
+			return { 176, 196, 222 };
+		}
+
+		constexpr static colour light_yellow() noexcept
+		{
+			return { 255, 255, 224 };
+		}
+
+		constexpr static colour lime() noexcept
+		{
+			return { 0, 255, 0 };
+		}        
+		
+		constexpr static colour lime_green() noexcept
+		{
+			return { 50, 205, 50 };
+		}
+		
+		constexpr static colour linen() noexcept
+		{
+			return { 250, 240, 230 };
+		}
+
+		constexpr static colour magenta() noexcept
+		{
+			return { 255, 0, 255 };
+		}
+		
+		constexpr static colour maroon() noexcept
+		{
+			return { 128, 0, 0 };
+		}
+
+		constexpr static colour medium_aquamarine() noexcept
+		{
+			return { 102, 205, 170 };
+		}
+
+		constexpr static colour medium_blue() noexcept
+		{
+			return { 0, 0, 205 };
+		}
+
+		constexpr static colour medium_orchid() noexcept
+		{
+			return { 186, 85, 211 };
+		}
+
+		constexpr static colour medium_purple() noexcept
+		{
+			return { 147, 112, 219 };
+		}
+
+		constexpr static colour medium_sea_green() noexcept
+		{
+			return { 60, 179, 113 };
+		}
+		
+		constexpr static colour medium_slate_blue() noexcept
+		{
+			return { 123, 104, 238 };
+		}
+		
+		constexpr static colour medium_spring_green() noexcept
+		{
+			return { 0, 250, 154 };
+		}
+		
+		constexpr static colour medium_turquoise() noexcept
+		{
+			return { 72, 209, 204 };
+		}
+		
+		constexpr static colour medium_violet_red() noexcept
+		{
+			return { 199, 21, 133 };
+		}
+		
+		constexpr static colour midnight_blue() noexcept
+		{
+			return { 25, 25, 112 };
+		}
+		
+		constexpr static colour mint_cream() noexcept
+		{
+			return { 245, 255, 250 };
+		}
+
+		constexpr static colour misty_rose() noexcept
+		{
+			return { 255, 228, 225 };
+		}
+		
+		constexpr static colour moccasin() noexcept
+		{
+			return { 255, 228, 181 };
+		}
+		
+		constexpr static colour navajo_white() noexcept
+		{
+			return { 255, 222, 173 };
+		}
+		
+		constexpr static colour navy() noexcept
+		{
+			return { 0, 0, 128 };
+		}
+		
+		constexpr static colour old_lace() noexcept
+		{
+			return { 253, 245, 230 };
+		}
+		
+		constexpr static colour olive() noexcept
+		{
+			return { 128, 128, 0 };
+		}
+		
+		constexpr static colour olive_drab() noexcept
+		{
+			return { 107, 142, 35 };
+		}
+
+		constexpr static colour orange() noexcept
+		{
+			return { 255, 69, 0 };
+		}
+		
+		constexpr static colour orange_red() noexcept
+		{
+			return { 255, 69, 0 };
+		}
+		
+		constexpr static colour orchid() noexcept
+		{
+			return { 218, 112, 214 };
+		}
+
+		constexpr static colour pale_goldenrod() noexcept
+		{
+			return { 238, 232, 170 };
+		}       
+		
+		constexpr static colour pale_green() noexcept
+		{
+			return { 152, 251, 152 };
+		}    
+		
+		constexpr static colour pale_turquoise() noexcept
+		{
+			return { 175, 238, 238 };
+		}    
+		
+		constexpr static colour pale_violet_red() noexcept
+		{
+			return { 219, 112, 147 };
+		}
+
+		constexpr static colour papaya_whip() noexcept
+		{
+			return { 255, 239, 213 };
+		}
+
+		constexpr static colour peach_puff() noexcept
+		{
+			return { 255, 218, 185 };
+		}
+		
+		constexpr static colour peru() noexcept
+		{
+			return { 205, 133, 63 };
+		}
+		
+		constexpr static colour pink() noexcept
+		{
+			return { 255, 192, 203 };
+		}
+		
+		constexpr static colour plum() noexcept
+		{
+			return { 221, 160, 221 };
+		}
+		
+		constexpr static colour powder_blue() noexcept
+		{
+			return { 176, 224, 230 };
+		}
+		
+		constexpr static colour purple() noexcept
+		{
+			return { 128, 0, 128 };
+		}
+		
+		constexpr static colour red() noexcept
+		{
+			return { 255, 0, 0 };
+		}
+
+		constexpr static colour rosy_brown() noexcept
+		{
+			return { 188, 143, 143 };
+		}
+		
+		constexpr static colour royal_blue() noexcept
+		{
+			return { 65, 105, 225 };
+		}
+		
+		constexpr static colour saddle_brown() noexcept
+		{
+			return { 139, 69, 19 };
+		}
+		
+		constexpr static colour salmon() noexcept
+		{
+			return { 250, 128, 114 };
+		}
+		
+		constexpr static colour sandy_brown() noexcept
+		{
+			return { 244, 164, 96 };
+		}
+		
+		constexpr static colour sea_green() noexcept
+		{
+			return { 46, 139, 87 };
+		}
+		
+		constexpr static colour sea_shell() noexcept
+		{
+			return { 255, 245, 238 };
+		}
+		
+		constexpr static colour sienna() noexcept
+		{
+			return { 160, 82, 45 };
+		}
+		
+		constexpr static colour silver() noexcept
+		{
+			return { 192, 192, 192 };
+		}
+		
+		constexpr static colour sky_blue() noexcept
+		{
+			return { 135, 206, 235 };
+		}
+
+		constexpr static colour slate_blue() noexcept
+		{
+			return { 106, 90, 205 };
+		}
+		
+		constexpr static colour slate_gray() noexcept
+		{
+			return { 112, 128, 144 };
+		}
+		
+		constexpr static colour slate_grey() noexcept
+		{
+			return { 112, 128, 144 };
+		}
+		
+		constexpr static colour snow() noexcept
+		{
+			return { 255, 250, 250 };
+		}
+
+		constexpr static colour spring_green() noexcept
+		{
+			return { 0, 255, 127 };
+		}
+		
+		constexpr static colour steel_blue() noexcept
+		{
+			return { 70, 130, 180 };
+		}
+
+		constexpr static colour tan() noexcept
+		{
+			return { 210, 180, 140 };
+		}
+		
+		constexpr static colour teal() noexcept
+		{
+			return { 0, 128, 128 };
+		}
+
+		constexpr static colour thistle() noexcept
+		{
+			return { 216, 191, 216 };
+		}
+		
+		constexpr static colour tomato() noexcept
+		{
+			return { 255, 99, 71 };
+		}
+
+		constexpr static colour transparent_black() noexcept
+		{
+			return { 0, 0, 0 };
+		}        
+		
+		constexpr static colour turquoise() noexcept
+		{
+			return { 64, 244, 208 };
+		} 
+
+		constexpr static colour violet() noexcept
+		{
+			return { 238, 130, 238 };
+		}
+		
+		constexpr static colour wheat() noexcept
+		{
+			return { 245, 222, 179 };
+		}
+		
+		constexpr static colour white() noexcept
+		{
+			return { 255, 255, 255 };
+		}
+		
+		constexpr static colour white_smoke() noexcept
+		{
+			return { 245, 245, 245 };
+		}
+		
+		constexpr static colour yellow() noexcept
+		{
+			return { 255, 255, 0 };
+		}
+
+		constexpr static colour yellow_green() noexcept
+		{
+			return { 154, 205, 50 };
+		}
     };
 
     using color = colour;

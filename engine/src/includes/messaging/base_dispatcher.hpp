@@ -2,18 +2,20 @@
 
 namespace moka
 {
-	class mouse_motion;
-	class key_down;
 	class close_queue;
-	class create_program;
+	class create_program_cmd;
+	class create_shader_cmd;
+	class create_vertex_buffer_cmd;
+	class frame_cmd;
 
 	class base_dispatcher
 	{
 	public:
 		virtual ~base_dispatcher() = default;
-		virtual bool dispatch(const mouse_motion&) { return false; }
-		virtual bool dispatch(const key_down&) { return false; }
 		virtual bool dispatch(const close_queue&) { return false; }
-		virtual bool dispatch(const create_program&) { return false; }
+		virtual bool dispatch(const create_program_cmd&) { return false; }
+		virtual bool dispatch(const frame_cmd&) { return false; }
+		virtual bool dispatch(const create_shader_cmd&) { return false; }
+		virtual bool dispatch(const create_vertex_buffer_cmd&) { return false; }
 	};
 }

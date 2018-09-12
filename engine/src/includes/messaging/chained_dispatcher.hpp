@@ -77,8 +77,7 @@ namespace moka
 		}
 
 		template <typename OtherMsg, typename OtherFunc>
-		chained_dispatcher<BlockingPolicy, chained_dispatcher, OtherMsg, OtherFunc>
-			handle(OtherFunc&& of)
+		chained_dispatcher<BlockingPolicy, chained_dispatcher, OtherMsg, OtherFunc> handle(OtherFunc&& of)
 		{
 			return chained_dispatcher<BlockingPolicy, chained_dispatcher, OtherMsg, OtherFunc>(
 				_q, this, std::forward<OtherFunc>(of));
