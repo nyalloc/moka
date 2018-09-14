@@ -7,20 +7,6 @@
 
 namespace moka
 {
-    struct memory
-    {
-        const uint8_t* data;
-        size_t size;
-    };
-
-    inline memory make_buffer(const void* buffer, const size_t size)
-    {
-        memory result{};
-        result.size = size;
-        result.data = static_cast<const uint8_t*>(buffer);
-        return result;
-    }
-
     enum class attribute
     {
         position,  
@@ -116,11 +102,11 @@ namespace moka
     struct vertex_layout
     {
     private:
-        std::vector<attribute_element> attributes_;
+        std::vector<attribute_element> layout_;
     public:
         void emplace(attribute attr, size_t size, attribute_type attr_type, bool normalised)
         {
-            attributes_.emplace_back(attr, size, attr_type, normalised);
+            layout_.emplace_back(attr, size, attr_type, normalised);
         }
 
         static vertex_layout_builder builder() noexcept;
@@ -131,29 +117,29 @@ namespace moka
 
         auto begin() noexcept
         {
-            return attributes_.begin();
+            return layout_.begin();
         }
 
         auto end() noexcept
         {
-            return attributes_.end();
+            return layout_.end();
         }
 
         auto begin() const noexcept
         {
-            return attributes_.begin();
+            return layout_.begin();
         }
 
         auto end() const noexcept
         {
-            return attributes_.end();
+            return layout_.end();
         }
     };
 
     inline size_t vertex_layout::stride() const noexcept
     {
         size_t stride = 0;
-        for (const auto& element : attributes_)
+        for (const auto& element : layout_)
         {
             stride += attr_type_size(element.type) * element.size;
         }
@@ -177,7 +163,7 @@ namespace moka
     inline size_t vertex_layout::size() const noexcept
     {
         size_t result = 0;
-        for (const auto& element : attributes_)
+        for (const auto& element : layout_)
         {
             result += element.size;
         }
@@ -390,6 +376,17 @@ namespace moka
 		return handle.id != std::numeric_limits<moka::handle_id>::max();
 	}
 
+	struct uniform_data
+	{
+		std::string name;
+		uniform_type type;
+		size_t count;
+		size_t buffer_start;
+		size_t buffer_end;
+	};
+
+	struct draw_call;
+
     /**
      * \brief render_context abstracts the native rendering API.
      */
@@ -397,36 +394,17 @@ namespace moka
     {
     public:
         virtual ~graphics_api() = default;
-
-        virtual std::string version() const = 0;
-        virtual std::string vendor() const = 0;
-        virtual std::string renderer() const = 0;
-        virtual std::string extensions() const = 0;
-        virtual std::string shading_language_version() const = 0;
-
-        virtual void clear(bool color, bool depth, bool stencil, byte stencil_value, const colour& colour) const = 0;
-        virtual void depth_bounds_test(float zmin, float zmax) const = 0;
-        virtual void polygon_offset(float scale, float bias) const = 0;
-        virtual void check_errors() const = 0;
-        virtual void clear_colour(const colour& colour) const = 0;
-        virtual void set_scissor(const rectangle& bounds) const = 0;
-        virtual void set_viewport(const rectangle& bounds) const = 0;
-        virtual void scissor_test(toggle toggle) const = 0;
-        virtual void depth_mask(toggle toggle) const = 0;
-        virtual void depth_test(toggle toggle) const = 0;
-        virtual void face_culling(toggle toggle) const = 0;
-        virtual void blend_function(blend_function_factor lhs, blend_function_factor rhs) const = 0;
-        virtual void destroy(const shader_handle& handle) = 0;
-		virtual void blend(toggle toggle) const = 0;
-
+		
 		virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_layout& decl) = 0;
+        virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) = 0;
+		virtual index_buffer_handle create_index_buffer(const void* indices, size_t size) = 0;
 
-		virtual void draw_arrays(primitive_type type, size_t first, size_t count) const = 0;
-		virtual void draw_indexed(primitive_type type, size_t count) const = 0;
+		virtual uniform_handle create_uniform(const char* name, const uniform_type& type, const size_t count) = 0;
+		virtual const uniform_data& set_uniform(const uniform_handle& uniform, const void* data) = 0;
 
-		virtual void bind(const vertex_buffer_handle& program) const = 0;
-		virtual void bind(const program_handle& program) const = 0;
+		virtual void submit(draw_call&& call) = 0;
+
+		virtual void frame() = 0;
     };
 }

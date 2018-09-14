@@ -1,5 +1,4 @@
 
-#include <GL/glew.h>
 #include <string>
 #include <sstream>
 #include <application/logger.hpp>
@@ -87,139 +86,193 @@ namespace moka
 		}
 	};
 
-    void gl_graphics_api::check_errors() const
-    {
-        std::string error;
+	void gl_graphics_api::submit(draw_call&& call) 
+	{
+		// lock here!
+		if (draw_call_buffer_pos_ + 1 < draw_call_buffer_.size())
+		{
+			draw_call_buffer_[draw_call_buffer_pos_++] = std::move(call);
+		}
+	}
 
-        // check for up to 10 errors pending
-        for (auto i = 0; i < 10; i++)
-        {
-            const int err = glGetError();
-            if (err == GL_NO_ERROR)
-            {
-                return;
-            }
-            switch (err)
-            {
-            case GL_INVALID_ENUM:
-                error = "GL_INVALID_ENUM";
-                break;
-            case GL_INVALID_VALUE:
-                error = "GL_INVALID_VALUE";
-                break;
-            case GL_INVALID_OPERATION:
-                error = "GL_INVALID_OPERATION";
-                break;
-            case GL_INVALID_FRAMEBUFFER_OPERATION:
-                error = "GL_INVALID_FRAMEBUFFER_OPERATION";
-                break;
-            case GL_OUT_OF_MEMORY:
-                error = "GL_OUT_OF_MEMORY";
-                break;
-            case GL_STACK_OVERFLOW:
-                error = "GL_STACK_OVERFLOW";
-                break;
-            case GL_STACK_UNDERFLOW:
-                error = "GL_STACK_UNDERFLOW";
-                break;
-            default:
-                break;
-            }
+	void gl_graphics_api::frame()
+	{
+		// draw item comparator for sorting
+		auto comparator = [](draw_call& a, draw_call& b)
+		{
+			return a.key > b.key;
+		};
 
-            log_.log(level::error, "OpenGL error: " + error);
-        }
-    }
+		// if draw commands have been sent
+		if (draw_call_buffer_pos_ > 0)
+		{
+			// sort all render items to minimise state changes
+			std::sort(draw_call_buffer_.begin(), draw_call_buffer_.begin() + draw_call_buffer_pos_, comparator);
 
-    void gl_graphics_api::clear_colour(const colour& colour) const
-    {
-        glClearColor(colour.r(), colour.g(), colour.b(), colour.a());
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
+			// clear the render target
+			auto color = colour::cornflower_blue();
 
-    void gl_graphics_api::set_scissor(const rectangle& bounds) const
-    {
-        glScissor(bounds.x(), bounds.y(), bounds.width(), bounds.height());
-    }
+			glClearColor(color.r(), color.g(), color.b(), color.a());
+			glClear(GL_COLOR_BUFFER_BIT);
 
-    void gl_graphics_api::set_viewport(const rectangle& bounds) const
-    {
-        glViewport(bounds.x(), bounds.y(), bounds.width(), bounds.height());
-    }
+			for (auto it = draw_call_buffer_.begin(); it != draw_call_buffer_.begin() + draw_call_buffer_pos_; ++it)
+			{
+				auto& current_call = *it;
 
-    void gl_graphics_api::scissor_test(const toggle toggle) const
-    {
-        switch (toggle)
-        {
-        case toggle::enable:
-            glEnable(GL_SCISSOR_TEST);
-            break;
-        case toggle::disable:
-            glDisable(GL_SCISSOR_TEST);
-            break;
-        default:;
-        }
-    }
+				if (previous_call_.vertex_buffer.id != current_call.vertex_buffer.id)
+				{
+					if (!is_handle_valid(current_call.vertex_buffer))
+					{
+						continue;
+					}
 
-    void gl_graphics_api::depth_mask(const toggle toggle) const
-    {
-        switch (toggle)
-        {
-        case toggle::enable:
-            glDepthMask(GL_TRUE);
-            break;
-        case toggle::disable:
-            glDepthMask(GL_FALSE);
-            break;
-        default:;
-        }
-    }
+					glBindBuffer(GL_ARRAY_BUFFER, current_call.vertex_buffer.id);
 
-    void gl_graphics_api::depth_test(const toggle toggle) const
-    {
-        switch (toggle)
-        {
-        case toggle::enable:
-            glEnable(GL_DEPTH_TEST);
-            break;
-        case toggle::disable:
-            glDisable(GL_DEPTH_TEST);
-            break;
-        default:;
-        }
-    }
+					if (is_handle_valid(current_call.index_buffer))
+					{
+						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_call.index_buffer.id);
+					}
 
-    void gl_graphics_api::face_culling(const toggle toggle) const
-    {
-        switch (toggle)
-        {
-        case toggle::enable:
-            glEnable(GL_CULL_FACE);
-            break;
-        case toggle::disable:
-            glDisable(GL_CULL_FACE);
-            break;
-        default:;
-        }
-    }
+					// update the current vertex layout to match the vertices we're about to render
+					size_t size_offset = 0;
+					auto layout = vertex_layouts_[current_call.vertex_buffer.id];
 
-    void gl_graphics_api::blend(const toggle toggle) const
-    {
-        switch (toggle)
-        {
-        case toggle::enable:
-            glEnable(GL_BLEND);
-            break;
-        case toggle::disable:
-            glDisable(GL_BLEND);
-            break;
-        default:;
-        }
-    }
+					for (const attribute_element& attribute : layout)
+					{
+						const auto index = static_cast<size_t>(attribute.attr);
+						const auto type = moka_to_gl(attribute.type);
+						const auto size = attribute.size;
+						const auto normalized = attribute.normalized;
+						const auto stride = layout.stride();
 
-    void gl_graphics_api::blend_function(const blend_function_factor lhs, const blend_function_factor rhs) const
-    {
-        glBlendFunc(moka_to_gl(lhs), moka_to_gl(rhs));
-    }
+						const auto offset = reinterpret_cast<void*>(
+							size_offset * attr_type_size(attribute.type));
+
+						glEnableVertexAttribArray(index);
+
+						glVertexAttribPointer(
+							index,
+							size,
+							type,
+							normalized,
+							stride,
+							offset);
+
+						size_offset += size;
+					}
+
+					glEnableVertexAttribArray(0);
+				}
+
+				if (previous_call_.program.id != current_call.program.id)
+				{
+					glUseProgram(current_call.program.id);
+				}
+
+				// the buffer allocates a contiguous block of space for each draw call's uniforms
+				// we're interested in the block between uniform_start and uniform_end
+
+				uniform_buffer_.set_position(current_call.uniform_start);
+
+				// iterate over every uniform related to this draw call
+				while (uniform_buffer_.position() < current_call.uniform_end)
+				{
+					// the handle is packed into the buffer as a header, allowing us to look up the size & type of the data that follows:
+
+					auto handle = uniform_buffer_.read_uniform_handle(); // get the uniform handle
+					auto uniform_data = uniform_data_[handle.id];		 // get the uniform type & count
+
+																		 // now that we know the size and type of the uniform, we can access the raw data.
+					const auto size = get_uniform_size(uniform_data.type, uniform_data.count);
+					auto data = uniform_buffer_.read_uniform_body(size);
+
+					//todo: abstact opengl implementation detail to gl_graphics_api
+
+					auto location = glGetUniformLocation(GLuint(current_call.program.id), uniform_data.name.data());
+
+					switch (uniform_data.type)
+					{
+					case uniform_type::int1:
+					{
+						GLuint texture_unit;
+						memcpy(&texture_unit, data, size);
+						glUniform1uiv(location, uniform_data.count, &texture_unit);
+						break;
+					}
+					case uniform_type::vec3:
+					{
+						float vec[3];
+						memcpy(&vec, data, size);
+						glUniform3fv(location, uniform_data.count, vec);
+						break;
+					}
+					case uniform_type::vec4:
+					{
+						float vec[4];
+						memcpy(&vec, data, size);
+						glUniform4fv(location, uniform_data.count, vec);
+						break;
+					}
+					case uniform_type::mat3:
+					{
+						float vec[9];
+						memcpy(&vec, data, size);
+						glUniformMatrix3fv(location, uniform_data.count, false, vec);
+						break;
+					}
+					case uniform_type::mat4:
+					{
+						float vec[16];
+						memcpy(&vec, data, size);
+						glUniformMatrix4fv(location, uniform_data.count, false, vec);
+						break;
+					}
+					default:;
+					}
+				}
+
+				// if an index buffer is set, draw indexed. Otherwise, draw arrays.
+				if (is_handle_valid(current_call.index_buffer))
+				{
+					glDrawElements(
+						moka_to_gl(primitive_type::triangles), 
+						current_call.index_count,
+						GL_UNSIGNED_INT, 
+						nullptr);
+				}
+				else
+				{
+					glDrawArrays(
+						moka_to_gl(primitive_type::triangles), 
+						current_call.vertex_start, 
+						current_call.vertex_count);
+				}
+
+				previous_call_ = current_call;
+			}
+		}
+
+		uniform_buffer_.clear();
+		draw_call_buffer_pos_ = 0;
+	}
+
+	uniform_handle gl_graphics_api::create_uniform(const char* name, const uniform_type& type, const size_t count)
+	{
+		auto& uniform_data = uniform_data_[uniform_count_];
+		uniform_data.type = type;
+		uniform_data.name = name;
+		uniform_data.count = count;
+		return uniform_handle{ static_cast<handle_id>(uniform_count_++) };
+	}
+
+	const uniform_data& gl_graphics_api::set_uniform(const uniform_handle& uniform, const void* data)
+	{
+		auto& uniform_data = uniform_data_[uniform.id];
+		uniform_data.buffer_start = uniform_buffer_.end();
+		uniform_buffer_.set_uniform(uniform, uniform_data.type, data, uniform_data.count);
+		uniform_data.buffer_end = uniform_buffer_.end();
+		return uniform_data;
+	}
 
     program_handle gl_graphics_api::create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
     {
@@ -257,10 +310,6 @@ namespace moka
 
         programs_.emplace_back(result);
         return result;
-    }
-
-    void gl_graphics_api::destroy(const shader_handle& handle)
-    {
     }
 
 	shader_handle gl_graphics_api::create_shader(const shader_type type, const std::string& source)
@@ -308,82 +357,64 @@ namespace moka
     }
 
     vertex_buffer_handle gl_graphics_api::create_vertex_buffer(
-        const memory& vertices,
-        const vertex_layout& decl)
+		const void* vertices,
+		size_t size, 
+		const vertex_layout& layout)
     {
-        unsigned int vbo, vao;
-        glGenVertexArrays(1, &vao);
-        glGenBuffers(1, &vbo);
-        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-        glBindVertexArray(vao);
+		GLuint id;
+		glGenBuffers(1, &id);
 
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, id);
+		glBufferData(GL_ARRAY_BUFFER
+			, size
+			, vertices
+			, (NULL == vertices) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW
+		);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        glBufferData(GL_ARRAY_BUFFER, vertices.size, vertices.data, GL_STATIC_DRAW);
+		const vertex_buffer_handle handle{ static_cast<handle_id>(id) };
 
-        size_t size_offset = 0;
-        for (const attribute_element& attribute : decl)
-        {
-            const auto index = static_cast<size_t>(attribute.attr);
-            const auto type = moka_to_gl(attribute.type);
-            const auto size = attribute.size;
-            const auto normalized = attribute.normalized;
-            const auto stride = decl.stride();
-
-            const auto offset = reinterpret_cast<void*>(
-                size_offset * attr_type_size(attribute.type));
-
-            glVertexAttribPointer(
-                index,
-                size,
-                type,
-                normalized,
-                stride,
-                offset);
-
-            glEnableVertexAttribArray(index);
-
-            size_offset += size;
-
-            // todo: investigate cleaning up attribute_element void* memory
-        }
-
-        glEnableVertexAttribArray(0);
-
-        // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-        // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-        glBindVertexArray(0);
-
-		const vertex_buffer_handle handle{ static_cast<handle_id>(vao) };
-
+		vertex_layouts_[handle.id] = layout;
         vertex_buffers_.emplace_back(handle);
+
         return handle;
     }
 
-	void gl_graphics_api::draw_arrays(primitive_type type, size_t first, size_t count) const
+	index_buffer_handle gl_graphics_api::create_index_buffer(const void* indices, size_t size)
 	{
-		glDrawArrays(moka_to_gl(type), first, count);
+		GLuint id;
+		glGenBuffers(1, &id);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER
+			, size
+			, indices
+			, (NULL == indices) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW
+		);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		const index_buffer_handle handle{ static_cast<handle_id>(id) };
+
+		index_buffers_.emplace_back(handle);
+
+		return handle;
 	}
 
-	void gl_graphics_api::draw_indexed(primitive_type type, size_t count) const
+	void GLAPIENTRY
+		message_callback(GLenum source,
+			GLenum type,
+			GLuint id,
+			GLenum severity,
+			GLsizei length,
+			const GLchar* message,
+			const void* userParam)
 	{
-		glDrawElements(moka_to_gl(type), count, GL_UNSIGNED_SHORT, (void*)0);
+		fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+			(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+			type, severity, message);
 	}
 
-	void gl_graphics_api::bind(const vertex_buffer_handle& vertex_buffer) const
-	{
-		glBindVertexArray(vertex_buffer.id);
-    }
-
-	void gl_graphics_api::bind(const program_handle& program) const
-	{
-		glUseProgram(program.id);
-    }
-
-    gl_graphics_api::gl_graphics_api()
+	gl_graphics_api::gl_graphics_api()
         : log_{ filesystem::current_path() }
     {
 		glewExperimental = GL_TRUE;
@@ -391,85 +422,16 @@ namespace moka
 		{
 			std::cout << glewGetErrorString(glewInit()) << std::endl;
 		}
-    }
 
-    std::string gl_graphics_api::version() const
-    {
-        return reinterpret_cast<const char*>(glGetString(GL_VERSION));
-    }
+		glGenVertexArrays(1, &vao_);
+		glBindVertexArray(vao_);
 
-    std::string gl_graphics_api::vendor() const
-    {
-        return reinterpret_cast<const char*>(glGetString(GL_VENDOR));
-    }
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(message_callback, 0);
+	}
 
-    std::string gl_graphics_api::renderer() const
-    {
-        return reinterpret_cast<const char*>(glGetString(GL_RENDERER));
-    }
-
-    std::string gl_graphics_api::extensions() const
-    {
-        auto count = 0;
-
-        glGetIntegerv(GL_NUM_EXTENSIONS, &count);
-
-        std::stringstream string;
-
-        for (auto i = 0; i < count; i++)
-        {
-            string << glGetStringi(GL_EXTENSIONS, i) << std::endl;
-        }
-
-        return string.str();
-    }
-
-    std::string gl_graphics_api::shading_language_version() const
-    {
-        return reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
-    }
-
-    void gl_graphics_api::clear(const bool color, const bool depth, const bool stencil,
-        const byte stencil_value, const colour& colour) const
-    {
-        auto clear_flags = 0;
-        if (color)
-        {
-            glClearColor(colour.r(), colour.g(), colour.b(), colour.a());
-            clear_flags |= GL_COLOR_BUFFER_BIT;
-        }
-        if (depth)
-        {
-            clear_flags |= GL_DEPTH_BUFFER_BIT;
-        }
-        if (stencil)
-        {
-            glClearStencil(stencil_value);
-            clear_flags |= GL_STENCIL_BUFFER_BIT;
-        }
-        glClear(clear_flags);
-    }
-
-    void gl_graphics_api::depth_bounds_test(const float zmin, const float zmax) const
-    {
-        if (zmin > zmax)
-        {
-            return;
-        }
-
-        if (zmin == 0.0f && zmax == 0.0f)
-        {
-            glDisable(GL_DEPTH_BOUNDS_TEST_EXT);
-        }
-        else
-        {
-            glEnable(GL_DEPTH_BOUNDS_TEST_EXT);
-            glDepthBoundsEXT(zmin, zmax);
-        }
-    }
-
-    void gl_graphics_api::polygon_offset(const float scale, const float bias) const
-    {
-        glPolygonOffset(scale, bias);
-    }
+	gl_graphics_api::~gl_graphics_api()
+	{
+		glDeleteVertexArrays(1, &vao_);
+	}
 }

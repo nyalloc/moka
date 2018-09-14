@@ -2,6 +2,10 @@
 
 #include <graphics/graphics_api.hpp>
 #include <application/logger.hpp>
+#include <GL/glew.h>
+#include "draw_call.hpp"
+#include "uniform_buffer.hpp"
+#include "uniform_buffer.hpp"
 
 namespace moka
 {
@@ -11,40 +15,42 @@ namespace moka
      */
     class gl_graphics_api : public graphics_api
     {
+		constexpr static size_t max_uniforms = 64;
+		constexpr static size_t max_draw_calls = 2048;
+
         logger log_;
         std::vector<shader_handle> shaders_;
         std::vector<program_handle> programs_;
-        std::vector<vertex_buffer_handle> vertex_buffers_;
+		std::vector<vertex_buffer_handle> vertex_buffers_;
+		vertex_buffer_handle current_vertex_;
+		std::vector<index_buffer_handle> index_buffers_;
+
+		GLuint vao_ = 0; // single VAO for entire project
+
+		draw_call previous_call_ = {};
+
+		std::unordered_map<handle_id, vertex_layout> vertex_layouts_;
+
+		size_t uniform_count_ = 0;
+		uniform_buffer uniform_buffer_;
+		std::array<uniform_data, max_uniforms> uniform_data_;
+
+		size_t draw_call_buffer_pos_ = 0;
+		std::array<draw_call, max_draw_calls> draw_call_buffer_;
     public:
         gl_graphics_api();
-        std::string version() const override;
-        std::string vendor() const override;
-        std::string renderer() const override;
-        std::string extensions() const override;
-        std::string shading_language_version() const override;
-        void clear(bool color, bool depth, bool stencil, byte stencil_value, const colour& colour) const override;
-        void depth_bounds_test(float zmin, float zmax) const override;
-        void polygon_offset(float scale, float bias) const override;
-        void check_errors() const override;
-        void clear_colour(const colour& colour) const override;
-        void set_scissor(const rectangle& bounds) const override;
-        void set_viewport(const rectangle& bounds) const override;
-        void scissor_test(toggle toggle) const override;
-        void depth_mask(toggle toggle) const override;
-        void depth_test(toggle toggle) const override;
-        void face_culling(toggle toggle) const override;
-        void blend(toggle toggle) const override;
-        void blend_function(blend_function_factor lhs, blend_function_factor rhs) const override;
-        void destroy(const shader_handle& handle) override;
+		~gl_graphics_api();
+
+		void frame() override;
+
+		void submit(draw_call&& call) override;
 
 		program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
         shader_handle create_shader(const shader_type type, const std::string& source) override;
-        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_layout& decl) override;
+	    vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) override;
+		index_buffer_handle create_index_buffer(const void* indices, size_t size) override;
 
-		void draw_arrays(primitive_type type, size_t first, size_t count) const override;
-		void draw_indexed(primitive_type type, size_t count) const override;
-
-		void bind(const vertex_buffer_handle& program) const override;
-		void bind(const program_handle& program) const override;
+		uniform_handle create_uniform(const char* name, const uniform_type& type, const size_t count) override;
+		const uniform_data& set_uniform(const uniform_handle& uniform, const void* data) override;
 	};
 }

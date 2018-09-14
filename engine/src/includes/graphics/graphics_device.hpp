@@ -4,9 +4,7 @@
 #include <graphics/graphics_api.hpp>
 #include <vector>
 #include "messaging/receiver.hpp"
-#include "uniform_buffer.hpp"
 #include "application/window.hpp"
-#include "draw_call.hpp"
 #include "draw_call_builder.hpp"
 
 namespace moka
@@ -27,15 +25,6 @@ namespace moka
         null         //!< No rendering API specified
     };
 
-	struct uniform_data
-	{
-		std::string name;
-		uniform_type type;
-		size_t count;
-		size_t buffer_start;
-		size_t buffer_end;
-	};
-
     /**
      * \brief The \p moka::graphics_device class presents a common rendering API and owns a pointer to the implementation.
      * An example of the bridge design pattern, \p moka::graphics_api allows moka rendering code to operate without being coupled to the native rendering API.
@@ -44,9 +33,6 @@ namespace moka
      */
     class graphics_device : public receiver
     {
-		constexpr static size_t max_uniforms = 64;
-		constexpr static size_t max_draw_calls = 2048;
-
 		window& window_;					//<! window that owns the rendering context
 		context_handle worker_context_;		//<! rendering context of the renderer worker thread
 		context_handle main_context_;		//<! rendering context of the main thread
@@ -55,18 +41,20 @@ namespace moka
 		std::thread worker_;					     //<! rendering thread (only thread to interact with the backend API)
 		std::unique_ptr<graphics_api> graphics_api_; //<! polymorphic abstraction of the native rendering API
 
-		size_t draw_call_buffer_pos_ = 0;
-		std::array<draw_call, max_draw_calls> draw_call_buffer_;
-
-		size_t uniform_count_;
-		uniform_buffer uniform_buffer_;
-    	std::array<uniform_data, max_uniforms> uniform_data_;
-
     	void worker_thread();
     public:
-        graphics_device(window& window, const graphics_backend graphics_backend = graphics_backend::opengl);
+        graphics_device(
+			window& window,
+			const graphics_backend graphics_backend = graphics_backend::opengl);
 
-        vertex_buffer_handle create_vertex_buffer(const memory& vertices, const vertex_layout& decl);
+        vertex_buffer_handle create_vertex_buffer(
+			const void* vertices, 
+			const size_t size,
+			const vertex_layout& layout);
+
+		index_buffer_handle create_index_buffer(
+			const void* indices, 
+			size_t size);
 
 		void submit(draw_call&& call);
 
@@ -102,6 +90,12 @@ namespace moka
          * \param handle Vertex buffer handle.
          */
         void destroy(vertex_buffer_handle handle);
+
+		/**
+	     * \brief Destroy index buffer.
+		 * \param handle Index buffer handle.
+		 */
+		void destroy(index_buffer_handle handle);
 
 		void frame();
 

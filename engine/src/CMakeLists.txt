@@ -97,8 +97,8 @@ set(MOKA_TESTS
   "src/tests/buffer_tests.cpp"
 )
 
-add_executable(moka_unit_test_app ${MOKA_TESTS})
+add_executable(unit_tests ${MOKA_TESTS})
 
-target_link_libraries(moka_unit_test_app moka)
+target_link_libraries(unit_tests moka)
 
-add_test(buffer_tests moka_unit_test_app [buffer])
+add_test(buffer_tests unit_tests [buffer])

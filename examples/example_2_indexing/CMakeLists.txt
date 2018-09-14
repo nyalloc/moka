@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(moka_example_triangle)
+project(example_2_indexing)
 
 set(Example_Includes 
 	"./"
@@ -13,7 +13,7 @@ set(Example_Includes
 
 include_directories(${Example_Includes})
 
-add_executable(moka_example_triangle main.cpp)
+add_executable(example_2_indexing main.cpp)
 
 add_compile_options("/std:c++latest")
 
@@ -24,4 +24,4 @@ foreach(_source IN ITEMS ${MOKA_SRC})
 endforeach()
 
 set_target_properties(moka PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(moka_example_triangle PUBLIC moka)
+target_link_libraries(example_2_indexing PUBLIC moka)

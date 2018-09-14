@@ -9,15 +9,18 @@ namespace moka
 	{
 		std::function<void(vertex_buffer_handle)> completion_handler_;
 	public:
-		const memory vertices;
+		const void* vertices;
+		const size_t size;
 		const vertex_layout layout;
 
 		explicit create_vertex_buffer_cmd(
-			const memory& vertices,
+			const void* vertices,
+			const size_t size,
 			const vertex_layout& layout,
 			std::function<void(vertex_buffer_handle)>&& completion_handler)
 			: completion_handler_(move(completion_handler))
 			, vertices(vertices)
+			, size(size)
 			, layout(layout)
 		{}
 

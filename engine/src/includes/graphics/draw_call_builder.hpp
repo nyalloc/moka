@@ -31,12 +31,12 @@ namespace moka
 
 		draw_call_builder& set_vertex_buffer(
 			const vertex_buffer_handle vertex_buffer,
-			const uint32_t start_vertex = 0,
-			const uint32_t vertex_count = std::numeric_limits<uint32_t>::max());
+			const uint32_t vertex_start,
+			const uint32_t vertex_count);
 
 		draw_call_builder& set_index_buffer(
 			const index_buffer_handle index_buffer,
-			const uint32_t index_count = std::numeric_limits<uint32_t>::max());
+			const uint32_t index_start);
 
 		template<typename T>
 		draw_call_builder& set_uniform(

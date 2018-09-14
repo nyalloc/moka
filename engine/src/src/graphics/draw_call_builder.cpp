@@ -28,12 +28,12 @@ namespace moka
 
 	draw_call_builder& draw_call_builder::set_vertex_buffer(
 		const vertex_buffer_handle vertex_buffer,
-		const uint32_t start_vertex, 
+		const uint32_t vertex_start,
 		const uint32_t vertex_count)
 	{
 		call_.vertex_buffer = vertex_buffer;
-		call_.start_vertex = start_vertex;
 		call_.vertex_count = vertex_count;
+		call_.vertex_start = vertex_start;
 		return *this;
 	}
 
