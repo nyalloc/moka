@@ -7,6 +7,7 @@ namespace moka
 	class create_shader_cmd;
 	class create_vertex_buffer_cmd;
 	class create_index_buffer_cmd;
+	class create_texture_cmd;
 	class frame_cmd;
 
 	class base_dispatcher
@@ -19,5 +20,6 @@ namespace moka
 		virtual bool dispatch(const create_shader_cmd&) { return false; }
 		virtual bool dispatch(const create_vertex_buffer_cmd&) { return false; }
 		virtual bool dispatch(const create_index_buffer_cmd&) { return false; }
+		virtual bool dispatch(const create_texture_cmd&) { return false; }
 	};
 }

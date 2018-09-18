@@ -17,18 +17,18 @@ struct vertex
 	{}
 };
 
-class triangle_application : public application
+class texture_application : public application
 {
 	vertex vertices_[3] =
 	{
-		vertex{ vector3{ -0.5f,  -0.5f, 0.0f }, color::red() },
-		vertex{ vector3{ 0.5f, -0.5f, 0.0f }, color::blue() },
-		vertex{ vector3{ 0.0f, 0.5f, 0.0f }, color::lime() },
+		vertex{ vector3{ -0.5f, -0.5f,  0.0f  }, color::red()  },
+		vertex{ vector3{  0.5f, -0.5f,  0.0f  }, color::blue() },
+		vertex{ vector3{  0.0f,  0.5f,  0.0f  }, color::lime() },
 	};
 
 	vertex_layout vertex_layout_ = vertex_layout::builder()
 		.add_attribute(attribute::position, 3, attribute_type::float32)
-		.add_attribute(attribute::color0, 4, attribute_type::float32)
+		.add_attribute(attribute::color0,   4, attribute_type::float32)
 		.build();
 
 	const char* vertex_source_ =
@@ -46,9 +46,10 @@ class triangle_application : public application
 		"    #version 330 core                               \n"
 		"    out vec4 FragColor;                             \n"
 		"    in vec3 out_color0;                             \n"
+		"    uniform vec4 color;                             \n"
 		"    void main()                                     \n"
 		"    {                                               \n"
-		"        FragColor = vec4(out_color0, 1.0f);         \n"
+		"        FragColor = vec4(out_color0, 1.0f) * color; \n"
 		"    }                                               \0";
 
 	vertex_buffer_handle vertex_buffer_;
@@ -56,29 +57,38 @@ class triangle_application : public application
 	shader_handle vertex_shader_;
 	shader_handle fragment_shader_;
 	program_handle program_;
+
+	uniform_handle colour_uniform_;
+	vector4 white_;
 public:
-	triangle_application(const int argc, char* argv[])
+
+	texture_application(const int argc, char* argv[])
 		: application(argc, argv)
 		, vertex_buffer_(graphics_.create_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_))
 		, vertex_shader_(graphics_.create_shader(shader_type::vertex, vertex_source_))
 		, fragment_shader_(graphics_.create_shader(shader_type::fragment, fragment_source_))
 		, program_(graphics_.create_program(vertex_shader_, fragment_shader_))
+		, colour_uniform_(graphics_.create_uniform("color", uniform_type::vec4, 1))
+		, white_(color::white().to_vector4())
 	{}
 
-	~triangle_application()
+	~texture_application()
 	{
 		graphics_.destroy(vertex_buffer_);
 		graphics_.destroy(program_);
+		timer_.stop();
 	}
 
 	void draw(const game_time delta_time) override
 	{
-		vector4 color{ 0.5f, 0.5f, 0.5f, 1.0f };
+		float current_time = timer_.elapsed() / 1000.0f;
+		float colour_val = (sin(current_time) / 2.0f) + 0.5f;
 
-		graphics_.draw()
+		graphics_.begin()
 			.set_vertex_buffer(vertex_buffer_, 0, 3)
 			.set_program(program_)
-			.submit();
+			.set_uniform(colour_uniform_, white_ * colour_val)
+			.end();
 
 		graphics_.frame();
 	}
@@ -86,9 +96,17 @@ public:
 	void update(const game_time delta_time) override
 	{
 	}
+
+	std::filesystem::path data_path() override
+	{
+		// cmake-defined macro points to example project asset folder relative to source.
+		// A real application could point this wherever it wanted.
+		std::filesystem::path result{ ASSET_PATH };
+		return result.lexically_normal();
+	}
 };
 
 int main(const int argc, char* argv[])
 {
-	return triangle_application{ argc, argv }.run();
+	return texture_application{ argc, argv }.run();
 }

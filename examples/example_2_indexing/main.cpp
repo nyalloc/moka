@@ -19,15 +19,15 @@ struct vertex
 
 class indexing_application : public application
 {
-	vertex vertices_[4] =
+	vertex vertices_a_[4] =
 	{
-		vertex{ vector3{ 0.5f, 0.5f, 0.0f }, color::red() },
-		vertex{ vector3{ 0.5f, -0.5f, 0.0f }, color::blue() },
-		vertex{ vector3{ -0.5f, -0.5f, 0.0f }, color::lime() },
-		vertex{ vector3{ -0.5f, 0.5f, 0.0f }, color::yellow() }
+		vertex{ vector3{  0.5f,  0.5f,  0.0f  }, color::red()    },
+		vertex{ vector3{  0.5f, -0.5f,  0.0f  }, color::blue()   },
+		vertex{ vector3{ -0.5f, -0.5f,  0.0f  }, color::lime()   },
+		vertex{ vector3{ -0.5f,  0.5f,  0.0f  }, color::yellow() }
 	};
 
-	uint32_t indices_[6] =
+	uint32_t indices_a_[6] =
 	{
 		0, 1, 3,
 		1, 2, 3
@@ -35,8 +35,15 @@ class indexing_application : public application
 
 	vertex_layout vertex_layout_ = vertex_layout::builder()
 		.add_attribute(attribute::position, 3, attribute_type::float32)
-		.add_attribute(attribute::color0, 4, attribute_type::float32)
+		.add_attribute(attribute::color0,   4, attribute_type::float32)
 		.build();
+
+	vertex vertices_b_[3] =
+	{
+		vertex{ vector3{ -0.25f, -0.25f, 1.0f }, color::red()  },
+		vertex{ vector3{  0.25f, -0.25f, 1.0f }, color::blue() },
+		vertex{ vector3{  0.0f,   0.25f, 1.0f }, color::lime() },
+	};
 
 	const char* vertex_source_ =
 		"    #version 330 core                               \n"
@@ -58,8 +65,9 @@ class indexing_application : public application
 		"        FragColor = vec4(out_color0, 1.0f);         \n"
 		"    }                                               \0";
 
-	vertex_buffer_handle vertex_buffer_;
-	index_buffer_handle index_buffer_;
+	vertex_buffer_handle vertex_buffer_a_;
+	vertex_buffer_handle vertex_buffer_b_;
+	index_buffer_handle index_buffer_a_;
 	shader_handle vertex_shader_;
 	shader_handle fragment_shader_;
 	program_handle program_;
@@ -68,8 +76,9 @@ public:
 
 	indexing_application(const int argc, char* argv[])
 		: application(argc, argv)
-		, vertex_buffer_(graphics_.create_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_))
-		, index_buffer_(graphics_.create_index_buffer(indices_, sizeof indices_))
+		, vertex_buffer_a_(graphics_.create_vertex_buffer(vertices_a_, sizeof vertices_a_, vertex_layout_))
+		, vertex_buffer_b_(graphics_.create_vertex_buffer(vertices_b_, sizeof vertices_b_, vertex_layout_))
+		, index_buffer_a_(graphics_.create_index_buffer(indices_a_, sizeof indices_a_))
 		, vertex_shader_(graphics_.create_shader(shader_type::vertex, vertex_source_))
 		, fragment_shader_(graphics_.create_shader(shader_type::fragment, fragment_source_))
 		, program_(graphics_.create_program(vertex_shader_, fragment_shader_))
@@ -77,26 +86,38 @@ public:
 
 	~indexing_application()
 	{
-		graphics_.destroy(index_buffer_);
-		graphics_.destroy(vertex_buffer_);
+		graphics_.destroy(index_buffer_a_);
+		graphics_.destroy(vertex_buffer_a_);
+		graphics_.destroy(vertex_buffer_b_);
 		graphics_.destroy(program_);
 	}
 
 	void draw(const game_time delta_time) override
 	{
-		vector4 color{ 0.5f, 0.5f, 0.5f, 1.0f };
-
-		graphics_.draw()
-			.set_vertex_buffer(vertex_buffer_, 0, 4)
-			.set_index_buffer(index_buffer_, 6)
+		graphics_.begin()
+			.set_vertex_buffer(vertex_buffer_a_, 0, 4)
+			.set_index_buffer(index_buffer_a_, 6)
 			.set_program(program_)
-			.submit();
+			.end();
+
+		graphics_.begin()
+			.set_vertex_buffer(vertex_buffer_b_, 0, 3)
+			.set_program(program_)
+			.end();
 
 		graphics_.frame();
 	}
 
 	void update(const game_time delta_time) override
 	{
+	}
+
+	std::filesystem::path data_path() override
+	{
+		// cmake-defined macro points to example project asset folder relative to source.
+		// A real application could point this wherever it wanted.
+		std::filesystem::path result{ ASSET_PATH };
+		return result.lexically_normal();
 	}
 };
 

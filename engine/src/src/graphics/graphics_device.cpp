@@ -6,6 +6,7 @@
 #include <graphics/create_shader.hpp>
 #include <graphics/create_vertex_buffer.hpp>
 #include <graphics/create_index_buffer.hpp>
+#include <graphics/create_texture.hpp>
 #include <graphics/frame.hpp>
 #include <application/logger.hpp>
 #include <GL/glew.h>
@@ -46,41 +47,42 @@ namespace moka
 
 		draw_call previous_call = {};
 
-		while (true)
+		wait()
+		.handle<frame_cmd>([&](const frame_cmd& event)
 		{
-			poll()
-			.handle<create_program_cmd>([&](const create_program_cmd& event)
-			{
-				event(graphics_api_->create_program(
-					event.vertex_handle, 
-					event.fragment_handle));
-			})
-			.handle<create_shader_cmd>([&](const create_shader_cmd& event)
-			{
-				event(graphics_api_->create_shader(
-					event.type, 
-					event.source));
-			})
-			.handle<create_vertex_buffer_cmd>([&](const create_vertex_buffer_cmd& event)
-			{
-				event(graphics_api_->create_vertex_buffer(
-					event.vertices, 
-					event.size, 
-					event.layout));
-			})
-			.handle<create_index_buffer_cmd>([&](const create_index_buffer_cmd& event)
-			{
-				event(graphics_api_->create_index_buffer(
-					event.indices, 
-					event.size));
-			})
-			.handle<frame_cmd>([&](const frame_cmd& event)
-			{
-				graphics_api_->frame();
-				window_.swap_buffer();
-				event();
-			});
-		}
+			graphics_api_->frame();
+			window_.swap_buffer();
+			event();
+		})
+		.handle<create_program_cmd>([&](const create_program_cmd& event)
+		{
+			event(graphics_api_->create_program(
+				event.vertex_handle,
+				event.fragment_handle));
+		})
+		.handle<create_shader_cmd>([&](const create_shader_cmd& event)
+		{
+			event(graphics_api_->create_shader(
+				event.type,
+				event.source));
+		})
+		.handle<create_vertex_buffer_cmd>([&](const create_vertex_buffer_cmd& event)
+		{
+			event(graphics_api_->create_vertex_buffer(
+				event.vertices,
+				event.size,
+				event.layout));
+		})
+		.handle<create_index_buffer_cmd>([&](const create_index_buffer_cmd& event)
+		{
+			event(graphics_api_->create_index_buffer(
+				event.indices,
+				event.size));
+		})
+		.handle<create_texture_cmd>([&](const create_texture_cmd& event)
+		{
+			event(graphics_api_->create_texture(event.data));
+		});
 	}
 
     graphics_device::graphics_device(
@@ -176,7 +178,7 @@ namespace moka
 		return handle;
 	}
 
-	draw_call_builder graphics_device::draw()
+	draw_call_builder graphics_device::begin()
 	{
 		return { *this };
 	}
@@ -216,6 +218,34 @@ namespace moka
 		// wait for render thread to complete its work.
 		std::unique_lock<std::mutex> lk(m);
 		cv.wait(lk, [&] { return ready; });
+
+		return handle;
+	}
+
+	texture_handle graphics_device::create_texture(texture_data& texture_data)
+	{
+		std::mutex m;
+		std::condition_variable cv;
+		auto ready = false;
+
+		texture_handle handle{};
+
+		// register handler to get the program handle from render thread.
+		const create_texture_cmd event(texture_data, [&](texture_handle h)
+		{
+			handle = h;
+			ready = true;
+			cv.notify_one();
+		});
+
+		// send request to render thread.
+		send(event);
+
+		// wait for render thread to complete its work.
+		std::unique_lock<std::mutex> lk(m);
+		cv.wait(lk, [&] { return ready; });
+
+		unload(texture_data);
 
 		return handle;
 	}

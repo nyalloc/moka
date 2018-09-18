@@ -12,7 +12,6 @@ set(MOKA_SRC
     "src/application/application.cpp"
     "src/application/application_sdl.cpp"
 	"src/application/system_info.cpp"
-	"src/application/logger.cpp"
 	"includes/application/mvp/model.hpp"
     "includes/application/application.hpp"
     "includes/application/signal.hpp"
@@ -20,7 +19,8 @@ set(MOKA_SRC
 	"includes/application/logger.hpp"
     "includes/application/system_info.hpp"
     "includes/application/game_loop.hpp"
-	
+    "includes/application/timer.hpp"
+
     "src/graphics/gl_graphics_api.cpp"
     "src/graphics/graphics_device.cpp"
     "src/graphics/draw_call_builder.cpp"
@@ -63,18 +63,9 @@ set(MOKA_SRC
     "includes/maths/vector2.hpp"
     "includes/maths/vector3.hpp"
     "includes/maths/vector4.hpp"
-
-	"includes/asset_importer/resource_manager.hpp"
-	"includes/asset_importer/texture_importer/texture_importer.hpp"
-	"includes/asset_importer/asset_database.hpp"
-	"includes/asset_importer/asset_importer.hpp"
-	"includes/asset_importer/filesystem.hpp"
-	"includes/asset_importer/importer_specialisations.hpp"
-	"includes/asset_importer/mesh_importer/mesh_importer.hpp"
-	"src/asset_importer/resource_manager.cpp"
-    "src/asset_importer/asset_importer.cpp"
-    "src/asset_importer/texture_importer/texture_importer.cpp"
-    "src/asset_importer/asset_database.cpp"
+	
+	"includes/asset_importer/texture_import.hpp"
+    "src/asset_importer/texture_import.cpp"
 )
 
 add_library(moka STATIC ${MOKA_SRC})
@@ -90,6 +81,7 @@ endforeach()
 target_link_libraries(moka
     glew::glew
     SDL2::SDL2
+	spdlog::spdlog
 )
 
 set(MOKA_TESTS
@@ -97,8 +89,8 @@ set(MOKA_TESTS
   "src/tests/buffer_tests.cpp"
 )
 
-add_executable(unit_tests ${MOKA_TESTS})
+add_executable(moka_tests ${MOKA_TESTS})
 
-target_link_libraries(unit_tests moka)
+target_link_libraries(moka_tests moka)
 
-add_test(buffer_tests unit_tests [buffer])
+add_test(buffer_tests moka_tests [buffer])

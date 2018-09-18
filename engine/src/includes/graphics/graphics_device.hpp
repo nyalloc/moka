@@ -6,6 +6,7 @@
 #include "messaging/receiver.hpp"
 #include "application/window.hpp"
 #include "draw_call_builder.hpp"
+#include <asset_importer/texture_import.hpp>
 
 namespace moka
 {
@@ -62,7 +63,7 @@ namespace moka
 
 		shader_handle create_shader(const shader_type type, const std::string& source);
 
-		draw_call_builder draw();
+		draw_call_builder begin();
 
         /**
          * \brief Create program with vertex and fragment shaders.
@@ -78,6 +79,8 @@ namespace moka
          * \return Program handle.
          */
         program_handle create_program(shader_handle compute_handle);
+
+		texture_handle create_texture(texture_data& texture_data);
 
         /**
          * \brief Destroy program.

@@ -10,7 +10,7 @@ namespace moka
 	{
 		switch (type)
 		{
-		case uniform_type::int1: return sizeof(int) * count;
+		case uniform_type::texture: return sizeof(texture_binding) * count;
 		case uniform_type::vec3: return sizeof(float) * 3 * count;
 		case uniform_type::vec4: return sizeof(float) * 4 * count;
 		case uniform_type::mat3: return sizeof(float) * 3 * 3 * count;

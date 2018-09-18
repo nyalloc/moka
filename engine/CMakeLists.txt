@@ -21,6 +21,10 @@ find_package(glew CONFIG REQUIRED)
 hunter_add_package(SDL2)
 find_package(SDL2 CONFIG REQUIRED)
 
+# Include spdlog
+hunter_add_package(spdlog)
+find_package(spdlog CONFIG REQUIRED)
+
 enable_testing()
 
 add_subdirectory(src)

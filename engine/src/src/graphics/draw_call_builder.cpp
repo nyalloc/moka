@@ -11,14 +11,6 @@ namespace moka
 		call_.uniform_end = 0;
 	}
 
-	draw_call_builder& draw_call_builder::set_texture_unit(
-		const size_t texture_unit, 
-		const uniform_handle sampler_handle,
-		const texture_handle texture)
-	{
-		return *this;
-	}
-
 	draw_call_builder& draw_call_builder::set_face_culling(
 		const face_culling culling)
 	{
@@ -64,6 +56,20 @@ namespace moka
 		return *this;
 	}
 
+	draw_call_builder& draw_call_builder::set_texture(
+		const size_t texture_unit,
+		const uniform_handle sampler_handle,
+		const texture_handle texture)
+	{
+		texture_binding data
+		{
+			texture,
+			texture_unit
+		};
+
+		return set_uniform_internal(sampler_handle, &data);
+	}
+
 	draw_call_builder& draw_call_builder::set_program(
 		const program_handle program)
 	{
@@ -77,7 +83,7 @@ namespace moka
 		return call_;
 	}
 
-	void draw_call_builder::submit()
+	void draw_call_builder::end()
 	{
 		device_.submit(build());
 	}

@@ -1,0 +1,14 @@
+{
+   "asset": {
+      "id": "default_texture",
+      "path": "tile.png",
+      "importer": {
+         "name": "mesh_importer"
+      },
+      "texture_import_settings": {
+          "generate_mipmaps": "true",
+          "teture_filtering": "linear",
+          "edge_value_sampling": "mirror_clamp_to_edge"         
+      }
+   }
+}

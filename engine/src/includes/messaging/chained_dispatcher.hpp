@@ -27,9 +27,9 @@ namespace moka
 			for (;;)
 			{
 				const auto msg = _q->wait_and_pop();
-				if (dispatch(msg))
+				if (msg)
 				{
-					break;
+					dispatch(msg);
 				}
 			}
 		}

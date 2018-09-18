@@ -18,7 +18,8 @@ namespace moka
 		constexpr static size_t max_uniforms = 64;
 		constexpr static size_t max_draw_calls = 2048;
 
-        logger log_;
+        static logger log_;
+
         std::vector<shader_handle> shaders_;
         std::vector<program_handle> programs_;
 		std::vector<vertex_buffer_handle> vertex_buffers_;
@@ -37,6 +38,15 @@ namespace moka
 
 		size_t draw_call_buffer_pos_ = 0;
 		std::array<draw_call, max_draw_calls> draw_call_buffer_;
+
+		static void GLAPIENTRY
+			message_callback(GLenum source,
+				GLenum type,
+				GLuint id,
+				GLenum severity,
+				GLsizei length,
+				const GLchar* message,
+				const void* userParam);
     public:
         gl_graphics_api();
 		~gl_graphics_api();
@@ -49,6 +59,7 @@ namespace moka
         shader_handle create_shader(const shader_type type, const std::string& source) override;
 	    vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) override;
 		index_buffer_handle create_index_buffer(const void* indices, size_t size) override;
+		texture_handle create_texture(const texture_data& data) override;
 
 		uniform_handle create_uniform(const char* name, const uniform_type& type, const size_t count) override;
 		const uniform_data& set_uniform(const uniform_handle& uniform, const void* data) override;

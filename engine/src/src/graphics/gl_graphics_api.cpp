@@ -3,6 +3,8 @@
 #include <sstream>
 #include <application/logger.hpp>
 #include <graphics/gl_graphics_api.hpp>
+#include <filesystem>
+#include <iostream>
 
 namespace moka
 {
@@ -17,6 +19,19 @@ namespace moka
 		default: return 0;
 		}
 	};
+
+	constexpr GLenum moka_to_gl(const texture_components type)
+	{
+		switch (type)
+		{
+		case texture_components::rgb: return GL_RGB;
+		case texture_components::rgb_alpha: return GL_RGBA;
+		case texture_components::grey_alpha: return GL_RGBA; //todo: this is probably wrong
+		case texture_components::grey: return GL_RGB;		 //todo: ditto
+		default: return 0;
+		}
+	};
+
 
 	constexpr GLenum moka_to_gl(const attribute_type type)
 	{
@@ -103,17 +118,17 @@ namespace moka
 			return a.key > b.key;
 		};
 
+		// clear the render target
+		auto color = colour::cornflower_blue();
+
+		glClearColor(color.r(), color.g(), color.b(), color.a());
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		// if draw commands have been sent
 		if (draw_call_buffer_pos_ > 0)
 		{
 			// sort all render items to minimise state changes
 			std::sort(draw_call_buffer_.begin(), draw_call_buffer_.begin() + draw_call_buffer_pos_, comparator);
-
-			// clear the render target
-			auto color = colour::cornflower_blue();
-
-			glClearColor(color.r(), color.g(), color.b(), color.a());
-			glClear(GL_COLOR_BUFFER_BIT);
 
 			for (auto it = draw_call_buffer_.begin(); it != draw_call_buffer_.begin() + draw_call_buffer_pos_; ++it)
 			{
@@ -192,11 +207,13 @@ namespace moka
 
 					switch (uniform_data.type)
 					{
-					case uniform_type::int1:
+					case uniform_type::texture:
 					{
-						GLuint texture_unit;
-						memcpy(&texture_unit, data, size);
-						glUniform1uiv(location, uniform_data.count, &texture_unit);
+						texture_binding texture;
+						memcpy(&texture, data, size);
+						glUniform1i(location, texture.unit);
+						glActiveTexture(GL_TEXTURE0 + texture.unit); // activate the texture unit first before binding texture
+						glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.handle.id));
 						break;
 					}
 					case uniform_type::vec3:
@@ -262,7 +279,12 @@ namespace moka
 		uniform_data.type = type;
 		uniform_data.name = name;
 		uniform_data.count = count;
-		return uniform_handle{ static_cast<handle_id>(uniform_count_++) };
+
+		auto result = uniform_handle{ static_cast<handle_id>(uniform_count_++) };
+
+		log_.info("OpenGL uniform sucessfully created. Handle: {}", result.id);
+
+		return result;
 	}
 
 	const uniform_data& gl_graphics_api::set_uniform(const uniform_handle& uniform, const void* data)
@@ -305,8 +327,10 @@ namespace moka
 
             glGetShaderInfoLog(id, 512, nullptr, info_log);
 
-            log_.log(level::error, info_log);
+			log_.info(info_log);
         }
+
+		log_.info("OpenGL program sucessfully created. Handle: {}", result.id);
 
         programs_.emplace_back(result);
         return result;
@@ -339,18 +363,20 @@ namespace moka
             switch (type)
             {
             case shader_type::vertex:
-                log_.log(level::error, "GLSL vertex shader compilation failed: "s + info_log);
+				log_.error("GLSL vertex shader compilation failed: {}",  info_log);
                 break;
             case shader_type::fragment:
-                log_.log(level::error, "GLSL fragment shader compilation failed: "s + info_log);
-                break;
+				log_.error("GLSL fragment shader compilation failed: {}", info_log);
+				break;
             case shader_type::compute:
-                log_.log(level::error, "GLSL compute shader compilation failed: "s + info_log);
-                break;
+				log_.error("GLSL fragment shader compilation failed: {}", info_log);
+				break;
             default:;
             }
 
         }
+
+		log_.info("OpenGL shader sucessfully created. Handle: {}", handle.id);
 
         shaders_.emplace_back(handle);
         return handle;
@@ -377,6 +403,8 @@ namespace moka
 		vertex_layouts_[handle.id] = layout;
         vertex_buffers_.emplace_back(handle);
 
+		log_.info("OpenGL vertex buffer sucessfully created. Handle: {}", handle.id);
+
         return handle;
     }
 
@@ -397,11 +425,24 @@ namespace moka
 
 		index_buffers_.emplace_back(handle);
 
+		log_.info("OpenGL index buffer sucessfully created. Handle: {}", handle.id);
+
 		return handle;
 	}
 
+	// todo: add argument to create_texture to allow users to specify the internal pixel format seperately from the input format
+	texture_handle gl_graphics_api::create_texture(const texture_data & data)
+	{
+		unsigned int texture;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data.resolution.x(), data.resolution.y(), 0, moka_to_gl(data.components), GL_UNSIGNED_BYTE, data.data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		return texture_handle{ static_cast<handle_id>(texture) };
+	}
+
 	void GLAPIENTRY
-		message_callback(GLenum source,
+		gl_graphics_api::message_callback(GLenum source,
 			GLenum type,
 			GLuint id,
 			GLenum severity,
@@ -409,25 +450,32 @@ namespace moka
 			const GLchar* message,
 			const void* userParam)
 	{
-		fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-			(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
-			type, severity, message);
+		log_.error(message);
 	}
 
+	logger gl_graphics_api::log_("OpenGL");
+
 	gl_graphics_api::gl_graphics_api()
-        : log_{ filesystem::current_path() }
     {
 		glewExperimental = GL_TRUE;
 		if (glewInit() != GLEW_OK)
 		{
-			std::cout << glewGetErrorString(glewInit()) << std::endl;
+			log_.error("Failed to initialise glew: {}", glewGetErrorString(glewInit()));
+		}
+
+		// enable GL_DEBUG_OUTPUT by default if it's a debug build
+		if constexpr(application_traits::is_debug_build)
+		{
+			glEnable(GL_DEBUG_OUTPUT);
+			glDebugMessageCallback(message_callback, 0);
 		}
 
 		glGenVertexArrays(1, &vao_);
 		glBindVertexArray(vao_);
 
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(message_callback, 0);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	}
 
 	gl_graphics_api::~gl_graphics_api()

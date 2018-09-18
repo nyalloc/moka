@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <application/logger.hpp>
 #include <atomic>
+#include <iostream>
+#include <string>
 
 namespace moka
 {
@@ -10,7 +12,7 @@ namespace moka
     {
         SDL_Window* window_;
         bool running_;
-        logger log_{ filesystem::current_path() / "window.log" };
+		logger log_{ "Window" };
 		std::unordered_map<handle_id, SDL_GLContext> contexts_;
     public:
         signal<> exit;

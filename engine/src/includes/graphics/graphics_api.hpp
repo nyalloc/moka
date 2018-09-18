@@ -3,6 +3,7 @@
 #include <ostream>
 #include <maths/colour.hpp>
 #include <maths/vector3.hpp>
+#include <asset_importer/texture_import.hpp>
 #include <vector>
 
 namespace moka
@@ -282,7 +283,7 @@ namespace moka
 
     enum class uniform_type : uint8_t
     {
-        int1, //!< integer uniform
+        texture, //!< sampler
         vec3, //!< 3 floats vector uniform
         vec4, //!< 4 floats vector uniform
         mat3, //!< 3x3 matrix uniform
@@ -385,6 +386,12 @@ namespace moka
 		size_t buffer_end;
 	};
 
+	struct texture_binding
+	{
+		texture_handle handle;
+		size_t unit;
+	};
+
 	struct draw_call;
 
     /**
@@ -399,8 +406,9 @@ namespace moka
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
         virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) = 0;
 		virtual index_buffer_handle create_index_buffer(const void* indices, size_t size) = 0;
-
 		virtual uniform_handle create_uniform(const char* name, const uniform_type& type, const size_t count) = 0;
+		virtual texture_handle create_texture(const texture_data& data) = 0;
+		
 		virtual const uniform_data& set_uniform(const uniform_handle& uniform, const void* data) = 0;
 
 		virtual void submit(draw_call&& call) = 0;

@@ -21,7 +21,7 @@ namespace moka
 		draw_call_builder(
 			graphics_device& device);
 
-		draw_call_builder& set_texture_unit(
+		draw_call_builder& set_texture(
 			const size_t texture_unit,
 			const uniform_handle sampler_handle,
 			const texture_handle texture);
@@ -46,7 +46,7 @@ namespace moka
 		draw_call_builder& set_program(
 			const program_handle program);
 
-		void submit();
+		void end();
 	};
 
 	template<typename T>

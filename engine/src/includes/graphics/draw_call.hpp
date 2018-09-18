@@ -23,6 +23,7 @@ namespace moka
 		uint32_t uniform_end   = std::numeric_limits<uint32_t>::max();   
 
 		uint64_t state = 0; 
+
 		sort_key key;
 	};
 }
