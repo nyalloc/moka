@@ -1,7 +1,7 @@
 #pragma once
 
-#include <maths/vector4.hpp>
-#include <maths/vector3.hpp>
+#include <glm/glm.hpp>
+#include <array>
 
 namespace moka
 {
@@ -29,17 +29,17 @@ namespace moka
 
     class colour
     {
-        detail::vector4<byte> rgba_bytes_;
+		std::array<byte, 4> rgba_bytes_;
     public:
 
-		constexpr operator vector4() const noexcept
+		operator glm::vec4() const noexcept
 		{
-			return to_vector4();
+			return glm::vec4{ r(), g(), b(), a() };
 		}
 
-		constexpr operator vector3() const noexcept
+		operator glm::vec3() const noexcept
 		{
-			return to_vector3();
+			return glm::vec3{ r(), g(), b() };
 		}
 
         constexpr colour(
@@ -57,17 +57,17 @@ namespace moka
 			, detail::int_to_byte(255) }
         {}
 
-        constexpr colour(const vector3& colour) noexcept
-            : colour{ detail::float_to_byte(colour.x())
-			, detail::float_to_byte(colour.y())
-			, detail::float_to_byte(colour.z()) }
+        constexpr colour(const glm::vec3& colour) noexcept
+            : colour{ detail::float_to_byte(colour.x)
+			, detail::float_to_byte(colour.y)
+			, detail::float_to_byte(colour.z) }
         {}
 
-        constexpr colour(const vector4& colour) noexcept
-            : colour{ detail::float_to_byte(colour.x())
-			, detail::float_to_byte(colour.y())
-			, detail::float_to_byte(colour.z())
-			, detail::float_to_byte(colour.w()) }
+        constexpr colour(const glm::vec4& colour) noexcept
+            : colour{ detail::float_to_byte(colour.x)
+			, detail::float_to_byte(colour.y)
+			, detail::float_to_byte(colour.z)
+			, detail::float_to_byte(colour.w) }
         {}
 
         constexpr colour(
@@ -97,42 +97,42 @@ namespace moka
 			return detail::byte_to_float(rgba_bytes_[pos]);
 		}
 
-        constexpr void r(const int val) noexcept
+        constexpr void set_r(const int val) noexcept
         {
             rgba_bytes_[0] = detail::int_to_byte(val);
         }
 
-        constexpr void r(const float val) noexcept
+        constexpr void set_r(const float val) noexcept
         {
             rgba_bytes_[0] = detail::float_to_byte(val);
         }
 
-        constexpr void g(const int val) noexcept
+        constexpr void set_g(const int val) noexcept
         {
             rgba_bytes_[1] = detail::int_to_byte(val);
         }
 
-        constexpr void g(const float val) noexcept
+        constexpr void set_g(const float val) noexcept
         {
             rgba_bytes_[1] = detail::float_to_byte(val);
         }
 
-        constexpr void b(const int val) noexcept
+        constexpr void set_b(const int val) noexcept
         {
             rgba_bytes_[2] = detail::int_to_byte(val);
         }
 
-        constexpr void b(const float val) noexcept
+        constexpr void set_b(const float val) noexcept
         {
             rgba_bytes_[2] = detail::float_to_byte(val);
         }
 
-        constexpr void a(const int val) noexcept
+        constexpr void set_a(const int val) noexcept
         {
             rgba_bytes_[3] = detail::int_to_byte(val);
         }
 
-        constexpr void a(const float val) noexcept
+        constexpr void set_a(const float val) noexcept
         {
             rgba_bytes_[3] = detail::float_to_byte(val);
         }
@@ -156,16 +156,6 @@ namespace moka
         {
             return detail::byte_to_float(rgba_bytes_[3]);
         }
-
-        constexpr vector4 to_vector4() const noexcept
-        {
-            return { r(), g(), b(), a() };
-        }
-
-		constexpr vector3 to_vector3() const noexcept
-		{
-			return { r(), g(), b() };
-		}
 
         constexpr static colour alice_blue() noexcept
         {
@@ -291,6 +281,26 @@ namespace moka
         {
             return { 169, 169, 169 };
         }
+
+		constexpr static colour nero() noexcept
+		{
+			return { 25, 25, 25 };
+		}
+
+		constexpr static colour night_rider() noexcept
+		{
+			return { 50, 50, 50 };
+		}
+
+		constexpr static colour charcoal() noexcept
+		{
+			return { 75, 75, 75 };
+		}
+
+		constexpr static colour studio() noexcept
+		{
+			return { 134, 78, 160 };
+		}
 
         constexpr static colour dark_grey() noexcept
         {

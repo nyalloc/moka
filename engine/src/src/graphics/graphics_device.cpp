@@ -2,6 +2,7 @@
 #include <graphics/graphics_device.hpp>
 #include <graphics/gl_graphics_api.hpp>
 #include <graphics/draw_call.hpp>
+#include <graphics/draw_call_builder.hpp>
 #include <graphics/create_program.hpp>
 #include <graphics/create_shader.hpp>
 #include <graphics/create_vertex_buffer.hpp>
@@ -31,60 +32,6 @@ namespace moka
         }
     }
 
-	void graphics_device::worker_thread()
-	{
-		// this is the worker thread that does all rendering
-		// this might not be very portable, a lot of literature I've read reccomends using the main thread for this work
-		// however this doesn't seem to be possible when using an SDL-based application, as it reserves the main thread for its event loop
-
-		// make worker graphics context current
-		window_.set_current_context(worker_context_);
-
-		// initialise renderer backend
-		graphics_api_ = create(graphics_backend_);
-
-		const auto bg = color::cornflower_blue();
-
-		draw_call previous_call = {};
-
-		wait()
-		.handle<frame_cmd>([&](const frame_cmd& event)
-		{
-			graphics_api_->frame();
-			window_.swap_buffer();
-			event();
-		})
-		.handle<create_program_cmd>([&](const create_program_cmd& event)
-		{
-			event(graphics_api_->create_program(
-				event.vertex_handle,
-				event.fragment_handle));
-		})
-		.handle<create_shader_cmd>([&](const create_shader_cmd& event)
-		{
-			event(graphics_api_->create_shader(
-				event.type,
-				event.source));
-		})
-		.handle<create_vertex_buffer_cmd>([&](const create_vertex_buffer_cmd& event)
-		{
-			event(graphics_api_->create_vertex_buffer(
-				event.vertices,
-				event.size,
-				event.layout));
-		})
-		.handle<create_index_buffer_cmd>([&](const create_index_buffer_cmd& event)
-		{
-			event(graphics_api_->create_index_buffer(
-				event.indices,
-				event.size));
-		})
-		.handle<create_texture_cmd>([&](const create_texture_cmd& event)
-		{
-			event(graphics_api_->create_texture(event.data));
-		});
-	}
-
     graphics_device::graphics_device(
 		window& window,
         const graphics_backend graphics_backend)
@@ -92,8 +39,68 @@ namespace moka
 	, worker_context_(window_.make_context())
 	, main_context_(window_.make_context())
 	, graphics_backend_(graphics_backend)
-	, worker_([&]() { worker_thread(); })
-	{}
+	{
+		std::mutex m;
+		std::condition_variable cv;
+		auto ready = false;
+
+		worker_ = std::thread([&]() 
+		{	
+			// this is the worker thread that does all rendering
+			// this might not be very portable, a lot of literature I've read reccomends using the main thread for this work
+			// however this doesn't seem to be possible when using an SDL-based application, as it reserves the main thread for its event loop
+
+			// make worker graphics context current
+			window_.set_current_context(worker_context_);
+
+			// initialise renderer backend
+			graphics_api_ = create(graphics_backend_);
+
+			ready = true;
+			cv.notify_one();
+
+			wait()
+			.handle<frame_cmd>([&](const frame_cmd& event)
+			{
+				graphics_api_->frame();
+				window_.swap_buffer();
+				event();
+			})
+			.handle<create_program_cmd>([&](const create_program_cmd& event)
+			{
+				event(graphics_api_->create_program(
+					event.vertex_handle,
+					event.fragment_handle));
+			})
+			.handle<create_shader_cmd>([&](const create_shader_cmd& event)
+			{
+				event(graphics_api_->create_shader(
+					event.type,
+					event.source));
+			})
+			.handle<create_vertex_buffer_cmd>([&](const create_vertex_buffer_cmd& event)
+			{
+				event(graphics_api_->create_vertex_buffer(
+					event.vertices,
+					event.size,
+					event.layout));
+			})
+			.handle<create_index_buffer_cmd>([&](const create_index_buffer_cmd& event)
+			{
+				event(graphics_api_->create_index_buffer(
+					event.indices,
+					event.size));
+			})
+			.handle<create_texture_cmd>([&](const create_texture_cmd& event)
+			{
+				event(graphics_api_->create_texture(event.data));
+			});
+		});
+
+		// wait for render thread to initialise backend
+		std::unique_lock<std::mutex> lk(m);
+		cv.wait(lk, [&] { return ready; });
+	}
 
 	vertex_buffer_handle graphics_device::create_vertex_buffer(
 		const void* vertices, 
@@ -222,7 +229,7 @@ namespace moka
 		return handle;
 	}
 
-	texture_handle graphics_device::create_texture(texture_data& texture_data)
+	texture_handle graphics_device::create_texture(texture_data& texture_data, bool free_data)
 	{
 		std::mutex m;
 		std::condition_variable cv;
@@ -245,7 +252,10 @@ namespace moka
 		std::unique_lock<std::mutex> lk(m);
 		cv.wait(lk, [&] { return ready; });
 
-		unload(texture_data);
+		if (free_data)
+		{
+			unload(texture_data);
+		}
 
 		return handle;
 	}

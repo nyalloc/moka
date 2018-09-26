@@ -4,16 +4,25 @@
 
 namespace moka
 {
+	// this code is stupid and dangerous
+	// need to get rid of it
+
 	template<size_t Size>
 	class basic_static_buffer
 	{
-		std::byte buffer_[Size];
+		std::byte* buffer_;
 		size_t end_ = 0;
 		size_t position_ = 0;
 	public:
 		basic_static_buffer()
 		{
+			buffer_ = new std::byte[Size];
 			clear();
+		}
+
+		~basic_static_buffer()
+		{
+			delete[] buffer_;
 		}
 
 		bool write_memory(const void* data, const size_t size)
@@ -68,9 +77,8 @@ namespace moka
 		{
 			end_ = 0;
 			position_ = 0;
-			memset(&buffer_, 0, Size);
 		}
 	};
 
-	using static_buffer = basic_static_buffer<1024>;
+	using static_buffer = basic_static_buffer<4098>;
 }

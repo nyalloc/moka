@@ -36,7 +36,7 @@ namespace moka
 
 		draw_call_builder& set_index_buffer(
 			const index_buffer_handle index_buffer,
-			const uint32_t index_start);
+			const uint32_t index_count);
 
 		template<typename T>
 		draw_call_builder& set_uniform(

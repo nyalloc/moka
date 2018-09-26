@@ -3,6 +3,41 @@
 
 namespace moka
 {
+	constexpr key sdl_to_moka(int key)
+	{
+		switch (key)
+		{
+		case SDLK_BACKSLASH: return key::backslash;
+		case SDLK_BACKSPACE: return key::backspace;
+		case SDLK_SPACE: return key::space;
+		case SDLK_COMMA: return key::comma;
+		case SDLK_DELETE: return key::del;
+		case SDLK_DOWN: return key::down;
+		case SDLK_END: return key::end;
+		case SDLK_RETURN: return key::enter;
+		case SDLK_ESCAPE: return key::esc;
+		case SDLK_F1: return key::f1;
+		case SDLK_F2: return key::f2;
+		case SDLK_F3: return key::f3;
+		case SDLK_F4: return key::f4;
+		case SDLK_F5: return key::f5;
+		case SDLK_F6: return key::f6;
+		case SDLK_F7: return key::f7;
+		case SDLK_F8: return key::f8;
+		case SDLK_F9: return key::f9;
+		case SDLK_F10: return key::f10;
+		case SDLK_F11: return key::f11;
+		case SDLK_F12: return key::f12;
+
+		case SDLK_w: return key::key_w;
+		case SDLK_a: return key::key_a;
+		case SDLK_s: return key::key_s;
+		case SDLK_d: return key::key_d;
+
+		default: return key::none;
+		}
+	}
+
 	void application::poll_events()
 	{
 		SDL_Event event;
@@ -43,36 +78,14 @@ namespace moka
 			case SDL_KEYDOWN:
 			{
 				log_.debug("SDL_KEYDOWN");
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_LEFT:
-					break;
-				case SDLK_RIGHT:
-					break;
-				case SDLK_UP:
-					break;
-				case SDLK_DOWN:
-					break;
-				default:
-					break;
-				}
+				keyboard_.state.set_key_down(sdl_to_moka(event.key.keysym.sym));
+				break;
 			}
 			case SDL_KEYUP:
 			{
 				log_.debug("SDL_KEYUP");
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_LEFT:
-					break;
-				case SDLK_RIGHT:
-					break;
-				case SDLK_UP:
-					break;
-				case SDLK_DOWN:
-					break;
-				default:
-					break;
-				}
+				keyboard_.state.set_key_up(sdl_to_moka(event.key.keysym.sym));
+				break;
 			}
 			case SDL_WINDOWEVENT:
 			{
@@ -194,7 +207,7 @@ namespace moka
 
 		auto update_app = [&](const game_time delta_time)
 		{
-			log_.debug("Updating application");
+			log_.debug("Updating application. Delta time: {}", delta_time);
 			poll_events();
 			// pre update
 			update(delta_time);
@@ -203,16 +216,34 @@ namespace moka
 
 		auto draw_app = [&](const game_time delta_time)
 		{
-			log_.debug("Rendering application");
+			log_.debug("Rendering application. Delta time: {}", delta_time);
 			// pre draw
 			draw(delta_time);
 			// post draw
 		};
 
+		double t = 0.0;
+		const double dt = 0.01;
+
+		double currentTime = elapsed();
+		double accumulator = 0.0;
+
 		while (running_)
 		{
-			update_app(16.0f);
-			draw_app(16.0f);
+			double newTime = double(elapsed());
+			double frameTime = newTime - currentTime;
+			currentTime = newTime;
+
+			accumulator += frameTime;
+
+			while (accumulator >= dt)
+			{
+				update_app(game_time(dt));
+				accumulator -= dt;
+				t += dt;
+			}
+
+			draw_app(game_time(dt));
 		}
 
         return 0;

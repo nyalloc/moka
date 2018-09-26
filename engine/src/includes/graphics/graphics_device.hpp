@@ -5,11 +5,12 @@
 #include <vector>
 #include "messaging/receiver.hpp"
 #include "application/window.hpp"
-#include "draw_call_builder.hpp"
 #include <asset_importer/texture_import.hpp>
 
 namespace moka
 {
+	class draw_call_builder;
+
     /**
      * \brief Specifies what native rendering API to use as the \p moka::graphics_api backend.
      */
@@ -42,8 +43,7 @@ namespace moka
 		std::thread worker_;					     //<! rendering thread (only thread to interact with the backend API)
 		std::unique_ptr<graphics_api> graphics_api_; //<! polymorphic abstraction of the native rendering API
 
-    	void worker_thread();
-    public:
+	public:
         graphics_device(
 			window& window,
 			const graphics_backend graphics_backend = graphics_backend::opengl);
@@ -80,7 +80,7 @@ namespace moka
          */
         program_handle create_program(shader_handle compute_handle);
 
-		texture_handle create_texture(texture_data& texture_data);
+		texture_handle create_texture(texture_data& texture_data, bool free_data = true);
 
         /**
          * \brief Destroy program.

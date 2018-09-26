@@ -5,6 +5,7 @@
 #include <maths/vector3.hpp>
 #include <asset_importer/texture_import.hpp>
 #include <vector>
+#include <utility>
 
 namespace moka
 {
@@ -80,20 +81,26 @@ namespace moka
 
     struct attribute_element
     {
-        attribute attr;
-        size_t size;
-        attribute_type type;
-        bool normalized;
+		size_t index;
+		attribute_type type;
+		size_t size;
+		bool normalized;
+		size_t stride;
+		size_t offset;
 
         constexpr attribute_element(
-            const attribute attr,
-            const size_t element_count,
-            const attribute_type attr_type,
-            const bool normalised) noexcept
-            : attr(attr),
-            size(element_count),
-            type(attr_type),
-            normalized(normalised)
+			size_t index
+		    , attribute_type type
+		    , size_t size
+		    , bool normalized
+			, size_t stride
+			, size_t offset) noexcept
+            : index(index)
+			, type(type)
+			, size(size) 
+			, normalized(normalized)
+			, stride(stride) 
+			, offset(offset)
         {}
     };
 
@@ -103,18 +110,17 @@ namespace moka
     struct vertex_layout
     {
     private:
-        std::vector<attribute_element> layout_;
+		std::vector<attribute_element> layout_;
     public:
-        void emplace(attribute attr, size_t size, attribute_type attr_type, bool normalised)
-        {
-            layout_.emplace_back(attr, size, attr_type, normalised);
-        }
+		vertex_layout() = default;
 
-        static vertex_layout_builder builder() noexcept;
+		vertex_layout(std::vector<attribute_element>&& layout)
+			: layout_(std::move(layout))
+        {}
 
-        size_t size() const noexcept;
+		using builder = vertex_layout_builder;
 
-        size_t stride() const noexcept;
+        size_t total_size() const noexcept;
 
         auto begin() noexcept
         {
@@ -137,31 +143,16 @@ namespace moka
         }
     };
 
-    inline size_t vertex_layout::stride() const noexcept
-    {
-        size_t stride = 0;
-        for (const auto& element : layout_)
-        {
-            stride += attr_type_size(element.type) * element.size;
-        }
-        return stride;
-    }
-
     struct vertex_layout_builder
     {
     private:
-        vertex_layout attr;
+		std::vector<attribute_element> attr;
     public:
-        vertex_layout_builder& add_attribute(attribute attr, size_t size, attribute_type attr_type, bool normalised);
-        vertex_layout build() const;
+        vertex_layout_builder& add_attribute(size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset);
+        vertex_layout build();
     };
 
-    inline vertex_layout_builder vertex_layout::builder() noexcept
-    {
-        return {};
-    }
-
-    inline size_t vertex_layout::size() const noexcept
+    inline size_t vertex_layout::total_size() const noexcept
     {
         size_t result = 0;
         for (const auto& element : layout_)
@@ -172,18 +163,15 @@ namespace moka
     }
 
     inline vertex_layout_builder& vertex_layout_builder::add_attribute(
-        const attribute attr, 
-        const size_t size,
-        const attribute_type attr_type,
-        const bool normalised = false)
+		size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset)
     {
-        this->attr.emplace(attr, size, attr_type, normalised);
+        this->attr.emplace_back(index, type, size, normalized, stride, offset);
         return *this;
     }
 
-    inline vertex_layout vertex_layout_builder::build() const
+    inline vertex_layout vertex_layout_builder::build()
     {
-        return attr;
+		return vertex_layout{ std::move(attr) };
     }
 
     template<typename T>
@@ -288,6 +276,7 @@ namespace moka
         vec4, //!< 4 floats vector uniform
         mat3, //!< 3x3 matrix uniform
         mat4, //!< 4x4 matrix uniform
+		float32 //! single floating point uniform
     };
 
     enum class shader_type : uint8_t
@@ -362,11 +351,6 @@ namespace moka
     };
 
     struct vertex_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct vertex_decl_handle
     {
 		handle_id id = std::numeric_limits<moka::handle_id>::max();
     };

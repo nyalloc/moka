@@ -5,6 +5,8 @@
 #include <graphics/gl_graphics_api.hpp>
 #include <filesystem>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace moka
 {
@@ -119,10 +121,10 @@ namespace moka
 		};
 
 		// clear the render target
-		auto color = colour::cornflower_blue();
+		auto color = colour::light_grey();
 
 		glClearColor(color.r(), color.g(), color.b(), color.a());
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// if draw commands have been sent
 		if (draw_call_buffer_pos_ > 0)
@@ -154,26 +156,15 @@ namespace moka
 
 					for (const attribute_element& attribute : layout)
 					{
-						const auto index = static_cast<size_t>(attribute.attr);
-						const auto type = moka_to_gl(attribute.type);
-						const auto size = attribute.size;
-						const auto normalized = attribute.normalized;
-						const auto stride = layout.stride();
-
-						const auto offset = reinterpret_cast<void*>(
-							size_offset * attr_type_size(attribute.type));
-
-						glEnableVertexAttribArray(index);
-
 						glVertexAttribPointer(
-							index,
-							size,
-							type,
-							normalized,
-							stride,
-							offset);
+							attribute.index,
+							attribute.size,
+							moka_to_gl(attribute.type),
+							attribute.normalized,
+							attribute.stride,
+							reinterpret_cast<void*>(attribute.offset));
 
-						size_offset += size;
+						glEnableVertexAttribArray(attribute.index);
 					}
 
 					glEnableVertexAttribArray(0);
@@ -216,32 +207,39 @@ namespace moka
 						glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.handle.id));
 						break;
 					}
+					case uniform_type::float32:
+					{
+						float vec;
+						memcpy(&vec, data, size);
+						glUniform1fv(location, uniform_data.count, &vec);
+						break;
+					}
 					case uniform_type::vec3:
 					{
-						float vec[3];
+						glm::vec3 vec;
 						memcpy(&vec, data, size);
-						glUniform3fv(location, uniform_data.count, vec);
+						glUniform3fv(location, uniform_data.count, glm::value_ptr(vec));
 						break;
 					}
 					case uniform_type::vec4:
 					{
-						float vec[4];
+						glm::vec4 vec;
 						memcpy(&vec, data, size);
-						glUniform4fv(location, uniform_data.count, vec);
+						glUniform4fv(location, uniform_data.count, glm::value_ptr(vec));
 						break;
 					}
 					case uniform_type::mat3:
 					{
-						float vec[9];
+						glm::mat3 vec;
 						memcpy(&vec, data, size);
-						glUniformMatrix3fv(location, uniform_data.count, false, vec);
+						glUniformMatrix3fv(location, uniform_data.count, false, glm::value_ptr(vec));
 						break;
 					}
 					case uniform_type::mat4:
 					{
-						float vec[16];
+						glm::mat4 vec;
 						memcpy(&vec, data, size);
-						glUniformMatrix4fv(location, uniform_data.count, false, vec);
+						glUniformMatrix4fv(location, uniform_data.count, false, glm::value_ptr(vec));
 						break;
 					}
 					default:;
@@ -254,7 +252,7 @@ namespace moka
 					glDrawElements(
 						moka_to_gl(primitive_type::triangles), 
 						current_call.index_count,
-						GL_UNSIGNED_INT, 
+						GL_UNSIGNED_SHORT, 
 						nullptr);
 				}
 				else
@@ -431,11 +429,20 @@ namespace moka
 	}
 
 	// todo: add argument to create_texture to allow users to specify the internal pixel format seperately from the input format
+	// todo: add arguments to allow users to specify filtering / mipmap generation
 	texture_handle gl_graphics_api::create_texture(const texture_data & data)
 	{
 		unsigned int texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
+
+		// set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data.resolution.x(), data.resolution.y(), 0, moka_to_gl(data.components), GL_UNSIGNED_BYTE, data.data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		return texture_handle{ static_cast<handle_id>(texture) };
@@ -474,8 +481,8 @@ namespace moka
 		glBindVertexArray(vao_);
 
 		glEnable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	}
 
 	gl_graphics_api::~gl_graphics_api()

@@ -2,6 +2,7 @@
 set(moka_INCLUDES
     "./includes/"
     "./deps/imgui/"
+    "./deps/tiny_gltf/"
     "./deps/"
 )
 
@@ -30,6 +31,7 @@ set(MOKA_SRC
     "includes/graphics/gl_graphics_api.hpp"
 	"includes/graphics/draw_call_builder.hpp"
 	"includes/graphics/buffer.hpp"
+	"includes/graphics/camera.hpp"
 	"includes/graphics/create_program.hpp"
 	"includes/graphics/create_shader.hpp"
 	"includes/graphics/create_vertex_buffer.hpp"
@@ -59,13 +61,16 @@ set(MOKA_SRC
 
     "includes/maths/utilities.hpp"
     "includes/maths/colour.hpp"
-    "includes/maths/matrix.hpp"
+    "includes/maths/matrix4.hpp"
+    "includes/maths/matrix3.hpp"
     "includes/maths/vector2.hpp"
     "includes/maths/vector3.hpp"
     "includes/maths/vector4.hpp"
 	
 	"includes/asset_importer/texture_import.hpp"
+	"includes/asset_importer/model_import.hpp"
     "src/asset_importer/texture_import.cpp"
+    "src/asset_importer/model_import.cpp"
 )
 
 add_library(moka STATIC ${MOKA_SRC})
@@ -80,8 +85,10 @@ endforeach()
 
 target_link_libraries(moka
     glew::glew
+	glm
     SDL2::SDL2
 	spdlog::spdlog
+	Assimp::assimp
 )
 
 set(MOKA_TESTS

@@ -3,6 +3,8 @@
 #include <graphics/buffer.hpp>
 #include <cstdint>
 #include <graphics/graphics_api.hpp>
+#include <glm/glm.hpp>
+#include <mutex>
 
 namespace moka
 {
@@ -11,10 +13,11 @@ namespace moka
 		switch (type)
 		{
 		case uniform_type::texture: return sizeof(texture_binding) * count;
-		case uniform_type::vec3: return sizeof(float) * 3 * count;
-		case uniform_type::vec4: return sizeof(float) * 4 * count;
-		case uniform_type::mat3: return sizeof(float) * 3 * 3 * count;
-		case uniform_type::mat4: return sizeof(float) * 4 * 4 * count;
+		case uniform_type::vec3: return sizeof(glm::vec3) * count;
+		case uniform_type::vec4: return sizeof(glm::vec4) * count;
+		case uniform_type::mat3: return sizeof(glm::mat3) * count;
+		case uniform_type::mat4: return sizeof(glm::mat4) * count;
+		case uniform_type::float32: return sizeof(float) * count;
 		default:;
 		}
 		return 0;

@@ -14,6 +14,11 @@ namespace moka
 		log_.info("Application started");
 	}
 
+	float application::elapsed() const 
+	{
+		return timer_.elapsed() / 1000.0f;
+	}
+
     application::~application()
         = default;
 }

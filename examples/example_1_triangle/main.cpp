@@ -1,40 +1,28 @@
 
 #include <application/application.hpp>
 #include <graphics/graphics_device.hpp>
+#include <graphics/draw_call_builder.hpp>
 
 using namespace moka;
 
-struct vertex
-{
-	vector3 position{ 0.0f };
-	vector4 color{ 0.0f };
-
-	constexpr vertex(
-		const vector3& position,
-		const colour& color) noexcept
-		: position(position),
-		color(color.to_vector4())
-	{}
-};
-
 class texture_application : public application
 {
-	vertex vertices_[3] =
+	float vertices_[18] = 
 	{
-		vertex{ vector3{ -0.5f, -0.5f,  0.0f  }, color::red()  },
-		vertex{ vector3{  0.5f, -0.5f,  0.0f  }, color::blue() },
-		vertex{ vector3{  0.0f,  0.5f,  0.0f  }, color::lime() },
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f
 	};
 
 	vertex_layout vertex_layout_ = vertex_layout::builder()
-		.add_attribute(attribute::position, 3, attribute_type::float32)
-		.add_attribute(attribute::color0,   4, attribute_type::float32)
+		.add_attribute(0, attribute_type::float32, 3, false, 3 * sizeof(float), 0)
+		.add_attribute(1, attribute_type::float32, 3, false, 3 * sizeof(float), 3 * sizeof(float))
 		.build();
 
 	const char* vertex_source_ =
 		"    #version 330 core                               \n"
 		"    layout (location = 0) in vec3 position;         \n"
-		"    layout (location = 4) in vec4 color0;           \n"
+		"    layout (location = 1) in vec4 color0;           \n"
 		"    out vec3 out_color0;                            \n"
 		"    void main()                                     \n"
 		"    {                                               \n"
@@ -59,7 +47,7 @@ class texture_application : public application
 	program_handle program_;
 
 	uniform_handle colour_uniform_;
-	vector4 white_;
+	glm::vec4 white_;
 public:
 
 	texture_application(const int argc, char* argv[])
@@ -69,7 +57,7 @@ public:
 		, fragment_shader_(graphics_.create_shader(shader_type::fragment, fragment_source_))
 		, program_(graphics_.create_program(vertex_shader_, fragment_shader_))
 		, colour_uniform_(graphics_.create_uniform("color", uniform_type::vec4, 1))
-		, white_(color::white().to_vector4())
+		, white_(color::white())
 	{}
 
 	~texture_application()
@@ -81,7 +69,8 @@ public:
 
 	void draw(const game_time delta_time) override
 	{
-		float current_time = timer_.elapsed() / 1000.0f;
+		float current_time = elapsed();
+
 		float colour_val = (sin(current_time) / 2.0f) + 0.5f;
 
 		graphics_.begin()

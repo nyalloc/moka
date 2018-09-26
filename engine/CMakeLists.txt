@@ -17,6 +17,10 @@ find_package(Catch CONFIG REQUIRED)
 hunter_add_package(glew)
 find_package(glew CONFIG REQUIRED)
 
+# Include glm
+hunter_add_package(glm)
+find_package(glm CONFIG REQUIRED)
+
 # Include SDL
 hunter_add_package(SDL2)
 find_package(SDL2 CONFIG REQUIRED)
@@ -24,6 +28,10 @@ find_package(SDL2 CONFIG REQUIRED)
 # Include spdlog
 hunter_add_package(spdlog)
 find_package(spdlog CONFIG REQUIRED)
+
+# Include assimp
+hunter_add_package(Assimp)
+find_package(Assimp CONFIG REQUIRED)
 
 enable_testing()
 
