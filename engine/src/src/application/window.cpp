@@ -14,6 +14,7 @@ namespace moka
         bool running_;
 		logger log_{ "Window" };
 		std::unordered_map<handle_id, SDL_GLContext> contexts_;
+		window_settings settings_;
     public:
         signal<> exit;
 
@@ -24,6 +25,8 @@ namespace moka
         ~impl();
 
         void set_size(int width, int height);
+
+		float aspect() const;
 
 		context_handle make_context();
 
@@ -54,7 +57,7 @@ namespace moka
     }
 
     window::impl::impl(const window_settings& settings)
-		: running_(true)
+		: running_(true), settings_(settings)
     {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
@@ -67,7 +70,7 @@ namespace moka
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-		window_ = SDL_CreateWindow("Moka", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 720, 720, SDL_WINDOW_OPENGL);
+		window_ = SDL_CreateWindow(settings.name.c_str(), settings.position.x, settings.position.y, settings.resolution.x, settings.resolution.y, SDL_WINDOW_OPENGL);
     }
 
     window::impl::~impl()
@@ -84,6 +87,11 @@ namespace moka
     {
         SDL_SetWindowSize(window_, width, height);
     }
+
+	float window::impl::aspect() const
+	{
+		return static_cast<float>(settings_.resolution.x) / settings_.resolution.y;
+	}
 
     window::window(const window_settings& settings)
     : impl_(new impl(settings))
@@ -109,6 +117,11 @@ namespace moka
 	context_handle window::make_context() const
 	{
 		return impl_->make_context();
+	}
+
+	float window::aspect() const
+	{
+		return impl_->aspect();
 	}
 
 	void window::set_current_context(const context_handle handle)

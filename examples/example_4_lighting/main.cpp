@@ -28,12 +28,12 @@ public:
 	model_loading_application(const app_settings& settings)
 		: app(settings)
 		, camera_(camera::builder()
-			.set_perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f)
+			.set_perspective(glm::radians(70.0f), window_.aspect(), 0.1f, 100.0f)
 			.set_position(glm::vec3(0.0f, 0.0f, -1.0f))
 			.set_view_target(glm::vec3{ 0 })
 			.build())
 		, model_importer_(data_path(), graphics_)
-		, model_(model_importer_.load("sponza.moka"))
+		, model_(model_importer_.load("flight_helmet.moka"))
 	{}
 
 	~model_loading_application()

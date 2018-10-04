@@ -30,9 +30,11 @@ namespace moka
 		handle_id id;
     };
 
-	class window_settings
+	struct window_settings
 	{
-
+		std::string name = "moka";
+		glm::ivec2 resolution = { 1280, 720 };
+		glm::ivec2 position = { 200, 200 };
 	};
 
     class window
@@ -45,6 +47,7 @@ namespace moka
         void set_size(int width, int height);
 		context_handle make_context() const;
 		void set_current_context(const context_handle handle);
+		float aspect() const ;
     private:
         class impl;
         std::unique_ptr<impl> impl_;
