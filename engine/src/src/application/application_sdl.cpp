@@ -13,6 +13,9 @@ namespace moka
 		case SDLK_COMMA: return key::comma;
 		case SDLK_DELETE: return key::del;
 		case SDLK_DOWN: return key::down;
+		case SDLK_UP: return key::up;
+		case SDLK_LEFT: return key::left;
+		case SDLK_RIGHT: return key::right;
 		case SDLK_END: return key::end;
 		case SDLK_RETURN: return key::enter;
 		case SDLK_ESCAPE: return key::esc;
@@ -28,7 +31,6 @@ namespace moka
 		case SDLK_F10: return key::f10;
 		case SDLK_F11: return key::f11;
 		case SDLK_F12: return key::f12;
-
 		case SDLK_w: return key::key_w;
 		case SDLK_a: return key::key_a;
 		case SDLK_s: return key::key_s;
@@ -38,7 +40,7 @@ namespace moka
 		}
 	}
 
-	void application::poll_events()
+	void app::poll_events()
 	{
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
@@ -52,6 +54,12 @@ namespace moka
 			}
 			case SDL_MOUSEMOTION:
 			{
+				//mouse_.state.motion_ = { event.motion.xrel, event.motion.yrel };
+
+				//int x, y;
+				//SDL_GetMouseState(&x, &y);
+				//mouse_.state.position_ = { x, y };
+
 				log_.debug("SDL_MOUSEMOTION");
 				break;
 			}
@@ -197,7 +205,7 @@ namespace moka
 		}
 	}
 
-    int application::run()
+    int app::run()
     {
         window_.exit.connect([this]()
         {

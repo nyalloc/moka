@@ -97,7 +97,7 @@ namespace moka
 
 	class keyboard_state
 	{
-		friend class application;
+		friend class app;
 
 		std::array<bool, 86> keys_;
 
@@ -125,7 +125,7 @@ namespace moka
 
 	class keyboard
 	{
-		friend class application;
+		friend class app;
 
 		inline static keyboard_state state{};
 	public:

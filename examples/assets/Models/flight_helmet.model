@@ -1,0 +1,4 @@
+{
+  "model": "Models/FlightHelmet/FlightHelmet.gltf",
+  "material": "Materials/pbr.material"
+}

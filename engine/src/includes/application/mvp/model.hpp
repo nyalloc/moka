@@ -108,10 +108,10 @@ namespace moka
 
     class concrete_model : public base_model
     {
-        application& application;
+        app& application;
 
     public:
-        concrete_model(moka::application& application)
+        concrete_model(moka::app& application)
             : application(application)
         {}
     };
@@ -119,7 +119,7 @@ namespace moka
     class concrete_view : public base_view
     {
         base_presenter* presenter = nullptr;
-        application& application;
+        app& application;
 
     public:
         concrete_view(moka::application& application)
@@ -135,11 +135,11 @@ namespace moka
 
     class concrete_presenter : public base_presenter
     {
-        application& application;
+        app& application;
         base_model& model;
         base_view& view;
     public:
-        concrete_presenter(moka::application& application, base_model& model, base_view& view)
+        concrete_presenter(moka::app& application, base_model& model, base_view& view)
             : application(application), model(model), view(view)
         {
             this->view.set_presenter(this);

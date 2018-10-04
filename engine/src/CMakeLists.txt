@@ -2,6 +2,7 @@
 set(moka_INCLUDES
     "./includes/"
     "./deps/imgui/"
+    "./deps/nlohmann/"
     "./deps/tiny_gltf/"
     "./deps/"
 )
@@ -22,6 +23,10 @@ set(MOKA_SRC
     "includes/application/game_loop.hpp"
     "includes/application/timer.hpp"
 
+    "includes/input/mouse.hpp"
+    "includes/input/keyboard.hpp"
+
+    "src/graphics/model.cpp"
     "src/graphics/gl_graphics_api.cpp"
     "src/graphics/graphics_device.cpp"
     "src/graphics/draw_call_builder.cpp"
@@ -30,7 +35,12 @@ set(MOKA_SRC
     "includes/graphics/graphics_api.hpp"
     "includes/graphics/gl_graphics_api.hpp"
 	"includes/graphics/draw_call_builder.hpp"
-	"includes/graphics/buffer.hpp"
+    "includes/graphics/model.hpp"
+    "includes/graphics/transform.hpp"
+    "includes/graphics/material.hpp"
+    "includes/graphics/material_builder.hpp"
+    "includes/graphics/material_properties.hpp"
+    "includes/graphics/texture_2d.hpp"
 	"includes/graphics/camera.hpp"
 	"includes/graphics/create_program.hpp"
 	"includes/graphics/create_shader.hpp"
@@ -67,10 +77,11 @@ set(MOKA_SRC
     "includes/maths/vector3.hpp"
     "includes/maths/vector4.hpp"
 	
-	"includes/asset_importer/texture_import.hpp"
-	"includes/asset_importer/model_import.hpp"
-    "src/asset_importer/texture_import.cpp"
-    "src/asset_importer/model_import.cpp"
+    "includes/asset_importer/asset_importer.hpp"
+	"includes/asset_importer/texture_importer.hpp"
+	"includes/asset_importer/model_importer.hpp"
+    "src/asset_importer/texture_importer.cpp"
+    "src/asset_importer/model_importer.cpp"
 )
 
 add_library(moka STATIC ${MOKA_SRC})

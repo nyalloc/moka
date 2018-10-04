@@ -1,49 +1,80 @@
 #pragma once
 
 #include <graphics/graphics_device.hpp>
-#include <graphics/effect.hpp>
+#include <graphics/transform.hpp>
+#include <graphics/material.hpp>
 
 namespace moka
 {
-	enum class alpha_mode : uint8_t
+	class primitive
 	{
-		opaque, // The rendered output is fully opaque and any alpha value is ignored.
-		mask, // The rendered output is either fully opaque or fully transparent depending on the alpha value and the specified alpha cutoff value. This mode is used to simulate geometry such as tree leaves or wire fences.
-		blend // The rendered output is combined with the background using the normal painting operation(i.e.the Porter and Duff over operator). This mode is used to simulate geometry such as guaze cloth or animal fur.
+		vertex_buffer_handle vertex_buffer_;
+		uint32_t vertex_count_ = 0;
+
+		index_buffer_handle index_buffer_;
+		uint32_t index_count_ = 0;
+
+		primitive_type type_ = primitive_type::triangles;
+
+		material material_;
+	public:
+		static constexpr char* id = "primitive";
+
+		material& get_material();
+
+		primitive(vertex_buffer_handle vertex_buffer
+			, uint32_t vertex_count
+			, index_buffer_handle index_buffer
+			, uint32_t index_count
+			, const material& material);
+
+		void draw(graphics_device& device);
 	};
 
-	struct texture_2d
+	class mesh
 	{
-		texture_handle handle;
-	};
+		std::vector<primitive> primitives_;
 
-	struct material
-	{
-		texture_2d albedo;
-		texture_2d roughness;
-		texture_2d occlusion;
-		texture_2d normals;
-	};
+		transform transform_;
+	public:
+		static constexpr char* id = "mesh";
 
-	struct model_mesh
-	{
-		transform trans;
+		using iterator = std::vector<primitive>::iterator;
+		using const_iterator = std::vector<primitive>::const_iterator;
 
-		//effect effect;
+		transform& get_transform();
 
-		vertex_buffer_handle vertex_buffer = { std::numeric_limits<handle_id>::max() };
-		uint32_t vertex_count = 0;
+		iterator begin();
 
-		index_buffer_handle index_buffer = { std::numeric_limits<handle_id>::max() };
-		uint32_t index_count = 0;
+		const_iterator begin() const;
 
-		alpha_mode alpha;
+		iterator end();
 
-		material mat;
+		const_iterator end() const;
+
+		mesh(std::vector<primitive>&& primitives, transform&& transform);
 	};
 
 	struct model
 	{
-		std::vector<model_mesh> meshes;
+		std::vector<mesh> meshes_;
+		transform transform_;
+	public:
+		static constexpr char* id = "model";
+
+		using iterator = std::vector<mesh>::iterator;
+		using const_iterator = std::vector<mesh>::const_iterator;
+
+		iterator begin();
+
+		const_iterator begin() const;
+
+		iterator end();
+
+		const_iterator end() const;
+
+		model(std::vector<mesh>&& meshes, transform&& transform = {});
+
+		std::vector<mesh>& get_meshes();
 	};
 }

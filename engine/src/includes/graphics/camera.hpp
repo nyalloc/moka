@@ -128,6 +128,11 @@ namespace moka
 			return view_;
 		}
 
+		const glm::vec3& get_position() const
+		{
+			return transform_.get_position();
+		}
+
 		const glm::mat4& get_projection() const
 		{
 			return projection_;

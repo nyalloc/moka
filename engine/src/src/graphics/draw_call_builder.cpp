@@ -1,15 +1,13 @@
 #include <graphics/draw_call_builder.hpp>
 #include <graphics/graphics_device.hpp>
+#include <graphics/draw_call.hpp>
 
 namespace moka
 {
 	draw_call_builder::draw_call_builder(
 		graphics_device& device)
 	: device_(device)
-	{
-		call_.uniform_start = 0;
-		call_.uniform_end = 0;
-	}
+	{}
 
 	draw_call_builder& draw_call_builder::set_face_culling(
 		const face_culling culling)
@@ -38,48 +36,16 @@ namespace moka
 		return *this;
 	}
 
-	draw_call_builder& draw_call_builder::set_uniform_internal(
-		const uniform_handle uniform, 
-		const void* data)
+	draw_call_builder& draw_call_builder::set_material(
+		const material& effect)
 	{
-		// update uniform buffer
-		const auto& uniform_data = device_.set_uniform(uniform, data);
-
-		if (!is_first_uniform_set_)
-		{
-			call_.uniform_start = uniform_data.buffer_start;
-			is_first_uniform_set_ = true;
-		}
-
-		call_.uniform_end = uniform_data.buffer_end;
-
-		return *this;
-	}
-
-	draw_call_builder& draw_call_builder::set_texture(
-		const size_t texture_unit,
-		const uniform_handle sampler_handle,
-		const texture_handle texture)
-	{
-		texture_binding data
-		{
-			texture,
-			texture_unit
-		};
-
-		return set_uniform_internal(sampler_handle, &data);
-	}
-
-	draw_call_builder& draw_call_builder::set_program(
-		const program_handle program)
-	{
-		call_.program = program;
+		call_.material = &effect;
 		return *this;
 	}
 
 	draw_call draw_call_builder::build()
 	{
-		call_.key = sort_key(call_.program);
+		call_.key = sort_key(call_.material->get_program());
 		return call_;
 	}
 

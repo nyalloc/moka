@@ -5,20 +5,20 @@
 
 namespace moka
 {
-	application::application(const int argc, char* argv[])
-        : log_("Application", moka::log_level::info)
-		, window_("Moka")
+	app::app(const app_settings& app_settings)
+        : log_("app", moka::log_level::info)
+		, window_(app_settings.get_window_settings())
 		, graphics_(window_)
 		, timer_(true)
     {
 		log_.info("Application started");
 	}
 
-	float application::elapsed() const 
+	float app::elapsed() const 
 	{
 		return timer_.elapsed() / 1000.0f;
 	}
 
-    application::~application()
+    app::~app()
         = default;
 }

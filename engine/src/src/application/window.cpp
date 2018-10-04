@@ -19,7 +19,7 @@ namespace moka
 
         void swap_buffer() const;
 
-        explicit impl(const std::string& title);
+        explicit impl(const window_settings& settings);
 
         ~impl();
 
@@ -53,7 +53,8 @@ namespace moka
         SDL_GL_SwapWindow(window_);
     }
 
-    window::impl::impl(const std::string& title): running_(true)
+    window::impl::impl(const window_settings& settings)
+		: running_(true)
     {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
@@ -84,8 +85,8 @@ namespace moka
         SDL_SetWindowSize(window_, width, height);
     }
 
-    window::window(const std::string& title)
-    : impl_(new impl(title))
+    window::window(const window_settings& settings)
+    : impl_(new impl(settings))
     {
         impl_->exit.connect([this]()
         {

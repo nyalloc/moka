@@ -14,6 +14,7 @@ namespace moka
 		glm::vec3 scale_;
 		glm::quat rotation_;
 
+		//transform* parent_;
 	public:
 		transform(
 			const glm::vec3& position
@@ -51,6 +52,20 @@ namespace moka
 		const glm::quat& get_rotation() const
 		{
 			return rotation_;
+		}
+
+		glm::mat4 to_matrix() const
+		{
+			glm::mat4 translate = glm::translate(glm::mat4(), get_position());
+			glm::mat4 rotate = glm::mat4_cast(get_rotation());
+			glm::mat4 scale = glm::scale(glm::mat4(), get_scale());
+
+			return translate * rotate * scale;
+		}
+
+		operator glm::mat4() const
+		{
+			return to_matrix();
 		}
 
 		void set_position(const glm::vec3& position)

@@ -30,11 +30,16 @@ namespace moka
 		handle_id id;
     };
 
+	class window_settings
+	{
+
+	};
+
     class window
     {
     public:
         signal<> exit;
-        window(const std::string& title);
+        window(const window_settings& settings);
         ~window();
         void swap_buffer() const;
         void set_size(int width, int height);

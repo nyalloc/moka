@@ -2,7 +2,7 @@
 #include <messaging/message_base.hpp>
 #include <graphics/graphics_api.hpp>
 #include <messaging/basic_dispatcher.hpp>
-#include <asset_importer/texture_import.hpp>
+#include <asset_importer/texture_importer.hpp>
 
 namespace moka
 {

@@ -5,7 +5,6 @@
 #include <vector>
 #include "messaging/receiver.hpp"
 #include "application/window.hpp"
-#include <asset_importer/texture_import.hpp>
 
 namespace moka
 {
@@ -61,7 +60,9 @@ namespace moka
 
         void destroy(shader_handle handle) const;
 
-		shader_handle create_shader(const shader_type type, const std::string& source);
+		shader_handle create_shader(
+			const shader_type type
+			, const std::string& source);
 
 		draw_call_builder begin();
 
@@ -101,9 +102,5 @@ namespace moka
 		void destroy(index_buffer_handle handle);
 
 		void frame();
-
-		uniform_handle create_uniform(const char* name, const uniform_type& type, size_t size = 1);
-
-	    const uniform_data& set_uniform(const uniform_handle& uniform, const void* data);
     };
 }

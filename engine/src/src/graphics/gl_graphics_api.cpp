@@ -7,6 +7,7 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <graphics/material.hpp>
 
 namespace moka
 {
@@ -170,80 +171,79 @@ namespace moka
 					glEnableVertexAttribArray(0);
 				}
 
-				if (previous_call_.program.id != current_call.program.id)
+				auto effect_ptr = current_call.material;
+
+				if (effect_ptr)
 				{
-					glUseProgram(current_call.program.id);
-				}
+					auto effect = *effect_ptr;
 
-				// the buffer allocates a contiguous block of space for each draw call's uniforms
-				// we're interested in the block between uniform_start and uniform_end
-
-				uniform_buffer_.set_position(current_call.uniform_start);
-
-				// iterate over every uniform related to this draw call
-				while (uniform_buffer_.position() < current_call.uniform_end)
-				{
-					// the handle is packed into the buffer as a header, allowing us to look up the size & type of the data that follows:
-
-					auto handle = uniform_buffer_.read_uniform_handle(); // get the uniform handle
-					auto uniform_data = uniform_data_[handle.id];		 // get the uniform type & count
-
-																		 // now that we know the size and type of the uniform, we can access the raw data.
-					const auto size = get_uniform_size(uniform_data.type, uniform_data.count);
-					auto data = uniform_buffer_.read_uniform_body(size);
-
-					//todo: abstact opengl implementation detail to gl_graphics_api
-
-					auto location = glGetUniformLocation(GLuint(current_call.program.id), uniform_data.name.data());
-
-					switch (uniform_data.type)
+					// if this is the first frame (previous call effect will be nullptr)
+					// or the previous effect is different from the current one, update the current program state
+					if (!previous_call_.material || previous_call_.material->get_program().id != effect.get_program().id)
 					{
-					case uniform_type::texture:
+						glUseProgram(effect.get_program().id);
+					}
+
+					auto program = effect_ptr->get_program();
+					auto size = effect_ptr->size();
+
+					size_t current_texture_unit = 0;
+
+					for (auto i = 0; i < size; i++)
 					{
-						texture_binding texture;
-						memcpy(&texture, data, size);
-						glUniform1i(location, texture.unit);
-						glActiveTexture(GL_TEXTURE0 + texture.unit); // activate the texture unit first before binding texture
-						glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.handle.id));
-						break;
+						auto& parameter = effect[i];
+
+						auto location = glGetUniformLocation(GLuint(effect.get_program().id), parameter.name.c_str());
+
+						if (location == -1) continue;
+
+						switch (parameter.type)
+						{
+						case parameter_type::texture:
+						{
+							auto data = std::get<texture_2d>(parameter.data);
+							// FIX THIS!!! TEXTURE UNIT 0???
+							glUniform1i(location, current_texture_unit);
+							glActiveTexture(GL_TEXTURE0 + current_texture_unit);
+							glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(data.handle.id));
+							++current_texture_unit;
+							break;
+						}
+						case parameter_type::float32:
+						{
+							auto data = std::get<float>(parameter.data);
+							glUniform1fv(location, parameter.count, &data);
+							break;
+						}
+						case parameter_type::vec3:
+						{
+							auto data = std::get<glm::vec3>(parameter.data);
+							glUniform3fv(location, parameter.count, glm::value_ptr(data));
+							break;
+						}
+						case parameter_type::vec4:
+						{
+							auto data = std::get<glm::vec4>(parameter.data);
+							glUniform4fv(location, parameter.count, glm::value_ptr(data));
+							break;
+						}
+						case parameter_type::mat3:
+						{
+							auto data = std::get<glm::mat3>(parameter.data);
+							glUniformMatrix3fv(location, parameter.count, false, glm::value_ptr(data));
+							break;
+						}
+						case parameter_type::mat4:
+						{
+							auto data = std::get<glm::mat4>(parameter.data);
+							glUniformMatrix4fv(location, parameter.count, false, glm::value_ptr(data));
+							break;
+						}
+						default:;
+						}
 					}
-					case uniform_type::float32:
-					{
-						float vec;
-						memcpy(&vec, data, size);
-						glUniform1fv(location, uniform_data.count, &vec);
-						break;
-					}
-					case uniform_type::vec3:
-					{
-						glm::vec3 vec;
-						memcpy(&vec, data, size);
-						glUniform3fv(location, uniform_data.count, glm::value_ptr(vec));
-						break;
-					}
-					case uniform_type::vec4:
-					{
-						glm::vec4 vec;
-						memcpy(&vec, data, size);
-						glUniform4fv(location, uniform_data.count, glm::value_ptr(vec));
-						break;
-					}
-					case uniform_type::mat3:
-					{
-						glm::mat3 vec;
-						memcpy(&vec, data, size);
-						glUniformMatrix3fv(location, uniform_data.count, false, glm::value_ptr(vec));
-						break;
-					}
-					case uniform_type::mat4:
-					{
-						glm::mat4 vec;
-						memcpy(&vec, data, size);
-						glUniformMatrix4fv(location, uniform_data.count, false, glm::value_ptr(vec));
-						break;
-					}
-					default:;
-					}
+
+					current_texture_unit = 0;
 				}
 
 				// if an index buffer is set, draw indexed. Otherwise, draw arrays.
@@ -267,31 +267,7 @@ namespace moka
 			}
 		}
 
-		uniform_buffer_.clear();
 		draw_call_buffer_pos_ = 0;
-	}
-
-	uniform_handle gl_graphics_api::create_uniform(const char* name, const uniform_type& type, const size_t count)
-	{
-		auto& uniform_data = uniform_data_[uniform_count_];
-		uniform_data.type = type;
-		uniform_data.name = name;
-		uniform_data.count = count;
-
-		auto result = uniform_handle{ static_cast<handle_id>(uniform_count_++) };
-
-		log_.info("OpenGL uniform sucessfully created. Handle: {}", result.id);
-
-		return result;
-	}
-
-	const uniform_data& gl_graphics_api::set_uniform(const uniform_handle& uniform, const void* data)
-	{
-		auto& uniform_data = uniform_data_[uniform.id];
-		uniform_data.buffer_start = uniform_buffer_.end();
-		uniform_buffer_.set_uniform(uniform, uniform_data.type, data, uniform_data.count);
-		uniform_data.buffer_end = uniform_buffer_.end();
-		return uniform_data;
 	}
 
     program_handle gl_graphics_api::create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
@@ -341,12 +317,13 @@ namespace moka
         char info_log[512];
 
         // vertex shader
-        auto string = source.c_str();
 
         const unsigned int id = glCreateShader(moka_to_gl(type));
 		const shader_handle handle{ static_cast<handle_id>(id) };
 
-        glShaderSource(id, 1, &string, nullptr);
+		const char* source_chars = source.c_str();
+
+        glShaderSource(id, 1, &source_chars, nullptr);
 
         glCompileShader(id);
 

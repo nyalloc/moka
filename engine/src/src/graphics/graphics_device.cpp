@@ -295,14 +295,4 @@ namespace moka
 		std::unique_lock<std::mutex> lk(m);
 		cv.wait(lk, [&] { return ready; });
 	}
-
-	uniform_handle graphics_device::create_uniform(const char* name, const uniform_type& type, size_t size)
-	{
-		return graphics_api_->create_uniform(name, type, size);
-	}
-
-	const uniform_data & graphics_device::set_uniform(const uniform_handle& uniform, const void* data)
-	{
-		return graphics_api_->set_uniform(uniform, data);
-	}
 }

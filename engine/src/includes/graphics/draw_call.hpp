@@ -2,7 +2,7 @@
 
 #include <graphics/sort_key.hpp>
 #include <graphics/graphics_api.hpp>
-#include <asset_importer/model_import.hpp>
+#include <asset_importer/model_importer.hpp>
 
 #undef max
 #undef min
@@ -15,8 +15,6 @@ namespace moka
 
 	struct draw_call
 	{
-		program_handle program = { std::numeric_limits<handle_id>::max() };
-
 		vertex_buffer_handle vertex_buffer = { std::numeric_limits<handle_id>::max() };
 		uint32_t vertex_start = 0;
 		uint32_t vertex_count = 0;
@@ -24,8 +22,7 @@ namespace moka
 		index_buffer_handle index_buffer = { std::numeric_limits<handle_id>::max() };
 		uint32_t index_count = 0;
 
-		uint32_t uniform_start = std::numeric_limits<uint32_t>::max();
-		uint32_t uniform_end   = std::numeric_limits<uint32_t>::max();   
+		const material* material = nullptr;
 
 		uint64_t state = 0; 
 

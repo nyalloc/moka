@@ -1,6 +1,8 @@
 #pragma once
+
 #include "sort_key.hpp"
 #include "draw_call.hpp"
+#include <graphics/material.hpp>
 
 namespace moka
 {
@@ -9,22 +11,16 @@ namespace moka
 	class draw_call_builder
 	{
 		draw_call call_;
-		graphics_device& device_;
-		bool is_first_uniform_set_;
 
-		draw_call_builder& set_uniform_internal(
-			const uniform_handle uniform,
-			const void* data);
+		graphics_device& device_;
 
 		draw_call build();
 	public:
 		draw_call_builder(
 			graphics_device& device);
 
-		draw_call_builder& set_texture(
-			const size_t texture_unit,
-			const uniform_handle sampler_handle,
-			const texture_handle texture);
+		draw_call_builder& set_material(
+			const material& material);
 
 		draw_call_builder& set_face_culling(
 			const face_culling culling);
@@ -38,21 +34,6 @@ namespace moka
 			const index_buffer_handle index_buffer,
 			const uint32_t index_count);
 
-		template<typename T>
-		draw_call_builder& set_uniform(
-			const uniform_handle uniform,
-			const T& data);
-
-		draw_call_builder& set_program(
-			const program_handle program);
-
 		void end();
 	};
-
-	template<typename T>
-	inline draw_call_builder& draw_call_builder::set_uniform(const uniform_handle uniform, const T & data)
-	{
-		return set_uniform_internal(uniform, &data);
-	}
-
 }

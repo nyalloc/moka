@@ -3,7 +3,7 @@
 #include <ostream>
 #include <maths/colour.hpp>
 #include <maths/vector3.hpp>
-#include <asset_importer/texture_import.hpp>
+#include <asset_importer/texture_importer.hpp>
 #include <vector>
 #include <utility>
 
@@ -208,12 +208,13 @@ namespace moka
 
     enum class primitive_type : uint8_t
     {
-		triangles,
-		triangle_strip,
-        lines,
-        line_strip,
-		points,
-		zero
+		points
+		, lines
+		, line_loop
+		, line_strip
+		, triangles
+		, triangle_strip
+		, triangle_fan
     };
 
     enum class toggle : uint8_t
@@ -269,7 +270,7 @@ namespace moka
         tex_coord7, 
     };
 
-    enum class uniform_type : uint8_t
+    enum class parameter_type : uint8_t
     {
         texture, //!< sampler
         vec3, //!< 3 floats vector uniform
@@ -340,16 +341,6 @@ namespace moka
 		handle_id id = std::numeric_limits<moka::handle_id>::max();
     };
 
-	struct uniform_handle
-	{
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-	};
-
-    struct uniform_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
     struct vertex_buffer_handle
     {
 		handle_id id = std::numeric_limits<moka::handle_id>::max();
@@ -364,7 +355,7 @@ namespace moka
 	struct uniform_data
 	{
 		std::string name;
-		uniform_type type;
+		parameter_type type;
 		size_t count;
 		size_t buffer_start;
 		size_t buffer_end;
@@ -390,11 +381,8 @@ namespace moka
         virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
         virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) = 0;
 		virtual index_buffer_handle create_index_buffer(const void* indices, size_t size) = 0;
-		virtual uniform_handle create_uniform(const char* name, const uniform_type& type, const size_t count) = 0;
 		virtual texture_handle create_texture(const texture_data& data) = 0;
 		
-		virtual const uniform_data& set_uniform(const uniform_handle& uniform, const void* data) = 0;
-
 		virtual void submit(draw_call&& call) = 0;
 
 		virtual void frame() = 0;

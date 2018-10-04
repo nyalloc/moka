@@ -1,0 +1,4 @@
+{
+  "model": "Models/Cube/Cube.gltf",
+  "material": "Materials/pbr.material"
+}
