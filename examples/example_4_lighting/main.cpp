@@ -13,6 +13,7 @@
 #include <graphics/draw_call_builder.hpp>
 #include <graphics/material.hpp>
 #include <sstream>
+#include <iostream>
 
 using namespace moka;
 
@@ -28,18 +29,12 @@ public:
 	model_loading_application(const app_settings& settings)
 		: app(settings)
 		, camera_(camera::builder()
-			.set_perspective(glm::radians(70.0f), window_.aspect(), 0.1f, 100.0f)
-			.set_position(glm::vec3(0.0f, 0.0f, -1.0f))
-			.set_view_target(glm::vec3{ 0 })
-			.build())
+			.set_fps_controls(keyboard_, mouse_)
+			.set_position(glm::vec3(0, 1, 0))
+			.set_perspective(glm::radians(70.0f), window_.aspect()))
 		, model_importer_(data_path(), graphics_)
-		, model_(model_importer_.load("flight_helmet.moka"))
+		, model_(model_importer_.load("sponza.moka"))
 	{}
-
-	~model_loading_application()
-	{
-		timer_.stop();
-	}
 
 	void draw(const game_time delta_time) override
 	{
@@ -63,59 +58,7 @@ public:
 
 	void update(const game_time delta_time) override
 	{
-		camera_.update();
-
-		auto normalize = [](const glm::vec3& vector)
-		{
-			if (vector != glm::vec3{ 0 })
-			{
-				return glm::normalize(vector);
-			}
-			return glm::vec3{ 0 };
-		};
-
-		auto& camera_transform = camera_.get_transform();
-
-		const auto& key_state = keyboard_.get_state();
-
-		glm::vec3 movement_direction;
-
-		if (key_state.is_key_down(key::key_w))
-		{
-			movement_direction += camera_transform.front();
-		}
-
-		if (key_state.is_key_down(key::key_s))
-		{
-			movement_direction += camera_transform.back();
-		}
-
-		if (key_state.is_key_down(key::key_a))
-		{
-			movement_direction += camera_transform.left();
-		}
-
-		if (key_state.is_key_down(key::key_d))
-		{
-			movement_direction += camera_transform.right();
-		}
-
-		if (key_state.is_key_down(key::up))
-		{
-			movement_direction += camera_transform.up();
-		}
-
-		if (key_state.is_key_down(key::down))
-		{
-			movement_direction += camera_transform.down();
-		}
-
-		const auto& current_pos = camera_transform.get_position();
-		auto target_pos = glm::mix(current_pos, current_pos + normalize(movement_direction * delta_time), delta_time);
-
-		camera_transform.set_position(target_pos);
-
-		camera_transform.look_at(glm::vec3{ 0 });
+		camera_.update(delta_time);
 	}
 
 	std::filesystem::path data_path() override

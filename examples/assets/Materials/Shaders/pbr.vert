@@ -5,7 +5,7 @@
 
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec3 aTangent;
+layout (location = 2) in vec4 aTangent;
 layout (location = 3) in vec2 aTexCoords;
 
 out vec3 in_frag_pos;
@@ -27,11 +27,21 @@ void main()
     in_texture_coord = aTexCoords;
 
     #ifdef NORMAL_MAP
-        vec3 bitangent = cross(aNormal, aTangent);
-        vec3 T = normalize(vec3(model * vec4(aTangent,  0.0)));
-        vec3 B = normalize(vec3(model * vec4(bitangent, 0.0)));
-        vec3 N = normalize(vec3(model * vec4(aNormal,   0.0)));
-        tbn_matrix = mat3(T, B, N);
+    
+    vec3 bitangent = cross(aNormal, aTangent.xyz) * aTangent.w;
+    
+    vec3 N = normalize(mat3(model) * aNormal);
+    vec3 T = normalize(mat3(model) * aTangent.xyz);
+    T = normalize(T - dot(N, T) * N);
+    vec3 B = normalize(mat3(model) * bitangent);
+
+    //if (dot(cross(N, T), B) < 0.0)
+    //{
+    //   T = T * -1.0;
+    //}
+    
+    tbn_matrix = mat3(T, B, N);
+    
     #endif
 
     gl_Position = projection * view * vec4(in_frag_pos, 1.0);

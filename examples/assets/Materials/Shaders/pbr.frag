@@ -53,6 +53,7 @@ out vec4 frag_color;
 
 #ifdef NORMAL_MAP 
     in mat3 tbn_matrix;
+    in float green_channel_scalar;
 #endif
 
 uniform vec3 view_pos;
@@ -74,10 +75,15 @@ vec3 get_normal()
         vec3 material_normal = texture(material.normal_map, in_texture_coord).rgb;
         material_normal = normalize(material_normal * 2.0 - 1.0); 
         material_normal = normalize(tbn_matrix * material_normal);
-        return material_normal;
+
+        // green channel scalar is a dot product between the cross of the bitangent and tangents and the surface normal.
+        // it will inform us if the texture has been flipped horizontally. If it has, we need to flip the green component.
+        // otherwise the lighting calculations will be all wrong! They end up the opposite y direction.
     #else 
-        return in_normal;
+        vec3 material_normal = in_normal;
     #endif
+    
+    return material_normal;
 }
 
 vec3 get_emissive()
@@ -92,7 +98,7 @@ vec3 get_emissive()
 float get_roughness()
 {
     #ifdef METALLIC_ROUGHNESS_MAP
-        return texture(material.metallic_roughness_map, in_texture_coord).g * material.roughness_factor;
+        return texture(material.metallic_roughness_map, in_texture_coord).g * 1.0f;
     #else
         return material.roughness_factor;
     #endif
@@ -109,18 +115,22 @@ float get_metalness()
 
 void main()
 {
-    vec3 material_diffuse = get_diffuse();
-    vec3 material_normal = get_normal();
-    vec3 material_emissive = get_emissive();
+    // ambient
+    vec3 ambient = vec3(0.1) * get_diffuse();
+  	
+    // diffuse 
+    vec3 norm = get_normal();
+
+    vec3 lightDir = normalize(vec3(0.0, 1.0, 1.0));  
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = vec3(0.8) * diff * get_diffuse();  
     
-    float material_roughness = get_roughness();
-    float material_metalness = get_metalness();
-    
-    #ifdef AO_MAP
-        float material_occlusion = texture(material.ao_map, in_texture_coord).r;
-    #endif
+    // specular
+    vec3 viewDir = normalize(view_pos - in_frag_pos);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(norm, halfwayDir), 0.0), 16.0f);
+    vec3 specular = vec3(1.0) * spec * get_roughness();  
         
-    vec3 result = material_diffuse + material_emissive;
-    
+    vec3 result = ambient + diffuse + specular;
     frag_color = vec4(result, 1.0);
 }

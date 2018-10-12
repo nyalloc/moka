@@ -417,7 +417,8 @@ namespace moka
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data.resolution.x(), data.resolution.y(), 0, moka_to_gl(data.components), GL_UNSIGNED_BYTE, data.data);
@@ -434,7 +435,18 @@ namespace moka
 			const GLchar* message,
 			const void* userParam)
 	{
-		log_.error(message);
+		switch (severity)
+		{
+		case GL_DEBUG_SEVERITY_HIGH:
+			log_.error(message);
+			break;
+		case GL_DEBUG_SEVERITY_MEDIUM:
+			log_.info(message);
+			break;
+		case GL_DEBUG_SEVERITY_LOW:
+			log_.debug(message);
+			break;
+		}
 	}
 
 	logger gl_graphics_api::log_("OpenGL");
@@ -458,6 +470,7 @@ namespace moka
 		glBindVertexArray(vao_);
 
 		glEnable(GL_BLEND);
+		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}

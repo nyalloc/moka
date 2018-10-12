@@ -91,29 +91,13 @@ namespace moka
 
 	texture_data::~texture_data() = default;
 
-	material asset_importer<material>::load(const std::filesystem::path& path)
-	{
-		std::ifstream i(root_directory_ / path);
-		nlohmann::json j;
-		i >> j;
-
-		auto vertex_shader = root_directory_ / j["vertex"]["file"].get<std::string>();
-		auto fragment_shader = root_directory_ / j["fragment"]["file"].get<std::string>();
-
-		return {};
-	}
-
-	asset_importer<material>::asset_importer(const std::filesystem::path& path, graphics_device& device)
+	asset_importer<model>::asset_importer(const std::filesystem::path& path, graphics_device& device)
 		: root_directory_(path), device_(device)
 	{}
 
-	asset_importer<model>::asset_importer(const std::filesystem::path& path, graphics_device& device)
-		: root_directory_(path), device_(device), material_loader_(path, device)
-	{}
-
-	mesh load_mesh(const tinygltf::Model& model, const tinygltf::Mesh& mesh, graphics_device& device, transform& trans, const std::filesystem::path& root_path)
+	mesh load_mesh(const tinygltf::Model& model, const tinygltf::Mesh& mesh, graphics_device& device, transform& trans, const std::filesystem::path& root_path, std::map<std::string, program_handle>& shaders)
 	{
-		material_builder mat_builder(device);
+		material_builder mat_builder(device, shaders);
 
 		mat_builder.set_vertex_shader(root_path / "Materials" / "Shaders" / "pbr.vert");
 		mat_builder.set_fragment_shader(root_path / "Materials" / "Shaders" / "pbr.frag");
@@ -474,7 +458,7 @@ namespace moka
 		return { std::move(primitives), std::move(trans) };
 	}
 
-	model load_model(const tinygltf::Model& model, graphics_device& device, const std::filesystem::path& root_path)
+	model load_model(const tinygltf::Model& model, graphics_device& device, const std::filesystem::path& root_path, std::map<std::string, program_handle>& shaders)
 	{
 		std::vector<mesh> meshes;
 
@@ -505,7 +489,7 @@ namespace moka
 				trans.set_rotation({ rotation[3], rotation[0], rotation[1], rotation[2] });
 			}
 
-			meshes.emplace_back(load_mesh(model, model.meshes[mesh_id], device, trans, root_path));
+			meshes.emplace_back(load_mesh(model, model.meshes[mesh_id], device, trans, root_path, shaders));
 		}
 
 		return { std::move(meshes) };
@@ -562,6 +546,6 @@ namespace moka
 			std::cout << "Failed to parse glTF: " << std::endl;
 		}
 
-		return load_model(model, device_, root_directory_);
+		return load_model(model, device_, root_directory_, shaders_);
 	}
 }

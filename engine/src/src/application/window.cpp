@@ -70,6 +70,9 @@ namespace moka
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+
 		window_ = SDL_CreateWindow(settings.name.c_str(), settings.position.x, settings.position.y, settings.resolution.x, settings.resolution.y, SDL_WINDOW_OPENGL);
     }
 

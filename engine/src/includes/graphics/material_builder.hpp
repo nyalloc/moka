@@ -16,6 +16,7 @@ namespace moka
 	{
 		graphics_device& graphics_device_;
 		std::vector<material_property> texture_maps_;
+		std::map<std::string, program_handle>& shaders_;
 		parameter_collection parameters_;
 		std::string fragment_shader_src_;
 		std::string vertex_shader_src_;
@@ -38,8 +39,9 @@ namespace moka
 			}
 		}
 			
-		material_builder(graphics_device& device)
+		material_builder(graphics_device& device, std::map<std::string, program_handle>& shaders)
 			: graphics_device_(device)
+			, shaders_{ shaders }
 			, parameters_{ effect_parameter("view_pos", glm::vec3(0.0f))
 				, effect_parameter("material.diffuse_factor", glm::vec3(1.0f))
 				, effect_parameter("material.emissive_factor", glm::vec3(0.0f))
@@ -159,18 +161,32 @@ namespace moka
 				}
 			}
 
-			replace(vertex_shader_src_,   "#moka_compilation_flags\n", compiler_flags);
+			program_handle program;
+
+			replace(vertex_shader_src_, "#moka_compilation_flags\n", compiler_flags);
 			replace(fragment_shader_src_, "#moka_compilation_flags\n", compiler_flags);
 
-			auto vertex_shader = graphics_device_.create_shader(
-				shader_type::vertex
-				, vertex_shader_src_);
+			auto key = vertex_shader_src_ + fragment_shader_src_;
 
-			auto fragment_shader = graphics_device_.create_shader(
-				shader_type::fragment
-				, fragment_shader_src_);
+			auto it = shaders_.find(key);
+			if (it != shaders_.end())
+			{
+				program = it->second;
+			}
+			else
+			{
+				auto vertex_shader = graphics_device_.create_shader(
+					shader_type::vertex
+					, vertex_shader_src_);
 
-			auto program = graphics_device_.create_program(vertex_shader, fragment_shader);
+				auto fragment_shader = graphics_device_.create_shader(
+					shader_type::fragment
+					, fragment_shader_src_);
+
+				 program = graphics_device_.create_program(vertex_shader, fragment_shader);
+
+				 shaders_[key] = program;
+			}
 
 			return { program, std::move(parameters_) };
 		}

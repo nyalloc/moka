@@ -22,7 +22,7 @@ namespace moka
 			, const glm::quat& rotation)
 			: position_(position)
 			, scale_(scale)
-			, rotation_(rotation)
+			, rotation_(glm::normalize(rotation))
 		{}
 
 		transform()
@@ -80,7 +80,7 @@ namespace moka
 
 		void set_rotation(const glm::quat& rotation)
 		{
-			rotation_ = rotation;
+			rotation_ = glm::normalize(rotation);
 		}
 
 		static glm::vec3 world_front()
@@ -90,7 +90,7 @@ namespace moka
 
 		static glm::vec3 world_back()
 		{
-			return -world_back();
+			return -world_front();
 		}
 
 		static glm::vec3 world_up()
@@ -115,32 +115,32 @@ namespace moka
 
 		glm::vec3 front() const
 		{
-			return glm::normalize(rotation_ * world_front());
+			return glm::conjugate(rotation_) * world_front();
 		}
 
 		glm::vec3 back() const
 		{
-			return -front();
+			return glm::conjugate(rotation_) * world_back();
 		}
 
 		glm::vec3 right() const
 		{
-			return glm::normalize(glm::cross(front(), world_up()));
+			return glm::conjugate(rotation_) * world_right();
 		}
 
 		glm::vec3 left() const
 		{
-			return -right();
+			return glm::conjugate(rotation_) * world_left();
 		}
 
 		glm::vec3 up() const
 		{
-			return glm::normalize(glm::cross(right(), front()));
+			return glm::conjugate(rotation_) * world_up();
 		}
 
 		glm::vec3 down() const
 		{
-			return -up();
+			return glm::conjugate(rotation_) * world_down();
 		}
 
 		void look_at(

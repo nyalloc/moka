@@ -54,11 +54,10 @@ namespace moka
 			}
 			case SDL_MOUSEMOTION:
 			{
-				//mouse_.state.motion_ = { event.motion.xrel, event.motion.yrel };
-
-				//int x, y;
-				//SDL_GetMouseState(&x, &y);
-				//mouse_.state.position_ = { x, y };
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				mouse_.state.position_ = { x, y };
+				mouse_.state.motion_ = { event.motion.xrel, event.motion.yrel };
 
 				log_.debug("SDL_MOUSEMOTION");
 				break;
@@ -207,6 +206,8 @@ namespace moka
 
     int app::run()
     {
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+
         window_.exit.connect([this]()
         {
 			log_.info("Exiting application");
@@ -215,6 +216,8 @@ namespace moka
 
 		auto update_app = [&](const game_time delta_time)
 		{
+			mouse_.state.motion_ = { 0, 0 };
+
 			log_.debug("Updating application. Delta time: {}", delta_time);
 			poll_events();
 			// pre update
