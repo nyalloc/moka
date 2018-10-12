@@ -311,6 +311,11 @@ namespace moka
 	{
 		keyboard& keyboard_;
 		mouse& mouse_;
+
+		float pitch_ = 0.0f;
+		float yaw_ = 0.0f;
+
+		static constexpr float max_pitch_ = glm::radians(89.0f);
 	public:
 		camera_fps_controller() = default;
 
@@ -321,7 +326,12 @@ namespace moka
 			: camera_decorator(std::move(camera))
 			, keyboard_(keyboard)
 			, mouse_(mouse)
-		{}
+		{
+			auto camera_transform = get_transform();
+			auto euler_angles = glm::eulerAngles(camera_transform.get_rotation());
+			pitch_ = euler_angles.x;
+			yaw_ = euler_angles.y;
+		}
 
 		void update(const float delta_time) override
 		{
@@ -378,12 +388,15 @@ namespace moka
 
 			auto camera_quat = camera_transform.get_rotation();
 
-			auto pitch_quat = glm::angleAxis(motion.y, glm::vec3(1.0f, 0.0f, 0.0f));
-			auto yaw_quat = glm::angleAxis(motion.x, glm::vec3(0.0f, 1.0f, 0.0f));
+			yaw_ += motion.x;
+			pitch_ = glm::clamp(pitch_ + motion.y, -max_pitch_, max_pitch_);
 
-			camera_quat = glm::normalize(pitch_quat * camera_quat * yaw_quat);
+			auto yaw_quat = glm::angleAxis(yaw_, glm::vec3(0.0f, 1.0f, 0.0f));
+			auto pitch_quat = glm::angleAxis(pitch_, glm::vec3(1.0f, 0.0f, 0.0f));
+			camera_quat = pitch_quat * yaw_quat;
 
 			camera_transform.set_position(target_pos);
+
 			camera_transform.set_rotation(camera_quat);
 
 			camera_->set_transform(camera_transform);
