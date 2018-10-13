@@ -8,6 +8,7 @@
 // #define EMISSIVE_MAP
 // #define METALLIC_ROUGHNESS_MAP
 // #define AO_MAP
+// #define MASK_ALPHA
 
 struct pbr_material 
 {
@@ -35,7 +36,10 @@ struct pbr_material
     #ifdef AO_MAP        
         sampler2D ao_map;
     #endif
-
+    
+    #ifdef MASK_ALPHA
+        float alpha_cutoff;
+    #endif
 };
 
 struct directional_light
@@ -80,7 +84,7 @@ vec3 get_normal()
         // it will inform us if the texture has been flipped horizontally. If it has, we need to flip the green component.
         // otherwise the lighting calculations will be all wrong! They end up the opposite y direction.
     #else 
-        vec3 material_normal = in_normal;
+        vec3 material_normal = normalize(in_normal);
     #endif
     
     return material_normal;
@@ -113,8 +117,22 @@ float get_metalness()
     #endif
 }
 
+bool discard_fragment()
+{
+    #ifdef MASK_ALPHA
+        return texture(material.diffuse_map, in_texture_coord).a < material.alpha_cutoff;
+    #else
+        return false;
+    #endif  
+}
+
 void main()
 {
+    if(discard_fragment())
+    {
+        discard;
+    }
+
     // ambient
     vec3 ambient = vec3(0.1) * get_diffuse();
   	

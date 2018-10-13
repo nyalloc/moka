@@ -40,11 +40,10 @@ namespace moka
 
 	void primitive::draw(graphics_device& device)
 	{
-		device.begin()
+		device.draw()
 			.set_vertex_buffer(vertex_buffer_, 0, vertex_count_)
 			.set_index_buffer(index_buffer_, index_count_)
-			.set_material(material_)
-			.end();
+			.set_material(material_);
 	}
 
 	primitive::primitive(vertex_buffer_handle vertex_buffer

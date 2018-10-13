@@ -315,7 +315,12 @@ namespace moka
 		float pitch_ = 0.0f;
 		float yaw_ = 0.0f;
 
+		glm::quat target_rot;
+		glm::vec3 target_pos;
+
 		static constexpr float max_pitch_ = glm::radians(89.0f);
+		static constexpr float movement_interpolant_ = 2.00f;
+		static constexpr float rotation_interpolant_ = 10.0f;
 	public:
 		camera_fps_controller() = default;
 
@@ -380,24 +385,23 @@ namespace moka
 				movement_direction += camera_transform.world_down();
 			}
 
-			const auto& current_pos = camera_transform.get_position();
-			auto target_pos = glm::mix(current_pos, current_pos + normalize(movement_direction * delta_time), delta_time);
+			auto direction = normalize(movement_direction);
 
-			const auto& mouse_state = mouse_.get_state();
-			const auto& motion = mouse_state.get_motion() * delta_time;
+			auto target_pos = camera_transform.get_position() + direction;
 
-			auto camera_quat = camera_transform.get_rotation();
+			const auto& motion = mouse_.get_state().get_motion() * delta_time;
 
 			yaw_ += motion.x;
 			pitch_ = glm::clamp(pitch_ + motion.y, -max_pitch_, max_pitch_);
 
 			auto yaw_quat = glm::angleAxis(yaw_, glm::vec3(0.0f, 1.0f, 0.0f));
 			auto pitch_quat = glm::angleAxis(pitch_, glm::vec3(1.0f, 0.0f, 0.0f));
-			camera_quat = pitch_quat * yaw_quat;
 
-			camera_transform.set_position(target_pos);
+			target_rot = pitch_quat * yaw_quat;
 
-			camera_transform.set_rotation(camera_quat);
+			camera_transform.set_position(glm::mix(camera_transform.get_position(), target_pos, delta_time * movement_interpolant_));
+			
+			camera_transform.set_rotation(glm::slerp(camera_transform.get_rotation(), target_rot, delta_time * rotation_interpolant_));
 
 			camera_->set_transform(camera_transform);
 

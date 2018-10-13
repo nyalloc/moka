@@ -97,18 +97,15 @@ namespace moka
 
 	mesh load_mesh(const tinygltf::Model& model, const tinygltf::Mesh& mesh, graphics_device& device, transform& trans, const std::filesystem::path& root_path, std::map<std::string, program_handle>& shaders)
 	{
-		material_builder mat_builder(device, shaders);
-
-		mat_builder.set_vertex_shader(root_path / "Materials" / "Shaders" / "pbr.vert");
-		mat_builder.set_fragment_shader(root_path / "Materials" / "Shaders" / "pbr.frag");
-
 		auto transform = trans;
 
 		std::vector<moka::primitive> primitives;
 
 
-		for (const auto& primitive : mesh.primitives)
+		for (auto i = 0; i < mesh.primitives.size(); i++)
 		{
+			const auto& primitive = mesh.primitives[i];
+
 			std::vector<uint8_t> index_buffer;
 			std::vector<uint8_t> vertex_buffer;
 
@@ -232,6 +229,11 @@ namespace moka
 			Where should this shader table live? graphics_device is a strong contender
 			*/
 
+			material_builder mat_builder(device, shaders);
+
+			mat_builder.set_vertex_shader(root_path / "Materials" / "Shaders" / "pbr.vert");
+			mat_builder.set_fragment_shader(root_path / "Materials" / "Shaders" / "pbr.frag");
+
 			if (primitive.material != -1)
 			{
 				auto material = model.materials[primitive.material];
@@ -260,6 +262,11 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
+							if (image_data.uri == "white.png")
+							{
+								std::cout << "Reeee";
+							}
+
 							texture_data data
 							{
 								image_data.image.data(),
@@ -280,7 +287,7 @@ namespace moka
 					{
 						auto data = metallic_factor_itr->second.number_value;
 						float metallic_factor(data);
-						mat_builder.add_uniform("material.metallic_factor", metallic_factor);
+						mat_builder.add_uniform("material.metalness_factor", metallic_factor);
 					}
 
 					if (auto roughness_factor_itr = material.values.find("roughnessFactor"); roughness_factor_itr != material.values.end())
@@ -427,14 +434,25 @@ namespace moka
 						}
 					}
 
+					//The alpha cutoff value of the material.	
+					auto alpha_cutoff = 0.5f;
+
+					if (auto alpha_cutoff_itr = material.additionalValues.find("alphaCutoff"); alpha_cutoff_itr != material.additionalValues.end())
+					{
+						auto alpha_cutoff_name = alpha_cutoff_itr->first;
+						auto alpha_cutoff_value = alpha_cutoff_itr->second;
+
+						alpha_cutoff = static_cast<float>(alpha_cutoff_value.number_value);
+					}
+
+					alpha_mode alpha = alpha_mode::opaque;
+
 					if (auto alpha_mode_itr = material.additionalValues.find("alphaMode"); alpha_mode_itr != material.additionalValues.end())
 					{
 						auto alpha_mode_name = alpha_mode_itr->first;
 						auto alpha_mode_value = alpha_mode_itr->second;
 
 						auto alpha_str = alpha_mode_value.string_value;
-
-						alpha_mode alpha;
 
 						if (alpha_str == "OPAQUE")
 						{
@@ -443,12 +461,15 @@ namespace moka
 						else if (alpha_str == "MASK")
 						{
 							alpha = alpha_mode::mask;
+							mat_builder.add_uniform("material.alpha_cutoff", alpha_cutoff);
 						}
 						else if (alpha_str == "BLEND")
 						{
 							alpha = alpha_mode::blend;
 						}
 					}
+
+					mat_builder.set_alpha_mode(alpha);
 				}
 			}
 

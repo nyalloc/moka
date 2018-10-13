@@ -64,7 +64,7 @@ namespace moka
 			const shader_type type
 			, const std::string& source);
 
-		draw_call_builder begin();
+		draw_call_builder draw();
 
         /**
          * \brief Create program with vertex and fragment shaders.

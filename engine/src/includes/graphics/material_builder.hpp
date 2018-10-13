@@ -20,6 +20,7 @@ namespace moka
 		parameter_collection parameters_;
 		std::string fragment_shader_src_;
 		std::string vertex_shader_src_;
+		alpha_mode alpha_mode_ = alpha_mode::opaque;
 	public:
 		static std::string get_property_name(const material_property property)
 		{
@@ -42,11 +43,13 @@ namespace moka
 		material_builder(graphics_device& device, std::map<std::string, program_handle>& shaders)
 			: graphics_device_(device)
 			, shaders_{ shaders }
-			, parameters_{ effect_parameter("view_pos", glm::vec3(0.0f))
-				, effect_parameter("material.diffuse_factor", glm::vec3(1.0f))
-				, effect_parameter("material.emissive_factor", glm::vec3(0.0f))
-			    , effect_parameter("material.roughness_factor", 1.0f)
-			    , effect_parameter("material.metalness_factor", 1.0f) }
+			, parameters_
+			{ effect_parameter("view_pos",                  glm::vec3(0.0f))
+			, effect_parameter("material.diffuse_factor",   glm::vec3(1.0f))
+			, effect_parameter("material.emissive_factor",  glm::vec3(0.0f))
+			, effect_parameter("material.roughness_factor", 1.0f           )
+			, effect_parameter("material.metalness_factor", 1.0f           ) 
+			}
 		{}
 
 		material_builder& set_vertex_shader(const std::filesystem::path& vertex_shader)
@@ -76,6 +79,12 @@ namespace moka
 		material_builder& set_fragment_shader(const std::string& fragment_shader)
 		{
 			fragment_shader_src_ = fragment_shader;
+			return *this;
+		}
+
+		material_builder& set_alpha_mode(const alpha_mode alpha_mode)
+		{
+			alpha_mode_ = alpha_mode;
 			return *this;
 		}
 
@@ -123,7 +132,6 @@ namespace moka
 			return *this;
 		}
 
-
 		bool replace(std::string& source, const std::string& target, const std::string& replacement) 
 		{
 			size_t start_pos = source.find(target);
@@ -138,6 +146,17 @@ namespace moka
 		material build()
 		{
 			std::string compiler_flags;
+
+			switch (alpha_mode_)
+			{
+			case alpha_mode::blend:
+				break;
+			case alpha_mode::mask:
+				compiler_flags.append("#define MASK_ALPHA\n");
+				break;
+			case alpha_mode::opaque:
+				break;
+			}
 
 			for (const auto& property : texture_maps_)
 			{
@@ -188,7 +207,7 @@ namespace moka
 				 shaders_[key] = program;
 			}
 
-			return { program, std::move(parameters_) };
+			return { program, std::move(parameters_), alpha_mode_ };
 		}
 	};
 }

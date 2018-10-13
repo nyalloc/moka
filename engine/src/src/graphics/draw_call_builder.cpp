@@ -43,13 +43,19 @@ namespace moka
 		return *this;
 	}
 
+	draw_call_builder & draw_call_builder::set_depth(const float depth)
+	{
+		depth_ = depth;
+		return *this;
+	}
+
 	draw_call draw_call_builder::build()
 	{
-		call_.key = sort_key(call_.material->get_program());
+		call_.key = sort_key(call_.material->get_program(), call_.material->get_alpha_mode(), depth_);
 		return call_;
 	}
 
-	void draw_call_builder::end()
+	draw_call_builder::~draw_call_builder()
 	{
 		device_.submit(build());
 	}

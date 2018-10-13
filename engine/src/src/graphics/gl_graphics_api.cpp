@@ -133,10 +133,8 @@ namespace moka
 			// sort all render items to minimise state changes
 			std::sort(draw_call_buffer_.begin(), draw_call_buffer_.begin() + draw_call_buffer_pos_, comparator);
 
-			for (auto it = draw_call_buffer_.begin(); it != draw_call_buffer_.begin() + draw_call_buffer_pos_; ++it)
+			for (auto& current_call : draw_call_buffer_)
 			{
-				auto& current_call = *it;
-
 				if (previous_call_.vertex_buffer.id != current_call.vertex_buffer.id)
 				{
 					if (!is_handle_valid(current_call.vertex_buffer))
@@ -171,21 +169,38 @@ namespace moka
 					glEnableVertexAttribArray(0);
 				}
 
-				auto effect_ptr = current_call.material;
+				auto material_ptr = current_call.material;
 
-				if (effect_ptr)
+				if (material_ptr)
 				{
-					auto effect = *effect_ptr;
+					auto effect = *material_ptr;
 
-					// if this is the first frame (previous call effect will be nullptr)
-					// or the previous effect is different from the current one, update the current program state
-					if (!previous_call_.material || previous_call_.material->get_program().id != effect.get_program().id)
+					bool no_previous_material = !previous_call_.material;
+
+					// if this is a different shader, update the program state
+					if (no_previous_material || previous_call_.material->get_program().id != effect.get_program().id)
 					{
 						glUseProgram(effect.get_program().id);
 					}
 
-					auto program = effect_ptr->get_program();
-					auto size = effect_ptr->size();
+					glCullFace(GL_BACK);
+
+					if (no_previous_material || previous_call_.material->get_alpha_mode() != effect.get_alpha_mode())
+					{
+						switch (effect.get_alpha_mode())
+						{
+						case alpha_mode::blend:
+							break;
+						case alpha_mode::mask:
+							break;
+						case alpha_mode::opaque:
+							break;
+						}
+						// do stateful switching based on blending properties of material
+					}
+
+					auto program = material_ptr->get_program();
+					auto size = material_ptr->size();
 
 					size_t current_texture_unit = 0;
 

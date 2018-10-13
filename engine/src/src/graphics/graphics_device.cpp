@@ -185,7 +185,7 @@ namespace moka
 		return handle;
 	}
 
-	draw_call_builder graphics_device::begin()
+	draw_call_builder graphics_device::draw()
 	{
 		return { *this };
 	}

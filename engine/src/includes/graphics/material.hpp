@@ -184,6 +184,7 @@ namespace moka
 	class material
 	{
 	protected:
+		alpha_mode alpha_mode_ = alpha_mode::opaque;
 		program_handle program_ = { std::numeric_limits<uint16_t>::max() };
 		parameter_collection parameters_;
 
@@ -191,10 +192,16 @@ namespace moka
 
 		material() = default;
 
-		material(program_handle program, parameter_collection&& parameters)
-			: program_(program)
+		material(program_handle program, parameter_collection&& parameters, alpha_mode alpha_mode)
+			: alpha_mode_(alpha_mode)
+			, program_(program)
 			, parameters_(std::move(parameters))
 		{}
+
+		alpha_mode get_alpha_mode() const
+		{
+			return alpha_mode_;
+		}
 
 		program_handle get_program() const
 		{

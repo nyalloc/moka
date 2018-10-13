@@ -34,11 +34,6 @@ void main()
     vec3 T = normalize(mat3(model) * aTangent.xyz);
     T = normalize(T - dot(N, T) * N);
     vec3 B = normalize(mat3(model) * bitangent);
-
-    //if (dot(cross(N, T), B) < 0.0)
-    //{
-    //   T = T * -1.0;
-    //}
     
     tbn_matrix = mat3(T, B, N);
     
