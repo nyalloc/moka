@@ -10,6 +10,7 @@
 #include <graphics/create_texture.hpp>
 #include <graphics/frame.hpp>
 #include <application/logger.hpp>
+#include <application/window.hpp>
 #include <GL/glew.h>
 
 namespace moka
@@ -36,13 +37,14 @@ namespace moka
 		window& window,
         const graphics_backend graphics_backend)
 	: window_(window)
-	, worker_context_(window_.make_context())
-	, main_context_(window_.make_context())
 	, graphics_backend_(graphics_backend)
 	{
 		std::mutex m;
 		std::condition_variable cv;
 		auto ready = false;
+
+		auto worker_context = window_.make_context();
+		auto main_context = window_.make_context();
 
 		worker_ = std::thread([&]() 
 		{	
@@ -51,7 +53,7 @@ namespace moka
 			// however this doesn't seem to be possible when using an SDL-based application, as it reserves the main thread for its event loop
 
 			// make worker graphics context current
-			window_.set_current_context(worker_context_);
+			window_.set_current_context(worker_context);
 
 			// initialise renderer backend
 			graphics_api_ = create(graphics_backend_);

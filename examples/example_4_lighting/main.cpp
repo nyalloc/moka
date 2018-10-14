@@ -14,6 +14,7 @@
 #include <graphics/material.hpp>
 #include <sstream>
 #include <iostream>
+#include <imgui.hpp>
 
 using namespace moka;
 
@@ -24,6 +25,8 @@ class model_loading_application : public app
 	asset_importer<model> model_importer_;
 
 	model model_;
+
+	imgui imgui_;
 public:
 
 	model_loading_application(const app_settings& settings)
@@ -34,7 +37,9 @@ public:
 			.set_perspective(glm::radians(70.0f), window_.aspect()))
 		, model_importer_(data_path(), graphics_)
 		, model_(model_importer_.load("sponza.moka"))
-	{}
+		, imgui_(window_, keyboard_, mouse_)
+	{
+	}
 
 	void draw(const game_time delta_time) override
 	{
@@ -53,12 +58,22 @@ public:
 			}
 		}
 
+		//ImGui::NewFrame();
+
+		//bool show = true;
+		//ImGui::ShowDemoWindow(&show);
+
+		//ImGui::Render();
+
+		//imgui_.draw(ImGui::GetDrawData());
+
 		graphics_.frame();
 	}
 
 	void update(const game_time delta_time) override
 	{
 		camera_.update(delta_time);
+		imgui_.update(delta_time);
 	}
 
 	std::filesystem::path data_path() override

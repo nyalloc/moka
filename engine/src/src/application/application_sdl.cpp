@@ -31,10 +31,10 @@ namespace moka
 		case SDLK_F10: return key::f10;
 		case SDLK_F11: return key::f11;
 		case SDLK_F12: return key::f12;
-		case SDLK_w: return key::key_w;
-		case SDLK_a: return key::key_a;
-		case SDLK_s: return key::key_s;
-		case SDLK_d: return key::key_d;
+		case SDLK_w: return key::w;
+		case SDLK_a: return key::a;
+		case SDLK_s: return key::s;
+		case SDLK_d: return key::d;
 
 		default: return key::none;
 		}
@@ -217,35 +217,30 @@ namespace moka
 		auto update_app = [&](const game_time delta_time)
 		{
 			mouse_.state.motion_ = { 0, 0 };
-
 			log_.debug("Updating application. Delta time: {}", delta_time);
 			poll_events();
-			// pre update
 			update(delta_time);
-			// post update
 		};
 
 		auto draw_app = [&](const game_time delta_time)
 		{
 			log_.debug("Rendering application. Delta time: {}", delta_time);
-			// pre draw
 			draw(delta_time);
-			// post draw
 		};
 
 		double t = 0.0;
 		const double dt = 0.01;
 
-		double currentTime = elapsed();
+		double current_time = elapsed();
 		double accumulator = 0.0;
 
 		while (running_)
 		{
-			double newTime = double(elapsed());
-			double frameTime = newTime - currentTime;
-			currentTime = newTime;
+			double new_time = double(elapsed());
+			double frame_time = new_time - current_time;
+			current_time = new_time;
 
-			accumulator += frameTime;
+			accumulator += frame_time;
 
 			while (accumulator >= dt)
 			{

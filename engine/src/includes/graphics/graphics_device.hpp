@@ -4,7 +4,6 @@
 #include <graphics/graphics_api.hpp>
 #include <vector>
 #include "messaging/receiver.hpp"
-#include "application/window.hpp"
 
 namespace moka
 {
@@ -26,6 +25,8 @@ namespace moka
         null         //!< No rendering API specified
     };
 
+	class window;
+
     /**
      * \brief The \p moka::graphics_device class presents a common rendering API and owns a pointer to the implementation.
      * An example of the bridge design pattern, \p moka::graphics_api allows moka rendering code to operate without being coupled to the native rendering API.
@@ -35,8 +36,6 @@ namespace moka
     class graphics_device : public receiver
     {
 		window& window_;					//<! window that owns the rendering context
-		context_handle worker_context_;		//<! rendering context of the renderer worker thread
-		context_handle main_context_;		//<! rendering context of the main thread
 		graphics_backend graphics_backend_; //<! renderer backend type enum
 
 		std::thread worker_;					     //<! rendering thread (only thread to interact with the backend API)

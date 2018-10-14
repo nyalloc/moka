@@ -9,11 +9,13 @@ project(example_4_model_loading)
 set(Example_Includes 
 	"./"
 	"../../engine/src/includes"
+    "../../engine/src/deps/imgui"
+    "../common"
 )
 
 include_directories(${Example_Includes})
 
-add_executable(example_4_model_loading main.cpp)
+add_executable(example_4_model_loading main.cpp ../common/imgui.hpp ../common/imgui.cpp)
 
 add_compile_options("/std:c++latest")
 

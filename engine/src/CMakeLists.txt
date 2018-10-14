@@ -1,7 +1,6 @@
 
 set(moka_INCLUDES
     "./includes/"
-    "./deps/imgui/"
     "./deps/nlohmann/"
     "./deps/tiny_gltf/"
     "./deps/"

@@ -355,22 +355,22 @@ namespace moka
 
 			glm::vec3 movement_direction;
 
-			if (key_state.is_key_down(key::key_w))
+			if (key_state.is_key_down(key::w))
 			{
 				movement_direction += camera_transform.back();
 			}
 
-			if (key_state.is_key_down(key::key_s))
+			if (key_state.is_key_down(key::s))
 			{
 				movement_direction += camera_transform.front();
 			}
 
-			if (key_state.is_key_down(key::key_a))
+			if (key_state.is_key_down(key::a))
 			{
 				movement_direction += camera_transform.left();
 			}
 
-			if (key_state.is_key_down(key::key_d))
+			if (key_state.is_key_down(key::d))
 			{
 				movement_direction += camera_transform.right();
 			}
@@ -401,7 +401,7 @@ namespace moka
 
 			camera_transform.set_position(glm::mix(camera_transform.get_position(), target_pos, delta_time * movement_interpolant_));
 			
-			camera_transform.set_rotation(glm::slerp(camera_transform.get_rotation(), target_rot, delta_time * rotation_interpolant_));
+			camera_transform.set_rotation(glm::lerp(camera_transform.get_rotation(), target_rot, delta_time * rotation_interpolant_));
 
 			camera_->set_transform(camera_transform);
 
