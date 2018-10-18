@@ -181,6 +181,8 @@ namespace moka
 		}
 	};
 
+	class material_builder;
+
 	class material
 	{
 	protected:
@@ -189,6 +191,8 @@ namespace moka
 		parameter_collection parameters_;
 
 	public:
+
+		using builder = material_builder;
 
 		material() = default;
 

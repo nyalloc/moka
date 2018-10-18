@@ -48,11 +48,6 @@ set(MOKA_SRC
 	"includes/graphics/frame.hpp"
 	"includes/graphics/sort_key.hpp"
 	"includes/graphics/uniform_buffer.hpp"
-
-    "deps/imgui/imgui.cpp"
-    "deps/imgui/imgui_draw.cpp"
-    "deps/imgui/imgui_impl_sdl_gl3.cpp"
-    "deps/imgui/imgui_demo.cpp"
 	
 	"includes/messaging/base_dispatcher.hpp"
 	"includes/messaging/basic_dispatcher.hpp"
@@ -98,7 +93,6 @@ target_link_libraries(moka
 	glm
     SDL2::SDL2
 	spdlog::spdlog
-	Assimp::assimp
 )
 
 set(MOKA_TESTS

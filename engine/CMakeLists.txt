@@ -29,10 +29,6 @@ find_package(SDL2 CONFIG REQUIRED)
 hunter_add_package(spdlog)
 find_package(spdlog CONFIG REQUIRED)
 
-# Include assimp
-hunter_add_package(Assimp)
-find_package(Assimp CONFIG REQUIRED)
-
 enable_testing()
 
 add_subdirectory(src)

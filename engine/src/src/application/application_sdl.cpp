@@ -31,11 +31,32 @@ namespace moka
 		case SDLK_F10: return key::f10;
 		case SDLK_F11: return key::f11;
 		case SDLK_F12: return key::f12;
-		case SDLK_w: return key::w;
 		case SDLK_a: return key::a;
-		case SDLK_s: return key::s;
+		case SDLK_b: return key::b;
+		case SDLK_c: return key::c;
 		case SDLK_d: return key::d;
-
+		case SDLK_e: return key::e;
+		case SDLK_f: return key::f;
+		case SDLK_g: return key::g;
+		case SDLK_h: return key::h;
+		case SDLK_i: return key::i;
+		case SDLK_j: return key::j;
+		case SDLK_k: return key::k;
+		case SDLK_l: return key::l;
+		case SDLK_m: return key::m;
+		case SDLK_n: return key::n;
+		case SDLK_o: return key::o;
+		case SDLK_p: return key::p;
+		case SDLK_q: return key::q;
+		case SDLK_r: return key::r;
+		case SDLK_s: return key::s;
+		case SDLK_t: return key::t;
+		case SDLK_u: return key::u;
+		case SDLK_v: return key::v;
+		case SDLK_w: return key::w;
+		case SDLK_x: return key::x;
+		case SDLK_y: return key::y;
+		case SDLK_z: return key::z;
 		default: return key::none;
 		}
 	}
@@ -214,20 +235,6 @@ namespace moka
             running_ = false;
         });
 
-		auto update_app = [&](const game_time delta_time)
-		{
-			mouse_.state.motion_ = { 0, 0 };
-			log_.debug("Updating application. Delta time: {}", delta_time);
-			poll_events();
-			update(delta_time);
-		};
-
-		auto draw_app = [&](const game_time delta_time)
-		{
-			log_.debug("Rendering application. Delta time: {}", delta_time);
-			draw(delta_time);
-		};
-
 		double t = 0.0;
 		const double dt = 0.01;
 
@@ -244,12 +251,16 @@ namespace moka
 
 			while (accumulator >= dt)
 			{
-				update_app(game_time(dt));
+				mouse_.state.motion_ = { 0, 0 };
+
+				poll_events();
+				update(dt);
+
 				accumulator -= dt;
 				t += dt;
 			}
 
-			draw_app(game_time(dt));
+			draw(dt);
 		}
 
         return 0;

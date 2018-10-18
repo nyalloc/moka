@@ -36,8 +36,8 @@ public:
 			.set_position(glm::vec3(0, 1, 0))
 			.set_perspective(glm::radians(70.0f), window_.aspect()))
 		, model_importer_(data_path(), graphics_)
-		, model_(model_importer_.load("sponza.moka"))
-		, imgui_(window_, keyboard_, mouse_)
+		, model_(model_importer_.load("flight_helmet.moka"))
+		, imgui_(window_, keyboard_, mouse_, graphics_)
 	{
 	}
 
@@ -58,14 +58,14 @@ public:
 			}
 		}
 
-		//ImGui::NewFrame();
+		ImGui::NewFrame();
 
-		//bool show = true;
-		//ImGui::ShowDemoWindow(&show);
+		bool show = true;
+		ImGui::ShowDemoWindow(&show);
 
-		//ImGui::Render();
+		ImGui::Render();
 
-		//imgui_.draw(ImGui::GetDrawData());
+		imgui_.draw(ImGui::GetDrawData());
 
 		graphics_.frame();
 	}
