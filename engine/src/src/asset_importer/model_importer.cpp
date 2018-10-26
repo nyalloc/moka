@@ -1,9 +1,11 @@
-#pragma once
-
 #include <asset_importer/model_importer.hpp>
 #include <asset_importer/texture_importer.hpp>
 #include <graphics/graphics_device.hpp>
 #include <graphics/material_builder.hpp>
+#include <graphics/graphics_api.hpp>
+#include <graphics/material_builder.hpp>
+#include <graphics/vertex_layout_builder.hpp>
+#include <graphics/vertex_layout.hpp>
 #include "../deps/nlohmann/json.hpp"
 
 #define TINYGLTF_IMPLEMENTATION
@@ -40,6 +42,7 @@ namespace moka
 		case STBI_default:
 			return texture_components::auto_detect;
 		}
+		throw std::runtime_error("Invalid texture_components value");
 	}
 
 	constexpr int moka_to_stb(texture_components format)
@@ -57,9 +60,15 @@ namespace moka
 		case texture_components::auto_detect:
 			return STBI_default;
 		}
+		throw std::runtime_error("Invalid texture_components value");
 	}
 
-	texture_data load(const std::filesystem::path& path, const texture_components components)
+	void load_texture(
+		const std::filesystem::path& path,
+		void* data,
+		glm::ivec2& resolution,
+		texture_components& components,
+		texture_components components_requested)
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -68,49 +77,40 @@ namespace moka
 
 		stbi_set_flip_vertically_on_load(true);
 
-		int x, y, n;
+		int n;
+
 		auto path_string = path.string();
 		auto path_c_string = path_string.c_str();
-		unsigned char *data = stbi_load(path_c_string, &x, &y, &n, moka_to_stb(components));
-		return texture_data{ data, vector2_uint{ x, y }, stb_to_moka(n) };
+
+		data = stbi_load(path_c_string, &resolution.x, &resolution.y, &n, moka_to_stb(components));
+
+		components = stb_to_moka(n);
 	}
 
-	void unload(texture_data& data)
+	void free_texture(void* data)
 	{
-		stbi_image_free(data.data);
+		stbi_image_free(data);
 	}
-
-	texture_data::texture_data(
-		void* data
-		, const vector2_uint& resolution
-		, const texture_components& components)
-		: data(data)
-		, resolution(resolution)
-		, components(components)
-	{}
-
-	texture_data::~texture_data() = default;
 
 	asset_importer<model>::asset_importer(const std::filesystem::path& path, graphics_device& device)
-		: root_directory_(path), device_(device)
+		: device_(device), root_directory_(path)
 	{}
 
-	mesh load_mesh(const tinygltf::Model& model, const tinygltf::Mesh& mesh, graphics_device& device, transform& trans, const std::filesystem::path& root_path, std::map<std::string, program_handle>& shaders)
+	mesh load_mesh(const tinygltf::Model& model, const tinygltf::Mesh& mesh, graphics_device& device, transform& trans, const std::filesystem::path& root_path, std::map<std::string, program>& shaders)
 	{
 		auto transform = trans;
 
 		std::vector<moka::primitive> primitives;
 
-
-		for (auto i = 0; i < mesh.primitives.size(); i++)
+		for (size_t i = 0; i < mesh.primitives.size(); i++)
 		{
 			const auto& primitive = mesh.primitives[i];
 
 			std::vector<uint8_t> index_buffer;
 			std::vector<uint8_t> vertex_buffer;
 
-			vertex_buffer_handle vertex_handle;
-			index_buffer_handle index_handle;
+			moka::vertex_buffer vertex_handle;
+			moka::index_buffer index_handle;
 
 			const auto& indices_accessor = model.accessors[primitive.indices];
 			const auto& indices_buffer_view = model.bufferViews[indices_accessor.bufferView];
@@ -123,32 +123,44 @@ namespace moka
 
 			auto indices_count = indices_accessor.count;
 
+			index_type type;
+
+			switch (indices_accessor.componentType)
+			{
+			case 5120:
+				type = index_type::int8;
+				break;
+			case 5121:
+				type = index_type::uint8;
+				break;
+			case 5122:
+				type = index_type::int16;
+				break;
+			case 5123:
+				type = index_type::uint16;
+				break;
+			case 5125:
+				type = index_type::uint32;
+				break;
+			case 5126:
+				type = index_type::float32;
+				break;
+			}
+
 			vertex_layout::builder layout_builder;
 
 			size_t vertices_count = 0;
 
 			auto get_size = [](int type) 
 			{
-				// based on the type, figure out the number of floats they consist of
-				if (type == TINYGLTF_TYPE_SCALAR)
+				switch (type)
 				{
-					return 1;
-				}
-				else if (type == TINYGLTF_TYPE_VEC2)
-				{
-					return 2;
-				}
-				else if (type == TINYGLTF_TYPE_VEC3)
-				{
-					return 3;
-				}
-				else if (type == TINYGLTF_TYPE_VEC4)
-				{
-					return 4;
-				}
-				else
-				{
-					assert(0);
+				case TINYGLTF_TYPE_SCALAR: return 1;
+				case TINYGLTF_TYPE_VEC2: return 2;
+				case TINYGLTF_TYPE_VEC3: return 3;
+				case TINYGLTF_TYPE_VEC4: return 4;
+				default:
+					throw std::runtime_error("Invalid TinyGLTF type");
 				}
 			};
 
@@ -208,8 +220,8 @@ namespace moka
 					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength);
 			}
 
-			vertex_handle = device.create_vertex_buffer(vertex_buffer.data(), vertex_buffer.size(), layout_builder.build());
-			index_handle = device.create_index_buffer(index_buffer.data(), index_buffer.size());
+			vertex_handle = device.make_vertex_buffer(vertex_buffer.data(), vertex_buffer.size(), layout_builder.build(), buffer_usage::static_draw);
+			index_handle = device.make_index_buffer(index_buffer.data(), index_buffer.size(), type, buffer_usage::static_draw);
 
 			/*
 			Importing assets authored by third parties brings additional complexity - each asset may define a number of materials
@@ -230,6 +242,12 @@ namespace moka
 			*/
 
 			material_builder mat_builder(device, shaders);
+
+			mat_builder.add_uniform("view_pos", glm::vec3(0.0f));
+			mat_builder.add_uniform("material.diffuse_factor", glm::vec3(1.0f));
+			mat_builder.add_uniform("material.emissive_factor", glm::vec3(0.0f));
+			mat_builder.add_uniform("material.roughness_factor", 1.0f);
+			mat_builder.add_uniform("material.metalness_factor", 1.0f);
 
 			mat_builder.set_vertex_shader(root_path / "Materials" / "Shaders" / "pbr.vert");
 			mat_builder.set_fragment_shader(root_path / "Materials" / "Shaders" / "pbr.frag");
@@ -262,22 +280,13 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
-							if (image_data.uri == "white.png")
-							{
-								std::cout << "Reeee";
-							}
-
-							texture_data data
-							{
+							auto diffuse_map = device.make_texture(
 								image_data.image.data(),
-								moka::vector2_uint{ image_data.width, image_data.height },
-								stb_to_moka(image_data.component)
-							};
-
-							auto albedo = device.create_texture(data, false);
-
-							texture_2d diffuse_map;
-							diffuse_map.handle = albedo;
+								glm::ivec2{ image_data.width, image_data.height },
+								stb_to_moka(image_data.component),
+								{},
+								true,
+								false);
 
 							mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
 						}
@@ -286,14 +295,14 @@ namespace moka
 					if (auto metallic_factor_itr = material.values.find("metallicFactor"); metallic_factor_itr != material.values.end())
 					{
 						auto data = metallic_factor_itr->second.number_value;
-						float metallic_factor(data);
+						float metallic_factor(static_cast<float>(data));
 						mat_builder.add_uniform("material.metalness_factor", metallic_factor);
 					}
 
 					if (auto roughness_factor_itr = material.values.find("roughnessFactor"); roughness_factor_itr != material.values.end())
 					{
 						auto data = roughness_factor_itr->second.number_value;
-						float roughness_factor(data);
+						auto roughness_factor(static_cast<float>(data));
 						mat_builder.add_uniform("material.roughness_factor", roughness_factor);
 					}
 
@@ -312,17 +321,13 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
-							texture_data data
-							{
+							auto metallic_roughness_map = device.make_texture(
 								image_data.image.data(),
-								moka::vector2_uint{ image_data.width, image_data.height },
-								stb_to_moka(image_data.component)
-							};
-
-							auto metallic_roughness = device.create_texture(data, false);
-
-							texture_2d metallic_roughness_map;
-							metallic_roughness_map.handle = metallic_roughness;
+								glm::ivec2{ image_data.width, image_data.height },
+								stb_to_moka(image_data.component),
+								{},
+								true,
+								false);
 
 							mat_builder.add_texture(material_property::metallic_roughness_map, metallic_roughness_map);
 						}
@@ -351,17 +356,13 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
-							texture_data data
-							{
+							auto normal_map = device.make_texture(
 								image_data.image.data(),
-								moka::vector2_uint{ image_data.width, image_data.height },
-								stb_to_moka(image_data.component)
-							};
-
-							auto normals = device.create_texture(data, false);
-
-							texture_2d normal_map;
-							normal_map.handle = normals;
+								glm::ivec2{ image_data.width, image_data.height },
+								stb_to_moka(image_data.component),
+								{},
+								true,
+								false);
 
 							mat_builder.add_texture(material_property::normal_map, normal_map);
 						}
@@ -382,16 +383,13 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
-							texture_data data
-							{
-								image_data.image.data(),
-								moka::vector2_uint{ image_data.width, image_data.height },
-								stb_to_moka(image_data.component)
-							};
-
-							auto occlusion = device.create_texture(data, false);
-							texture_2d occlusion_map;
-							occlusion_map.handle = occlusion;
+							auto occlusion_map = device.make_texture(
+								image_data.image.data(), 
+								glm::ivec2{ image_data.width, image_data.height },
+								stb_to_moka(image_data.component), 
+								{}, 
+								true,
+								false);
 
 							mat_builder.add_texture(material_property::ao_map, occlusion_map);
 						}
@@ -419,16 +417,13 @@ namespace moka
 
 							auto image_data = model.images[texture_source];
 
-							texture_data data
-							{
+							auto emissive_map = device.make_texture(
 								image_data.image.data(),
-								moka::vector2_uint{ image_data.width, image_data.height },
-								stb_to_moka(image_data.component)
-							};
-
-							auto emissive = device.create_texture(data, false);
-							texture_2d emissive_map;
-							emissive_map.handle = emissive;
+								glm::ivec2{ image_data.width, image_data.height },
+								stb_to_moka(image_data.component),
+								{},
+								true,
+								false);
 
 							mat_builder.add_texture(material_property::emissive_map, emissive_map);
 						}
@@ -473,13 +468,16 @@ namespace moka
 				}
 			}
 
-			primitives.emplace_back(vertex_handle, vertices_count, index_handle, indices_count, mat_builder.build());
+			index_buffer.clear();
+			vertex_buffer.clear();
+
+			primitives.emplace_back(vertex_handle, vertices_count, index_handle, type, indices_count, 0, mat_builder.build());
 		}
 
 		return { std::move(primitives), std::move(trans) };
 	}
 
-	model load_model(const tinygltf::Model& model, graphics_device& device, const std::filesystem::path& root_path, std::map<std::string, program_handle>& shaders)
+	model load_model(const tinygltf::Model& model, graphics_device& device, const std::filesystem::path& root_path, std::map<std::string, program>& shaders)
 	{
 		std::vector<mesh> meshes;
 

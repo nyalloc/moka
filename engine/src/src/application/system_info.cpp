@@ -8,7 +8,7 @@
 namespace moka
 {
 
-    CString get_string_from_reg(const HKEY key_parent, const CString& key_name, const CString& key_val_name)
+    CString get_string_from_reg(HKEY key_parent, const CString& key_name, const CString& key_val_name)
     {
         CRegKey key;
         CString out;

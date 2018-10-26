@@ -1,300 +1,306 @@
 
 #include <graphics/graphics_device.hpp>
 #include <graphics/gl_graphics_api.hpp>
-#include <graphics/draw_call.hpp>
-#include <graphics/draw_call_builder.hpp>
-#include <graphics/create_program.hpp>
-#include <graphics/create_shader.hpp>
-#include <graphics/create_vertex_buffer.hpp>
-#include <graphics/create_index_buffer.hpp>
-#include <graphics/create_texture.hpp>
-#include <graphics/frame.hpp>
-#include <application/logger.hpp>
+#include <graphics/messages.hpp>
 #include <application/window.hpp>
-#include <GL/glew.h>
+#include "application/profile.hpp"
 
 namespace moka
 {
-    std::unique_ptr<graphics_api> create(
-        const graphics_backend backend)
+    std::unique_ptr<graphics_api> create(window& window, const graphics_backend graphics_backend)
     {
-        switch (backend)
+		// right now we only have an OpenGL backend!
+        switch (graphics_backend)
         {
-        case graphics_backend::direct3d_9:  return std::make_unique<gl_graphics_api>();
-        case graphics_backend::direct3d_11: return std::make_unique<gl_graphics_api>();
-        case graphics_backend::direct3d_12: return std::make_unique<gl_graphics_api>();
-        case graphics_backend::gnm:         return std::make_unique<gl_graphics_api>();
-        case graphics_backend::metal:       return std::make_unique<gl_graphics_api>();
-        case graphics_backend::opengl_es:   return std::make_unique<gl_graphics_api>();
-        case graphics_backend::opengl:      return std::make_unique<gl_graphics_api>();
-        case graphics_backend::vulkan:      return std::make_unique<gl_graphics_api>();
+        case graphics_backend::direct3d_9:  return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::direct3d_11: return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::direct3d_12: return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::gnm:         return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::metal:       return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::opengl_es:   return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::opengl:      return std::make_unique<gl_graphics_api>(window);
+        case graphics_backend::vulkan:      return std::make_unique<gl_graphics_api>(window);
         case graphics_backend::null:        return nullptr;
-        default:                            return std::make_unique<gl_graphics_api>();
+        default:                            return std::make_unique<gl_graphics_api>(window);
         }
     }
 
-    graphics_device::graphics_device(
-		window& window,
-        const graphics_backend graphics_backend)
-	: window_(window)
-	, graphics_backend_(graphics_backend)
+    graphics_device::graphics_device(window& window, const graphics_backend graphics_backend)
+		: window_(window)
 	{
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
+		bool ready = false;
 
-		auto worker_context = window_.make_context();
-		auto main_context = window_.make_context();
+		auto worker_context = window.make_context();
+		auto main_context = window.make_context();
 
-		worker_ = std::thread([&]() 
-		{	
-			// this is the worker thread that does all rendering
-			// this might not be very portable, a lot of literature I've read reccomends using the main thread for this work
-			// however this doesn't seem to be possible when using an SDL-based application, as it reserves the main thread for its event loop
+		std::condition_variable condition_variable_;
 
-			// make worker graphics context current
-			window_.set_current_context(worker_context);
+		worker_ = std::thread([&]()
+		{
+			window.set_current_context(worker_context);
 
-			// initialise renderer backend
-			graphics_api_ = create(graphics_backend_);
+			graphics_api_ = create(window, graphics_backend);
 
-			ready = true;
-			cv.notify_one();
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
+				ready = true;
+			}
 
-			wait()
-			.handle<frame_cmd>([&](const frame_cmd& event)
+			condition_variable_.notify_one();
+
+			// send messages to the render backend
+			while (true)
 			{
-				graphics_api_->frame();
-				window_.swap_buffer();
-				event();
-			})
-			.handle<create_program_cmd>([&](const create_program_cmd& event)
-			{
-				event(graphics_api_->create_program(
-					event.vertex_handle,
-					event.fragment_handle));
-			})
-			.handle<create_shader_cmd>([&](const create_shader_cmd& event)
-			{
-				event(graphics_api_->create_shader(
-					event.type,
-					event.source));
-			})
-			.handle<create_vertex_buffer_cmd>([&](const create_vertex_buffer_cmd& event)
-			{
-				event(graphics_api_->create_vertex_buffer(
-					event.vertices,
-					event.size,
-					event.layout));
-			})
-			.handle<create_index_buffer_cmd>([&](const create_index_buffer_cmd& event)
-			{
-				event(graphics_api_->create_index_buffer(
-					event.indices,
-					event.size));
-			})
-			.handle<create_texture_cmd>([&](const create_texture_cmd& event)
-			{
-				event(graphics_api_->create_texture(event.data));
-			});
+				if (!graphics_api_)
+				{
+					std::cout << "Error: graphics backend set to null" << std::endl;
+					return;
+				}
+
+				auto val = messages_.pop();  // wait for message to be pushed
+
+				if (!val)
+				{
+					std::cout << "Err" << std::endl;
+					continue;
+				}
+
+				val->accept(*graphics_api_); // dispatch message
+			}
 		});
 
-		// wait for render thread to initialise backend
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
+		// wait for worker thread to initialise the render backend before returning control to the application
+
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{ 
+			return ready; 
+		});
 	}
 
-	vertex_buffer_handle graphics_device::create_vertex_buffer(
-		const void* vertices, 
-		const size_t size, 
-		const vertex_layout& layout)
+	void graphics_device::submit(command_list&& command_list, bool sort)
+	{
+		auto sort_time = profile<milliseconds>([&]()
+		{
+			if (sort && !command_list.is_sorted())
+			{
+				command_list.sort();
+			}
+		});
+
+		messages_.push(std::make_unique<submit_commands>(std::move(command_list), false, []{}));
+	}
+
+	void graphics_device::submit_and_swap(command_list&& command_list, bool sort)
+	{
+		std::condition_variable condition_variable_;
+
+		if (sort && !command_list.is_sorted())
+		{
+			command_list.sort();
+		}
+
+		float ready = false;
+
+		messages_.push(std::make_unique<submit_commands>(std::move(command_list), true, [&]()
+		{
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
+
+		// wait for render thread to complete its work.
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{
+			return ready;
+		});
+	}
+
+	vertex_buffer graphics_device::make_vertex_buffer(const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
     {
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
+		std::condition_variable condition_variable_;
 
-		vertex_buffer_handle handle{};
+		vertex_buffer response;
+		bool ready = false;
 
-		// register handler to get the program handle from render thread.
-		const create_vertex_buffer_cmd event(vertices, size, layout, [&](vertex_buffer_handle h)
+		// message the render thread and ask for a vertex buffer. Wait here until we get a response.
+
+		messages_.push(std::make_unique<moka::make_vertex_buffer>(vertices, size, std::move(layout), use, [&](vertex_buffer&& result)
 		{
-			handle = h;
-			ready = true;
-			cv.notify_one();
-		});
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
 
-		// send request to render thread.
-		send(event);
+				response = result;
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
 
 		// wait for render thread to complete its work.
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
 
-		return handle;
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{
+			return ready;
+		});
+
+		return response;
 	}
 
-	index_buffer_handle graphics_device::create_index_buffer(const void* indices, const size_t size)
+	index_buffer graphics_device::make_index_buffer(const void* indices, const size_t size, const index_type type, const buffer_usage use)
 	{
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
+		std::condition_variable condition_variable_;
 
-		index_buffer_handle handle{};
+		index_buffer response;
+		bool ready = false;
 
-		// register handler to get the program handle from render thread.
-		const create_index_buffer_cmd event(indices, size, [&](index_buffer_handle h)
+		// message the render thread and ask for an index buffer. Wait here until we get a response.
+
+		messages_.push(std::make_unique<moka::make_index_buffer>(indices, size, type, use, [&](index_buffer&& result)
 		{
-			handle = h;
-			ready = true;
-			cv.notify_one();
-		});
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
 
-		// send request to render thread.
-		send(event);
+				response = result;
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
 
 		// wait for render thread to complete its work.
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
 
-		return handle;
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{
+			return ready;
+		});
+
+		return response;
 	}
 
-    shader_handle graphics_device::create_shader(
-        const shader_type type
-        , const std::string& source)
+    shader graphics_device::make_shader(const shader_type type, const std::string& source)
     {
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
+		std::condition_variable condition_variable_;
 
-		shader_handle handle{};
+		shader response{};
+		bool ready = false;
 
-		//// register handler to get the program handle from render thread.
-		const create_shader_cmd event(type, source, [&](shader_handle h)
+		// message the render thread and ask for an index buffer. Wait here until we get a response.
+
+		messages_.push(std::make_unique<moka::make_shader>(type, source, [&](shader&& result)
 		{
-			handle = h;
-			ready = true;
-			cv.notify_one();
-		});
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
 
-		//// send request to render thread.
-		send(event);
+				response = result;
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
 
 		// wait for render thread to complete its work.
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
 
-		return handle;
-	}
+		std::unique_lock<std::mutex> lock(mutex_);
 
-	draw_call_builder graphics_device::draw()
-	{
-		return { *this };
-	}
-
-	void graphics_device::submit(
-		draw_call&& call)
-	{
-		graphics_api_->submit(std::move(call));
-	}
-
-	void graphics_device::destroy(
-        const shader_handle handle) const
-    {
-    }
-
-	program_handle graphics_device::create_program(
-		const shader_handle vertex_handle
-		, const shader_handle fragment_handle)
-	{
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
-
-		program_handle handle{};
-
-		// register handler to get the program handle from render thread.
-		const create_program_cmd event(vertex_handle, fragment_handle, [&](program_handle h)
+		condition_variable_.wait(lock, [&]
 		{
-			handle = h;
-			ready = true;
-			cv.notify_one();
+			return ready;
 		});
 
-		// send request to render thread.
-		send(event);
-
-		// wait for render thread to complete its work.
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
-
-		return handle;
+		return response;
 	}
 
-	texture_handle graphics_device::create_texture(texture_data& texture_data, bool free_data)
+	program graphics_device::make_program(const shader vertex_handle, const shader fragment_handle)
 	{
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
+		std::condition_variable condition_variable_;
 
-		texture_handle handle{};
+		program response{};
+		bool ready = false;
 
-		// register handler to get the program handle from render thread.
-		const create_texture_cmd event(texture_data, [&](texture_handle h)
+		// message the render thread and ask for an index buffer. Wait here until we get a response.
+
+		messages_.push(std::make_unique<moka::make_program>(vertex_handle, fragment_handle, [&](program&& result)
 		{
-			handle = h;
-			ready = true;
-			cv.notify_one();
-		});
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
 
-		// send request to render thread.
-		send(event);
+				response = result;
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
 
 		// wait for render thread to complete its work.
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
+
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{
+			return ready;
+		});
+
+		return response;
+	}
+
+	texture graphics_device::make_texture(void* data, const glm::ivec2& resolution, texture_components components, texture_wrap_mode wrap_mode, bool has_mipmaps, bool free_data)
+	{
+		std::condition_variable condition_variable_;
+
+		texture response{};
+		bool ready = false;
+
+		// message the render thread and ask for an index buffer. Wait here until we get a response.
+
+		messages_.push(std::make_unique<moka::make_texture>(data, resolution, components, wrap_mode, has_mipmaps, [&](texture&& result)
+		{
+			{
+				std::lock_guard<std::mutex> lock(mutex_);
+
+				response = result;
+
+				ready = true;
+			}
+			condition_variable_.notify_one();
+		}));
+
+		// wait for render thread to complete its work.
+
+		std::unique_lock<std::mutex> lock(mutex_);
+
+		condition_variable_.wait(lock, [&]
+		{
+			return ready;
+		});
 
 		if (free_data)
 		{
-			unload(texture_data);
+			free_texture(data);
 		}
 
-		return handle;
+		return response;
 	}
 
-    program_handle graphics_device::create_program(
-        shader_handle compute_handle)
-    {
-		return {};
-    }
-
-    void graphics_device::destroy(
-        program_handle handle)
+    void graphics_device::destroy(program handle)
     {}
 
-	void graphics_device::destroy(
-        vertex_buffer_handle handle)
+	void graphics_device::destroy(vertex_buffer handle)
 	{}
 
-	void graphics_device::destroy(
-		index_buffer_handle handle)
+	void graphics_device::destroy(index_buffer handle)
 	{}
 
-	void graphics_device::frame()
-	{
-		std::mutex m;
-		std::condition_variable cv;
-		auto ready = false;
-
-		const frame_cmd frame([&]()
-		{
-			ready = true;
-			cv.notify_one();
-		});
-
-    	send(frame);
-
-		std::unique_lock<std::mutex> lk(m);
-		cv.wait(lk, [&] { return ready; });
-	}
+	void graphics_device::destroy(const shader handle)
+	{}
 }

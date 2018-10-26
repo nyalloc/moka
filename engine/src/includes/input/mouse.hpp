@@ -4,22 +4,47 @@
 
 namespace moka
 {
+	enum class mouse_button : uint8_t
+	{
+		left = 0,
+		right,
+		middle
+	};
+
 	class mouse_state
 	{
 		friend class app;
 
-		glm::vec2 position_;
-		glm::vec2 motion_;
+		glm::ivec2 position_;
+		glm::ivec2 motion_;
+		std::array<bool, 3> buttons_ = {};
+		float scroll_ = 0.0f;
 	public:
 
-		const glm::vec2& get_position() const
+		const glm::ivec2& get_position() const
 		{
 			return position_;
 		}
 
-		const glm::vec2& get_motion() const
+		const glm::ivec2& get_motion() const
 		{
 			return motion_;
+		}
+
+		bool is_button_down(const mouse_button button) const
+		{
+			const auto pos = static_cast<size_t>(button);
+			return buttons_[pos];
+		}
+
+		bool is_button_up(const mouse_button button) const
+		{
+			return !is_button_down(button);
+		}
+
+		float get_scroll() const
+		{
+			return scroll_;
 		}
 	};
 
@@ -27,11 +52,18 @@ namespace moka
 	{
 		friend class app;
 
-		inline static mouse_state state{};
+		mouse_state state_;
 	public:
-		static const mouse_state& get_state()
+		mouse() = default;
+		mouse(const mouse& rhs) = delete;
+		mouse(mouse&& rhs) = delete;
+		mouse& operator = (const mouse& rhs) = delete;
+		mouse& operator = (mouse&& rhs) = delete;
+		~mouse() = default;
+
+		const mouse_state& get_state() const
 		{
-			return state;
+			return state_;
 		}
 	};
 }

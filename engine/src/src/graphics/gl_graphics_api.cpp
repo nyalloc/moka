@@ -1,17 +1,40 @@
 
 #include <string>
-#include <sstream>
 #include <application/logger.hpp>
 #include <graphics/gl_graphics_api.hpp>
 #include <filesystem>
-#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <graphics/material.hpp>
+#include <graphics/command_list.hpp>
+#include <application/window.hpp>
+#include <graphics/vertex_layout.hpp>
 
 namespace moka
 {
-	constexpr GLenum moka_to_gl(const primitive_type type) 
+	constexpr GLenum moka_to_gl(const polygon_draw_mode type)
+	{
+		switch (type)
+		{
+		case polygon_draw_mode::fill: return GL_FILL;
+		case polygon_draw_mode::line: return GL_LINE;
+		case polygon_draw_mode::points: return GL_POINTS;
+		default: return 0;
+		}
+	}
+
+	constexpr GLenum moka_to_gl(const face type)
+	{
+		switch(type)
+		{
+		case face::front: return GL_FRONT;
+		case face::back: return GL_BACK;
+		case face::front_and_back: return GL_FRONT_AND_BACK;
+		default: return 0;
+		}
+	}
+
+	constexpr GLenum moka_to_gl(const primitive_type type)
 	{
 		switch (type)
 		{
@@ -21,7 +44,22 @@ namespace moka
 		case primitive_type::triangle_strip: return GL_TRIANGLE_STRIP;
 		default: return 0;
 		}
-	};
+	}
+
+	constexpr GLenum moka_to_gl(const index_type type)
+	{
+		switch (type)
+		{
+		case index_type::int8: return GL_BYTE;
+		case index_type::uint8: return GL_UNSIGNED_BYTE;
+		case index_type::int16: return GL_SHORT;
+		case index_type::uint16: return GL_UNSIGNED_SHORT;
+		case index_type::int32: return GL_INT;
+		case index_type::uint32: return GL_UNSIGNED_INT;
+		case index_type::float32: return GL_FLOAT;
+		default: return 0;
+		}
+	}
 
 	constexpr GLenum moka_to_gl(const texture_components type)
 	{
@@ -33,7 +71,7 @@ namespace moka
 		case texture_components::grey: return GL_RGB;		 //todo: ditto
 		default: return 0;
 		}
-	};
+	}
 
 
 	constexpr GLenum moka_to_gl(const attribute_type type)
@@ -52,7 +90,7 @@ namespace moka
 		case attribute_type::float64: return GL_DOUBLE;
 		default: return 0;
 		}
-	};
+	}
 
 	constexpr GLenum moka_to_gl(const shader_type type)
 	{
@@ -66,7 +104,36 @@ namespace moka
 			return GL_COMPUTE_SHADER;
 		default: return 0;
 		}
-	};
+	}
+
+	constexpr GLenum moka_to_gl(const blend_equation type)
+	{
+		switch(type) 
+		{ 
+			case blend_equation::func_add: 
+				return GL_FUNC_ADD;
+			case blend_equation::func_subtract:
+				return GL_FUNC_SUBTRACT;
+			case blend_equation::func_reverse_subtract:
+				return GL_FUNC_REVERSE_SUBTRACT;
+			case blend_equation::min: 
+				return GL_MIN;
+			case blend_equation::max: 
+				return GL_MAX;
+			default: return 0;
+		}
+	}
+
+	constexpr GLenum moka_to_gl(const buffer_usage type)
+	{
+		switch (type)
+		{
+		case buffer_usage::static_draw: return GL_STATIC_DRAW;
+		case buffer_usage::dynamic_draw: return GL_DYNAMIC_DRAW;
+		case buffer_usage::stream_draw: return GL_STREAM_DRAW;
+		default: return 0;
+		}
+	}
 
 	constexpr GLenum moka_to_gl(const blend_function_factor type)
 	{
@@ -102,195 +169,230 @@ namespace moka
 			return GL_ONE_MINUS_CONSTANT_ALPHA;
 		default: return 0;
 		}
-	};
-
-	void gl_graphics_api::submit(draw_call&& call) 
-	{
-		// lock here!
-		if (draw_call_buffer_pos_ + 1 < draw_call_buffer_.size())
-		{
-			draw_call_buffer_[draw_call_buffer_pos_++] = std::move(call);
-		}
 	}
 
-	void gl_graphics_api::frame()
+	void gl_graphics_api::visit(clear_command& cmd)
 	{
-		// draw item comparator for sorting
-		auto comparator = [](draw_call& a, draw_call& b)
+		uint32_t bitmask = 0;
+
+		if (cmd.clear_color)
 		{
-			return a.key > b.key;
-		};
+			auto& color = cmd.color;
+			glClearColor(color.r, color.g, color.b, color.a);
+			bitmask = bitmask | GL_COLOR_BUFFER_BIT;
+		}
 
-		// clear the render target
-		auto color = colour::light_grey();
-
-		glClearColor(color.r(), color.g(), color.b(), color.a());
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// if draw commands have been sent
-		if (draw_call_buffer_pos_ > 0)
+		if (cmd.clear_depth)
 		{
-			// sort all render items to minimise state changes
-			std::sort(draw_call_buffer_.begin(), draw_call_buffer_.begin() + draw_call_buffer_pos_, comparator);
+			bitmask = bitmask | GL_DEPTH_BUFFER_BIT;
+		}
 
-			for (auto& current_call : draw_call_buffer_)
+		glClear(bitmask);
+	}
+
+	void gl_graphics_api::visit(viewport_command& cmd)
+	{
+		glViewport(cmd.x, cmd.y, cmd.width, cmd.height);
+	}
+
+	void gl_graphics_api::visit(scissor_command& cmd)
+	{
+		glScissor(cmd.x, cmd.y, cmd.width, cmd.height);
+	}
+
+	void gl_graphics_api::visit(fill_vertex_buffer_command& cmd)
+	{
+		const GLuint handle(cmd.handle.id);
+
+		auto& data = vertex_buffer_data_[cmd.handle.id];
+		data.size = cmd.size;
+
+		glBindBuffer(GL_ARRAY_BUFFER, handle);
+		glBufferData(GL_ARRAY_BUFFER
+			, cmd.size
+			, cmd.data
+			, moka_to_gl(data.buffer_use)
+		);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void gl_graphics_api::visit(fill_index_buffer_command& cmd)
+	{
+		const GLuint handle(cmd.handle.id);
+
+		auto& data = index_buffer_data_[cmd.handle.id];
+		data.size = cmd.size;
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER
+			, cmd.size
+			, cmd.data
+			, moka_to_gl(data.buffer_use)
+		);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	void gl_graphics_api::visit(draw_command& cmd)
+	{
+		// early exit if a bogus vertex buffer is given to us
+		if(cmd.index_buffer.id == std::numeric_limits<uint16_t>::max())
+		{
+			return;
+		}
+
+		const auto indexed = cmd.index_buffer.id != std::numeric_limits<uint16_t>::max();
+
+		glBindBuffer(GL_ARRAY_BUFFER, cmd.vertex_buffer.id);
+
+		if (indexed)
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cmd.index_buffer.id);
+		}
+
+		// update the current vertex layout to match the vertices we're about to render
+		auto& layout = vertex_buffer_data_[cmd.vertex_buffer.id].layout;
+
+		for (const auto& attribute : layout)
+		{
+			glVertexAttribPointer(
+				GLuint(attribute.index),
+				GLint(attribute.size),
+				moka_to_gl(attribute.type),
+				attribute.normalized,
+				GLsizei(attribute.stride),
+				reinterpret_cast<void*>(attribute.offset));
+
+			glEnableVertexAttribArray(GLuint(attribute.index));
+		}
+
+		glEnableVertexAttribArray(0);
+
+		auto& material = cmd.mat;
+		auto& previous = previous_command_.mat;
+
+		// if this is a different shader, update the program state
+		if (material.get_program().id != previous.get_program().id)
+		{
+			glUseProgram(material.get_program().id);
+		}
+
+		if (material.get_alpha_mode() != previous.get_alpha_mode())
+		{
+			switch (material.get_alpha_mode())
 			{
-				if (previous_call_.vertex_buffer.id != current_call.vertex_buffer.id)
-				{
-					if (!is_handle_valid(current_call.vertex_buffer))
-					{
-						continue;
-					}
+			case alpha_mode::blend:
+				break;
+			case alpha_mode::mask:
+				break;
+			case alpha_mode::opaque:
+				break;
+			}
+			// do stateful switching based on blending properties of material
+		}
 
-					glBindBuffer(GL_ARRAY_BUFFER, current_call.vertex_buffer.id);
+		auto& blend = material.get_blend();
+		blend.enabled ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
+		glBlendEquation(moka_to_gl(blend.equation));
+		glBlendFunc(moka_to_gl(blend.source), moka_to_gl(blend.destination));
 
-					if (is_handle_valid(current_call.index_buffer))
-					{
-						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_call.index_buffer.id);
-					}
+		auto& polygon_mode = material.get_polygon_mode();
+		glPolygonMode(moka_to_gl(polygon_mode.faces), moka_to_gl(polygon_mode.mode));
 
-					// update the current vertex layout to match the vertices we're about to render
-					size_t size_offset = 0;
-					auto layout = vertex_layouts_[current_call.vertex_buffer.id];
+		auto& culling = material.get_culling();
+		culling.enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+		glCullFace(moka_to_gl(culling.faces));
 
-					for (const attribute_element& attribute : layout)
-					{
-						glVertexAttribPointer(
-							attribute.index,
-							attribute.size,
-							moka_to_gl(attribute.type),
-							attribute.normalized,
-							attribute.stride,
-							reinterpret_cast<void*>(attribute.offset));
+		material.get_depth_test() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+		material.get_scissor_test() ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
 
-						glEnableVertexAttribArray(attribute.index);
-					}
+		const auto size = material.size();
 
-					glEnableVertexAttribArray(0);
-				}
+		size_t current_texture_unit = 0;
 
-				auto material_ptr = current_call.material;
+		for (size_t i = 0; i < size; i++)
+		{
+			auto& parameter = material[i];
 
-				if (material_ptr)
-				{
-					auto effect = *material_ptr;
+			const auto location = glGetUniformLocation(GLuint(material.get_program().id), parameter.name.c_str());
 
-					bool no_previous_material = !previous_call_.material;
+			if (location == -1) continue;
 
-					// if this is a different shader, update the program state
-					if (no_previous_material || previous_call_.material->get_program().id != effect.get_program().id)
-					{
-						glUseProgram(effect.get_program().id);
-					}
-
-					glCullFace(GL_BACK);
-
-					if (no_previous_material || previous_call_.material->get_alpha_mode() != effect.get_alpha_mode())
-					{
-						switch (effect.get_alpha_mode())
-						{
-						case alpha_mode::blend:
-							break;
-						case alpha_mode::mask:
-							break;
-						case alpha_mode::opaque:
-							break;
-						}
-						// do stateful switching based on blending properties of material
-					}
-
-					auto program = material_ptr->get_program();
-					auto size = material_ptr->size();
-
-					size_t current_texture_unit = 0;
-
-					for (auto i = 0; i < size; i++)
-					{
-						auto& parameter = effect[i];
-
-						auto location = glGetUniformLocation(GLuint(effect.get_program().id), parameter.name.c_str());
-
-						if (location == -1) continue;
-
-						switch (parameter.type)
-						{
-						case parameter_type::texture:
-						{
-							auto data = std::get<texture_2d>(parameter.data);
-							// FIX THIS!!! TEXTURE UNIT 0???
-							glUniform1i(location, current_texture_unit);
-							glActiveTexture(GL_TEXTURE0 + current_texture_unit);
-							glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(data.handle.id));
-							++current_texture_unit;
-							break;
-						}
-						case parameter_type::float32:
-						{
-							auto data = std::get<float>(parameter.data);
-							glUniform1fv(location, parameter.count, &data);
-							break;
-						}
-						case parameter_type::vec3:
-						{
-							auto data = std::get<glm::vec3>(parameter.data);
-							glUniform3fv(location, parameter.count, glm::value_ptr(data));
-							break;
-						}
-						case parameter_type::vec4:
-						{
-							auto data = std::get<glm::vec4>(parameter.data);
-							glUniform4fv(location, parameter.count, glm::value_ptr(data));
-							break;
-						}
-						case parameter_type::mat3:
-						{
-							auto data = std::get<glm::mat3>(parameter.data);
-							glUniformMatrix3fv(location, parameter.count, false, glm::value_ptr(data));
-							break;
-						}
-						case parameter_type::mat4:
-						{
-							auto data = std::get<glm::mat4>(parameter.data);
-							glUniformMatrix4fv(location, parameter.count, false, glm::value_ptr(data));
-							break;
-						}
-						default:;
-						}
-					}
-
-					current_texture_unit = 0;
-				}
-
-				// if an index buffer is set, draw indexed. Otherwise, draw arrays.
-				if (is_handle_valid(current_call.index_buffer))
-				{
-					glDrawElements(
-						moka_to_gl(primitive_type::triangles), 
-						current_call.index_count,
-						GL_UNSIGNED_SHORT, 
-						nullptr);
-				}
-				else
-				{
-					glDrawArrays(
-						moka_to_gl(primitive_type::triangles), 
-						current_call.vertex_start, 
-						current_call.vertex_count);
-				}
-
-				previous_call_ = current_call;
+			switch (parameter.type)
+			{
+			case parameter_type::texture:
+			{
+				auto data = std::get<texture>(parameter.data);
+				// FIX THIS!!! TEXTURE UNIT 0???
+				glUniform1i(location, GLint(current_texture_unit));
+				glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
+				glBindTexture(GL_TEXTURE_2D, GLuint(data.id));
+				++current_texture_unit;
+				break;
+			}
+			case parameter_type::float32:
+			{
+				auto data = std::get<float>(parameter.data);
+				glUniform1fv(location, GLsizei(parameter.count), &data);
+				break;
+			}
+			case parameter_type::vec3:
+			{
+				auto data = std::get<glm::vec3>(parameter.data);
+				glUniform3fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+				break;
+			}
+			case parameter_type::vec4:
+			{
+				auto data = std::get<glm::vec4>(parameter.data);
+				glUniform4fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+				break;
+			}
+			case parameter_type::mat3:
+			{
+				auto data = std::get<glm::mat3>(parameter.data);
+				glUniformMatrix3fv(location, GLsizei(parameter.count), false, glm::value_ptr(data));
+				break;
+			}
+			case parameter_type::mat4:
+			{
+				auto data = std::get<glm::mat4>(parameter.data);
+				glUniformMatrix4fv(location, GLsizei(parameter.count), false, glm::value_ptr(data));
+				break;
+			}
+			default:;
 			}
 		}
 
-		draw_call_buffer_pos_ = 0;
-	}
+		if (indexed)
+		{
+			auto& index_buffer = index_buffer_data_[cmd.index_buffer.id];
 
-    program_handle gl_graphics_api::create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
+			glDrawElements(
+				moka_to_gl(cmd.prim_type),
+				GLsizei(cmd.index_count),
+				moka_to_gl(cmd.idx_type),
+				reinterpret_cast<void*>(cmd.index_buffer_offset));
+		}
+		else
+		{
+			glDrawArrays(
+				moka_to_gl(cmd.prim_type),
+				GLint(cmd.first_vertex),
+				GLsizei(cmd.vertex_count));
+		}
+
+		previous_command_ = cmd;
+	}
+	
+    program gl_graphics_api::make_program(const shader& vertex_handle, const shader& fragment_handle)
     {
-        const auto id = glCreateProgram();
-		const program_handle result{ static_cast<handle_id>(id) };
+        auto id = glCreateProgram();
+
+		const program result{ static_cast<uint16_t>(id) };
 
         // Attach shaders as necessary.
+
         glAttachShader(id, vertex_handle.id);
 
         glAttachShader(id, fragment_handle.id);
@@ -319,22 +421,18 @@ namespace moka
 			log_.info(info_log);
         }
 
-		log_.info("OpenGL program sucessfully created. Handle: {}", result.id);
-
-        programs_.emplace_back(result);
         return result;
     }
 
-	shader_handle gl_graphics_api::create_shader(const shader_type type, const std::string& source)
+	shader gl_graphics_api::make_shader(const shader_type type, const std::string& source)
     {
         int success;
 
         char info_log[512];
 
-        // vertex shader
+		auto id = glCreateShader(moka_to_gl(type));
 
-        const unsigned int id = glCreateShader(moka_to_gl(type));
-		const shader_handle handle{ static_cast<handle_id>(id) };
+		const shader result{ static_cast<uint16_t>(id) };
 
 		const char* source_chars = source.c_str();
 
@@ -342,103 +440,126 @@ namespace moka
 
         glCompileShader(id);
 
-        // print compile errors if any
         glGetShaderiv(id, GL_COMPILE_STATUS, &success);
         if (!success)
         {
             using namespace std::string_literals;
 
             glGetShaderInfoLog(id, 512, nullptr, info_log);
-
-            switch (type)
-            {
-            case shader_type::vertex:
-				log_.error("GLSL vertex shader compilation failed: {}",  info_log);
-                break;
-            case shader_type::fragment:
-				log_.error("GLSL fragment shader compilation failed: {}", info_log);
-				break;
-            case shader_type::compute:
-				log_.error("GLSL fragment shader compilation failed: {}", info_log);
-				break;
-            default:;
-            }
-
         }
 
-		log_.info("OpenGL shader sucessfully created. Handle: {}", handle.id);
-
-        shaders_.emplace_back(handle);
-        return handle;
+        return result;
     }
 
-    vertex_buffer_handle gl_graphics_api::create_vertex_buffer(
+    vertex_buffer gl_graphics_api::make_vertex_buffer(
 		const void* vertices,
 		size_t size, 
-		const vertex_layout& layout)
+	    vertex_layout&& layout, 
+		buffer_usage use)
     {
-		GLuint id;
-		glGenBuffers(1, &id);
+		vertex_buffer result;
 
-		glBindBuffer(GL_ARRAY_BUFFER, id);
+		GLuint handle;
+
+		vertex_buffer_data data;
+		data.layout = std::move(layout);
+		data.buffer_use = use;
+		data.size = size;
+
+		glGenBuffers(1, &handle);
+
+		result.id = uint16_t(handle);
+
+		vertex_buffer_data_[result.id] = std::move(data);
+
+		glBindBuffer(GL_ARRAY_BUFFER, handle);
 		glBufferData(GL_ARRAY_BUFFER
 			, size
 			, vertices
-			, (NULL == vertices) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW
+			, moka_to_gl(use)
 		);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		const vertex_buffer_handle handle{ static_cast<handle_id>(id) };
-
-		vertex_layouts_[handle.id] = layout;
-        vertex_buffers_.emplace_back(handle);
-
-		log_.info("OpenGL vertex buffer sucessfully created. Handle: {}", handle.id);
-
-        return handle;
+        return result;
     }
 
-	index_buffer_handle gl_graphics_api::create_index_buffer(const void* indices, size_t size)
+	index_buffer gl_graphics_api::make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use)
 	{
-		GLuint id;
-		glGenBuffers(1, &id);
+		index_buffer result;
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+		GLuint handle;
+
+		index_buffer_data data;
+		data.buffer_use = use;
+		data.size = size;
+		data.type = type;
+
+		glGenBuffers(1, &handle);
+
+		result.id = uint16_t(handle);
+
+		index_buffer_data_[result.id] = data;
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER
 			, size
 			, indices
-			, (NULL == indices) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW
+			, moka_to_gl(use)
 		);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		const index_buffer_handle handle{ static_cast<handle_id>(id) };
-
-		index_buffers_.emplace_back(handle);
-
-		log_.info("OpenGL index buffer sucessfully created. Handle: {}", handle.id);
-
-		return handle;
+		return result;
 	}
 
-	// todo: add argument to create_texture to allow users to specify the internal pixel format seperately from the input format
+	void gl_graphics_api::submit(command_list&& commands)
+	{
+		commands.accept(*this);
+	}
+
+	void gl_graphics_api::submit_and_swap(command_list&& commands)
+	{
+		const auto duration = profile<milliseconds>([&]()
+		{
+			commands.accept(*this);
+			window_.swap_buffer();
+			previous_command_ = {};
+		});
+
+		int foo = 0;
+	}
+
+	// todo: add argument to make_texture to allow users to specify the internal pixel format seperately from the input format
 	// todo: add arguments to allow users to specify filtering / mipmap generation
-	texture_handle gl_graphics_api::create_texture(const texture_data & data)
+	moka::texture gl_graphics_api::make_texture(const void* pixels, glm::ivec2& resolution, texture_components components, texture_wrap_mode wrap_mode, bool has_mipmaps)
 	{
 		unsigned int texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		// set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		// set texture filtering parameters
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		if (has_mipmaps)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		}
+		else
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data.resolution.x(), data.resolution.y(), 0, moka_to_gl(data.components), GL_UNSIGNED_BYTE, data.data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		return texture_handle{ static_cast<handle_id>(texture) };
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, resolution.x, resolution.y, 0, moka_to_gl(components), GL_UNSIGNED_BYTE, pixels);
+
+		if (has_mipmaps)
+		{
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+
+		return moka::texture{ static_cast<uint16_t>(texture) };
 	}
 
 	void GLAPIENTRY
@@ -459,19 +580,24 @@ namespace moka
 			log_.info(message);
 			break;
 		case GL_DEBUG_SEVERITY_LOW:
-			log_.debug(message);
+			log_.info(message);
+			break;
+		default:
+			log_.info(message);
 			break;
 		}
 	}
 
 	logger gl_graphics_api::log_("OpenGL");
 
-	gl_graphics_api::gl_graphics_api()
+	gl_graphics_api::gl_graphics_api(window& window)
+		: window_(window)
     {
 		glewExperimental = GL_TRUE;
 		if (glewInit() != GLEW_OK)
 		{
 			log_.error("Failed to initialise glew: {}", glewGetErrorString(glewInit()));
+			std::abort();
 		}
 
 		// enable GL_DEBUG_OUTPUT by default if it's a debug build
@@ -484,10 +610,7 @@ namespace moka
 		glGenVertexArrays(1, &vao_);
 		glBindVertexArray(vao_);
 
-		glEnable(GL_BLEND);
 		glEnable(GL_MULTISAMPLE);
-		glEnable(GL_DEPTH_TEST);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	gl_graphics_api::~gl_graphics_api()

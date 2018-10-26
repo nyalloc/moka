@@ -1,18 +1,16 @@
 //
 //#include <application/application.hpp>
 //#include <graphics/graphics_device.hpp>
-//#include <graphics/draw_call_builder.hpp>
 //#include <maths/vector2.hpp>
 //#include <maths/vector3.hpp>
 //#include <maths/vector4.hpp>
-//#include <asset_importer/texture_import.hpp>
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 //#include <glm/gtc/type_ptr.hpp>
 //
 //using namespace moka;
 //
-//class texture_application : public application
+//class texture_application : public app
 //{
 //	float vertices_[32] = 
 //	{
@@ -28,11 +26,12 @@
 //		1, 2, 3
 //	};
 //
-//	vertex_layout vertex_layout_ = vertex_layout::builder()
-//		.add_attribute(0, attribute_type::float32, 3, false, 3 * sizeof(float), 0)
-//		.add_attribute(1, attribute_type::float32, 3, false, 3 * sizeof(float), 3 * sizeof(float))
-//		.add_attribute(2, attribute_type::float32, 2, false, 2 * sizeof(float), 6 * sizeof(float))
-//		.build();
+//	vertex_layout vertex_layout_ = 
+//	{
+//		vertex_attribute(0, attribute_type::float32, 3, false, 3 * sizeof(float), 0),
+//		vertex_attribute(1, attribute_type::float32, 3, false, 3 * sizeof(float), 3 * sizeof(float)),
+//		vertex_attribute(2, attribute_type::float32, 2, false, 2 * sizeof(float), 6 * sizeof(float))
+//	};
 //
 //	const char* vertex_source_ =
 //		"    #version 330 core                                  \n"
@@ -61,36 +60,30 @@
 //		"        FragColor = mix(tex1, tex2, tex2.a);               \n"
 //		"    }                                                      \0";
 //
-//	vertex_buffer_handle vertex_buffer_;
-//	index_buffer_handle index_buffer_;
+//	vertex_buffer vertex_buffer_;
+//	index_buffer index_buffer_;
 //	
-//	shader_handle vertex_shader_;
-//	shader_handle fragment_shader_;
-//	program_handle program_;
+//	shader vertex_shader_;
+//	shader fragment_shader_;
+//	program program_;
 //
-//	texture_handle tile_texture_;
-//	uniform_handle tile_texture_uniform_;
-//
-//	texture_handle test_texture_;
-//	uniform_handle test_texture_uniform_;
-//	
-//	uniform_handle transform_uniform_;
-//	
+//	texture tile_texture_;
+//	texture test_texture_;		
 //	vector4 white_;
 //public:
 //
 //	texture_application(const int argc, char* argv[])
 //		: application(argc, argv)
-//		, vertex_buffer_(graphics_.create_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_))
-//		, index_buffer_(graphics_.create_index_buffer(indices_, sizeof indices_))
-//		, vertex_shader_(graphics_.create_shader(shader_type::vertex, vertex_source_))
-//		, fragment_shader_(graphics_.create_shader(shader_type::fragment, fragment_source_))
-//		, program_(graphics_.create_program(vertex_shader_, fragment_shader_))
-//		, tile_texture_uniform_(graphics_.create_uniform("tile_texture", uniform_type::texture))
-//		, tile_texture_(graphics_.create_texture(load(data_path() / "tile.png")))
-//		, test_texture_uniform_(graphics_.create_uniform("test_texture", uniform_type::texture))
-//		, test_texture_(graphics_.create_texture(load(data_path() / "test_alpha.png")))
-//		, transform_uniform_(graphics_.create_uniform("transform", uniform_type::mat4))
+//		, vertex_buffer_(graphics_.make_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_))
+//		, index_buffer_(graphics_.make_index_buffer(indices_, sizeof indices_))
+//		, vertex_shader_(graphics_.make_shader(shader_type::vertex, vertex_source_))
+//		, fragment_shader_(graphics_.make_shader(shader_type::fragment, fragment_source_))
+//		, program_(graphics_.make_program(vertex_shader_, fragment_shader_))
+//		, tile_texture_uniform_(graphics_.make_uniform("tile_texture", uniform_type::texture))
+//		, tile_texture_(graphics_.make_texture(load(data_path() / "tile.png")))
+//		, test_texture_uniform_(graphics_.make_uniform("test_texture", uniform_type::texture))
+//		, test_texture_(graphics_.make_texture(load(data_path() / "test_alpha.png")))
+//		, transform_uniform_(graphics_.make_uniform("transform", uniform_type::mat4))
 //	{}
 //
 //	~texture_application()
@@ -127,7 +120,7 @@
 //	{
 //		// cmake-defined macro points to example project asset folder relative to source.
 //		// A real application could point this wherever it wanted.
-//		std::filesystem::path result{ ASSET_PATH };
+//		std::filesystem::path result{ MOKA_ASSET_PATH };
 //		return result.lexically_normal();
 //	}
 //};

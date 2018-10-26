@@ -1,7 +1,7 @@
 #pragma once
 
-#include <maths/vector2.hpp>
 #include <filesystem>
+#include <glm/vec2.hpp>
 
 namespace moka
 {
@@ -14,23 +14,12 @@ namespace moka
 		auto_detect
 	};
 
-	struct texture_data
-	{
-		void* data;
-		vector2_uint resolution;
-		texture_components components;
-
-		texture_data(
-			void* data, 
-			const vector2_uint& resolution, 
-			const texture_components& components);
-
-		~texture_data();
-	};
-
-	texture_data load(
+	void load_texture(
 		const std::filesystem::path& path,
-		texture_components components = texture_components::auto_detect);
+		void* data,
+		glm::ivec2& resolution,
+		texture_components& components,
+		texture_components components_requested = texture_components::auto_detect);
 
-	void unload(texture_data& data);
+	void free_texture(void* data);
 }

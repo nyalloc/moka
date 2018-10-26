@@ -11,9 +11,8 @@ namespace moka
     class window::impl
     {
         SDL_Window* window_;
-        bool running_;
 		logger log_{ "Window" };
-		std::unordered_map<handle_id, SDL_GLContext> contexts_;
+		std::unordered_map<uint16_t, SDL_GLContext> contexts_;
 		window_settings settings_;
     public:
         signal<> exit;
@@ -31,11 +30,29 @@ namespace moka
 		context_handle make_context();
 
 		void set_current_context(const context_handle handle);
+
+		glm::ivec2 get_size() const;
+
+		glm::ivec2 get_drawable_size() const;
     };
+
+	glm::ivec2 window::impl::get_size() const
+	{
+		int w, h;
+		SDL_GetWindowSize(window_, &w, &h);
+		return { w, h };
+	}
+
+	glm::ivec2 window::impl::get_drawable_size() const
+	{
+		int display_w, display_h;
+		SDL_GL_GetDrawableSize(window_, &display_w, &display_h);
+		return { display_w, display_h };
+	}
 
 	context_handle window::impl::make_context()
 	{
-		static std::atomic<handle_id> current_id = 0;
+		static std::atomic<uint16_t> current_id = 0;
 		contexts_.emplace(current_id, SDL_GL_CreateContext(window_));
 		const context_handle handle{ current_id };
 		++current_id;
@@ -57,7 +74,7 @@ namespace moka
     }
 
     window::impl::impl(const window_settings& settings)
-		: running_(true), settings_(settings)
+		: settings_(settings)
     {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
@@ -130,5 +147,15 @@ namespace moka
 	void window::set_current_context(const context_handle handle)
 	{
 		impl_->set_current_context(handle);
+	}
+
+	glm::ivec2 window::get_size() const
+	{
+		return impl_->get_size();
+	}
+
+	glm::ivec2 window::get_drawable_size() const
+	{
+		return impl_->get_drawable_size();
 	}
 }

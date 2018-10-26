@@ -4,6 +4,7 @@
 #include <string>
 #include <application/game_loop.hpp>
 #include "graphics/graphics_api.hpp"
+#include <glm/glm.hpp>
 
 namespace moka
 {
@@ -27,7 +28,7 @@ namespace moka
 
     struct context_handle
     {
-		handle_id id;
+		uint16_t id;
     };
 
 	struct window_settings
@@ -41,13 +42,21 @@ namespace moka
     {
     public:
         signal<> exit;
+
+		window(const window& window) = delete;
+		window(window&& window) = delete;
+		window& operator = (const window& window) = delete;
+		window& operator = (window&& window) = delete;
+
         window(const window_settings& settings);
         ~window();
         void swap_buffer() const;
         void set_size(int width, int height);
 		context_handle make_context() const;
 		void set_current_context(const context_handle handle);
-		float aspect() const ;
+		float aspect() const;
+		glm::ivec2 get_size() const;
+		glm::ivec2 get_drawable_size() const;
     private:
         class impl;
         std::unique_ptr<impl> impl_;

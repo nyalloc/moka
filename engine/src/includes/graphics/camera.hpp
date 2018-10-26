@@ -4,8 +4,6 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/orthonormalize.hpp>
-#include <game_loop/game_loop.hpp>
 #include <graphics/transform.hpp>
 
 #undef near
@@ -22,9 +20,15 @@ namespace moka
 	class base_camera
 	{
 	public:
+		base_camera() = default;
+		base_camera(const base_camera& base_camera) = delete;
+		base_camera(base_camera&& base_camera) = delete;
+		base_camera& operator = (const base_camera& base_camera) = delete;
+		base_camera& operator = (base_camera&& base_camera) = delete;
+
 		virtual ~base_camera() = default;
 
-		virtual const glm::mat4 get_view() const = 0;
+		virtual glm::mat4 get_view() const = 0;
 
 		virtual const glm::quat& get_rotation() const = 0;
 		virtual void set_rotation(const glm::quat& rotation) = 0;
@@ -49,8 +53,6 @@ namespace moka
 	{
 		transform transform_;
 		glm::mat4 projection_;
-		frustrum frustum;
-
 	public:
 		basic_camera() = default;
 
@@ -66,7 +68,7 @@ namespace moka
 
 		}
 
-		const glm::mat4 get_view() const override
+		glm::mat4 get_view() const override
 		{
 			glm::mat4 matrix = glm::mat4_cast(transform_.get_rotation());
 			matrix = glm::translate(matrix, -transform_.get_position());
@@ -103,7 +105,7 @@ namespace moka
 			projection_ = projection;
 		}
 
-		void set_transform(const transform& transform)
+		void set_transform(const transform& transform) override
 		{
 			transform_ = transform;
 		}
@@ -197,15 +199,20 @@ namespace moka
 
 		using builder = camera_builder;
 
-		camera(camera&& rhs)
-			: camera_(std::move(rhs.camera_))
+		camera(const camera& camera) = delete;
+
+		camera(camera&& camera) noexcept
+			: camera_(std::move(camera.camera_))
 		{}
+
+		camera& operator = (const camera& camera) = delete;
+		camera& operator = (camera&& camera) = delete;
 
 		camera(std::unique_ptr<base_camera>&& camera)
 			: camera_(std::move(camera))
 		{}
 
-		const glm::mat4 get_view() const
+		glm::mat4 get_view() const
 		{
 			return camera_->get_view();
 		}
@@ -230,13 +237,13 @@ namespace moka
 			return camera_->get_transform();
 		}
 
-		void update(const float delta_time)
+		void update(const float delta_time) const
 		{
 			return camera_->update(delta_time);
 		}
 	};
 
-	camera camera_builder::build()
+	inline camera camera_builder::build()
 	{
 		return { std::move(camera_) };
 	}
@@ -247,7 +254,6 @@ namespace moka
 	protected:
 		std::unique_ptr<base_camera> camera_;
 	public:
-		camera_decorator() = default;
 
 		camera_decorator(
 			std::unique_ptr<base_camera>&& camera)
@@ -259,14 +265,14 @@ namespace moka
 
 		}
 
-		const glm::mat4 get_view() const override
+		glm::mat4 get_view() const override
 		{
 			return camera_->get_view();
 		}
 
 		const glm::quat& get_rotation() const override
 		{
-			return camera_->get_view();
+			return camera_->get_rotation();
 		}
 
 		void set_rotation(const glm::quat& rotation) override
@@ -294,7 +300,7 @@ namespace moka
 			camera_->set_projection(projection);
 		}
 
-		void set_transform(const transform& transform)
+		void set_transform(const transform& transform) override
 		{
 			camera_->set_transform(transform);
 		}
@@ -322,7 +328,10 @@ namespace moka
 		static constexpr float movement_interpolant_ = 2.00f;
 		static constexpr float rotation_interpolant_ = 10.0f;
 	public:
-		camera_fps_controller() = default;
+		camera_fps_controller(const camera_fps_controller& camera) = delete;
+		camera_fps_controller(camera_fps_controller&& camera) = delete;
+		camera_fps_controller& operator = (const camera_fps_controller& camera) = delete;
+		camera_fps_controller& operator = (camera_fps_controller&& camera) = delete;
 
 		camera_fps_controller(
 			std::unique_ptr<base_camera>&& camera
@@ -332,15 +341,15 @@ namespace moka
 			, keyboard_(keyboard)
 			, mouse_(mouse)
 		{
-			auto camera_transform = get_transform();
-			auto euler_angles = glm::eulerAngles(camera_transform.get_rotation());
+			auto camera_transform = camera_decorator::get_transform();
+			const auto euler_angles = glm::eulerAngles(camera_transform.get_rotation());
 			pitch_ = euler_angles.x;
 			yaw_ = euler_angles.y;
 		}
 
 		void update(const float delta_time) override
 		{
-			auto normalize = [](const glm::vec3& vector)
+			const auto normalize = [](const glm::vec3& vector)
 			{
 				if (vector != glm::vec3{ 0 })
 				{
@@ -377,25 +386,26 @@ namespace moka
 
 			if (key_state.is_key_down(key::up))
 			{
-				movement_direction += camera_transform.world_up();
+				movement_direction += transform::world_up();
 			}
 
 			if (key_state.is_key_down(key::down))
 			{
-				movement_direction += camera_transform.world_down();
+				movement_direction += transform::world_down();
 			}
 
-			auto direction = normalize(movement_direction);
+			const auto direction = normalize(movement_direction);
 
-			auto target_pos = camera_transform.get_position() + direction;
+			const auto target_pos = camera_transform.get_position() + direction;
 
-			const auto& motion = mouse_.get_state().get_motion() * delta_time;
+			const auto mouse_motion = mouse_.get_state().get_motion();
+			const auto& motion = glm::vec2(mouse_motion.x, mouse_motion.y) * delta_time;
 
-			yaw_ += motion.x;
-			pitch_ = glm::clamp(pitch_ + motion.y, -max_pitch_, max_pitch_);
+	/*		yaw_ += motion.x;
+			pitch_ = glm::clamp(pitch_ + motion.y, -max_pitch_, max_pitch_);*/
 
-			auto yaw_quat = glm::angleAxis(yaw_, glm::vec3(0.0f, 1.0f, 0.0f));
-			auto pitch_quat = glm::angleAxis(pitch_, glm::vec3(1.0f, 0.0f, 0.0f));
+			const auto yaw_quat = glm::angleAxis(yaw_, glm::vec3(0.0f, 1.0f, 0.0f));
+			const auto pitch_quat = glm::angleAxis(pitch_, glm::vec3(1.0f, 0.0f, 0.0f));
 
 			target_rot = pitch_quat * yaw_quat;
 
@@ -409,13 +419,13 @@ namespace moka
 		}
 	};
 
-	camera_builder& camera_builder::set_fps_controls(keyboard& keyboard, mouse& mouse)
+	inline camera_builder& camera_builder::set_fps_controls(keyboard& keyboard, mouse& mouse)
 	{
 		camera_ = std::make_unique<camera_fps_controller>(std::move(camera_), keyboard, mouse);
 		return *this;
 	}
 
-	camera_builder::operator camera()
+	inline camera_builder::operator camera()
 	{
 		return this->build();
 	}

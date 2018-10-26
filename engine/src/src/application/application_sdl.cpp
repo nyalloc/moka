@@ -1,5 +1,6 @@
 #include <application/application.hpp>
 #include <SDL.h>
+#include "application/profile.hpp"
 
 namespace moka
 {
@@ -77,19 +78,47 @@ namespace moka
 			{
 				int x, y;
 				SDL_GetMouseState(&x, &y);
-				mouse_.state.position_ = { x, y };
-				mouse_.state.motion_ = { event.motion.xrel, event.motion.yrel };
+				mouse_.state_.position_ = glm::ivec2{ x, y };
+				mouse_.state_.motion_ = glm::ivec2{ event.motion.xrel, event.motion.yrel };
 
 				log_.debug("SDL_MOUSEMOTION");
 				break;
 			}
 			case SDL_MOUSEBUTTONDOWN:
 			{
+				switch(event.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::left)] = true;
+					break;
+				case SDL_BUTTON_RIGHT:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::right)] = true;
+					break;
+				case SDL_BUTTON_MIDDLE:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::middle)] = true;
+					break;
+				default: ;
+				}
+
 				log_.debug("SDL_MOUSEBUTTONDOWN");
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:
 			{
+				switch (event.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::left)] = false;
+					break;
+				case SDL_BUTTON_RIGHT:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::right)] = false;
+					break;
+				case SDL_BUTTON_MIDDLE:
+					mouse_.state_.buttons_[static_cast<size_t>(mouse_button::middle)] = false;
+					break;
+				default:;
+				}
+
 				log_.debug("SDL_MOUSEBUTTONUP");
 				break;
 			}
@@ -227,40 +256,55 @@ namespace moka
 
     int app::run()
     {
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-
-        window_.exit.connect([this]()
-        {
-			log_.info("Exiting application");
-            running_ = false;
-        });
-
-		double t = 0.0;
-		const double dt = 0.01;
-
-		double current_time = elapsed();
-		double accumulator = 0.0;
-
-		while (running_)
+		try
 		{
-			double new_time = double(elapsed());
-			double frame_time = new_time - current_time;
-			current_time = new_time;
-
-			accumulator += frame_time;
-
-			while (accumulator >= dt)
+			window_.exit.connect([this]()
 			{
-				mouse_.state.motion_ = { 0, 0 };
+				log_.info("Exiting application");
+				running_ = false;
+			});
 
-				poll_events();
-				update(dt);
+			float t = 0.0f;
+			const float fixed_update_time = 1.0f / 60.0f;
 
-				accumulator -= dt;
-				t += dt;
+			float current_time = elapsed();
+			float delta_time = 0.0f;
+
+			while (running_)
+			{
+				float new_time = elapsed();
+				float frame_time = new_time - current_time;
+				current_time = new_time;
+
+				delta_time += frame_time;
+
+				while (delta_time >= fixed_update_time)
+				{
+					mouse_.state_.motion_ = { 0, 0 };
+
+					poll_events();
+					update(fixed_update_time);
+
+					delta_time -= fixed_update_time;
+					t += fixed_update_time;
+				}
+
+				const auto duration = profile<milliseconds>([&]()
+				{
+					if (delta_time > 1.0f / 60.0f)
+					{
+						std::cout << "Frame rate dropped bellow 60. Delta time: " << fixed_update_time << "\n";
+					}
+
+					draw(delta_time);
+				});
+
+				//std::cout << "Total draw time: " << duration << " ms" << std::endl;
 			}
-
-			draw(dt);
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
 		}
 
         return 0;

@@ -1,11 +1,10 @@
-#pragma once
 
 #include <imgui.hpp>
-#include <window/window.hpp>
+#include <application/window.hpp>
 #include <input/keyboard.hpp>
 #include <input/mouse.hpp>
 #include <graphics/material_builder.hpp>
-#include <graphics/draw_call_builder.hpp>
+#include <SDL_mouse.h>
 
 namespace moka
 {
@@ -21,101 +20,206 @@ namespace moka
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
-		
+
 		ImFont* font = io.Fonts->AddFontDefault();
+
+		if (!font)
+		{
+			std::cout << "Null ptr to default font" << std::endl;
+		}
 
 		ImGui::StyleColorsDark();
 
 		io.DisplaySize.x = 1280;
 		io.DisplaySize.y = 720;
 
-		io.Fonts->GetTexDataAsRGBA32(&font_data, &font_width, &font_height, &font_components);
+		const std::string vertex_shader =
+		R"(
+			#version 330
+			uniform mat4 u_projection;
+			layout (location = 0) in vec2 pos;
+			layout (location = 1) in vec2 uv;
+			layout (location = 2) in vec4 color;
+			out vec2 frag_uv;
+			out vec4 frag_color;
+			void main()
+			{
+				frag_uv = uv;
+				frag_color = color;
+				gl_Position = u_projection*vec4(pos, 0.0, 1.0);
+			} 
+		)";
+
+		const std::string fragment_shader =
+		R"(
+			#version 330
+			uniform sampler2D u_tex0;
+			in vec2 frag_uv;
+			in vec4 frag_color;
+			out vec4 color;
+			void main() 
+			{
+				color = texture(u_tex0, frag_uv)*frag_color;
+			}
+		)";
+
+		std::map<std::string, program> shaders;
+
+		material::builder builder(graphics_device_, shaders);
+
+		builder.set_fragment_shader(fragment_shader);
+		builder.set_vertex_shader(vertex_shader);
+		
+		builder.set_blend_enabled(true);
+		builder.set_blend_equation(blend_equation::func_add);
+		builder.set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha);
+		builder.set_culling_enabled(false);
+		builder.set_polygon_mode(face::front_and_back, polygon_draw_mode::fill);
+
+		builder.set_depth_test_enabled(false);
+		builder.set_scissor_test_enabled(true);
+
+		material_ = builder.build();
+
+		unsigned char* pixels;
+		int width, height;
+		io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
+
+		const auto resolution = glm::ivec2{ width, height };
+		font_atlas_ = graphics_device_.make_texture(pixels, resolution, texture_components::rgb_alpha, {}, false, false);
+
+		io.Fonts->TexID = reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas_.id));
+
+		vertex_layout layout
+		{
+			vertex_attribute(0, attribute_type::float32, 2, false, sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, pos)),
+			vertex_attribute(1, attribute_type::float32, 2, false, sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, uv)),
+			vertex_attribute(2, attribute_type::uint8, 4, true, sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, col))
+		};
+
+		index_buffer_ = graphics_device_.make_index_buffer(nullptr, 0, index_type::uint16, buffer_usage::stream_draw);
+
+		vertex_buffer_ = graphics_device_.make_vertex_buffer(nullptr, 0, std::move(layout), buffer_usage::stream_draw);
 	}
 
-	void imgui::update(const float data_time)
+	void imgui::new_frame(const float data_time)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.DisplaySize.x = 1280;
 		io.DisplaySize.y = 720;
 
-		auto mouse_state = mouse_.get_state();
-		auto position = mouse_state.get_position();
-		auto motion = mouse_state.get_motion();
+		auto& mouse_state = mouse_.get_state();
+		auto& position = mouse_state.get_position();
+		auto& motion = mouse_state.get_motion();
 
-		io.MousePos.x = position.x;
-		io.MousePos.y = position.y;
+		io.MousePos.x = static_cast<float>(position.x);
+		io.MousePos.y = static_cast<float>(position.y);
+
+		IM_ASSERT(io.Fonts->IsBuilt());
+
+		auto size = window_.get_size();
+		auto display_size = window_.get_drawable_size();
+		io.DisplaySize = ImVec2(static_cast<float>(size.x), static_cast<float>(size.y));
+		io.DisplayFramebufferScale = ImVec2(size.x > 0 ? ((float)display_size.x / size.x) : 0, size.y > 0 ? ((float)display_size.y / size.y) : 0);
+
+		io.DeltaTime = data_time;
+
+		io.MouseDown[0] = mouse_state.is_button_down(mouse_button::left);
+		io.MouseDown[1] = mouse_state.is_button_down(mouse_button::right);
+		io.MouseDown[2] = mouse_state.is_button_down(mouse_button::middle);
+
+		ImGui::NewFrame();
 	}
 
-	void imgui::draw(ImDrawData* draw_data)
+	command_list imgui::draw()
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		int fb_width = (int)(draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
-		int fb_height = (int)(draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
+		command_list list;
 
-		if (fb_width <= 0 || fb_height <= 0)
+		ImGui::Render();
+
+		auto& buff = list.make_command_buffer();
+
+		auto* draw_data = ::ImGui::GetDrawData();
+
+		if (!draw_data)
 		{
-			return;
+			return {};
 		}
 
+		auto& io = ::ImGui::GetIO();
+
+		const auto fb_width = static_cast<int>(draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
+		const auto fb_height = static_cast<int>(draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
+
+		if (fb_width <= 0 || fb_height <= 0) return {};
+		
 		draw_data->ScaleClipRects(io.DisplayFramebufferScale);
+
+		buff.viewport()
+			.set_rectangle(0, 0, fb_width, fb_height);
 
 		float L = draw_data->DisplayPos.x;
 		float R = draw_data->DisplayPos.x + draw_data->DisplaySize.x;
 		float T = draw_data->DisplayPos.y;
 		float B = draw_data->DisplayPos.y + draw_data->DisplaySize.y;
 
-		const float ortho_projection[4][4] =
+		const glm::mat4 proj =
 		{
-			{ 2.0f / (R - L), 0.0f, 0.0f, 0.0f },
-			{ 0.0f, 2.0f / (T - B), 0.0f, 0.0f },
-			{ 0.0f,	0.0f, -1.0f, 0.0f },
-			{ (R + L) / (L - R), (T + B) / (B - T), 0.0f, 1.0f },
+			2.0f / (R - L), 0.0f, 0.0f, 0.0f ,
+			0.0f, 2.0f / (T - B), 0.0f, 0.0f ,
+			0.0f, 0.0f, -1.0f, 0.0f ,
+			(R + L) / (L - R), (T + B) / (B - T), 0.0f, 1.0f
 		};
 
-		auto layout = vertex_layout::builder()
-			.add_attribute(0, attribute_type::float32, 2, false, sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, pos))
-			.add_attribute(1, attribute_type::float32, 2, false, sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, uv))
-			.add_attribute(2, attribute_type::uint32,  4, true,  sizeof(ImDrawVert), IM_OFFSETOF(ImDrawVert, col))
-			.build();
+		material_["u_projection"] = proj;
 
-		for (int n = 0; n < draw_data->CmdListsCount; n++)
+		ImVec2 pos = draw_data->DisplayPos;
+		for (int n = 0; n < draw_data->CmdListsCount; ++n)
 		{
 			const ImDrawList* cmd_list = draw_data->CmdLists[n];
-			const ImDrawIdx* idx_buffer_offset = 0;
+			uint32_t idx_buffer_offset = 0;
 
-			auto vertex_handle = graphics_device_.create_vertex_buffer(cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert), layout);
-			auto index_handle  = graphics_device_.create_index_buffer(cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
+			buff.fill_vertex_buffer()
+				.set_buffer(vertex_buffer_, (const void*)cmd_list->VtxBuffer.Data, (size_t)cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
+
+			buff.fill_index_buffer()
+				.set_buffer(index_buffer_, (const void*)cmd_list->IdxBuffer.Data, (size_t)cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
 
 			for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
 			{
-				const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
-				if (pcmd->UserCallback)
+				const ImDrawCmd *cmd = &cmd_list->CmdBuffer[cmd_i];
+				
+				if (cmd->UserCallback)
 				{
-					// User callback (registered via ImDrawList::AddCallback)
-					pcmd->UserCallback(cmd_list, pcmd);
+					cmd->UserCallback(cmd_list, cmd);
+					continue;
 				}
-				else
+
+				ImVec4 clip_rect = ImVec4(cmd->ClipRect.x - pos.x, cmd->ClipRect.y - pos.y, cmd->ClipRect.z - pos.x, cmd->ClipRect.w - pos.y);
+				if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
 				{
-					//ImVec4 clip_rect = ImVec4(pcmd->ClipRect.x - pos.x, pcmd->ClipRect.y - pos.y, pcmd->ClipRect.z - pos.x, pcmd->ClipRect.w - pos.y);
-					//if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
-					//{
-						//// Apply scissor/clipping rectangle
-						//glScissor((int)clip_rect.x, (int)(fb_height - clip_rect.w), (int)(clip_rect.z - clip_rect.x), (int)(clip_rect.w - clip_rect.y));
+					buff.scissor()
+					    .set_rectangle((int)clip_rect.x, (int)(fb_height - clip_rect.w), (int)(clip_rect.z - clip_rect.x), (int)(clip_rect.w - clip_rect.y));
 
-						//// Bind texture, Draw
-						//glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->TextureId);
-						//glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, idx_buffer_offset);
-					//}
+					texture handle{ (uint16_t)(intptr_t)cmd->TextureId };
+					material_["u_tex0"] = handle;
 
-					//graphics_device_.draw()
-					//	.set_vertex_buffer(vertex_handle, 0, cmd_list->VtxBuffer.Size)
-					//	.set_index_buffer(index_handle, cmd_list->IdxBuffer.Size);
+					buff.clear()
+					    .set_clear_depth(true);
+
+					buff.draw()
+					    .set_vertex_buffer(vertex_buffer_)
+					    .set_index_count(cmd->ElemCount)
+					    .set_index_buffer(index_buffer_)
+					    .set_index_type(index_type::uint16)
+					    .set_index_buffer_offset(sizeof(ImDrawIdx)*idx_buffer_offset)
+					    .set_material(material_);
 				}
-				idx_buffer_offset += pcmd->ElemCount;
+				idx_buffer_offset += cmd->ElemCount;
 			}
 		}
 
-		// Restore modified GL state
+		return list;
 	}
 }

@@ -6,9 +6,17 @@
 #include <asset_importer/texture_importer.hpp>
 #include <vector>
 #include <utility>
+#include <graphics/vertex_buffer.hpp>
+#include <graphics/index_buffer.hpp>
+#include <graphics/shader.hpp>
+#include <graphics/program.hpp>
+#include <graphics/texture.hpp>
+#include <graphics/graphics_visitor.hpp>
 
 namespace moka
 {
+	class command_list;
+
 	enum class alpha_mode : uint8_t
 	{
 		blend, // The rendered output is combined with the background using the normal painting operation(i.e.the Porter and Duff over operator). This mode is used to simulate geometry such as guaze cloth or animal fur.
@@ -38,148 +46,6 @@ namespace moka
         tex_coord7,
         extension
     };
-
-    enum class attribute_type
-    {
-        int8,   
-        int16,
-        int32,
-        int64,
-        uint8,
-        uint16,
-        uint32,
-        uint64,
-        float16,
-        float32,
-        float64,
-        boolean,
-    };
-
-    inline size_t attr_type_size(const attribute_type attr_type)
-    {
-        switch (attr_type)
-        {
-        case attribute_type::int8:
-            return sizeof(int8_t);
-        case attribute_type::int16:
-            return sizeof(int16_t);
-        case attribute_type::int32:
-            return sizeof(int32_t);
-        case attribute_type::int64:
-            return sizeof(int64_t);
-        case attribute_type::uint8:
-            return sizeof(uint8_t);
-        case attribute_type::uint16:
-            return sizeof(uint16_t);
-        case attribute_type::uint32:
-            return sizeof(uint32_t);
-        case attribute_type::uint64:
-            return sizeof(int64_t);
-        case attribute_type::float32:
-            return sizeof(float);
-        case attribute_type::float64:
-            return sizeof(double);
-        default:
-            return 0;
-        }
-    }
-
-    struct vertex_layout;
-
-    struct attribute_element
-    {
-		size_t index;
-		attribute_type type;
-		size_t size;
-		bool normalized;
-		size_t stride;
-		size_t offset;
-
-        constexpr attribute_element(
-			size_t index
-		    , attribute_type type
-		    , size_t size
-		    , bool normalized
-			, size_t stride
-			, size_t offset) noexcept
-            : index(index)
-			, type(type)
-			, size(size) 
-			, normalized(normalized)
-			, stride(stride) 
-			, offset(offset)
-        {}
-    };
-
-    
-    struct vertex_layout_builder;
-
-    struct vertex_layout
-    {
-    private:
-		std::vector<attribute_element> layout_;
-    public:
-		vertex_layout() = default;
-
-		vertex_layout(std::vector<attribute_element>&& layout)
-			: layout_(std::move(layout))
-        {}
-
-		using builder = vertex_layout_builder;
-
-        size_t total_size() const noexcept;
-
-        auto begin() noexcept
-        {
-            return layout_.begin();
-        }
-
-        auto end() noexcept
-        {
-            return layout_.end();
-        }
-
-        auto begin() const noexcept
-        {
-            return layout_.begin();
-        }
-
-        auto end() const noexcept
-        {
-            return layout_.end();
-        }
-    };
-
-    struct vertex_layout_builder
-    {
-    private:
-		std::vector<attribute_element> attr;
-    public:
-        vertex_layout_builder& add_attribute(size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset);
-        vertex_layout build();
-    };
-
-    inline size_t vertex_layout::total_size() const noexcept
-    {
-        size_t result = 0;
-        for (const auto& element : layout_)
-        {
-            result += element.size;
-        }
-        return result;
-    }
-
-    inline vertex_layout_builder& vertex_layout_builder::add_attribute(
-		size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset)
-    {
-        this->attr.emplace_back(index, type, size, normalized, stride, offset);
-        return *this;
-    }
-
-    inline vertex_layout vertex_layout_builder::build()
-    {
-		return vertex_layout{ std::move(attr) };
-    }
 
     template<typename T>
     class basic_rectangle
@@ -255,6 +121,15 @@ namespace moka
         one_minus_constant_alpha   
     };
 
+	enum class blend_equation : uint8_t
+	{
+		func_add,
+		func_subtract,
+		func_reverse_subtract,
+		min,
+		max
+	};
+
     enum class shader_attribute : uint8_t
     {
         position,   
@@ -284,80 +159,16 @@ namespace moka
         vec4, //!< 4 floats vector uniform
         mat3, //!< 3x3 matrix uniform
         mat4, //!< 4x4 matrix uniform
-		float32 //! single floating point uniform
+		float32, //! single floating point uniform
+		null //!< value not yet assigned to
     };
 
-    enum class shader_type : uint8_t
-    {
-        vertex,	  
-        fragment, 
-        compute   
-    };
-
-	enum class face_culling : uint8_t
+	enum class face : uint8_t
 	{
 		front,
 		back,
 		front_and_back
 	};
-
-    using handle_id = uint16_t;
-
-    struct dynamic_index_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct dynamic_vertex_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct frame_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct index_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct indirect_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct occlusion_query_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct program_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct shader_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct texture_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-    struct vertex_buffer_handle
-    {
-		handle_id id = std::numeric_limits<moka::handle_id>::max();
-    };
-
-	template<typename T>
-	bool is_handle_valid(const T& handle)
-	{
-		return handle.id != std::numeric_limits<moka::handle_id>::max();
-	}
 
 	struct uniform_data
 	{
@@ -370,7 +181,7 @@ namespace moka
 
 	struct texture_binding
 	{
-		texture_handle handle;
+		texture handle;
 		size_t unit;
 	};
 
@@ -379,19 +190,30 @@ namespace moka
     /**
      * \brief render_context abstracts the native rendering API.
      */
-    class graphics_api
+    class graphics_api : public graphics_visitor
     {
-    public:
+	public:
         virtual ~graphics_api() = default;
-		
-		virtual program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
-        virtual shader_handle create_shader(shader_type type, const std::string& source) = 0;
-        virtual vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) = 0;
-		virtual index_buffer_handle create_index_buffer(const void* indices, size_t size) = 0;
-		virtual texture_handle create_texture(const texture_data& data) = 0;
-		
-		virtual void submit(draw_call&& call) = 0;
+		graphics_api() = default;
+		graphics_api(const graphics_api& rhs) = default;
+		graphics_api(graphics_api&& rhs) = default;
+		graphics_api& operator=(const graphics_api& rhs) = default;
+		graphics_api& operator=(graphics_api&& rhs) = default;
 
-		virtual void frame() = 0;
+		virtual void visit(clear_command& cmd) = 0;
+		virtual void visit(draw_command& cmd) = 0;
+		virtual void visit(viewport_command& cmd) = 0;
+		virtual void visit(scissor_command& cmd) = 0;
+		virtual void visit(fill_vertex_buffer_command& cmd) = 0;
+		virtual void visit(fill_index_buffer_command& cmd) = 0;
+
+		virtual void submit(command_list&& commands) = 0;
+		virtual void submit_and_swap(command_list&& commands) = 0;
+
+		virtual program make_program(const shader& vertex_handle, const shader& fragment_handle) = 0;
+        virtual shader make_shader(shader_type type, const std::string& source) = 0;
+        virtual vertex_buffer make_vertex_buffer(const void* vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;
+		virtual index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) = 0;
+		virtual texture make_texture(const void* data, glm::ivec2& resolution, texture_components components, texture_wrap_mode wrap_mode, bool has_mipmaps) = 0;
     };
 }

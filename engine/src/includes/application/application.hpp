@@ -42,10 +42,14 @@ namespace moka
         graphics_device graphics_;
     public:
         app(const app_settings& settings);
-        virtual ~app();
+		app(const app& rhs) = delete;
+		app(app&& rhs) = delete;
+		app& operator=(const app& rhs) = delete;
+		app& operator=(app&& rhs) = delete;
+		virtual ~app();
 		float elapsed() const;
-        virtual void draw(const game_time delta_time) = 0;
-        virtual void update(const game_time delta_time) = 0;
+        virtual void draw(game_time delta_time) = 0;
+        virtual void update(game_time delta_time) = 0;
         int run();
         virtual std::filesystem::path data_path() = 0;
     };

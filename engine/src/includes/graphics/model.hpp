@@ -8,27 +8,31 @@ namespace moka
 {
 	class primitive
 	{
-		vertex_buffer_handle vertex_buffer_;
+		vertex_buffer vertex_buffer_;
 		uint32_t vertex_count_ = 0;
 
-		index_buffer_handle index_buffer_;
+		index_buffer index_buffer_;
+		index_type index_type_;
 		uint32_t index_count_ = 0;
+		uint32_t index_buffer_offset_ = 0;
 
 		primitive_type type_ = primitive_type::triangles;
 
 		material material_;
 	public:
-		static constexpr char* id = "primitive";
-
 		material& get_material();
 
-		primitive(vertex_buffer_handle vertex_buffer
-			, uint32_t vertex_count
-			, index_buffer_handle index_buffer
-			, uint32_t index_count
-			, const material& material);
+		const material& get_material() const;
 
-		void draw(graphics_device& device);
+		primitive(vertex_buffer vertex_buffer
+			, uint32_t vertex_count
+			, index_buffer index_buffer
+			, index_type index_type
+			, uint32_t index_count
+			, uint32_t index_buffer_offset
+			, material&& material);
+
+		void draw(command_list& list) const;
 	};
 
 	class mesh
@@ -37,8 +41,6 @@ namespace moka
 
 		transform transform_;
 	public:
-		static constexpr char* id = "mesh";
-
 		using iterator = std::vector<primitive>::iterator;
 		using const_iterator = std::vector<primitive>::const_iterator;
 
@@ -55,12 +57,11 @@ namespace moka
 		mesh(std::vector<primitive>&& primitives, transform&& transform);
 	};
 
-	struct model
+	class model
 	{
 		std::vector<mesh> meshes_;
 		transform transform_;
 	public:
-		static constexpr char* id = "model";
 
 		using iterator = std::vector<mesh>::iterator;
 		using const_iterator = std::vector<mesh>::const_iterator;
@@ -72,6 +73,8 @@ namespace moka
 		iterator end();
 
 		const_iterator end() const;
+
+		model() = default;
 
 		model(std::vector<mesh>&& meshes, transform&& transform = {});
 

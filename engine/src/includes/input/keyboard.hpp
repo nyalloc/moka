@@ -127,9 +127,9 @@ namespace moka
 	{
 		friend class app;
 
-		inline static keyboard_state state{};
+		keyboard_state state{};
 	public:
-		static const keyboard_state& get_state()
+		const keyboard_state& get_state()
 		{
 			return state;
 		}

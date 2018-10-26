@@ -12,7 +12,7 @@ namespace moka
 	public:
 		sort_key() = default;
 
-		explicit sort_key(const program_handle program, const alpha_mode alpha_mode, const float depth)
+		explicit sort_key(const program program, const alpha_mode alpha_mode, const float depth)
 			: key_
 			(
 				static_cast<uint64_t>(depth * std::numeric_limits<uint16_t>::max()) |
@@ -24,7 +24,7 @@ namespace moka
 			)
 		{}
 
-		program_handle program_handle() const
+		program program() const
 		{
 			return { static_cast<uint16_t>(key_) };
 		}

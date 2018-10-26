@@ -145,7 +145,7 @@ namespace moka
 
 		void look_at(
 			const glm::vec3& world_location
-			, const glm::vec3& world_up = world_up())
+			, const glm::vec3& world_up = transform::world_up())
 		{
 			glm::mat3 result;
 

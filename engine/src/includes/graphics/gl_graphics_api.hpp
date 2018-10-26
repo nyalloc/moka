@@ -2,36 +2,58 @@
 
 #include <graphics/graphics_api.hpp>
 #include <application/logger.hpp>
+#include <application/window.hpp>
 #include <GL/glew.h>
-#include "draw_call.hpp"
-#include "uniform_buffer.hpp"
-#include "uniform_buffer.hpp"
+#include "material.hpp"
+#include "vertex_buffer.hpp"
+#include "index_buffer.hpp"
+#include "shader.hpp"
+#include "program.hpp"
+#include "draw_command.hpp"
 
 namespace moka
 {
+	struct texture_data
+	{
+		texture_wrap_mode wrap_mode;
+		bool has_mipmaps;
+		glm::ivec2 resolution;
+	};
+
+	struct program_data
+	{
+	};
+
+	struct shader_data
+	{
+		shader_type type;
+	};
+
+	struct vertex_buffer_data
+	{
+		buffer_usage buffer_use = buffer_usage::static_draw;
+		size_t size{};
+		vertex_layout layout;
+	};
+
+	struct index_buffer_data
+	{
+		buffer_usage buffer_use = buffer_usage::static_draw;
+		size_t size{};
+		index_type type = index_type::uint16;
+	};
+
     /**
      * \brief Convert the interface of OpenGL into the moka rendring API.
      * Allows moka rendering functionality to work at a higher level without being coupled to an OpenGL backend.
      */
     class gl_graphics_api : public graphics_api
     {
-		constexpr static size_t max_draw_calls = 2048;
+		window& window_;
 
         static logger log_;
 
-        std::vector<shader_handle> shaders_;
-        std::vector<program_handle> programs_;
-		std::vector<vertex_buffer_handle> vertex_buffers_;
-		std::vector<index_buffer_handle> index_buffers_;
-
-		GLuint vao_ = 0; // single VAO for entire project
-
-		draw_call previous_call_ = {};
-
-		std::unordered_map<handle_id, vertex_layout> vertex_layouts_;
-
-		size_t draw_call_buffer_pos_ = 0;
-		std::array<draw_call, max_draw_calls> draw_call_buffer_;
+		GLuint vao_ = 0;
 
 		static void GLAPIENTRY
 			message_callback(GLenum source,
@@ -41,18 +63,35 @@ namespace moka
 				GLsizei length,
 				const GLchar* message,
 				const void* userParam);
+
+		std::unordered_map<uint16_t, vertex_buffer_data> vertex_buffer_data_;
+		std::unordered_map<uint16_t, index_buffer_data> index_buffer_data_;
+
+		draw_command previous_command_;
     public:
-        gl_graphics_api();
-		~gl_graphics_api();
+        gl_graphics_api(window& window);
 
-		void frame() override;
+		gl_graphics_api(const gl_graphics_api& gl_graphics_api) = delete;
+		gl_graphics_api(gl_graphics_api&& gl_graphics_api) = delete;
+		gl_graphics_api& operator = (const gl_graphics_api& gl_graphics_api) = delete;
+		gl_graphics_api& operator = (gl_graphics_api&& gl_graphics_api) = delete;
 
-		void submit(draw_call&& call) override;
+		virtual ~gl_graphics_api();
 
-		program_handle create_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
-		shader_handle create_shader(const shader_type type, const std::string& source) override;
-	    vertex_buffer_handle create_vertex_buffer(const void* vertices, size_t size, const vertex_layout& decl) override;
-		index_buffer_handle create_index_buffer(const void* indices, size_t size) override;
-		texture_handle create_texture(const texture_data& data) override;
+		program make_program(const shader& vertex_handle, const shader& fragment_handle) override;
+		shader make_shader(shader_type type, const std::string& source) override;
+	    vertex_buffer make_vertex_buffer(const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) override;
+		index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) override;
+		texture make_texture(const void* pixels, glm::ivec2& resolution, texture_components components, texture_wrap_mode wrap_mode, bool has_mipmaps) override;
+
+		void submit(command_list&& commands) override;
+		void submit_and_swap(command_list&& commands) override;
+
+		void visit(clear_command& cmd) override;
+		void visit(draw_command& cmd) override;
+		void visit(viewport_command& cmd) override;
+		void visit(scissor_command& cmd) override;
+		void visit(fill_vertex_buffer_command& cmd) override;
+		void visit(fill_index_buffer_command& cmd) override;
 	};
 }

@@ -14,7 +14,7 @@
 //
 //struct texture_uniform
 //{
-//	texture_handle texture;
+//	texture texture;
 //	uniform_handle uniform;
 //};
 //
@@ -189,10 +189,10 @@
 //		}
 //	)";
 //
-//	vertex_buffer_handle vertex_buffer_;
+//	vertex_buffer vertex_buffer_;
 //
-//	program_handle cube_program_;
-//	program_handle lamp_program_;
+//	program cube_program_;
+//	program lamp_program_;
 //
 //	uniform_handle model_uniform_;
 //	uniform_handle colour_;
@@ -216,34 +216,34 @@
 //			.set_view_target(glm::vec3{ 0 })
 //			.build())
 //	{
-//		model_uniform_ = graphics_.create_uniform("model", uniform_type::mat4);
+//		model_uniform_ = graphics_.make_uniform("model", uniform_type::mat4);
 //
-//		shader_handle vert = graphics_.create_shader(shader_type::vertex, cube_vertex_);
-//		shader_handle frag = graphics_.create_shader(shader_type::fragment, cube_fragment_);
-//		cube_program_ = graphics_.create_program(vert, frag);
+//		shader vert = graphics_.make_shader(shader_type::vertex, cube_vertex_);
+//		shader frag = graphics_.make_shader(shader_type::fragment, cube_fragment_);
+//		cube_program_ = graphics_.make_program(vert, frag);
 //
-//		vert = graphics_.create_shader(shader_type::vertex, lamp_vertex_);
-//		frag = graphics_.create_shader(shader_type::fragment, lamp_fragment_);
-//		lamp_program_ = graphics_.create_program(vert, frag);
+//		vert = graphics_.make_shader(shader_type::vertex, lamp_vertex_);
+//		frag = graphics_.make_shader(shader_type::fragment, lamp_fragment_);
+//		lamp_program_ = graphics_.make_program(vert, frag);
 //
-//		vertex_buffer_ = graphics_.create_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_);
+//		vertex_buffer_ = graphics_.make_vertex_buffer(vertices_, sizeof vertices_, vertex_layout_);
 //
-//		material_.albedo.uniform = graphics_.create_uniform("material.diffuse", uniform_type::texture);
-//		material_.specular.uniform = graphics_.create_uniform("material.specular", uniform_type::texture);
-//		material_.shininess = graphics_.create_uniform("material.shininess", uniform_type::float32);
-//		material_.albedo.texture = graphics_.create_texture(load(data_path() / "crate_diffuse.png"));
-//		material_.specular.texture = graphics_.create_texture(load(data_path() / "crate_specular.png"));
+//		material_.albedo.uniform = graphics_.make_uniform("material.diffuse", uniform_type::texture);
+//		material_.specular.uniform = graphics_.make_uniform("material.specular", uniform_type::texture);
+//		material_.shininess = graphics_.make_uniform("material.shininess", uniform_type::float32);
+//		material_.albedo.texture = graphics_.make_texture(load(data_path() / "crate_diffuse.png"));
+//		material_.specular.texture = graphics_.make_texture(load(data_path() / "crate_specular.png"));
 //
-//		light_.position = graphics_.create_uniform("light.position", uniform_type::vec3);
-//		light_.ambient = graphics_.create_uniform("light.ambient", uniform_type::vec3);
-//		light_.diffuse = graphics_.create_uniform("light.diffuse", uniform_type::vec3);
-//		light_.specular = graphics_.create_uniform("light.specular", uniform_type::vec3);
+//		light_.position = graphics_.make_uniform("light.position", uniform_type::vec3);
+//		light_.ambient = graphics_.make_uniform("light.ambient", uniform_type::vec3);
+//		light_.diffuse = graphics_.make_uniform("light.diffuse", uniform_type::vec3);
+//		light_.specular = graphics_.make_uniform("light.specular", uniform_type::vec3);
 //
-//		colour_ = graphics_.create_uniform("colour", uniform_type::vec3);
+//		colour_ = graphics_.make_uniform("colour", uniform_type::vec3);
 //
-//		view_uniform_ = graphics_.create_uniform("view", uniform_type::mat4);
-//		projection_uniform_ = graphics_.create_uniform("projection", uniform_type::mat4);
-//		view_pos_ = graphics_.create_uniform("viewPos", uniform_type::vec3);
+//		view_uniform_ = graphics_.make_uniform("view", uniform_type::mat4);
+//		projection_uniform_ = graphics_.make_uniform("projection", uniform_type::mat4);
+//		view_pos_ = graphics_.make_uniform("viewPos", uniform_type::vec3);
 //	}
 //
 //	~model_loading_application()

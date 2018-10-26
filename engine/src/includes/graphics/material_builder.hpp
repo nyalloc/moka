@@ -3,7 +3,7 @@
 #include <graphics/material_properties.hpp>
 #include <graphics/graphics_device.hpp>
 #include <graphics/material.hpp>
-#include <graphics/texture_2d.hpp>
+#include <graphics/texture.hpp>
 #include <filesystem>
 #include <vector>
 #include <string>
@@ -17,11 +17,16 @@ namespace moka
 	{
 		graphics_device& graphics_device_;
 		std::vector<material_property> texture_maps_;
-		std::map<std::string, program_handle>& shaders_;
+		std::map<std::string, program>& shaders_;
 		parameter_collection parameters_;
 		std::string fragment_shader_src_;
 		std::string vertex_shader_src_;
 		alpha_mode alpha_mode_ = alpha_mode::opaque;
+		blend blend_;
+		culling culling_;
+		polygon_mode polygon_mode_;
+		bool scissor_test_ = false;
+		bool depth_test_ = true;
 	public:
 		static std::string get_property_name(const material_property property)
 		{
@@ -37,20 +42,14 @@ namespace moka
 				return "material.metallic_roughness_map";
 			case material_property::ao_map:
 				return "material.ao_map";
-				break;
+			default:
+				return "error";
 			}
 		}
 			
-		material_builder(graphics_device& device, std::map<std::string, program_handle>& shaders)
+		material_builder(graphics_device& device, std::map<std::string, program>& shaders)
 			: graphics_device_(device)
 			, shaders_{ shaders }
-			, parameters_
-			{ effect_parameter("view_pos",                  glm::vec3(0.0f))
-			, effect_parameter("material.diffuse_factor",   glm::vec3(1.0f))
-			, effect_parameter("material.emissive_factor",  glm::vec3(0.0f))
-			, effect_parameter("material.roughness_factor", 1.0f           )
-			, effect_parameter("material.metalness_factor", 1.0f           ) 
-			}
 		{}
 
 		material_builder& set_vertex_shader(const std::filesystem::path& vertex_shader)
@@ -77,6 +76,49 @@ namespace moka
 			return *this;
 		}
 
+		material_builder& set_blend_equation(const blend_equation equation)
+		{
+			blend_.equation = equation;
+			return *this;
+		}
+
+		material_builder& set_blend_function(const blend_function_factor source, const blend_function_factor destination)
+		{
+			blend_.source = source;
+			blend_.destination = destination;
+			return *this;
+		}
+
+		material_builder& set_blend_enabled(const bool enabled)
+		{
+			blend_.enabled = enabled;
+			return *this;
+		}
+
+		material_builder& set_culling_enabled(const bool enabled)
+		{
+			culling_.enabled = enabled;
+			return *this;
+		}
+
+		material_builder& set_depth_test_enabled(const bool enabled)
+		{
+			depth_test_ = enabled;
+			return *this;
+		}
+
+		material_builder& set_scissor_test_enabled(const bool enabled)
+		{
+			scissor_test_ = enabled;
+			return *this;
+		}
+
+		material_builder& set_culling_faces(const face faces)
+		{
+			culling_.faces = faces;
+			return *this;
+		}
+
 		material_builder& set_fragment_shader(const std::string& fragment_shader)
 		{
 			fragment_shader_src_ = fragment_shader;
@@ -89,13 +131,20 @@ namespace moka
 			return *this;
 		}
 
+		material_builder& set_polygon_mode(const face faces, const polygon_draw_mode mode)
+		{
+			polygon_mode_.faces = faces;
+			polygon_mode_.mode = mode;
+			return *this;
+		}
+
 		material_builder& add_uniform(const std::string& name, const float data)
 		{
 			parameters_[name] = effect_parameter{ name, parameter_type::float32, data };
 			return *this;
 		}
 
-		material_builder& add_uniform(const std::string& name, const texture_2d& data)
+		material_builder& add_uniform(const std::string& name, const texture& data)
 		{
 			parameters_[name] = effect_parameter{ name, parameter_type::texture, data };
 			return *this;
@@ -125,17 +174,17 @@ namespace moka
 			return *this;
 		}
 
-		material_builder& add_texture(material_property property, const texture_2d texture)
+		material_builder& add_texture(material_property property, const texture texture)
 		{
 			texture_maps_.emplace_back(property);
-			auto name = get_property_name(property);
+			const auto name = get_property_name(property);
 			add_uniform(name, texture);
 			return *this;
 		}
 
-		bool replace(std::string& source, const std::string& target, const std::string& replacement) 
+		static bool replace(std::string& source, const std::string& target, const std::string& replacement) 
 		{
-			size_t start_pos = source.find(target);
+			const auto start_pos = source.find(target);
 			if (start_pos == std::string::npos)
 			{
 				return false;
@@ -181,34 +230,34 @@ namespace moka
 				}
 			}
 
-			program_handle program;
+			program program{};
 
 			replace(vertex_shader_src_, "#moka_compilation_flags\n", compiler_flags);
 			replace(fragment_shader_src_, "#moka_compilation_flags\n", compiler_flags);
 
-			auto key = vertex_shader_src_ + fragment_shader_src_;
+			const auto key = vertex_shader_src_ + fragment_shader_src_;
 
-			auto it = shaders_.find(key);
+			const auto it = shaders_.find(key);
 			if (it != shaders_.end())
 			{
 				program = it->second;
 			}
 			else
 			{
-				auto vertex_shader = graphics_device_.create_shader(
+				const auto vertex_shader = graphics_device_.make_shader(
 					shader_type::vertex
 					, vertex_shader_src_);
 
-				auto fragment_shader = graphics_device_.create_shader(
+				const auto fragment_shader = graphics_device_.make_shader(
 					shader_type::fragment
 					, fragment_shader_src_);
 
-				 program = graphics_device_.create_program(vertex_shader, fragment_shader);
+				 program = graphics_device_.make_program(vertex_shader, fragment_shader);
 
 				 shaders_[key] = program;
 			}
 
-			return { program, std::move(parameters_), alpha_mode_ };
+			return { program, std::move(parameters_), alpha_mode_, blend_, culling_, polygon_mode_, depth_test_, scissor_test_ };
 		}
 	};
 }

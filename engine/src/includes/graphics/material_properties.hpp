@@ -1,7 +1,6 @@
 #pragma once
 
-#include <type_traits>
-#include <stdint.h>
+#include <cstdint>
 
 namespace moka
 {

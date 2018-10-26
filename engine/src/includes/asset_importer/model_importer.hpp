@@ -16,7 +16,7 @@ namespace moka
 	{
 		graphics_device& device_;
 		std::filesystem::path root_directory_;
-		std::map<std::string, program_handle> shaders_;
+		std::map<std::string, program> shaders_;
 	public:
 
 		asset_importer(const std::filesystem::path& path, graphics_device& device);

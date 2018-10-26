@@ -97,7 +97,7 @@ namespace moka
 		case log_level::warn:
 			warn(fmt, std::forward<Args>(args)...);
 			break;
-		case default:
+		default:
 			break;
 		}
 
