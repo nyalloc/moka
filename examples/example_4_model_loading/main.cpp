@@ -42,10 +42,10 @@ public:
 		: app(settings)
 		, camera_(camera::builder()
 			.set_fps_controls(keyboard_, mouse_)
-			.set_position(glm::vec3(0, 0, 0))
+			.set_position(glm::vec3(0, 0, -1))
 			.set_perspective(glm::radians(70.0f), window_.aspect()))
 		, model_importer_(model_loading_application::data_path(), graphics_)
-		, model_(model_importer_.load("sponza.moka"))
+		, model_(model_importer_.load("flight_helmet.moka"))
 		, imgui_(window_, keyboard_, mouse_, graphics_)
 	{}
 
@@ -60,7 +60,7 @@ public:
 			.set_rectangle(0, 0, 1280, 720);
 
 		scene_draw.clear()
-			.set_color(1.0f, 0.0f, 0.0f, 1.0f)
+			.set_color(0.8f, 0.8f, 0.8f, 1.0f)
 			.set_clear_color(true)
 			.set_clear_depth(true);
 

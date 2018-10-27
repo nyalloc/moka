@@ -28,7 +28,7 @@ namespace moka
 			std::cout << "Null ptr to default font" << std::endl;
 		}
 
-		ImGui::StyleColorsDark();
+		ImGui::StyleColorsLight();
 
 		io.DisplaySize.x = 1280;
 		io.DisplaySize.y = 720;

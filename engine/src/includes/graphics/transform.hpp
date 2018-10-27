@@ -4,7 +4,6 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/orthonormalize.hpp>
 
 namespace moka
 {
@@ -56,9 +55,9 @@ namespace moka
 
 		glm::mat4 to_matrix() const
 		{
-			glm::mat4 translate = glm::translate(glm::mat4(), get_position());
-			glm::mat4 rotate = glm::mat4_cast(get_rotation());
-			glm::mat4 scale = glm::scale(glm::mat4(), get_scale());
+			const auto translate = glm::translate(glm::mat4(), get_position());
+			const auto rotate = glm::mat4_cast(get_rotation());
+			const auto scale = glm::scale(glm::mat4(), get_scale());
 
 			return translate * rotate * scale;
 		}
@@ -143,9 +142,22 @@ namespace moka
 			return glm::conjugate(rotation_) * world_down();
 		}
 
-		void look_at(
-			const glm::vec3& world_location
-			, const glm::vec3& world_up = transform::world_up())
+		void rotate_around(const glm::vec3& point, const glm::quat& rotation)
+		{
+			auto vector = position_;
+			auto vector2 = vector - point;
+			vector2 = rotation * vector2;
+			vector = point + vector2;
+			position_ = vector;
+			rotation_ = rotation;
+		}
+
+		void rotate_around(const glm::vec3& point, const glm::vec3& axis, const float angle)
+		{
+			rotate_around(point, glm::angleAxis(angle, axis));
+		}
+
+		void look_at(const glm::vec3& world_location, const glm::vec3& world_up = transform::world_up())
 		{
 			glm::mat3 result;
 

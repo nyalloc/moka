@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <graphics/transform.hpp>
+#include "imgui.h"
 
 #undef near
 #undef far
@@ -70,9 +71,9 @@ namespace moka
 
 		glm::mat4 get_view() const override
 		{
-			glm::mat4 matrix = glm::mat4_cast(transform_.get_rotation());
-			matrix = glm::translate(matrix, -transform_.get_position());
-			return matrix;
+			return glm::lookAt(transform_.get_position(),
+				transform_.get_position() + transform_.front(),
+				transform_.up());
 		}
 
 		const glm::quat& get_rotation() const override
@@ -318,15 +319,13 @@ namespace moka
 		keyboard& keyboard_;
 		mouse& mouse_;
 
-		float pitch_ = 0.0f;
-		float yaw_ = 0.0f;
+		float current_translate_z = 0.0f;
+		float current_rotate_x = 0.0f;
+		float current_rotate_y = 0.0f;
 
-		glm::quat target_rot;
-		glm::vec3 target_pos;
-
-		static constexpr float max_pitch_ = glm::radians(89.0f);
-		static constexpr float movement_interpolant_ = 2.00f;
-		static constexpr float rotation_interpolant_ = 10.0f;
+		float translate_z = 0.0f;
+		float rotate_x = 0.0f;
+		float rotate_y = 0.0f;
 	public:
 		camera_fps_controller(const camera_fps_controller& camera) = delete;
 		camera_fps_controller(camera_fps_controller&& camera) = delete;
@@ -341,81 +340,57 @@ namespace moka
 			, keyboard_(keyboard)
 			, mouse_(mouse)
 		{
-			auto camera_transform = camera_decorator::get_transform();
-			const auto euler_angles = glm::eulerAngles(camera_transform.get_rotation());
-			pitch_ = euler_angles.x;
-			yaw_ = euler_angles.y;
+		}
+
+		glm::mat4 get_view() const override
+		{
+			glm::mat4 mat;
+			mat = glm::translate(mat, { 0.0, 0.0, current_translate_z });
+			mat = glm::rotate(mat, current_rotate_y, { 1.0, 0.0, 0.0 });
+			mat = glm::rotate(mat, current_rotate_x, { 0.0, 1.0, 0.0 });
+			return mat;
 		}
 
 		void update(const float delta_time) override
 		{
-			const auto normalize = [](const glm::vec3& vector)
+			auto mouse_state = mouse_.get_state();
+			auto motion = mouse_state.get_motion();
+
+			const auto& io = ImGui::GetIO();
+
+			if(mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
 			{
-				if (vector != glm::vec3{ 0 })
-				{
-					return glm::normalize(vector);
-				}
-				return glm::vec3{ 0 };
-			};
-
-			auto camera_transform = get_transform();
-
-			const auto& key_state = keyboard_.get_state();
-
-			glm::vec3 movement_direction;
-
-			if (key_state.is_key_down(key::w))
+				rotate_x += motion.x * delta_time;
+				rotate_y += motion.y * delta_time;
+			}
+			else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
 			{
-				movement_direction += camera_transform.back();
+				translate_z -= motion.y * delta_time;
 			}
 
-			if (key_state.is_key_down(key::s))
-			{
-				movement_direction += camera_transform.front();
-			}
+			current_rotate_x = glm::mix(current_rotate_x, rotate_x, delta_time * 5);
+			current_rotate_y = glm::mix(current_rotate_y, rotate_y, delta_time * 5);
+			current_translate_z = glm::mix(current_translate_z, translate_z, delta_time * 5);
 
-			if (key_state.is_key_down(key::a))
-			{
-				movement_direction += camera_transform.left();
-			}
+			//if (keyboard.is_key_down(key::left))
+			//{
+			//	rotate_x += delta_time;
+			//}
 
-			if (key_state.is_key_down(key::d))
-			{
-				movement_direction += camera_transform.right();
-			}
+			//if (keyboard.is_key_down(key::right))
+			//{
+			//	rotate_x -= delta_time;
+			//}
 
-			if (key_state.is_key_down(key::up))
-			{
-				movement_direction += transform::world_up();
-			}
+			//if (keyboard.is_key_down(key::up))
+			//{
+			//	rotate_y += delta_time;
+			//}
 
-			if (key_state.is_key_down(key::down))
-			{
-				movement_direction += transform::world_down();
-			}
-
-			const auto direction = normalize(movement_direction);
-
-			const auto target_pos = camera_transform.get_position() + direction;
-
-			const auto mouse_motion = mouse_.get_state().get_motion();
-			const auto& motion = glm::vec2(mouse_motion.x, mouse_motion.y) * delta_time;
-
-	/*		yaw_ += motion.x;
-			pitch_ = glm::clamp(pitch_ + motion.y, -max_pitch_, max_pitch_);*/
-
-			const auto yaw_quat = glm::angleAxis(yaw_, glm::vec3(0.0f, 1.0f, 0.0f));
-			const auto pitch_quat = glm::angleAxis(pitch_, glm::vec3(1.0f, 0.0f, 0.0f));
-
-			target_rot = pitch_quat * yaw_quat;
-
-			camera_transform.set_position(glm::mix(camera_transform.get_position(), target_pos, delta_time * movement_interpolant_));
-			
-			camera_transform.set_rotation(glm::lerp(camera_transform.get_rotation(), target_rot, delta_time * rotation_interpolant_));
-
-			camera_->set_transform(camera_transform);
-
-			camera_->update(delta_time);
+			//if (keyboard.is_key_down(key::down))
+			//{
+			//	rotate_y -= delta_time;
+			//}
 		}
 	};
 
