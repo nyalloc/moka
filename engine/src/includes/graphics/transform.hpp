@@ -112,6 +112,11 @@ namespace moka
 			return -world_right();
 		}
 
+		static glm::vec3 world_origin()
+		{
+			return glm::vec3(0, 0, 0);
+		}
+
 		glm::vec3 front() const
 		{
 			return glm::conjugate(rotation_) * world_front();
@@ -156,13 +161,7 @@ namespace moka
 
 		void look_at(const glm::vec3& world_location, const glm::vec3& world_up = transform::world_up())
 		{
-			glm::mat3 result;
-
-			result[2] = glm::normalize(world_location - position_);
-			result[0] = glm::normalize(glm::cross(world_up, result[2]));
-			result[1] = glm::normalize(glm::cross(result[2], result[0]));
-
-			rotation_ = glm::inverse(glm::quat_cast(result));
+			rotation_ = glm::quat_cast(glm::lookAt(-position_, world_location, world_up));
 		}
 	};
 }

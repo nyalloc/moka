@@ -41,7 +41,7 @@ public:
 	model_loading_application(const app_settings& settings)
 		: app(settings)
 		, camera_(camera::builder()
-			.set_fps_controls(keyboard_, mouse_)
+			.set_mouse_controller(mouse_)
 			.set_position(glm::vec3(0, 0, -1))
 			.set_perspective(glm::radians(70.0f), window_.aspect()))
 		, model_importer_(model_loading_application::data_path(), graphics_)

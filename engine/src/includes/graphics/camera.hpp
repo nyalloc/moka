@@ -185,7 +185,7 @@ namespace moka
 			return *this;
 		}
 
-		camera_builder& set_fps_controls(keyboard& keyboard, mouse& mouse);
+		camera_builder& set_mouse_controller(mouse& mouse);
 
 		camera build();
 	};
@@ -312,32 +312,27 @@ namespace moka
 		}
 	};
 
-	// first person camera controls. 
-	// a camera decorator, this class takes a camera and provides basic FPS controls to move it around.
-	class camera_fps_controller : public camera_decorator
+	class camera_mouse_controller : public camera_decorator
 	{
-		keyboard& keyboard_;
 		mouse& mouse_;
 
-		float current_translate_z = 0.0f;
-		float current_rotate_x = 0.0f;
+		float current_translate_z = -1.0f;
+		float current_rotate_x = -glm::pi<float>();
 		float current_rotate_y = 0.0f;
 
 		float translate_z = -1.0f;
-		float rotate_x = 0.0f;
+		float rotate_x = -glm::pi<float>();
 		float rotate_y = 0.0f;
 	public:
-		camera_fps_controller(const camera_fps_controller& camera) = delete;
-		camera_fps_controller(camera_fps_controller&& camera) = delete;
-		camera_fps_controller& operator = (const camera_fps_controller& camera) = delete;
-		camera_fps_controller& operator = (camera_fps_controller&& camera) = delete;
+		camera_mouse_controller(const camera_mouse_controller& camera) = delete;
+		camera_mouse_controller(camera_mouse_controller&& camera) = delete;
+		camera_mouse_controller& operator = (const camera_mouse_controller& camera) = delete;
+		camera_mouse_controller& operator = (camera_mouse_controller&& camera) = delete;
 
-		camera_fps_controller(
+		camera_mouse_controller(
 			std::unique_ptr<base_camera>&& camera
-			, keyboard& keyboard
 			, mouse& mouse)
 			: camera_decorator(std::move(camera))
-			, keyboard_(keyboard)
 			, mouse_(mouse)
 		{
 		}
@@ -356,7 +351,7 @@ namespace moka
 
 			if(mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
 			{
-				rotate_x += motion.x * delta_time;
+				rotate_x -= motion.x * delta_time;
 				rotate_y -= motion.y * delta_time;
 			}
 			else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
@@ -364,47 +359,28 @@ namespace moka
 				translate_z -= motion.y * delta_time;
 			}
 
+			rotate_y = glm::clamp(rotate_y, glm::radians(-89.0f), glm::radians(89.0f));
+			translate_z = glm::clamp(translate_z, 0.3f, 5.0f);
+
 			current_rotate_x = glm::mix(current_rotate_x, rotate_x, delta_time * 5);
 			current_rotate_y = glm::mix(current_rotate_y, rotate_y, delta_time * 5);
 			current_translate_z = glm::mix(current_translate_z, translate_z, delta_time * 5);
 
 			auto trans = get_transform();
-		
-			glm::vec3 pos = { 0, 0, current_translate_z };
-			pos = pos * glm::angleAxis(current_rotate_y, glm::vec3{ 1.0, 0.0, 0.0 });;
-			pos = pos * glm::angleAxis(current_rotate_x, glm::vec3{ 0.0, 1.0, 0.0 });;
 
-			trans.set_position(pos);
+			trans.set_position(glm::vec3{ 0, 0, current_translate_z });
+			trans.rotate_around(transform::world_origin(), transform::world_right(), current_rotate_y);
+			trans.rotate_around(transform::world_origin(), transform::world_up(), current_rotate_x);
 
-			trans.look_at({});
+			trans.look_at(transform::world_origin());
 
 			set_transform(trans);
-
-			//if (keyboard.is_key_down(key::left))
-			//{
-			//	rotate_x += delta_time;
-			//}
-
-			//if (keyboard.is_key_down(key::right))
-			//{
-			//	rotate_x -= delta_time;
-			//}
-
-			//if (keyboard.is_key_down(key::up))
-			//{
-			//	rotate_y += delta_time;
-			//}
-
-			//if (keyboard.is_key_down(key::down))
-			//{
-			//	rotate_y -= delta_time;
-			//}
 		}
 	};
 
-	inline camera_builder& camera_builder::set_fps_controls(keyboard& keyboard, mouse& mouse)
+	inline camera_builder& camera_builder::set_mouse_controller(mouse& mouse)
 	{
-		camera_ = std::make_unique<camera_fps_controller>(std::move(camera_), keyboard, mouse);
+		camera_ = std::make_unique<camera_mouse_controller>(std::move(camera_), mouse);
 		return *this;
 	}
 
