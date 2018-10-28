@@ -144,12 +144,9 @@ namespace moka
 
 		void rotate_around(const glm::vec3& point, const glm::quat& rotation)
 		{
-			auto vector = position_;
-			auto vector2 = vector - point;
-			vector2 = rotation * vector2;
-			vector = point + vector2;
-			position_ = vector;
-			rotation_ = rotation;
+			auto diff = position_ - point;
+			diff = rotation * diff;
+			position_ = point + diff;
 		}
 
 		void rotate_around(const glm::vec3& point, const glm::vec3& axis, const float angle)
@@ -161,11 +158,11 @@ namespace moka
 		{
 			glm::mat3 result;
 
-			result[2] = -glm::normalize(position_ - world_location);
+			result[2] = glm::normalize(world_location - position_);
 			result[0] = glm::normalize(glm::cross(world_up, result[2]));
 			result[1] = glm::normalize(glm::cross(result[2], result[0]));
 
-			rotation_ = glm::quat_cast(result);
+			rotation_ = glm::inverse(glm::quat_cast(result));
 		}
 	};
 }

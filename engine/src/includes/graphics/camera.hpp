@@ -323,7 +323,7 @@ namespace moka
 		float current_rotate_x = 0.0f;
 		float current_rotate_y = 0.0f;
 
-		float translate_z = 0.0f;
+		float translate_z = -1.0f;
 		float rotate_x = 0.0f;
 		float rotate_y = 0.0f;
 	public:
@@ -344,11 +344,7 @@ namespace moka
 
 		glm::mat4 get_view() const override
 		{
-			glm::mat4 mat;
-			mat = glm::translate(mat, { 0.0, 0.0, current_translate_z });
-			mat = glm::rotate(mat, current_rotate_y, { 1.0, 0.0, 0.0 });
-			mat = glm::rotate(mat, current_rotate_x, { 0.0, 1.0, 0.0 });
-			return mat;
+			return camera_->get_view();
 		}
 
 		void update(const float delta_time) override
@@ -361,7 +357,7 @@ namespace moka
 			if(mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
 			{
 				rotate_x += motion.x * delta_time;
-				rotate_y += motion.y * delta_time;
+				rotate_y -= motion.y * delta_time;
 			}
 			else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
 			{
@@ -371,6 +367,18 @@ namespace moka
 			current_rotate_x = glm::mix(current_rotate_x, rotate_x, delta_time * 5);
 			current_rotate_y = glm::mix(current_rotate_y, rotate_y, delta_time * 5);
 			current_translate_z = glm::mix(current_translate_z, translate_z, delta_time * 5);
+
+			auto trans = get_transform();
+		
+			glm::vec3 pos = { 0, 0, current_translate_z };
+			pos = pos * glm::angleAxis(current_rotate_y, glm::vec3{ 1.0, 0.0, 0.0 });;
+			pos = pos * glm::angleAxis(current_rotate_x, glm::vec3{ 0.0, 1.0, 0.0 });;
+
+			trans.set_position(pos);
+
+			trans.look_at({});
+
+			set_transform(trans);
 
 			//if (keyboard.is_key_down(key::left))
 			//{

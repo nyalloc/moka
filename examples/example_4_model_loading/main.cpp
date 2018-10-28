@@ -60,7 +60,7 @@ public:
 			.set_rectangle(0, 0, 1280, 720);
 
 		scene_draw.clear()
-			.set_color(0.8f, 0.8f, 0.8f, 1.0f)
+			.set_color(0.6f, 0.6f, 0.6f, 1.0f)
 			.set_clear_color(true)
 			.set_clear_depth(true);
 
