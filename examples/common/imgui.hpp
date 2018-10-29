@@ -29,7 +29,7 @@ namespace moka
 			, mouse& mouse
 			, graphics_device& graphics_device);
 
-		void new_frame(float data_time);
+		void new_frame(float data_time) const;
 
 		command_list draw();
 	};

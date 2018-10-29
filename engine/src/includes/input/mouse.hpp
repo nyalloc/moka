@@ -18,7 +18,7 @@ namespace moka
 		glm::ivec2 position_;
 		glm::ivec2 motion_;
 		std::array<bool, 3> buttons_ = {};
-		float scroll_ = 0.0f;
+		glm::ivec2 scroll_;
 	public:
 
 		const glm::ivec2& get_position() const
@@ -42,7 +42,7 @@ namespace moka
 			return !is_button_down(button);
 		}
 
-		float get_scroll() const
+		glm::ivec2 get_scroll() const
 		{
 			return scroll_;
 		}

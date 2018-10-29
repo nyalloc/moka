@@ -125,6 +125,9 @@ namespace moka
 			case SDL_MOUSEWHEEL:
 			{
 				log_.debug("SDL_MOUSEWHEEL");
+
+				mouse_.state_.scroll_.x = event.wheel.x;
+				mouse_.state_.scroll_.y = event.wheel.y;
 				break;
 			}
 			case SDL_TEXTINPUT:

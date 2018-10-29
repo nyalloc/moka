@@ -19,11 +19,10 @@ namespace moka
 	{
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
 
-		ImFont* font = io.Fonts->AddFontDefault();
+		auto& io = ImGui::GetIO();
 
-		if (!font)
+		if (!io.Fonts->AddFontDefault())
 		{
 			std::cout << "Null ptr to default font" << std::endl;
 		}
@@ -102,9 +101,9 @@ namespace moka
 		vertex_buffer_ = graphics_device_.make_vertex_buffer(nullptr, 0, std::move(layout), buffer_usage::stream_draw);
 	}
 
-	void imgui::new_frame(const float data_time)
+	void imgui::new_frame(const float data_time) const
 	{
-		ImGuiIO& io = ImGui::GetIO();
+		auto& io = ImGui::GetIO();
 
 		io.DisplaySize.x = 1280;
 		io.DisplaySize.y = 720;
@@ -118,10 +117,10 @@ namespace moka
 
 		IM_ASSERT(io.Fonts->IsBuilt());
 
-		auto size = window_.get_size();
-		auto display_size = window_.get_drawable_size();
+		const auto size = window_.get_size();
+		const auto display_size = window_.get_drawable_size();
 		io.DisplaySize = ImVec2(static_cast<float>(size.x), static_cast<float>(size.y));
-		io.DisplayFramebufferScale = ImVec2(size.x > 0 ? ((float)display_size.x / size.x) : 0, size.y > 0 ? ((float)display_size.y / size.y) : 0);
+		io.DisplayFramebufferScale = ImVec2(size.x > 0 ? static_cast<float>(display_size.x) / size.x : 0, size.y > 0 ? static_cast<float>(display_size.y) / size.y : 0);
 
 		io.DeltaTime = data_time;
 
@@ -152,43 +151,46 @@ namespace moka
 		const auto fb_width = static_cast<int>(draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
 		const auto fb_height = static_cast<int>(draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
 
-		if (fb_width <= 0 || fb_height <= 0) return {};
-		
+		if (fb_width <= 0 || fb_height <= 0)
+		{
+			return {};
+		}
+
 		draw_data->ScaleClipRects(io.DisplayFramebufferScale);
 
 		buff.viewport()
 			.set_rectangle(0, 0, fb_width, fb_height);
 
-		float L = draw_data->DisplayPos.x;
-		float R = draw_data->DisplayPos.x + draw_data->DisplaySize.x;
-		float T = draw_data->DisplayPos.y;
-		float B = draw_data->DisplayPos.y + draw_data->DisplaySize.y;
+		const auto l = draw_data->DisplayPos.x;
+		const auto r = draw_data->DisplayPos.x + draw_data->DisplaySize.x;
+		const auto t = draw_data->DisplayPos.y;
+		const auto b = draw_data->DisplayPos.y + draw_data->DisplaySize.y;
 
 		const glm::mat4 proj =
 		{
-			2.0f / (R - L), 0.0f, 0.0f, 0.0f ,
-			0.0f, 2.0f / (T - B), 0.0f, 0.0f ,
+			2.0f / (r - l), 0.0f, 0.0f, 0.0f ,
+			0.0f, 2.0f / (t - b), 0.0f, 0.0f ,
 			0.0f, 0.0f, -1.0f, 0.0f ,
-			(R + L) / (L - R), (T + B) / (B - T), 0.0f, 1.0f
+			(r + l) / (l - r), (t + b) / (b - t), 0.0f, 1.0f
 		};
 
 		material_["u_projection"] = proj;
 
-		ImVec2 pos = draw_data->DisplayPos;
-		for (int n = 0; n < draw_data->CmdListsCount; ++n)
+		const auto pos = draw_data->DisplayPos;
+		for (auto n = 0; n < draw_data->CmdListsCount; ++n)
 		{
 			const ImDrawList* cmd_list = draw_data->CmdLists[n];
 			uint32_t idx_buffer_offset = 0;
 
 			buff.fill_vertex_buffer()
-				.set_buffer(vertex_buffer_, (const void*)cmd_list->VtxBuffer.Data, (size_t)cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
+				.set_buffer(vertex_buffer_, cmd_list->VtxBuffer.Data, static_cast<size_t>(cmd_list->VtxBuffer.Size) * sizeof(ImDrawVert));
 
 			buff.fill_index_buffer()
-				.set_buffer(index_buffer_, (const void*)cmd_list->IdxBuffer.Data, (size_t)cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
+				.set_buffer(index_buffer_, cmd_list->IdxBuffer.Data, static_cast<size_t>(cmd_list->IdxBuffer.Size) * sizeof(ImDrawIdx));
 
-			for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
+			for (auto cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
 			{
-				const ImDrawCmd *cmd = &cmd_list->CmdBuffer[cmd_i];
+				auto cmd = &cmd_list->CmdBuffer[cmd_i];
 				
 				if (cmd->UserCallback)
 				{
@@ -196,13 +198,17 @@ namespace moka
 					continue;
 				}
 
-				ImVec4 clip_rect = ImVec4(cmd->ClipRect.x - pos.x, cmd->ClipRect.y - pos.y, cmd->ClipRect.z - pos.x, cmd->ClipRect.w - pos.y);
+				const auto clip_rect = ImVec4(cmd->ClipRect.x - pos.x, cmd->ClipRect.y - pos.y, cmd->ClipRect.z - pos.x, cmd->ClipRect.w - pos.y);
 				if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
 				{
 					buff.scissor()
-					    .set_rectangle((int)clip_rect.x, (int)(fb_height - clip_rect.w), (int)(clip_rect.z - clip_rect.x), (int)(clip_rect.w - clip_rect.y));
+					    .set_rectangle(static_cast<int>(clip_rect.x), 
+							           static_cast<int>(fb_height - clip_rect.w), 
+							           static_cast<int>(clip_rect.z - clip_rect.x), 
+							           static_cast<int>(clip_rect.w - clip_rect.y));
 
-					texture handle{ (uint16_t)(intptr_t)cmd->TextureId };
+					const texture handle{ reinterpret_cast<uint16_t>(cmd->TextureId) };
+
 					material_["u_tex0"] = handle;
 
 					buff.clear()

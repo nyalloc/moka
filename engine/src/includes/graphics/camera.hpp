@@ -316,13 +316,15 @@ namespace moka
 	{
 		mouse& mouse_;
 
-		float current_translate_z = -1.0f;
+		float current_translate_z = 1.0f;
 		float current_rotate_x = -glm::pi<float>();
-		float current_rotate_y = 0.0f;
+		float current_rotate_y = 0.3f;
 
-		float translate_z = -1.0f;
+		float translate_z = 1.0f;
 		float rotate_x = -glm::pi<float>();
-		float rotate_y = 0.0f;
+		float rotate_y = 0.3f;
+
+		bool auto_scroll = true;
 	public:
 		camera_mouse_controller(const camera_mouse_controller& camera) = delete;
 		camera_mouse_controller(camera_mouse_controller&& camera) = delete;
@@ -333,9 +335,8 @@ namespace moka
 			std::unique_ptr<base_camera>&& camera
 			, mouse& mouse)
 			: camera_decorator(std::move(camera))
-			, mouse_(mouse)
-		{
-		}
+			  , mouse_(mouse)
+		{}
 
 		glm::mat4 get_view() const override
 		{
@@ -345,18 +346,32 @@ namespace moka
 		void update(const float delta_time) override
 		{
 			auto mouse_state = mouse_.get_state();
-			auto motion = mouse_state.get_motion();
+			const auto motion = mouse_state.get_motion();
 
 			const auto& io = ImGui::GetIO();
 
-			if(mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
+			if(auto_scroll)
 			{
-				rotate_x -= motion.x * delta_time;
-				rotate_y -= motion.y * delta_time;
+				rotate_x -= delta_time * 0.2f;
+
+				if ((mouse_state.is_button_down(mouse_button::left) || 
+					 mouse_state.is_button_down(mouse_button::right)) &&
+					 !io.WantCaptureMouse)
+				{
+					auto_scroll = false;
+				}
 			}
-			else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
+			else
 			{
-				translate_z -= motion.y * delta_time;
+				if (mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
+				{
+					rotate_x -= motion.x * delta_time;
+					rotate_y -= motion.y * delta_time;
+				}
+				else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
+				{
+					translate_z -= motion.y * delta_time;
+				}
 			}
 
 			rotate_y = glm::clamp(rotate_y, glm::radians(-89.0f), glm::radians(89.0f));
