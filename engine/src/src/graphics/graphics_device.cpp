@@ -81,13 +81,10 @@ namespace moka
 
 	void graphics_device::submit(command_list&& command_list, bool sort)
 	{
-		auto sort_time = profile<milliseconds>([&]()
+		if (sort && !command_list.is_sorted())
 		{
-			if (sort && !command_list.is_sorted())
-			{
-				command_list.sort();
-			}
-		});
+			command_list.sort();
+		}
 
 		messages_.push(std::make_unique<submit_commands>(std::move(command_list), false, []{}));
 	}

@@ -12,8 +12,8 @@
 
 struct pbr_material 
 {
-    vec3 diffuse_factor;    // default = vec3(1.0, 1.0, 1.0)    
-    vec3 emissive_factor;   // default = vec3(0.0, 0.0, 0.0)  
+    vec4 diffuse_factor;    // default = vec3(1.0, 1.0, 1.0, 1.0)    
+    vec4 emissive_factor;   // default = vec3(0.0, 0.0, 0.0, 1.0)  
     float roughness_factor; // default = 1.0f 
     float metalness_factor; // default = 1.0f 
     
@@ -64,10 +64,10 @@ uniform vec3 view_pos;
 uniform pbr_material material;
 uniform directional_light light;
 
-vec3 get_diffuse()
+vec4 get_diffuse()
 {
     #ifdef DIFFUSE_MAP
-        return texture(material.diffuse_map, in_texture_coord).rgb * material.diffuse_factor;
+        return texture(material.diffuse_map, in_texture_coord).rgba * material.diffuse_factor;
     #else 
         return material.diffuse_factor;
     #endif
@@ -90,10 +90,10 @@ vec3 get_normal()
     return material_normal;
 }
 
-vec3 get_emissive()
+vec4 get_emissive()
 {
     #ifdef EMISSIVE_MAP
-        return texture(material.emissive_map, in_texture_coord).rgb * material.emissive_factor;
+        return texture(material.emissive_map, in_texture_coord).rgba * material.emissive_factor;
     #else 
         return material.emissive_factor;
     #endif
@@ -134,21 +134,24 @@ void main()
     }
 
     // ambient
-    vec3 ambient = vec3(0.1) * get_diffuse();
+    
+    vec4 base_diffuse = get_diffuse();
+    
+    vec4 ambient = vec4(light.ambient * base_diffuse.rgb, base_diffuse.a);
   	
     // diffuse 
     vec3 norm = get_normal();
 
-    vec3 lightDir = normalize(vec3(0.0, 1.0, 1.0));  
+    vec3 lightDir = normalize(light.position);  
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = vec3(0.8) * diff * get_diffuse();  
     
+    vec4 diffuse = vec4(light.diffuse * diff * base_diffuse.rgb, base_diffuse.a);
+        
     // specular
     vec3 viewDir = normalize(view_pos - in_frag_pos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), 16.0f);
-    vec3 specular = vec3(1.0) * spec * get_roughness();  
+    vec4 specular = vec4(light.specular * spec * get_roughness(), base_diffuse.a);  
         
-    vec3 result = ambient + diffuse + specular;
-    frag_color = vec4(result, 1.0);
+    frag_color = ambient + diffuse + specular;
 }

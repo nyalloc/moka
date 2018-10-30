@@ -347,6 +347,7 @@ namespace moka
 		{
 			auto mouse_state = mouse_.get_state();
 			const auto motion = mouse_state.get_motion();
+			const auto scroll = mouse_state.get_scroll();
 
 			const auto& io = ImGui::GetIO();
 
@@ -370,7 +371,12 @@ namespace moka
 				}
 				else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
 				{
-					translate_z -= motion.y * delta_time;
+					translate_z += motion.y * delta_time;
+				}
+
+				if (scroll.y != 0 && !io.WantCaptureMouse)
+				{
+					translate_z += scroll.y * delta_time;
 				}
 			}
 

@@ -244,8 +244,8 @@ namespace moka
 			material_builder mat_builder(device, shaders);
 
 			mat_builder.add_uniform("view_pos", glm::vec3(0.0f));
-			mat_builder.add_uniform("material.diffuse_factor", glm::vec3(1.0f));
-			mat_builder.add_uniform("material.emissive_factor", glm::vec3(0.0f));
+			mat_builder.add_uniform("material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			mat_builder.add_uniform("material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 			mat_builder.add_uniform("material.roughness_factor", 1.0f);
 			mat_builder.add_uniform("material.metalness_factor", 1.0f);
 
@@ -261,7 +261,7 @@ namespace moka
 					if (auto base_color_factor_itr = material.values.find("baseColorFactor"); base_color_factor_itr != material.values.end())
 					{
 						auto data = base_color_factor_itr->second.number_array;
-						glm::vec3 diffuse_factor(data[0], data[1], data[2]);
+						glm::vec4 diffuse_factor(data[0], data[1], data[2], data[3]);
 						mat_builder.add_uniform("material.diffuse_factor", diffuse_factor);
 					}
 
@@ -398,7 +398,7 @@ namespace moka
 					if (auto emissive_factor_itr = material.additionalValues.find("emissiveFactor"); emissive_factor_itr != material.additionalValues.end())
 					{
 						auto data = emissive_factor_itr->second.number_array;
-						glm::vec3 emissive_factor(data[0], data[1], data[2]);
+						glm::vec4 emissive_factor(data[0], data[1], data[2], data[3]);
 						mat_builder.add_uniform("material.emissive_factor", emissive_factor);
 					}
 
@@ -457,10 +457,12 @@ namespace moka
 						{
 							alpha = alpha_mode::mask;
 							mat_builder.add_uniform("material.alpha_cutoff", alpha_cutoff);
+							mat_builder.set_blend_enabled(true);
 						}
 						else if (alpha_str == "BLEND")
 						{
 							alpha = alpha_mode::blend;
+							mat_builder.set_blend_enabled(true);
 						}
 					}
 

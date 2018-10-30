@@ -32,7 +32,7 @@ namespace moka
 			, uint32_t index_buffer_offset
 			, material&& material);
 
-		void draw(command_list& list) const;
+		void draw(command_buffer& list) const;
 	};
 
 	class mesh

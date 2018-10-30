@@ -277,20 +277,6 @@ namespace moka
 			glUseProgram(material.get_program().id);
 		}
 
-		if (material.get_alpha_mode() != previous.get_alpha_mode())
-		{
-			switch (material.get_alpha_mode())
-			{
-			case alpha_mode::blend:
-				break;
-			case alpha_mode::mask:
-				break;
-			case alpha_mode::opaque:
-				break;
-			}
-			// do stateful switching based on blending properties of material
-		}
-
 		auto& blend = material.get_blend();
 		blend.enabled ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
 		glBlendEquation(moka_to_gl(blend.equation));
@@ -322,8 +308,7 @@ namespace moka
 			{
 			case parameter_type::texture:
 			{
-				auto data = std::get<texture>(parameter.data);
-				// FIX THIS!!! TEXTURE UNIT 0???
+				const auto data = std::get<texture>(parameter.data);
 				glUniform1i(location, GLint(current_texture_unit));
 				glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
 				glBindTexture(GL_TEXTURE_2D, GLuint(data.id));
@@ -577,13 +562,13 @@ namespace moka
 			log_.error(message);
 			break;
 		case GL_DEBUG_SEVERITY_MEDIUM:
-			log_.info(message);
+			log_.warn(message);
 			break;
 		case GL_DEBUG_SEVERITY_LOW:
-			log_.info(message);
+			log_.debug(message);
 			break;
 		default:
-			log_.info(message);
+			log_.trace(message);
 			break;
 		}
 	}

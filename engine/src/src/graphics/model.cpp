@@ -42,7 +42,7 @@ namespace moka
 		: primitives_(std::move(primitives)), transform_(transform)
 	{}
 
-	void primitive::draw(command_list& cmd) const
+	void primitive::draw(command_buffer& cmd) const
 	{
 		cmd.draw()
 			.set_vertex_buffer(vertex_buffer_)

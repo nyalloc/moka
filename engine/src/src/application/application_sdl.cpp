@@ -267,16 +267,19 @@ namespace moka
 				running_ = false;
 			});
 
-			float t = 0.0f;
-			const float fixed_update_time = 1.0f / 60.0f;
+			auto t = 0.0f;
+			const auto fixed_update_time = 1.0f / 60.0f;
 
-			float current_time = elapsed();
-			float delta_time = 0.0f;
+			auto current_time = elapsed();
+			auto delta_time = 0.0f;
+
+			poll_events();
+			update(fixed_update_time);
 
 			while (running_)
 			{
-				float new_time = elapsed();
-				float frame_time = new_time - current_time;
+				const auto new_time = elapsed();
+				const auto frame_time = new_time - current_time;
 				current_time = new_time;
 
 				delta_time += frame_time;
@@ -284,6 +287,7 @@ namespace moka
 				while (delta_time >= fixed_update_time)
 				{
 					mouse_.state_.motion_ = { 0, 0 };
+					mouse_.state_.scroll_ = { 0, 0 };
 
 					poll_events();
 					update(fixed_update_time);
@@ -292,15 +296,7 @@ namespace moka
 					t += fixed_update_time;
 				}
 
-				const auto duration = profile<milliseconds>([&]()
-				{
-					if (delta_time > 1.0f / 60.0f)
-					{
-						std::cout << "Frame rate dropped bellow 60. Delta time: " << fixed_update_time << "\n";
-					}
-
-					draw(delta_time);
-				});
+				draw(delta_time);
 
 				//std::cout << "Total draw time: " << duration << " ms" << std::endl;
 			}

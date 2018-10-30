@@ -175,8 +175,31 @@ namespace moka
 	class parameter_collection
 	{
 		std::vector<effect_parameter> parameters_;
-	    std::unordered_map<std::string, size_t> index_lookup_;   
+	    std::unordered_map<std::string, size_t> index_lookup_;
+
 	public:
+		using iterator = std::vector<effect_parameter>::iterator;
+		using const_iterator = std::vector<effect_parameter>::const_iterator;
+
+		const_iterator begin() const
+		{
+			return parameters_.begin();
+		}
+
+		const_iterator end() const 
+		{
+			return parameters_.end();
+		}
+
+		iterator begin()
+		{
+			return parameters_.begin();
+		}
+
+		iterator end()
+		{
+			return parameters_.end();
+		}
 
 		void generate_index_lookup()
 		{
@@ -299,6 +322,9 @@ namespace moka
 		bool scissor_test_ = false;
 	public:
 
+		using iterator = parameter_collection::iterator;
+		using const_iterator = parameter_collection::const_iterator;
+
 		using builder = material_builder;
 
 		material() = default;
@@ -371,6 +397,26 @@ namespace moka
 		bool get_depth_test() const
 		{
 			return depth_test_;
+		}
+
+		const_iterator begin() const
+		{
+			return parameters_.begin();
+		}
+
+		const_iterator end() const
+		{
+			return parameters_.end();
+		}
+
+		iterator begin()
+		{
+			return parameters_.begin();
+		}
+
+		iterator end()
+		{
+			return parameters_.end();
 		}
 
 		const effect_parameter& operator[](const size_t index) const

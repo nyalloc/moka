@@ -27,7 +27,7 @@ namespace moka
 			std::cout << "Null ptr to default font" << std::endl;
 		}
 
-		ImGui::StyleColorsLight();
+		ImGui::StyleColorsDark();
 
 		io.DisplaySize.x = 1280;
 		io.DisplaySize.y = 720;
@@ -105,15 +105,18 @@ namespace moka
 	{
 		auto& io = ImGui::GetIO();
 
-		io.DisplaySize.x = 1280;
-		io.DisplaySize.y = 720;
+		io.DisplaySize.x = window_.get_size().x;
+		io.DisplaySize.y = window_.get_size().y;
 
-		auto& mouse_state = mouse_.get_state();
-		auto& position = mouse_state.get_position();
-		auto& motion = mouse_state.get_motion();
+		const auto& mouse_state = mouse_.get_state();
+		const auto& position = mouse_state.get_position();
+		const auto& motion = mouse_state.get_motion();
+		const auto& scroll = mouse_state.get_scroll();
 
 		io.MousePos.x = static_cast<float>(position.x);
 		io.MousePos.y = static_cast<float>(position.y);
+
+		io.MouseWheel = scroll.y;
 
 		IM_ASSERT(io.Fonts->IsBuilt());
 
