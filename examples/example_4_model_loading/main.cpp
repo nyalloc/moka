@@ -11,6 +11,8 @@
 #include <graphics/model.hpp>
 #include <graphics/material.hpp>
 #include <imgui.hpp>
+#include <shellapi.h>
+#include "application/open_file.hpp"
 
 using namespace moka;
 
@@ -118,16 +120,32 @@ public:
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("Open"))
+				{
+					open_file();
+				}
+
+				if (ImGui::MenuItem("Exit"))
+				{
+					
+				}
+
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Edit"))
 			{
-				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-				ImGui::Separator();
-				if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-				if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-				if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+				if (ImGui::MenuItem("Options"))
+				{
+
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("View"))
+			{
+				if (ImGui::MenuItem("Options"))
+				{
+
+				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMainMenuBar();

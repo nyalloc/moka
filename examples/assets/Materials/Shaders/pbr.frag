@@ -132,12 +132,10 @@ void main()
     {
         discard;
     }
-
-    // ambient
     
     vec4 base_diffuse = get_diffuse();
     
-    vec4 ambient = vec4(light.ambient * base_diffuse.rgb, base_diffuse.a);
+    vec3 ambient = light.ambient * base_diffuse.rgb;
   	
     // diffuse 
     vec3 norm = get_normal();
@@ -145,13 +143,13 @@ void main()
     vec3 lightDir = normalize(light.position);  
     float diff = max(dot(norm, lightDir), 0.0);
     
-    vec4 diffuse = vec4(light.diffuse * diff * base_diffuse.rgb, base_diffuse.a);
+    vec3 diffuse = light.diffuse * diff * base_diffuse.rgb;
         
     // specular
     vec3 viewDir = normalize(view_pos - in_frag_pos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), 16.0f);
-    vec4 specular = vec4(light.specular * spec * get_roughness(), base_diffuse.a);  
+    vec3 specular = light.specular * spec * get_roughness();  
         
-    frag_color = ambient + diffuse + specular;
+    frag_color = vec4(ambient + diffuse + specular, base_diffuse.a);
 }

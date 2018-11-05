@@ -116,10 +116,9 @@ namespace moka
 			const auto& indices_buffer_view = model.bufferViews[indices_accessor.bufferView];
 			const auto& indices_buffer = model.buffers[indices_buffer_view.buffer].data;
 
-			index_buffer.insert(
-				index_buffer.end(),
-				indices_buffer.begin() + indices_buffer_view.byteOffset,
-				indices_buffer.begin() + indices_buffer_view.byteOffset + indices_buffer_view.byteLength);
+			std::move(indices_buffer.begin() + indices_buffer_view.byteOffset,
+				indices_buffer.begin() + indices_buffer_view.byteOffset + indices_buffer_view.byteLength, 
+				std::back_inserter(index_buffer)); 
 
 			auto indices_count = indices_accessor.count;
 
@@ -145,6 +144,7 @@ namespace moka
 			case 5126:
 				type = index_type::float32;
 				break;
+			default: ;
 			}
 
 			vertex_layout::builder layout_builder;
@@ -168,56 +168,56 @@ namespace moka
 			if (tex_coord0 != primitive.attributes.end())
 			{
 				const auto& vertices_accessor = model.accessors[tex_coord0->second];
-				auto vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+				const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
 				vertices_count = vertices_accessor.count;
 				const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
 				layout_builder.add_attribute(3, attribute_type::float32, get_size(vertices_accessor.type), vertices_accessor.normalized, 0, vertex_buffer.size());
-				vertex_buffer.insert(
-					vertex_buffer.end(),
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset,
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength);
+
+				std::move(vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+					std::back_inserter(vertex_buffer));
 			}
 
 			auto tangent = primitive.attributes.find("TANGENT");
 			if (tangent != primitive.attributes.end())
 			{
 				const auto& vertices_accessor = model.accessors[tangent->second];
-				auto vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+				const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
 				vertices_count = vertices_accessor.count;
 				const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
 				layout_builder.add_attribute(2, attribute_type::float32, get_size(vertices_accessor.type), vertices_accessor.normalized, 0, vertex_buffer.size());
-				vertex_buffer.insert(
-					vertex_buffer.end(),
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset,
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength);
+
+				std::move(vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+					std::back_inserter(vertex_buffer));
 			}
 
 			auto normal = primitive.attributes.find("NORMAL");
 			if (normal != primitive.attributes.end())
 			{
 				const auto& vertices_accessor = model.accessors[normal->second];
-				auto vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+				const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
 				vertices_count = vertices_accessor.count;
 				const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
 				layout_builder.add_attribute(1, attribute_type::float32, get_size(vertices_accessor.type), vertices_accessor.normalized, 0, vertex_buffer.size());
-				vertex_buffer.insert(
-					vertex_buffer.end(),
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset,
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength);
+
+				std::move(vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+					std::back_inserter(vertex_buffer));
 			}
 
 			auto position = primitive.attributes.find("POSITION");
 			if (position != primitive.attributes.end())
 			{
 				const auto& vertices_accessor = model.accessors[position->second];
-				auto vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+				const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
 				vertices_count = vertices_accessor.count;
 				const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
 				layout_builder.add_attribute(0, attribute_type::float32, get_size(vertices_accessor.type), vertices_accessor.normalized, 0, vertex_buffer.size());
-				vertex_buffer.insert(
-					vertex_buffer.end(),
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset,
-					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength);
+
+				std::move(vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+					vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+					std::back_inserter(vertex_buffer));
 			}
 
 			vertex_handle = device.make_vertex_buffer(vertex_buffer.data(), vertex_buffer.size(), layout_builder.build(), buffer_usage::static_draw);

@@ -9,10 +9,12 @@ set(moka_INCLUDES
 include_directories(${moka_INCLUDES})
 
 set(MOKA_SRC 
+    "src/application/open_file.cpp"
     "src/application/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp"
 	"src/application/system_info.cpp"
+    "includes/application/open_file.hpp"
     "includes/application/application.hpp"
     "includes/application/signal.hpp"
 	"includes/application/window.hpp"
@@ -71,6 +73,9 @@ target_link_libraries(moka
 	glm
     SDL2::SDL2
 	spdlog::spdlog
+    comctl32.lib
+    Propsys.lib
+    Shlwapi.lib
 )
 
 set(MOKA_TESTS
