@@ -3,7 +3,7 @@
 #include <application/window.hpp>
 #include <input/keyboard.hpp>
 #include <input/mouse.hpp>
-#include <graphics/material_builder.hpp>
+#include <graphics/material/material_builder.hpp>
 #include <SDL_mouse.h>
 
 namespace moka

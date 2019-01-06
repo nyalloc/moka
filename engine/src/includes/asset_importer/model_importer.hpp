@@ -6,7 +6,7 @@
 #include <fstream>
 #include <graphics/model.hpp>
 #include <asset_importer/asset_importer.hpp>
-#include <graphics/material.hpp>
+#include <graphics/material/material.hpp>
 #include <map>
 
 namespace moka

@@ -62,7 +62,7 @@ namespace moka
 		}
 	}
 
-	void app::poll_events()
+	void application::poll_events()
 	{
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
@@ -257,7 +257,7 @@ namespace moka
 		}
 	}
 
-    int app::run()
+    int application::run()
     {
 		try
 		{
@@ -270,7 +270,7 @@ namespace moka
 			auto t = 0.0f;
 			const auto fixed_update_time = 1.0f / 60.0f;
 
-			auto current_time = elapsed();
+			auto current_time = seconds_elapsed();
 			auto delta_time = 0.0f;
 
 			poll_events();
@@ -278,7 +278,7 @@ namespace moka
 
 			while (running_)
 			{
-				const auto new_time = elapsed();
+				const auto new_time = seconds_elapsed();
 				const auto frame_time = new_time - current_time;
 				current_time = new_time;
 
@@ -297,8 +297,6 @@ namespace moka
 				}
 
 				draw(delta_time);
-
-				//std::cout << "Total draw time: " << duration << " ms" << std::endl;
 			}
 		}
 		catch (const std::exception& e)

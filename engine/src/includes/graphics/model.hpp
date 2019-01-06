@@ -1,8 +1,8 @@
 #pragma once
 
-#include <graphics/graphics_device.hpp>
+#include <graphics/device/graphics_device.hpp>
 #include <graphics/transform.hpp>
-#include <graphics/material.hpp>
+#include <graphics/material/material.hpp>
 
 namespace moka
 {

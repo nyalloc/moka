@@ -13,7 +13,7 @@ namespace moka
 
 	class mouse_state
 	{
-		friend class app;
+		friend class application;
 
 		glm::ivec2 position_;
 		glm::ivec2 motion_;
@@ -50,7 +50,7 @@ namespace moka
 
 	class mouse
 	{
-		friend class app;
+		friend class application;
 
 		mouse_state state_;
 	public:

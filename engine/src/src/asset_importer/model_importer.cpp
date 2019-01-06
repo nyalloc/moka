@@ -1,11 +1,11 @@
 #include <asset_importer/model_importer.hpp>
 #include <asset_importer/texture_importer.hpp>
-#include <graphics/graphics_device.hpp>
-#include <graphics/material_builder.hpp>
-#include <graphics/graphics_api.hpp>
-#include <graphics/material_builder.hpp>
-#include <graphics/vertex_layout_builder.hpp>
-#include <graphics/vertex_layout.hpp>
+#include <graphics/device/graphics_device.hpp>
+#include <graphics/material/material_builder.hpp>
+#include <graphics/api/graphics_api.hpp>
+#include <graphics/material/material_builder.hpp>
+#include <graphics/buffer/vertex_layout_builder.hpp>
+#include <graphics/buffer/vertex_layout.hpp>
 #include "../deps/nlohmann/json.hpp"
 
 #define TINYGLTF_IMPLEMENTATION

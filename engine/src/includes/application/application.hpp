@@ -4,7 +4,7 @@
 #include <application/logger.hpp>
 #include <application/timer.hpp>
 #include <asset_importer/asset_importer.hpp>
-#include <graphics/graphics_device.hpp>
+#include <graphics/device/graphics_device.hpp>
 #include <input/keyboard.hpp>
 #include <input/mouse.hpp>
 #include <filesystem>
@@ -29,7 +29,7 @@ namespace moka
 		}
 	};
 
-    class app
+    class application
     {
         bool running_ = true;
 		void poll_events();
@@ -41,13 +41,13 @@ namespace moka
 		keyboard keyboard_;
         graphics_device graphics_;
     public:
-        app(const app_settings& settings);
-		app(const app& rhs) = delete;
-		app(app&& rhs) = delete;
-		app& operator=(const app& rhs) = delete;
-		app& operator=(app&& rhs) = delete;
-		virtual ~app();
-		float elapsed() const;
+        application(const app_settings& settings);
+		application(const application& rhs) = delete;
+		application(application&& rhs) = delete;
+		application& operator=(const application& rhs) = delete;
+		application& operator=(application&& rhs) = delete;
+		virtual ~application();
+		float seconds_elapsed() const;
         virtual void draw(game_time delta_time) = 0;
         virtual void update(game_time delta_time) = 0;
         int run();

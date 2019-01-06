@@ -1,14 +1,7 @@
 #version 330
 
-// Moka GLSL standard uber-shader
-
 #moka_compilation_flags
-// #define DIFFUSE_MAP
-// #define NORMAL_MAP
-// #define EMISSIVE_MAP
-// #define METALLIC_ROUGHNESS_MAP
-// #define AO_MAP
-// #define MASK_ALPHA
+#define PI 3.1415926535897932384626433832795
 
 struct pbr_material 
 {
@@ -45,7 +38,7 @@ struct pbr_material
 struct directional_light
 {
     vec3 ambient;
-    vec3 position;
+    vec3 direction;
     vec3 diffuse;
     vec3 specular;
 };
@@ -64,10 +57,10 @@ uniform vec3 view_pos;
 uniform pbr_material material;
 uniform directional_light light;
 
-vec4 get_diffuse()
+vec4 get_albedo()
 {
     #ifdef DIFFUSE_MAP
-        return texture(material.diffuse_map, in_texture_coord).rgba * material.diffuse_factor;
+        return texture(material.diffuse_map, in_texture_coord).rgba;
     #else 
         return material.diffuse_factor;
     #endif
@@ -108,12 +101,21 @@ float get_roughness()
     #endif
 }
 
-float get_metalness()
+float get_metallic()
 {
     #ifdef METALLIC_ROUGHNESS_MAP
         return texture(material.metallic_roughness_map, in_texture_coord).b * material.metalness_factor;
     #else 
         return material.metalness_factor;
+    #endif
+}
+
+float get_ao()
+{
+    #ifdef AO_MAP
+        return texture(material.ao_map, in_texture_coord).r;
+    #else 
+        return 1.0f;
     #endif
 }
 
@@ -126,30 +128,103 @@ bool discard_fragment()
     #endif  
 }
 
+float distribution_ggx(vec3 N, vec3 H, float roughness)
+{
+    float a = roughness * roughness;
+    float a2 = a * a;
+    float n_dot_h = max(dot(N, H), 0.0);
+    float n_dot_h2 = n_dot_h * n_dot_h;
+
+    float nom   = a2;
+    float denom = (n_dot_h2 * (a2 - 1.0) + 1.0);
+    denom = PI * denom * denom;
+
+    return nom / denom;
+}
+
+float geometry_schlick_ggx(float n_dot_v, float roughness)
+{
+    float r = (roughness + 1.0);
+    float k = (r * r) / 8.0;
+
+    float nom   = n_dot_v;
+    float denom = n_dot_v * (1.0 - k) + k;
+
+    return nom / denom;
+}
+
+float geometry_smith(vec3 N, vec3 V, vec3 L, float roughness)
+{
+    float n_dot_v = max(dot(N, V), 0.0);
+    float n_dot_l = max(dot(N, L), 0.0);
+    float ggx2 = geometry_schlick_ggx(n_dot_v, roughness);
+    float ggx1 = geometry_schlick_ggx(n_dot_l, roughness);
+
+    return ggx1 * ggx2;
+}
+
+vec3 fresnel_schlick(float cos_theta, vec3 f0)
+{
+    return f0 + (1.0 - f0) * pow(1.0 - cos_theta, 5.0);
+}
+
+vec3 fresnel_schlick_roughness(float cos_theta, vec3 f0, float roughness)
+{
+    return f0 + (max(vec3(1.0 - roughness), f0) - f0) * pow(1.0 - cos_theta, 5.0);
+}   
+
+vec3 calc_directional_light(vec3 f0, vec3 n, vec3 v, vec3 r, vec3 albedo, float metallic, float roughness)
+{
+	vec3 l = normalize(light.direction);
+	vec3 h = normalize(v + l);
+	vec3 radiance = light.diffuse;
+	
+	float ndf = distribution_ggx(n, h, roughness);
+	float g = geometry_smith(n, v, l, roughness);
+	vec3 f = fresnel_schlick(max(dot(h, v), 0.0f), f0);
+	
+	vec3 nominator = ndf * g * f;
+	float denominator = 4 * max(dot(n, v), 0.0f) * max(dot(n, l), 0.0f) + 0.001;
+	vec3 specular = nominator / denominator;
+	
+	vec3 ks = f;
+	vec3 kd = vec3(1.0f) - ks;
+	
+	kd *= 1.0f - metallic;
+	
+	float n_dot_l = max(dot(n, l), 0.0f);
+	
+	return (kd * albedo / PI + specular) * radiance * n_dot_l;
+}
+
 void main()
 {
     if(discard_fragment())
     {
         discard;
-    }
-    
-    vec4 base_diffuse = get_diffuse();
-    
-    vec3 ambient = light.ambient * base_diffuse.rgb;
-  	
-    // diffuse 
-    vec3 norm = get_normal();
-
-    vec3 lightDir = normalize(light.position);  
-    float diff = max(dot(norm, lightDir), 0.0);
-    
-    vec3 diffuse = light.diffuse * diff * base_diffuse.rgb;
+    }  
         
-    // specular
-    vec3 viewDir = normalize(view_pos - in_frag_pos);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(norm, halfwayDir), 0.0), 16.0f);
-    vec3 specular = light.specular * spec * get_roughness();  
-        
-    frag_color = vec4(ambient + diffuse + specular, base_diffuse.a);
+	vec3 albedo = get_albedo().rgb;
+	float metallic = get_metallic();
+	float roughness = get_roughness();
+	float ao = get_ao();
+	
+	vec3 n = get_normal();
+	vec3 v = normalize(view_pos - in_frag_pos);
+	vec3 r = reflect(-v, n);
+	
+	vec3 f0 = vec3(0.04f);
+	f0 = mix(f0, albedo, metallic);
+	
+	vec3 lo = calc_directional_light(f0, n, v, r, albedo, metallic, roughness);
+	
+	vec3 ambient = vec3(0.03f) * albedo * ao;
+	
+	vec3 color = ambient + lo;
+	
+	color = color / (color + vec3(1.0f));
+	
+	color = pow(color, vec3(1.0f/2.2f));
+	
+    frag_color = vec4(color, 1.0f);
 }

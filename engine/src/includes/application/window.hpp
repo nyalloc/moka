@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 #include <application/game_loop.hpp>
-#include "graphics/graphics_api.hpp"
+#include "graphics/api/graphics_api.hpp"
 #include <glm/glm.hpp>
 
 namespace moka
