@@ -1,38 +1,56 @@
 #pragma once
 
-#include <window/window.hpp>
-#include <safe_queue.hpp>
-#include <atomic>
-#include <logger/logger.hpp>
-#include <graphics_api.hpp>
-#include <entry.hpp>
-#include <asset_importer/filesystem.hpp>
+#include <application/window.hpp>
+#include <application/logger.hpp>
+#include <application/timer.hpp>
+#include <asset_importer/asset_importer.hpp>
+#include <graphics/device/graphics_device.hpp>
+#include <input/keyboard.hpp>
+#include <input/mouse.hpp>
+#include <filesystem>
 
 namespace moka
 {
+	using game_time = float;
+
+	class app_settings
+	{
+		window_settings window_settings_;
+	public:
+
+		const window_settings& get_window_settings() const
+		{
+			return window_settings_;
+		}
+
+		app_settings(int argc, char* argv[])
+		{
+
+		}
+	};
+
     class application
     {
-        event_dispatcher dispatcher_;
-        logger log_;
         bool running_ = true;
+		void poll_events();
     protected:
+		logger log_;
+		timer timer_;
         window window_;
-        graphics_api graphics_;
+		mouse mouse_;
+		keyboard keyboard_;
+        graphics_device graphics_;
     public:
-        template<typename T, typename event_type, typename = std::enable_if<std::is_base_of_v<event, event_type>>>
-        void post_event(event_type&& event, event_subscriber& recipient);
-        application(int argc, char* argv[]);
-        virtual ~application();
-        virtual void draw(const game_time delta_time);
-        virtual void update(const game_time delta_time);
+        application(const app_settings& settings);
+		application(const application& rhs) = delete;
+		application(application&& rhs) = delete;
+		application& operator=(const application& rhs) = delete;
+		application& operator=(application&& rhs) = delete;
+		virtual ~application();
+		float seconds_elapsed() const;
+        virtual void draw(game_time delta_time) = 0;
+        virtual void update(game_time delta_time) = 0;
         int run();
-        static filesystem::path data_path();
+        virtual std::filesystem::path data_path() = 0;
     };
-
-    template <typename T, typename event_type, typename>
-    void application::post_event(event_type&& event, event_subscriber& recipient)
-    {
-        dispatcher_.post_event(std::move(event), recipient);
-    }
-
 }

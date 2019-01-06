@@ -1,0 +1,4 @@
+{
+  "model": "Models/BoomBox/BoomBox.gltf",
+  "material": "Materials/pbr.material"
+}

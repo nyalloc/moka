@@ -1,17 +1,12 @@
 #pragma once
 
+#include <filesystem>
+#include <map>
+
 namespace moka
 {
-    class base_importer
-    {
-    public:
-        virtual ~base_importer() = default;
-    };
-
-    template<typename T>
-    class asset_importer : public base_importer
-    {
-        // basic asset_importer definition.
-        // provide specialisations for each resource type
-    };
+	template<typename T>
+	class asset_importer
+	{
+	};
 }

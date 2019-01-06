@@ -1,0 +1,8 @@
+{
+  "vertex": {
+    "file": "Materials/Shaders/pbr.vert"
+  },
+  "fragment": {
+    "file": "Materials/Shaders/pbr.frag"
+  }
+}

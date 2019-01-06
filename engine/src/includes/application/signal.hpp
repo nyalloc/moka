@@ -41,7 +41,7 @@ namespace moka
     signal_id signal<Args...>::connect(std::function<void(Args...)>&& slot) const
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        slots_.emplace(++id_, std::move(slot));
+        auto val = slots_.emplace(++id_, std::move(slot));
         return id_;
     }
 
