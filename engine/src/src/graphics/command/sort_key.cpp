@@ -1,102 +1,47 @@
-#include <graphics/model.hpp>
-#include <graphics/device/graphics_device.hpp>
+#include <graphics/command/sort_key.hpp>
 
 namespace moka
 {
-	transform& mesh::get_transform()
-	{
-		return transform_;
-	}
+    sort_key::sort_key() = default;
 
-	mesh::iterator mesh::begin()
-	{
-		return primitives_.begin();
-	}
+    sort_key::sort_key(const moka::program program, const alpha_mode alpha_mode, const float depth)
+        : key_(
+              static_cast<uint64_t>(depth * std::numeric_limits<uint16_t>::max()) |
+              static_cast<uint64_t>(alpha_mode) << 16 |
+              static_cast<uint64_t>(program.id) << 24 |
+              static_cast<uint64_t>(program.id) << 40 |
+              static_cast<uint64_t>(program.id) << 48 |
+              static_cast<uint64_t>(program.id) << 56)
+    {
+    }
 
-	mesh::const_iterator mesh::begin() const
-	{
-		return primitives_.begin();
-	}
+    program sort_key::program() const
+    {
+        return {static_cast<uint16_t>(key_)};
+    }
 
-	mesh::iterator mesh::end()
-	{
-		return primitives_.end();
-	}
+    bool sort_key::operator>(const sort_key& rhs) const
+    {
+        return key_ > rhs.key_;
+    }
 
-	mesh::const_iterator mesh::end() const
-	{
-		return primitives_.end();
-	}
+    bool sort_key::operator<(const sort_key& rhs) const
+    {
+        return key_ < rhs.key_;
+    }
 
-	material& primitive::get_material()
-	{
-		return material_;
-	}
+    bool sort_key::operator<=(const sort_key& rhs) const
+    {
+        return key_ <= rhs.key_;
+    }
 
-	const material& primitive::get_material() const
-	{
-		return material_;
-	}
+    bool sort_key::operator>=(const sort_key& rhs) const
+    {
+        return key_ >= rhs.key_;
+    }
 
-	mesh::mesh(std::vector<primitive>&& primitives, transform && transform)
-		: primitives_(std::move(primitives)), transform_(transform)
-	{}
-
-	void primitive::draw(command_buffer& cmd) const
-	{
-		cmd.draw()
-			.set_vertex_buffer(vertex_buffer_)
-			.set_vertex_count(vertex_count_)
-			.set_index_buffer(index_buffer_)
-			.set_index_type(index_type_)
-			.set_primitive_type(type_)
-			.set_index_count(index_count_)
-			.set_index_buffer_offset(index_buffer_offset_)
-			.set_material(material_);
-	}
-
-	primitive::primitive(vertex_buffer vertex_buffer
-		, uint32_t vertex_count
-		, index_buffer index_buffer
-		, index_type index_type
-		, uint32_t index_count
-		, uint32_t index_buffer_offset
-		, material&& material)
-		: vertex_buffer_(vertex_buffer)
-		, vertex_count_(vertex_count)
-		, index_buffer_(index_buffer)
-		, index_type_(index_type)
-		, index_count_(index_count)
-		, index_buffer_offset_(index_buffer_offset)
-		, material_(std::move(material))
-	{}
-
-	model::iterator model::begin()
-	{
-		return meshes_.begin();
-	}
-
-	model::const_iterator model::begin() const
-	{
-		return meshes_.begin();
-	}
-
-	model::iterator model::end()
-	{
-		return meshes_.end();
-	}
-
-	model::const_iterator model::end() const
-	{
-		return meshes_.end();
-	}
-
-	model::model(std::vector<mesh>&& meshes, transform&& transform)
-		: meshes_(std::move(meshes)), transform_(transform)
-	{}
-
-	std::vector<mesh>& model::get_meshes()
-	{
-		return meshes_;
-	}
-}
+    bool sort_key::operator==(const sort_key& rhs) const
+    {
+        return key_ == rhs.key_;
+    }
+} // namespace moka

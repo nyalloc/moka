@@ -26,19 +26,19 @@ namespace moka
 
     using window_flags = size_t;
 
-    struct context_handle
+    struct context_handle final
     {
 		uint16_t id;
     };
 
-	struct window_settings
+	struct window_settings final
 	{
 		std::string name = "moka";
 		glm::ivec2 resolution = { 1280, 720 };
 		glm::ivec2 position = { 200, 200 };
 	};
 
-    class window
+    class window final
     {
     public:
         signal<> exit;
@@ -48,12 +48,12 @@ namespace moka
 		window& operator = (const window& window) = delete;
 		window& operator = (window&& window) = delete;
 
-        window(const window_settings& settings);
+        explicit window(const window_settings& settings);
         ~window();
         void swap_buffer() const;
         void set_size(int width, int height);
 		context_handle make_context() const;
-		void set_current_context(const context_handle handle);
+		void set_current_context(context_handle handle);
 		float aspect() const;
 		glm::ivec2 get_size() const;
 		glm::ivec2 get_drawable_size() const;

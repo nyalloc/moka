@@ -5,54 +5,26 @@
 
 namespace moka
 {
-	class sort_key
-	{
-		uint64_t key_ = 0;
+    class sort_key final
+    {
+        uint64_t key_ = 0;
 
-	public:
-		sort_key() = default;
+    public:
+        sort_key();
 
-		explicit sort_key(const program program, const alpha_mode alpha_mode, const float depth)
-			: key_
-			(
-				static_cast<uint64_t>(depth * std::numeric_limits<uint16_t>::max()) |
-				static_cast<uint64_t>(alpha_mode) << 16 |
-				static_cast<uint64_t>(program.id) << 24 |
-				static_cast<uint64_t>(program.id) << 40 |
-				static_cast<uint64_t>(program.id) << 48 |
-				static_cast<uint64_t>(program.id) << 56
-			)
-		{}
+        explicit sort_key(program program, alpha_mode alpha_mode, float depth);
 
-		program program() const
-		{
-			return { static_cast<uint16_t>(key_) };
-		}
+        program program() const;
 
-		bool operator > (const sort_key& rhs) const
-		{
-			return key_ > rhs.key_;
-		}
+        bool operator>(const sort_key& rhs) const;
 
-		bool operator < (const sort_key& rhs) const
-		{
-			return key_ < rhs.key_;
-		}
+        bool operator<(const sort_key& rhs) const;
 
-		bool operator <= (const sort_key& rhs) const
-		{
-			return key_ <= rhs.key_;
-		}
+        bool operator<=(const sort_key& rhs) const;
 
-		bool operator >= (const sort_key& rhs) const
-		{
-			return key_ >= rhs.key_;
-		}
+        bool operator>=(const sort_key& rhs) const;
 
-		bool operator == (const sort_key& rhs) const
-		{
-			return key_ == rhs.key_;
-		}
-	};
+        bool operator==(const sort_key& rhs) const;
+    };
 
-}
+} // namespace moka

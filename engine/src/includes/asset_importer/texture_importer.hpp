@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <glm/vec2.hpp>
 
 namespace moka
 {

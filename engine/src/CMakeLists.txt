@@ -11,6 +11,7 @@ set(moka_INCLUDES
 include_directories(${moka_INCLUDES})
 
 set(APPLICATION_SRC
+    "includes/application/app_settings.hpp"  
     "includes/application/window.hpp"  
     "includes/application/application.hpp"
     "includes/application/open_file.hpp"
@@ -18,6 +19,7 @@ set(APPLICATION_SRC
     "includes/application/logger.hpp"
     "includes/application/system_info.hpp"
     "includes/application/timer.hpp"
+    "src/application/app_settings.cpp"  
     "src/application/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp" 
@@ -54,10 +56,18 @@ set(GRAPHICS_BUFFER_SRC
 )
 
 set(GRAPHICS_CAMERA_SRC
+    "includes/graphics/camera/base_camera.hpp"
+    "includes/graphics/camera/basic_camera.hpp"
     "includes/graphics/camera/camera.hpp"
-    "includes/graphics/camera/camera_first_person.hpp"
+    "includes/graphics/camera/camera_builder.hpp"
+    "includes/graphics/camera/camera_decorator.hpp"
+    "includes/graphics/camera/camera_mouse_controller.hpp"
+    "src/graphics/camera/base_camera.cpp"
+    "src/graphics/camera/basic_camera.cpp"
     "src/graphics/camera/camera.cpp"
-    "src/graphics/camera/camera_first_person.cpp"
+    "src/graphics/camera/camera_builder.cpp"
+    "src/graphics/camera/camera_decorator.cpp"
+    "src/graphics/camera/camera_mouse_controller.cpp"
 )
 
 set(GRAPHICS_COMMAND_SRC

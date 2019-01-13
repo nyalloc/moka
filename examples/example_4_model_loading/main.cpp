@@ -8,15 +8,14 @@
 #include <graphics/model.hpp>
 #include <graphics/material/material.hpp>
 #include <imgui.hpp>
-#include <shellapi.h>
 #include <application/open_file.hpp>
 
 using namespace moka;
 
 struct directional_light
 {
-	glm::vec3 ambient = color::dim_grey();
-	glm::vec3 direction = color::light_slate_grey();
+	glm::vec3 ambient = color::light_slate_grey();
+	glm::vec3 direction = { 0, 0, -1 };
 	glm::vec3 diffuse = color::dim_grey();
 	glm::vec3 specular = color::white();
 };
@@ -38,12 +37,13 @@ class model_loading_application : public application
 	directional_light light;
 public:
 
-	model_loading_application(const app_settings& settings)
+	explicit model_loading_application(const app_settings& settings)
 		: application(settings)
 		, camera_(camera::builder()
 			.set_mouse_controller(mouse_)
-			.set_perspective(glm::radians(70.0f), window_.aspect()))
-		, model_importer_(data_path(), graphics_)
+			.set_perspective(glm::radians(70.0f), window_.aspect())
+			.build())
+		, model_importer_(model_loading_application::data_path(), graphics_)
 		, model_(model_importer_.load("flight_helmet.moka"))
 		, imgui_(window_, keyboard_, mouse_, graphics_)
 	{}
@@ -104,7 +104,7 @@ public:
 		graphics_.submit_and_swap(imgui_.draw());
 	}
 
-	uint32_t depth_to_bits(const float depth) const
+	static uint32_t depth_to_bits(const float depth)
 	{
 		// stolen from http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
 		union { float f = 0.0f; uint32_t i; } data{};
@@ -112,7 +112,7 @@ public:
 		return data.i >> 22; // take highest 10 bits
 	}
 
-	sort_key generate_sort_key(const float depth, const uint16_t material_id, const alpha_mode alpha) const
+	static sort_key generate_sort_key(const float depth, const uint16_t material_id, const alpha_mode alpha)
 	{
 		// http://realtimecollisiondetection.net/blog/?p=86
 		// sort by alpha, then by depth, then by material
@@ -155,7 +155,7 @@ public:
 				material["light.diffuse"]   = light.diffuse;
 				material["light.specular"]  = light.specular;
 
-				auto sort_key = generate_sort_key(distance, material.get_program().id, material.get_alpha_mode());
+				const auto sort_key = generate_sort_key(distance, material.get_program().id, material.get_alpha_mode());
 
 				auto& buffer = scene_draw.make_command_buffer(sort_key);
 
