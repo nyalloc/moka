@@ -102,11 +102,15 @@ set(GRAPHICS_DEVICE_SRC
 
 set(GRAPHICS_MATERIAL_SRC
     "includes/graphics/material/material.hpp"
+    "includes/graphics/material/material_parameter.hpp"
     "includes/graphics/material/material_builder.hpp"
     "includes/graphics/material/material_properties.hpp"
+	"includes/graphics/material/parameter_collection.hpp"
     "src/graphics/material/material.cpp"
+    "src/graphics/material/material_parameter.cpp"
     "src/graphics/material/material_builder.cpp"
     "src/graphics/material/material_properties.cpp"
+	"src/graphics/material/parameter_collection.cpp"
 )
 
 set(GRAPHICS_SRC
