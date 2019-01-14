@@ -25,7 +25,13 @@ add_executable(example_4_model_loading
     ../../engine/src/deps/imgui/imgui_widgets.cpp
     ../../engine/src/deps/imgui/imgui_draw.cpp)
 
-add_compile_options("/std:c++latest")
+set_target_properties(example_4_model_loading PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+target_compile_features(example_4_model_loading PRIVATE cxx_std_17)
 
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)

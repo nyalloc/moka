@@ -1,5 +1,6 @@
 #pragma once
 
+#include <application/app_settings.hpp>
 #include <application/window.hpp>
 #include <application/logger.hpp>
 #include <application/timer.hpp>
@@ -13,21 +14,7 @@ namespace moka
 {
 	using game_time = float;
 
-	class app_settings
-	{
-		window_settings window_settings_;
-	public:
 
-		const window_settings& get_window_settings() const
-		{
-			return window_settings_;
-		}
-
-		app_settings(int argc, char* argv[])
-		{
-
-		}
-	};
 
     class application
     {

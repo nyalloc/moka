@@ -1,7 +1,7 @@
 #pragma once
 
-#include "buffer_usage.hpp"
 #include <cstdint>
+#include <limits>
 
 namespace moka
 {
@@ -18,38 +18,20 @@ namespace moka
 		float32
 	};
 
-	struct index_buffer
+	struct index_buffer final
 	{
 		uint16_t id = std::numeric_limits<uint16_t>::max();
 
-		bool operator == (const index_buffer& rhs)
-		{
-			return id == rhs.id;
-		}
+		bool operator ==(const index_buffer& rhs) const;
 
-		bool operator != (const index_buffer& rhs)
-		{
-			return id != rhs.id;
-		}
+		bool operator !=(const index_buffer& rhs) const;
 
-		bool operator > (const index_buffer& rhs)
-		{
-			return id > rhs.id;
-		}
+		bool operator >(const index_buffer& rhs) const;
 
-		bool operator < (const index_buffer& rhs)
-		{
-			return id < rhs.id;
-		}
+		bool operator <(const index_buffer& rhs) const;
 
-		bool operator >= (const index_buffer& rhs)
-		{
-			return id >= rhs.id;
-		}
+		bool operator >=(const index_buffer& rhs) const;
 
-		bool operator <= (const index_buffer& rhs)
-		{
-			return id <= rhs.id;
-		}
+		bool operator <=(const index_buffer& rhs) const;
 	};
 }

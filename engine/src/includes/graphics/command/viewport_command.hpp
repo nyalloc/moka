@@ -1,5 +1,6 @@
 #pragma once
 
+#include <graphics/api/graphics_api.hpp>
 #include <graphics/command/graphics_command.hpp>
 #include <graphics/device/graphics_visitor.hpp>
 
@@ -15,29 +16,12 @@ namespace moka
 
         const char* name = "viewport_command";
 
-        virtual ~viewport_command() = default;
-        
-        void accept(graphics_visitor& visitor) override
-        {
-            visitor.visit(*this);
-        }
+        virtual ~viewport_command();
 
-        viewport_command& set_rectangle(int x, int y, int width, int height)
-        {
-            this->width = width;
-            this->height = height;
-            this->x = x;
-            this->y = y;
-            return *this;
-        }
+        void accept(graphics_visitor& visitor) override;
 
-        viewport_command& set_rectangle(const rectangle& rectangle)
-        {
-            this->width = rectangle.width;
-            this->height = rectangle.height;
-            this->x = rectangle.x;
-            this->y = rectangle.y;
-            return *this;
-        }
+        viewport_command& set_rectangle(int x, int y, int width, int height);
+
+        viewport_command& set_rectangle(const rectangle& rectangle);
     };
-}
+} // namespace moka

@@ -10,6 +10,8 @@ HunterGate(
 
 project(moka)
 
+add_compile_options("/std:c++latest")
+
 enable_testing()
 
 add_subdirectory(engine)

@@ -13,30 +13,30 @@
 
 namespace moka
 {
-	struct texture_data
+	struct texture_data final
 	{
 		texture_wrap_mode wrap_mode;
 		bool has_mipmaps;
 		glm::ivec2 resolution;
 	};
 
-	struct program_data
+	struct program_data final
 	{
 	};
 
-	struct shader_data
+	struct shader_data final
 	{
 		shader_type type;
 	};
 
-	struct vertex_buffer_data
+	struct vertex_buffer_data final
 	{
 		buffer_usage buffer_use = buffer_usage::static_draw;
 		size_t size{};
 		vertex_layout layout;
 	};
 
-	struct index_buffer_data
+	struct index_buffer_data final
 	{
 		buffer_usage buffer_use = buffer_usage::static_draw;
 		size_t size{};
@@ -47,7 +47,7 @@ namespace moka
      * \brief Convert the interface of OpenGL into the moka rendring API.
      * Allows moka rendering functionality to work at a higher level without being coupled to an OpenGL backend.
      */
-    class gl_graphics_api : public graphics_api
+    class gl_graphics_api final : public graphics_api
     {
 		window& window_;
 

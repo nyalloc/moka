@@ -20,7 +20,7 @@ namespace moka
 		boolean,
 	};
 
-	inline constexpr size_t size(const attribute_type attr_type)
+	constexpr size_t size(const attribute_type attr_type)
 	{
 		switch (attr_type)
 		{
@@ -49,7 +49,7 @@ namespace moka
 		}
 	}
 
-	struct vertex_attribute
+	struct vertex_attribute final
 	{
 		size_t index;
 		attribute_type type;
@@ -64,13 +64,16 @@ namespace moka
 			, size_t size
 			, bool normalized
 			, size_t stride
-			, size_t offset) noexcept
-			: index(index)
-			, type(type)
-			, size(size)
-			, normalized(normalized)
-			, stride(stride)
-			, offset(offset)
-		{}
+			, size_t offset) noexcept;
 	};
+
+	constexpr vertex_attribute::vertex_attribute(size_t index, attribute_type type, size_t size, bool normalized,
+		size_t stride, size_t offset) noexcept : index(index)
+		, type(type)
+		, size(size)
+		, normalized(normalized)
+		, stride(stride)
+		, offset(offset)
+	{
+	}
 }

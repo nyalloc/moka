@@ -1,19 +1,19 @@
 #pragma once
 
-#include <ostream>
 #include <graphics/colour.hpp>
 #include <asset_importer/texture_importer.hpp>
-#include <vector>
-#include <utility>
+#include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/buffer/vertex_buffer.hpp>
 #include <graphics/buffer/index_buffer.hpp>
 #include <graphics/shader.hpp>
 #include <graphics/program.hpp>
 #include <graphics/texture.hpp>
 #include <graphics/device/graphics_visitor.hpp>
+#include <graphics/buffer/buffer_usage.hpp>
 
 namespace moka
 {
+	struct vertex_layout;
 	class command_list;
 
 	enum class alpha_mode : uint8_t
@@ -86,16 +86,16 @@ namespace moka
     {
         zero,                      
         one,                       
-        src_colour,                
-        one_minus_src_colour,      
-        dst_colour,                
-        one_minus_dst_colour,      
+        src_color,                
+        one_minus_src_color,      
+        dst_color,                
+        one_minus_dst_color,      
         src_alpha,                 
         one_minus_src_alpha,       
         dst_alpha,                 
         one_minus_dst_alpha,       
-        constant_colour,           
-        one_minus_constant_colour,  
+        constant_color,           
+        one_minus_constant_color,  
         constant_alpha,            
         one_minus_constant_alpha   
     };
@@ -108,28 +108,6 @@ namespace moka
 		min,
 		max
 	};
-
-    enum class shader_attribute : uint8_t
-    {
-        position,   
-        normal,     
-        tangent,    
-        bitangent,  
-        color0,     
-        color1,     
-        color2,     
-        color3,     
-        indices,    
-        weight,     
-        tex_coord0, 
-        tex_coord1, 
-        tex_coord2, 
-        tex_coord3, 
-        tex_coord4, 
-        tex_coord5, 
-        tex_coord6, 
-        tex_coord7, 
-    };
 
     enum class parameter_type : uint8_t
     {
@@ -179,12 +157,12 @@ namespace moka
 		graphics_api& operator=(const graphics_api& rhs) = default;
 		graphics_api& operator=(graphics_api&& rhs) = default;
 
-		virtual void visit(clear_command& cmd) = 0;
-		virtual void visit(draw_command& cmd) = 0;
-		virtual void visit(viewport_command& cmd) = 0;
-		virtual void visit(scissor_command& cmd) = 0;
-		virtual void visit(fill_vertex_buffer_command& cmd) = 0;
-		virtual void visit(fill_index_buffer_command& cmd) = 0;
+		void visit(clear_command& cmd) override = 0;
+		void visit(draw_command& cmd) override = 0;
+		void visit(viewport_command& cmd) override = 0;
+		void visit(scissor_command& cmd) override = 0;
+		void visit(fill_vertex_buffer_command& cmd) override = 0;
+        void visit(fill_index_buffer_command& cmd) override = 0;
 
 		virtual void submit(command_list&& commands) = 0;
 		virtual void submit_and_swap(command_list&& commands) = 0;

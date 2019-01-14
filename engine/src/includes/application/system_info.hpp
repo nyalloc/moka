@@ -28,9 +28,9 @@ namespace moka
         system_info();
         ~system_info();
 
-		system_info(const system_info& rhs) = default;
+		system_info(const system_info& rhs) = delete;
 		system_info(system_info&& rhs) = default;
-		system_info& operator=(const system_info& rhs) = default;
+		system_info& operator=(const system_info& rhs) = delete;
 		system_info& operator=(system_info&& rhs) = default;
 
         size_t number_of_processors() const;

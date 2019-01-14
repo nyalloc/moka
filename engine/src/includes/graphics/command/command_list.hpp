@@ -1,182 +1,88 @@
 #pragma once
 
-
-#include <string>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <functional>
-#include <algorithm>
-#include <atomic>
-#include <graphics/command/graphics_command.hpp>
+#include <graphics/command/clear_command.hpp>
 #include <graphics/command/command_buffer.hpp>
-#include <application/profile.hpp>
+#include <graphics/command/command_list.hpp>
+#include <graphics/command/draw_command.hpp>
+#include <graphics/command/fill_index_buffer_command.hpp>
+#include <graphics/command/fill_vertex_buffer_command.hpp>
+#include <graphics/command/scissor_command.hpp>
+#include <graphics/command/viewport_command.hpp>
+#include <vector>
 
 namespace moka
 {
-	class command_list
-	{
-		bool is_sorted_ = false;
-		sort_key current_key = 0;
-		std::vector<command_buffer> command_packets;
-		using iterator = std::vector<command_buffer>::iterator;
-		using const_iterator = std::vector<command_buffer>::const_iterator;
+    class command_list
+    {
+        bool is_sorted_ = false;
+        sort_key current_key_ = 0;
+        std::vector<command_buffer> command_packets_;
 
-		struct key_comparator
-		{
-			bool operator()(const command_buffer& left, const command_buffer& right) const
-			{
-				return left.get_key() < right.get_key();
-			}
-		};
+        using iterator = std::vector<command_buffer>::iterator;
+        using const_iterator = std::vector<command_buffer>::const_iterator;
 
-	public:
-		command_list() = default;
-		~command_list() = default;
-		command_list(const command_list& command_list) = delete;
+        struct key_comparator final
+        {
+            bool operator()(const command_buffer& left, const command_buffer& right) const;
+        };
 
-		command_list(command_list&& command_list)
-			: command_packets(std::move(command_list.command_packets))
-		{}
+    public:
+        command_list();
 
-		command_list& operator = (command_list&& command_list)
-		{
-			command_packets = std::move(command_list.command_packets);
-			return *this;
-		}
+        ~command_list();
 
-		command_list& operator = (const command_list& command_list) = delete;
+        command_list(const command_list& command_list) = delete;
 
-		void destroy()
-		{
-			command_packets.clear();
-			//command_packets.shrink_to_fit();
-		}
+        command_list(command_list&& command_list) noexcept;
 
-		void accept(graphics_visitor& device)
-		{
-			const auto duration = profile<milliseconds>([&]()
-			{
-				for (auto& command_packet : command_packets)
-				{
-					command_packet.accept(device);
-				}
-			});
+        command_list& operator=(command_list&& command_list) noexcept;
 
-			int foo = 0;
-		}
+        command_list& operator=(const command_list& command_list) = delete;
 
-		void sort()
-		{
-			std::sort(command_packets.begin(), command_packets.end(), key_comparator{});
-			is_sorted_ = true;
-		}
+        void destroy();
 
-		bool is_sorted()
-		{
-			return is_sorted_;
-		}
+        void accept(graphics_visitor& device);
 
-		bool is_empty()
-		{
-			return command_packets.empty();
-		}
+        void sort();
 
-		iterator begin()
-		{
-			return command_packets.begin();
-		}
+        bool is_sorted() const;
 
-		const_iterator begin() const
-		{
-			return command_packets.begin();
-		}
+        bool is_empty() const;
 
-		iterator end()
-		{
-			return command_packets.end();
-		}
+        iterator begin();
 
-		const_iterator end() const
-		{
-			return command_packets.end();
-		}
+        const_iterator begin() const;
 
-		command_buffer& make_command_buffer(sort_key key)
-		{
-			static int num_calls = 0;
-			num_calls++;
-			is_sorted_ = false;
+        iterator end();
 
-			current_key = key;
-			command_packets.emplace_back(key);
+        const_iterator end() const;
 
-			return command_packets.back();
-		}
+        command_buffer& make_command_buffer(sort_key key);
 
-		command_buffer& make_command_buffer()
-		{
-			return make_command_buffer(current_key + 1);
-		}
+        command_buffer& make_command_buffer();
 
-		clear_command& clear()
-		{
-			return make_command_buffer().clear();
-		}
+        clear_command& clear();
 
-		clear_command& clear(sort_key key)
-		{
-			return make_command_buffer(key).clear();
-		}
+        clear_command& clear(sort_key key);
 
-		draw_command& draw()
-		{
-			return make_command_buffer().draw();
-		}
+        draw_command& draw();
 
-		draw_command& draw(sort_key key)
-		{
-			return make_command_buffer(key).draw();
-		}
+        draw_command& draw(sort_key key);
 
-		scissor_command& scissor()
-		{
-			return make_command_buffer().scissor();
-		}
+        scissor_command& scissor();
 
-		scissor_command& scissor(sort_key key)
-		{
-			return make_command_buffer(key).scissor();
-		}
+        scissor_command& scissor(sort_key key);
 
-		viewport_command& viewport()
-		{
-			return make_command_buffer().viewport();
-		}
+        viewport_command& viewport();
 
-		viewport_command& viewport(sort_key key)
-		{
-			return make_command_buffer(key).viewport();
-		}
+        viewport_command& viewport(sort_key key);
 
-		fill_index_buffer_command& fill_index_buffer()
-		{
-			return make_command_buffer().fill_index_buffer();
-		}
+        fill_index_buffer_command& fill_index_buffer();
 
-		fill_index_buffer_command& fill_index_buffer(sort_key key)
-		{
-			return make_command_buffer(key).fill_index_buffer();
-		}
+        fill_index_buffer_command& fill_index_buffer(sort_key key);
 
-		fill_vertex_buffer_command& fill_vertex_buffer()
-		{
-			return make_command_buffer().fill_vertex_buffer();
-		}
+        fill_vertex_buffer_command& fill_vertex_buffer();
 
-		fill_vertex_buffer_command& fill_vertex_buffer(sort_key key)
-		{
-			return make_command_buffer(key).fill_vertex_buffer();
-		}
-	};
-}
+        fill_vertex_buffer_command& fill_vertex_buffer(sort_key key);
+    };
+} // namespace moka
