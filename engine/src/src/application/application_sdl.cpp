@@ -191,13 +191,13 @@ namespace moka
             case SDL_KEYDOWN:
             {
                 log_.debug("SDL_KEYDOWN");
-                keyboard_.state.set_key_down(sdl_to_moka(event.key.keysym.sym));
+                keyboard_.state_.set_key_down(sdl_to_moka(event.key.keysym.sym));
                 break;
             }
             case SDL_KEYUP:
             {
                 log_.debug("SDL_KEYUP");
-                keyboard_.state.set_key_up(sdl_to_moka(event.key.keysym.sym));
+                keyboard_.state_.set_key_up(sdl_to_moka(event.key.keysym.sym));
                 break;
             }
             case SDL_WINDOWEVENT:

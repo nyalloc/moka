@@ -1,14 +1,14 @@
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(moka_INCLUDES
+set(MOKA_INCLUDES
     "./includes/"
     "./deps/nlohmann/"
     "./deps/tiny_gltf/"
     "./deps/"
 )
 
-include_directories(${moka_INCLUDES})
+include_directories(${MOKA_INCLUDES})
 
 set(APPLICATION_SRC
     "includes/application/app_settings.hpp"  
@@ -122,6 +122,7 @@ set(GRAPHICS_SRC
     ${GRAPHICS_MATERIAL_SRC}
 
     "includes/graphics/colour.hpp"
+    "includes/graphics/color.hpp"
     "includes/graphics/model.hpp"
     "includes/graphics/program.hpp"
     "includes/graphics/shader.hpp"
@@ -164,7 +165,13 @@ set(MOKA_SRC
 
 add_library(moka STATIC ${MOKA_SRC})
 
-add_compile_options("/std:c++latest")
+set_target_properties(moka PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+target_compile_features(moka PRIVATE cxx_std_17)
 
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)

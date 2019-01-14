@@ -1,5 +1,8 @@
+#pragma once
+
 #include <graphics/colour.hpp>
 
 namespace moka
 {
-} // namespace moka
+    using color = colour;
+}
