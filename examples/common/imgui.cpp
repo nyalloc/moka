@@ -130,9 +130,22 @@ namespace moka
         int width, height;
         io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-        const auto resolution = glm::ivec2{width, height};
+        const texture_wrap_mode wrap{wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge};
+
+        const texture_filter_mode filter{mag_filter_mode::linear, min_filter_mode::linear};
+
         font_atlas_ = graphics_device_.make_texture(
-            pixels, resolution, texture_components::rgb_alpha, {}, false, false);
+            texture_target::texture_2d,
+            pixels,
+            texture_type::uint8,
+            width,
+            height,
+            base_pixel_format::rgba,
+            internal_pixel_format::rgba,
+            filter,
+            wrap,
+            false,
+            false);
 
         io.Fonts->TexID =
             reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas_.id));

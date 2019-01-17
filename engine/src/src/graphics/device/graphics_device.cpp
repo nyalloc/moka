@@ -84,19 +84,24 @@ namespace moka
     }
 
     texture graphics_device::make_texture(
-        void* data,
-        const glm::ivec2& resolution,
-        const texture_components components,
+        const texture_target target,
+        void* pixels,
+        const texture_type type,
+        const int width,
+        const int height,
+        const base_pixel_format base_format,
+        const internal_pixel_format internal_format,
+        const texture_filter_mode filter_mode,
         const texture_wrap_mode wrap_mode,
         const bool has_mipmaps,
-        const bool free_data) const
+        const bool free_memory) const
     {
         const auto handle = graphics_api_->make_texture(
-            data, resolution, components, wrap_mode, has_mipmaps);
+            target, pixels, type, width, height, base_format, internal_format, filter_mode, wrap_mode, has_mipmaps);
 
-        if (free_data)
+        if (free_memory)
         {
-            free_texture(data);
+            free_texture(pixels);
         }
 
         return handle;

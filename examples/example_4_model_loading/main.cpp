@@ -6,13 +6,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <graphics/camera/camera.hpp>
 #include <graphics/device/graphics_device.hpp>
-#include <graphics/material/material.hpp>
+#include <graphics/material/material_builder.hpp>
 #include <graphics/model.hpp>
+#include <imgui.h>
 #include <imgui.hpp>
 
 using namespace moka;
 
-struct directional_light
+struct directional_light final
 {
     glm::vec3 ambient = colour::light_slate_grey();
     glm::vec3 direction = {0, 0, -1};
@@ -20,7 +21,84 @@ struct directional_light
     glm::vec3 specular = colour::white();
 };
 
-class model_loading_application : public application
+model make_cube(graphics_device& device)
+{
+    // clang-format off
+    float vertices[] = 
+    {
+        // back face
+        -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+         1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+         1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right         
+         1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+        -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+        -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
+        // front face
+        -1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+         1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
+         1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+         1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+        -1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
+        -1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+        // left face
+        -1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+        -1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
+        -1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+        -1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+        -1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+        -1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+        // right face
+         1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+         1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+         1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right         
+         1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+         1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+         1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left     
+        // bottom face
+        -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+         1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
+         1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+         1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+        -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+        -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+        // top face
+        -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+         1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+         1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-right     
+         1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+        -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+        -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left        
+    };
+    // clang-format on
+
+    const auto size = sizeof(float);
+
+    auto layout =
+        vertex_layout::builder{}
+            .add_attribute(0, attribute_type::float32, 3, false, 8 * size, 0)
+            .add_attribute(1, attribute_type::float32, 3, false, 8 * size, 3 * size)
+            .add_attribute(2, attribute_type::float32, 2, false, 8 * size, 6 * size)
+            .build();
+
+    auto buffer = device.make_vertex_buffer(
+        vertices, sizeof vertices, std::move(layout), buffer_usage::static_draw);
+
+    std::map<std::string, program> shaders;
+
+    auto material = material::builder{device, shaders}
+                        .add_uniform("projection", glm::mat4{})
+                        .add_uniform("view", glm::mat4{})
+                        .add_uniform("equirectangularMap", texture{})
+                        .build();
+
+    primitive primitive(buffer, sizeof vertices / sizeof(float), std::move(material));
+
+    mesh mesh(primitive);
+
+    return model{mesh};
+}
+
+class app final : public application
 {
     camera camera_;
 
@@ -30,23 +108,76 @@ class model_loading_application : public application
 
     model model_;
 
-    imgui imgui_;
+    model cube_;
+
+    texture hdr_{};
 
     glm::vec4 color_{0.8f, 0.8f, 0.8f, 1.0f};
 
-    directional_light light;
+    directional_light light_;
+
+    imgui imgui_;
 
 public:
-    explicit model_loading_application(const app_settings& settings)
+    explicit app(const app_settings& settings)
         : application(settings),
           camera_(camera::builder{}
                       .set_mouse_controller(mouse_)
                       .set_perspective(glm::radians(70.0f), window_.aspect())
                       .build()),
-          model_importer_(model_loading_application::data_path(), graphics_),
-          model_(model_importer_.load("flight_helmet.moka")),
+          model_importer_(app::data_path(), graphics_),
+          model_(model_importer_.load(
+              app::data_path() / "Models" / "FlightHelmet" / "FlightHelmet.gltf",
+              app::data_path() / "Materials" / "pbr.material")),
+          cube_(model_importer_.load(
+              app::data_path() / "Models" / "Cube" / "Cube.gltf",
+              app::data_path() / "Materials" / "cube.material")),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
+        auto height = 0;
+        auto width = 0;
+        base_pixel_format format;
+
+        const auto path = app::data_path() / "Textures" / "siggraph.hdr";
+
+        const auto data = texture_load_hdr(path, width, height, format);
+
+        const texture_wrap_mode wrap{wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge};
+
+        const texture_filter_mode filter{mag_filter_mode::linear, min_filter_mode::linear};
+
+        hdr_ = graphics_.make_texture(
+            texture_target::texture_2d,
+            data,
+            texture_type::float32,
+            width,
+            height,
+            format,
+            internal_pixel_format::rgb16f,
+            filter,
+            wrap,
+            false,
+            true);
+    }
+
+    static uint32_t depth_to_bits(const float depth)
+    {
+        // stolen from http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
+        union {
+            float f = 0.0f;
+            uint32_t i;
+        } data{};
+        data.f = depth;
+        return data.i >> 22; // take highest 10 bits
+    }
+
+    static sort_key generate_sort_key(const float depth, const uint16_t material_id, const alpha_mode alpha)
+    {
+        // http://realtimecollisiondetection.net/blog/?p=86
+        // sort by alpha, then by depth, then by material
+        return static_cast<sort_key>(material_id) |
+               static_cast<sort_key>(depth_to_bits(depth)) << 16 |
+               static_cast<sort_key>(alpha == alpha_mode::blend) << 48;
     }
 
     void draw_imgui(const game_time delta_time)
@@ -90,36 +221,16 @@ public:
             ImGui::ColorEdit4("Clear Color", &color_[0]);
             ImGui::Separator();
             ImGui::Text("Directional Light");
-            ImGui::ColorEdit3("Ambient", &light.ambient[0]);
-            ImGui::ColorEdit3("Diffuse", &light.diffuse[0]);
-            ImGui::ColorEdit3("Specular", &light.specular[0]);
-            ImGui::DragFloat3("Direction", &light.direction[0], 0.01, -1, 1);
+            ImGui::ColorEdit3("Ambient", &light_.ambient[0]);
+            ImGui::ColorEdit3("Diffuse", &light_.diffuse[0]);
+            ImGui::ColorEdit3("Specular", &light_.specular[0]);
+            ImGui::DragFloat3("Direction", &light_.direction[0], 0.01, -1, 1);
         }
         ImGui::End();
 
-        light.direction = glm::normalize(light.direction);
+        light_.direction = glm::normalize(light_.direction);
 
         graphics_.submit_and_swap(imgui_.draw());
-    }
-
-    static uint32_t depth_to_bits(const float depth)
-    {
-        // stolen from http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
-        union {
-            float f = 0.0f;
-            uint32_t i;
-        } data{};
-        data.f = depth;
-        return data.i >> 22; // take highest 10 bits
-    }
-
-    static sort_key generate_sort_key(const float depth, const uint16_t material_id, const alpha_mode alpha)
-    {
-        // http://realtimecollisiondetection.net/blog/?p=86
-        // sort by alpha, then by depth, then by material
-        return static_cast<sort_key>(material_id) |
-               static_cast<sort_key>(depth_to_bits(depth)) << 16 |
-               static_cast<sort_key>(alpha == alpha_mode::blend) << 48;
     }
 
     void draw(const game_time delta_time) override
@@ -149,10 +260,10 @@ public:
                 material["projection"] = camera_.get_projection();
                 material["view_pos"] = camera_.get_position();
 
-                material["light.ambient"] = light.ambient;
-                material["light.direction"] = light.direction;
-                material["light.diffuse"] = light.diffuse;
-                material["light.specular"] = light.specular;
+                material["light.ambient"] = light_.ambient;
+                material["light.direction"] = light_.direction;
+                material["light.diffuse"] = light_.diffuse;
+                material["light.specular"] = light_.specular;
 
                 const auto sort_key = generate_sort_key(
                     distance, material.get_program().id, material.get_alpha_mode());
@@ -185,5 +296,5 @@ public:
 int main(const int argc, char* argv[])
 {
     const app_settings settings(argc, argv);
-    return model_loading_application{settings}.run();
+    return app{settings}.run();
 }

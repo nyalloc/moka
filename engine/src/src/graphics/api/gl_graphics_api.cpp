@@ -88,18 +88,45 @@ namespace moka
         }
     }
 
-    constexpr GLenum moka_to_gl(const texture_components type)
+    constexpr GLenum moka_to_gl(const base_pixel_format type)
     {
         switch (type)
         {
-        case texture_components::rgb:
+        case base_pixel_format::rgb:
             return GL_RGB;
-        case texture_components::rgb_alpha:
+        case base_pixel_format::rgba:
             return GL_RGBA;
-        case texture_components::grey_alpha:
-            return GL_RGBA; // todo: this is probably wrong
-        case texture_components::grey:
-            return GL_RGB; // todo: ditto
+        case base_pixel_format::r:
+            return GL_R;
+        case base_pixel_format::rg:
+            return GL_RG;
+        case base_pixel_format::bgr:
+            return GL_BGR;
+        case base_pixel_format::bgra:
+            return GL_BGRA;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const internal_pixel_format type)
+    {
+        switch (type)
+        {
+        case internal_pixel_format::r:
+            return GL_R;
+        case internal_pixel_format::rg:
+            return GL_RG;
+        case internal_pixel_format::rgb:
+            return GL_RGB;
+        case internal_pixel_format::rgb16f:
+            return GL_RGB16F;
+        case internal_pixel_format::bgr:
+            return GL_BGR;
+        case internal_pixel_format::rgba:
+            return GL_RGBA;
+        case internal_pixel_format::bgra:
+            return GL_BGRA;
         default:
             return 0;
         }
@@ -178,6 +205,66 @@ namespace moka
             return GL_DYNAMIC_DRAW;
         case buffer_usage::stream_draw:
             return GL_STREAM_DRAW;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const texture_type type)
+    {
+        switch (type)
+        {
+        case texture_type::int8:
+            return GL_BYTE;
+        case texture_type::int16:
+            return GL_SHORT;
+        case texture_type::int32:
+            return GL_INT;
+        case texture_type::uint8:
+            return GL_UNSIGNED_BYTE;
+        case texture_type::uint16:
+            return GL_UNSIGNED_SHORT;
+        case texture_type::uint32:
+            return GL_UNSIGNED_INT;
+        case texture_type::float16:
+            return GL_HALF_FLOAT;
+        case texture_type::float32:
+            return GL_FLOAT;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const texture_target type)
+    {
+        switch (type)
+        {
+        case texture_target::texture_2d:
+            return GL_TEXTURE_2D;
+        case texture_target::texture_2d_proxy:
+            return GL_PROXY_TEXTURE_2D;
+        case texture_target::array_1d:
+            return GL_TEXTURE_1D_ARRAY;
+        case texture_target::array_1d_proxy:
+            return GL_PROXY_TEXTURE_1D_ARRAY;
+        case texture_target::rectangle:
+            return GL_TEXTURE_RECTANGLE;
+        case texture_target::rectangle_proxy:
+            return GL_PROXY_TEXTURE_RECTANGLE;
+        case texture_target::cubemap:
+            return GL_TEXTURE_CUBE_MAP;
+        case texture_target::cubemap_positive_x:
+            return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
+        case texture_target::cubemap_positive_y:
+            return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
+        case texture_target::cubemap_positive_z:
+            return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
+        case texture_target::cubemap_negative_x:
+            return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
+        case texture_target::cubemap_negative_y:
+            return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
+        case texture_target::cubemap_negative_z:
+            return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
         default:
             return 0;
         }
@@ -415,7 +502,7 @@ namespace moka
 
     program gl_graphics_api::make_program(const shader& vertex_handle, const shader& fragment_handle)
     {
-        auto id = glCreateProgram();
+        const auto id = glCreateProgram();
 
         const program result{static_cast<uint16_t>(id)};
 
@@ -458,11 +545,11 @@ namespace moka
 
         char info_log[512];
 
-        auto id = glCreateShader(moka_to_gl(type));
+        const auto id = glCreateShader(moka_to_gl(type));
 
         const shader result{static_cast<uint16_t>(id)};
 
-        const char* source_chars = source.c_str();
+        auto source_chars = source.c_str();
 
         glShaderSource(id, 1, &source_chars, nullptr);
 
@@ -480,7 +567,7 @@ namespace moka
     }
 
     vertex_buffer gl_graphics_api::make_vertex_buffer(
-        const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use)
+        const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
     {
         vertex_buffer result;
 
@@ -505,7 +592,7 @@ namespace moka
     }
 
     index_buffer gl_graphics_api::make_index_buffer(
-        const void* indices, size_t size, index_type type, buffer_usage use)
+        const void* indices, const size_t size, const index_type type, const buffer_usage use)
     {
         index_buffer result;
 
@@ -541,41 +628,86 @@ namespace moka
         previous_command_ = {};
     }
 
-    // todo: add argument to make_texture to allow users to specify the internal pixel format seperately from the input format
-    // todo: add arguments to allow users to specify filtering / mipmap generation
-    moka::texture gl_graphics_api::make_texture(
-        const void* pixels,
-        const glm::ivec2& resolution,
-        texture_components components,
-        texture_wrap_mode wrap_mode,
-        bool has_mipmaps)
+    constexpr GLenum moka_to_gl(const wrap_mode type)
     {
+        switch (type)
+        {
+        case wrap_mode::clamp_to_edge:
+            return GL_CLAMP_TO_EDGE;
+        case wrap_mode::mirrored_repeat:
+            return GL_MIRRORED_REPEAT;
+        case wrap_mode::repeat:
+            return GL_REPEAT;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const min_filter_mode type)
+    {
+        switch (type)
+        {
+        case min_filter_mode::nearest:
+            return GL_NEAREST;
+        case min_filter_mode::linear:
+            return GL_LINEAR;
+        case min_filter_mode::nearest_mipmap_nearest:
+            return GL_NEAREST_MIPMAP_NEAREST;
+        case min_filter_mode::linear_mipmap_nearest:
+            return GL_LINEAR_MIPMAP_NEAREST;
+        case min_filter_mode::nearest_mipmap_linear:
+            return GL_NEAREST_MIPMAP_LINEAR;
+        case min_filter_mode::linear_mipmap_linear:
+            return GL_LINEAR_MIPMAP_LINEAR;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const mag_filter_mode type)
+    {
+        switch (type)
+        {
+        case mag_filter_mode::nearest:
+            return GL_NEAREST;
+        case mag_filter_mode::linear:
+            return GL_LINEAR;
+        default:
+            return 0;
+        }
+    }
+
+    texture gl_graphics_api::make_texture(
+        const texture_target target,
+        void* pixels,
+        const texture_type type,
+        const int width,
+        const int height,
+        const base_pixel_format base_format,
+        const internal_pixel_format internal_format,
+        const texture_filter_mode filter_mode,
+        const texture_wrap_mode wrap_mode,
+        const bool has_mipmaps)
+    {
+        const auto gl_target = moka_to_gl(target);
+
         unsigned int texture;
         glGenTextures(1, &texture);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glBindTexture(gl_target, texture);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        if (has_mipmaps)
-        {
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        }
-        else
-        {
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        }
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(wrap_mode.x));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(wrap_mode.y));
+        glTexParameteri(gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(filter_mode.min));
+        glTexParameteri(gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(filter_mode.mag));
 
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 
         glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGBA, resolution.x, resolution.y, 0, moka_to_gl(components), GL_UNSIGNED_BYTE, pixels);
+            gl_target, 0, moka_to_gl(internal_format), width, height, 0, moka_to_gl(base_format), moka_to_gl(type), pixels);
 
         if (has_mipmaps)
         {
-            glGenerateMipmap(GL_TEXTURE_2D);
+            glGenerateMipmap(gl_target);
         }
 
         return moka::texture{static_cast<uint16_t>(texture)};
@@ -616,7 +748,7 @@ namespace moka
         if constexpr (application_traits::is_debug_build)
         {
             glEnable(GL_DEBUG_OUTPUT);
-            glDebugMessageCallback(message_callback, 0);
+            glDebugMessageCallback(message_callback, nullptr);
         }
 
         glGenVertexArrays(1, &vao_);

@@ -204,7 +204,7 @@ HRESULT CDialogEventHandler_CreateInstance(REFIID riid, void **ppv)
 /* Utility Functions *************************************************************************************************************/
 
 // A helper function that converts UNICODE data to ANSI and writes it to the given file.
-// We write in ANSI format to make it easier to open the output file in Notepad.
+// We write in ANSI base_pixel_format to make it easier to open the output file in Notepad.
 HRESULT _WriteDataToFile(HANDLE hFile, PCWSTR pszDataIn)
 {
 	// First figure out our required buffer size.
@@ -233,9 +233,9 @@ HRESULT _WriteDataToFile(HANDLE hFile, PCWSTR pszDataIn)
 	return hr;
 }
 
-// Helper function to write property/value into a custom file format.
+// Helper function to write property/value into a custom file base_pixel_format.
 //
-// We are inventing a dummy format here:
+// We are inventing a dummy base_pixel_format here:
 // [APPDATA]
 // xxxxxx
 // [ENDAPPDATA]
@@ -290,9 +290,9 @@ HRESULT _WritePropertyToCustomFile(PCWSTR pszFileName, PCWSTR pszPropertyName, P
 	return hr;
 }
 
-// Helper function to write dummy content to a custom file format.
+// Helper function to write dummy content to a custom file base_pixel_format.
 //
-// We are inventing a dummy format here:
+// We are inventing a dummy base_pixel_format here:
 // [APPDATA]
 // xxxxxx
 // [ENDAPPDATA]
@@ -649,7 +649,7 @@ HRESULT WritePropertiesUsingHandlers()
 		WCHAR szFullPathToTestFile[MAX_PATH] = {};
 
 		// For this exercise, let's just support only one file type to make things simpler.
-		// Also, let's use the jpg format for sample purpose because the Windows ships with
+		// Also, let's use the jpg base_pixel_format for sample purpose because the Windows ships with
 		// property handlers for jpg files.
 		const COMDLG_FILTERSPEC rgSaveTypes[] = { { L"Photo Document (*.jpg)", L"*.jpg" } };
 

@@ -1,4 +1,5 @@
 #include <fstream>
+#include <graphics/material/material.hpp>
 #include <graphics/material/material_builder.hpp>
 #include <sstream>
 

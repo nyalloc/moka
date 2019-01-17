@@ -33,7 +33,7 @@
 //	uniform_handle specular;
 //};
 //
-//class model_loading_application : public application
+//class app : public application
 //{
 //	float vertices_[288] =
 //	{
@@ -207,7 +207,7 @@
 //	camera camera_;
 //public:
 //
-//	model_loading_application(const int argc, char* argv[])
+//	app(const int argc, char* argv[])
 //		: application(argc, argv)
 //
 //		, camera_(camera::builder()
@@ -246,7 +246,7 @@
 //		view_pos_ = graphics_.make_uniform("viewPos", uniform_type::vec3);
 //	}
 //
-//	~model_loading_application()
+//	~app()
 //	{
 //		graphics_.destroy(vertex_buffer_);
 //		graphics_.destroy(cube_program_);
@@ -357,7 +357,7 @@
 //
 //int main(const int argc, char* argv[])
 //{
-//	return model_loading_application{ argc, argv }.run();
+//	return app{ argc, argv }.run();
 //}
 int main(const int argc, char* argv[])
 {

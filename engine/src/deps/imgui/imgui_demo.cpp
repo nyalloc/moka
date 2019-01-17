@@ -63,14 +63,14 @@ Index of this file:
 #pragma clang diagnostic ignored "-Wold-style-cast"             // warning : use of old-style cast                              // yes, they are more terse.
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"    // warning : 'xx' is deprecated: The POSIX name for this item.. // for strdup used in demo code (so user can copy & paste the code)
 #pragma clang diagnostic ignored "-Wint-to-void-pointer-cast"   // warning : cast to 'void *' from smaller integer type 'int'
-#pragma clang diagnostic ignored "-Wformat-security"            // warning : warning: format string is not a string literal
+#pragma clang diagnostic ignored "-Wformat-security"            // warning : warning: base_pixel_format string is not a string literal
 #pragma clang diagnostic ignored "-Wexit-time-destructors"      // warning : declaration requires an exit-time destructor       // exit-time destruction order is undefined. if MemFree() leads to users code that has been disabled before exit it might cause problems. ImGui coding style welcomes static/globals.
 #if __has_warning("-Wreserved-id-macro")
 #pragma clang diagnostic ignored "-Wreserved-id-macro"          // warning : macro name is a reserved identifier                //
 #endif
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wint-to-pointer-cast"          // warning: cast to pointer from integer of different size
-#pragma GCC diagnostic ignored "-Wformat-security"              // warning : format string is not a string literal (potentially insecure)
+#pragma GCC diagnostic ignored "-Wformat-security"              // warning : base_pixel_format string is not a string literal (potentially insecure)
 #pragma GCC diagnostic ignored "-Wdouble-promotion"             // warning: implicit conversion from 'float' to 'double' when passing argument to function
 #pragma GCC diagnostic ignored "-Wconversion"                   // warning: conversion to 'xxxx' from 'xxxx' may alter its value
 #if (__GNUC__ >= 6)
@@ -548,7 +548,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
                 if (align_label_with_current_x_position)
                     ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
-                static int selection_mask = (1 << 2); // Dumb representation of what may be user-side selection state. You may carry selection state inside or outside your objects in whatever format you see fit.
+                static int selection_mask = (1 << 2); // Dumb representation of what may be user-side selection state. You may carry selection state inside or outside your objects in whatever base_pixel_format you see fit.
                 int node_clicked = -1;                // Temporary storage of what node we have clicked to process selection at the end of the loop. May be a pointer to your own node type, etc.
                 ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, ImGui::GetFontSize()*3); // Increase spacing to differentiate leaves from expanded contents.
                 for (int i = 0; i < 6; i++)
@@ -1126,9 +1126,9 @@ void ImGui::ShowDemoWindow(bool* p_open)
             // In practice, if you frequently use a given type that is not covered by the normal API entry points, you can wrap it 
             // yourself inside a 1 line function which can take typed argument as value instead of void*, and then pass their address 
             // to the generic function. For example:
-            //   bool MySliderU64(const char *label, u64* value, u64 min = 0, u64 max = 0, const char* format = "%lld") 
+            //   bool MySliderU64(const char *label, u64* value, u64 min = 0, u64 max = 0, const char* base_pixel_format = "%lld") 
             //   { 
-            //      return SliderScalar(label, ImGuiDataType_U64, value, &min, &max, format); 
+            //      return SliderScalar(label, ImGuiDataType_U64, value, &min, &max, base_pixel_format); 
             //   }
 
             // Limits (as helper variables that we can take the address of)

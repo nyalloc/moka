@@ -1,24 +1,24 @@
 #pragma once
 
 #include <filesystem>
+#include <glm/vec2.hpp>
+#include <graphics/texture.hpp>
 
 namespace moka
 {
-	enum class texture_components : uint8_t
-	{
-		grey,
-		grey_alpha,
-		rgb,
-		rgb_alpha,
-		auto_detect
-	};
+    std::byte* texture_load(
+        const std::filesystem::path& path,
+        int& width,
+        int& height,
+        base_pixel_format& format,
+        base_pixel_format requested_format = base_pixel_format::auto_detect);
 
-	void load_texture(
-		const std::filesystem::path& path,
-		void* data,
-		glm::ivec2& resolution,
-		texture_components& components,
-		texture_components components_requested = texture_components::auto_detect);
+    float* texture_load_hdr(
+        const std::filesystem::path& path,
+        int& width,
+        int& height,
+        base_pixel_format& format,
+        base_pixel_format requested_format = base_pixel_format::auto_detect);
 
-	void free_texture(void* data);
-}
+    void free_texture(void* data);
+} // namespace moka

@@ -34,6 +34,8 @@ namespace moka
             uint32_t index_buffer_offset,
             material&& material);
 
+        primitive(vertex_buffer vertex_buffer, uint32_t vertex_count, material&& material);
+
         void draw(command_buffer& list) const;
     };
 
@@ -57,7 +59,9 @@ namespace moka
 
         const_iterator end() const;
 
-        mesh(std::vector<primitive>&& primitives, transform&& transform);
+        explicit mesh(std::vector<primitive>&& primitives, transform&& transform = {});
+
+        explicit mesh(const primitive& prim, transform&& transform = {});
     };
 
     class model
@@ -79,7 +83,9 @@ namespace moka
 
         model() = default;
 
-        model(std::vector<mesh>&& meshes, transform&& transform = {});
+        explicit model(const mesh& meshes, transform&& transform = {});
+
+        explicit model(std::vector<mesh>&& meshes, transform&& transform = {});
 
         std::vector<mesh>& get_meshes();
     };

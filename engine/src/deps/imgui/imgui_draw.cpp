@@ -1481,8 +1481,8 @@ void    ImFontAtlas::GetTexDataAsAlpha8(unsigned char** out_pixels, int* out_wid
 
 void    ImFontAtlas::GetTexDataAsRGBA32(unsigned char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel)
 {
-    // Convert to RGBA32 format on demand
-    // Although it is likely to be the most commonly used format, our font rendering is 1 channel / 8 bpp
+    // Convert to RGBA32 base_pixel_format on demand
+    // Although it is likely to be the most commonly used base_pixel_format, our font rendering is 1 channel / 8 bpp
     if (!TexPixelsRGBA32)
     {
         unsigned char* pixels = NULL;
@@ -2359,7 +2359,7 @@ void ImFont::GrowIndex(int new_size)
 }
 
 // x0/y0/x1/y1 are offset from the character upper-left layout position, in pixels. Therefore x0/y0 are often fairly close to zero.
-// Not to be mistaken with texture coordinates, which are held by u0/v0/u1/v1 in normalized format (0.0..1.0 on each texture axis).
+// Not to be mistaken with texture coordinates, which are held by u0/v0/u1/v1 in normalized base_pixel_format (0.0..1.0 on each texture axis).
 void ImFont::AddGlyph(ImWchar codepoint, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
 {
     Glyphs.resize(Glyphs.Size + 1);

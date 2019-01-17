@@ -37,12 +37,17 @@ namespace moka
         program make_program(shader vertex_handle, shader fragment_handle) const;
 
         texture make_texture(
-            void* data,
-            const glm::ivec2& resolution,
-            texture_components components,
+            texture_target target,
+            void* pixels,
+            texture_type type,
+            int width,
+            int height,
+            base_pixel_format base_format,
+            internal_pixel_format internal_format,
+            texture_filter_mode filter_mode,
             texture_wrap_mode wrap_mode,
             bool has_mipmaps,
-            bool free_data = true) const;
+            bool free_memory) const;
 
         void destroy(program handle);
 
