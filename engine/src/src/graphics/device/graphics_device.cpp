@@ -1,5 +1,4 @@
 
-#include "application/profile.hpp"
 #include <application/window.hpp>
 #include <graphics/api/gl_graphics_api.hpp>
 #include <graphics/device/graphics_device.hpp>
@@ -83,28 +82,38 @@ namespace moka
         return graphics_api_->make_program(vertex_handle, fragment_handle);
     }
 
-    texture graphics_device::make_texture(
-        const texture_target target,
-        void* pixels,
-        const texture_type type,
-        const int width,
-        const int height,
-        const base_pixel_format base_format,
-        const internal_pixel_format internal_format,
-        const texture_filter_mode filter_mode,
-        const texture_wrap_mode wrap_mode,
-        const bool has_mipmaps,
-        const bool free_memory) const
+    texture graphics_device::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data) const
     {
-        const auto handle = graphics_api_->make_texture(
-            target, pixels, type, width, height, base_format, internal_format, filter_mode, wrap_mode, has_mipmaps);
+        auto size = metadata.data.size();
 
-        if (free_memory)
+        const auto handle =
+            graphics_api_->make_texture(data, std::move(metadata), free_host_data);
+
+        // this does not seem very safe at all! what if make_texture throws! Leak city!
+        if (free_host_data)
         {
-            free_texture(pixels);
+            for (size_t i = 0; i < metadata.data.size(); i++)
+            {
+                free_texture(data[i]);
+            }
         }
 
         return handle;
+    }
+
+    texture_builder graphics_device::build_texture()
+    {
+        return texture_builder{*this};
+    }
+
+    frame_buffer graphics_device::make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count)
+    {
+        return graphics_api_->make_frame_buffer(render_textures, render_texture_count);
+    }
+
+    frame_buffer_builder graphics_device::build_frame_buffer()
+    {
+        return frame_buffer_builder{*this};
     }
 
     void graphics_device::destroy(program handle)

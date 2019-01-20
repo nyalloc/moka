@@ -4,8 +4,10 @@
 #include <application/logger.hpp>
 #include <application/window.hpp>
 #include <graphics/api/graphics_api.hpp>
+#include <graphics/buffer/buffer_usage.hpp>
 #include <graphics/buffer/index_buffer.hpp>
 #include <graphics/buffer/vertex_buffer.hpp>
+#include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/command/draw_command.hpp>
 #include <graphics/material/material.hpp>
 #include <graphics/program.hpp>
@@ -13,13 +15,6 @@
 
 namespace moka
 {
-    struct texture_data final
-    {
-        texture_wrap_mode wrap_mode;
-        bool has_mipmaps;
-        glm::ivec2 resolution;
-    };
-
     struct program_data final
     {
     };
@@ -29,14 +24,14 @@ namespace moka
         shader_type type;
     };
 
-    struct vertex_buffer_data final
+    struct vertex_metadata final
     {
         buffer_usage buffer_use = buffer_usage::static_draw;
         size_t size{};
         vertex_layout layout;
     };
 
-    struct index_buffer_data final
+    struct index_metadata final
     {
         buffer_usage buffer_use = buffer_usage::static_draw;
         size_t size{};
@@ -62,10 +57,11 @@ namespace moka
             GLenum severity,
             GLsizei length,
             const GLchar* message,
-            const void* userParam);
+            const void* user_param);
 
-        std::unordered_map<uint16_t, vertex_buffer_data> vertex_buffer_data_;
-        std::unordered_map<uint16_t, index_buffer_data> index_buffer_data_;
+        std::unordered_map<uint16_t, vertex_metadata> vertex_buffer_data_;
+        std::unordered_map<uint16_t, texture_metadata> texture_data_;
+        std::unordered_map<uint16_t, index_metadata> index_buffer_data_;
 
         draw_command previous_command_;
 
@@ -85,19 +81,12 @@ namespace moka
             const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) override;
         index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) override;
 
-        texture make_texture(
-            texture_target target,
-            void* pixels,
-            texture_type type,
-            int width,
-            int height,
-            base_pixel_format base_format,
-            internal_pixel_format internal_format,
-            texture_filter_mode filter_mode,
-            texture_wrap_mode wrap_mode,
-            bool has_mipmaps) override;
+        texture make_texture(void** data, texture_metadata&& metadata, bool free_host_data) override;
+
+        frame_buffer make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count) override;
 
         void submit(command_list&& commands) override;
+        static void reset_gl_state();
         void submit_and_swap(command_list&& commands) override;
 
         void visit(clear_command& cmd) override;
@@ -106,5 +95,8 @@ namespace moka
         void visit(scissor_command& cmd) override;
         void visit(fill_vertex_buffer_command& cmd) override;
         void visit(fill_index_buffer_command& cmd) override;
+        static void check_errors(const char* caller);
+        void visit(frame_buffer_command& cmd) override;
+        void visit(frame_buffer_texture_command& cmd) override;
     };
 } // namespace moka

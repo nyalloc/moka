@@ -6,13 +6,15 @@
 #include <graphics/command/draw_command.hpp>
 #include <graphics/command/fill_index_buffer_command.hpp>
 #include <graphics/command/fill_vertex_buffer_command.hpp>
+#include <graphics/command/frame_buffer_command.hpp>
+#include <graphics/command/frame_buffer_texture_command.hpp>
 #include <graphics/command/scissor_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 #include <vector>
 
 namespace moka
 {
-    class command_list
+    class command_list final
     {
         bool is_sorted_ = false;
         sort_key current_key_ = 0;
@@ -57,9 +59,17 @@ namespace moka
 
         const_iterator end() const;
 
+        command_buffer& make_command_buffer();
+
         command_buffer& make_command_buffer(sort_key key);
 
-        command_buffer& make_command_buffer();
+        frame_buffer_command& frame_buffer();
+
+        frame_buffer_command& frame_buffer(sort_key key);
+
+        frame_buffer_texture_command& frame_buffer_texture();
+
+        frame_buffer_texture_command& frame_buffer_texture(sort_key key);
 
         clear_command& clear();
 

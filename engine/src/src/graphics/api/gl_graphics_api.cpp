@@ -18,6 +18,34 @@
 
 namespace moka
 {
+    constexpr GLenum moka_to_gl(const frame_attachment type)
+    {
+        switch (type)
+        {
+        case frame_attachment::color:
+            return GL_COLOR_ATTACHMENT0;
+        case frame_attachment::depth:
+            return GL_DEPTH_ATTACHMENT;
+        case frame_attachment::stencil:
+            return GL_STENCIL_ATTACHMENT;
+        case frame_attachment::depth_stencil:
+            return GL_DEPTH_STENCIL_ATTACHMENT;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const frame_format type)
+    {
+        switch (type)
+        {
+        case frame_format::depth_component24:
+            return GL_DEPTH_COMPONENT24;
+        default:
+            return 0;
+        }
+    }
+
     constexpr GLenum moka_to_gl(const polygon_draw_mode type)
     {
         switch (type)
@@ -88,44 +116,44 @@ namespace moka
         }
     }
 
-    constexpr GLenum moka_to_gl(const base_pixel_format type)
+    constexpr GLenum moka_to_gl(const host_format type)
     {
         switch (type)
         {
-        case base_pixel_format::rgb:
+        case host_format::rgb:
             return GL_RGB;
-        case base_pixel_format::rgba:
+        case host_format::rgba:
             return GL_RGBA;
-        case base_pixel_format::r:
+        case host_format::r:
             return GL_R;
-        case base_pixel_format::rg:
+        case host_format::rg:
             return GL_RG;
-        case base_pixel_format::bgr:
+        case host_format::bgr:
             return GL_BGR;
-        case base_pixel_format::bgra:
+        case host_format::bgra:
             return GL_BGRA;
         default:
             return 0;
         }
     }
 
-    constexpr GLenum moka_to_gl(const internal_pixel_format type)
+    constexpr GLenum moka_to_gl(const device_format type)
     {
         switch (type)
         {
-        case internal_pixel_format::r:
+        case device_format::r:
             return GL_R;
-        case internal_pixel_format::rg:
+        case device_format::rg:
             return GL_RG;
-        case internal_pixel_format::rgb:
+        case device_format::rgb:
             return GL_RGB;
-        case internal_pixel_format::rgb16f:
+        case device_format::rgb16f:
             return GL_RGB16F;
-        case internal_pixel_format::bgr:
+        case device_format::bgr:
             return GL_BGR;
-        case internal_pixel_format::rgba:
+        case device_format::rgba:
             return GL_RGBA;
-        case internal_pixel_format::bgra:
+        case device_format::bgra:
             return GL_BGRA;
         default:
             return 0;
@@ -210,25 +238,25 @@ namespace moka
         }
     }
 
-    constexpr GLenum moka_to_gl(const texture_type type)
+    constexpr GLenum moka_to_gl(const pixel_type type)
     {
         switch (type)
         {
-        case texture_type::int8:
+        case pixel_type::int8:
             return GL_BYTE;
-        case texture_type::int16:
+        case pixel_type::int16:
             return GL_SHORT;
-        case texture_type::int32:
+        case pixel_type::int32:
             return GL_INT;
-        case texture_type::uint8:
+        case pixel_type::uint8:
             return GL_UNSIGNED_BYTE;
-        case texture_type::uint16:
+        case pixel_type::uint16:
             return GL_UNSIGNED_SHORT;
-        case texture_type::uint32:
+        case pixel_type::uint32:
             return GL_UNSIGNED_INT;
-        case texture_type::float16:
+        case pixel_type::float16:
             return GL_HALF_FLOAT;
-        case texture_type::float32:
+        case pixel_type::float32:
             return GL_FLOAT;
         default:
             return 0;
@@ -239,32 +267,63 @@ namespace moka
     {
         switch (type)
         {
+        case texture_target::texture_1d:
+            return GL_TEXTURE_1D;
         case texture_target::texture_2d:
             return GL_TEXTURE_2D;
-        case texture_target::texture_2d_proxy:
-            return GL_PROXY_TEXTURE_2D;
+        case texture_target::texture_3d:
+            return GL_TEXTURE_3D;
         case texture_target::array_1d:
             return GL_TEXTURE_1D_ARRAY;
-        case texture_target::array_1d_proxy:
-            return GL_PROXY_TEXTURE_1D_ARRAY;
+        case texture_target::array_2d:
+            return GL_TEXTURE_2D_ARRAY;
         case texture_target::rectangle:
             return GL_TEXTURE_RECTANGLE;
-        case texture_target::rectangle_proxy:
-            return GL_PROXY_TEXTURE_RECTANGLE;
         case texture_target::cubemap:
             return GL_TEXTURE_CUBE_MAP;
-        case texture_target::cubemap_positive_x:
+        case texture_target::cubemap_array:
+            return GL_TEXTURE_CUBE_MAP_ARRAY;
+        case texture_target::texture_buffer:
+            return GL_TEXTURE_BUFFER;
+        case texture_target::texture_2d_multisample:
+            return GL_TEXTURE_2D_MULTISAMPLE;
+        case texture_target::texture_2d_multisample_array:
+            return GL_TEXTURE_2D_MULTISAMPLE_ARRAY;
+        default:
+            return 0;
+        }
+    }
+
+    constexpr GLenum moka_to_gl(const image_target type)
+    {
+        switch (type)
+        {
+        case image_target::texture_2d:
+            return GL_TEXTURE_2D;
+        case image_target::texture_2d_proxy:
+            return GL_PROXY_TEXTURE_2D;
+        case image_target::array_1d:
+            return GL_TEXTURE_1D_ARRAY;
+        case image_target::array_1d_proxy:
+            return GL_PROXY_TEXTURE_1D_ARRAY;
+        case image_target::rectangle:
+            return GL_TEXTURE_RECTANGLE;
+        case image_target::rectangle_proxy:
+            return GL_PROXY_TEXTURE_2D;
+        case image_target::cubemap_positive_x:
             return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
-        case texture_target::cubemap_positive_y:
+        case image_target::cubemap_positive_y:
             return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
-        case texture_target::cubemap_positive_z:
+        case image_target::cubemap_positive_z:
             return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
-        case texture_target::cubemap_negative_x:
+        case image_target::cubemap_negative_x:
             return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
-        case texture_target::cubemap_negative_y:
+        case image_target::cubemap_negative_y:
             return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
-        case texture_target::cubemap_negative_z:
+        case image_target::cubemap_negative_z:
             return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
+        case image_target::cubemap_proxy:
+            return GL_PROXY_TEXTURE_CUBE_MAP;
         default:
             return 0;
         }
@@ -324,16 +383,31 @@ namespace moka
         }
 
         glClear(bitmask);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit clear_command");
+        }
     }
 
     void gl_graphics_api::visit(viewport_command& cmd)
     {
         glViewport(cmd.x, cmd.y, cmd.width, cmd.height);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit viewport_command");
+        }
     }
 
     void gl_graphics_api::visit(scissor_command& cmd)
     {
         glScissor(cmd.x, cmd.y, cmd.width, cmd.height);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit scissor_command");
+        }
     }
 
     void gl_graphics_api::visit(fill_vertex_buffer_command& cmd)
@@ -346,6 +420,11 @@ namespace moka
         glBindBuffer(GL_ARRAY_BUFFER, handle);
         glBufferData(GL_ARRAY_BUFFER, cmd.size, cmd.data, moka_to_gl(data.buffer_use));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit fill_vertex_buffer_command");
+        }
     }
 
     void gl_graphics_api::visit(fill_index_buffer_command& cmd)
@@ -359,12 +438,51 @@ namespace moka
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, cmd.size, cmd.data, moka_to_gl(data.buffer_use));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit fill_index_buffer_command");
+        }
+    }
+
+    void gl_graphics_api::check_errors(const char* caller)
+    {
+        // check OpenGL error
+        while (glGetError() != GL_NO_ERROR)
+        {
+            log_.error("OpenGL error discovered. Last call: {}", caller);
+        }
+    }
+
+    void gl_graphics_api::visit(frame_buffer_command& cmd)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, GLuint{cmd.buffer.id});
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit frame_buffer_command");
+        }
+    }
+
+    void gl_graphics_api::visit(frame_buffer_texture_command& cmd)
+    {
+        glFramebufferTexture2D(
+            GL_FRAMEBUFFER,
+            moka_to_gl(cmd.attachment),
+            moka_to_gl(cmd.target),
+            GLuint{cmd.tex.id},
+            cmd.level);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit frame_buffer_texture_command");
+        }
     }
 
     void gl_graphics_api::visit(draw_command& cmd)
     {
         // early exit if a bogus vertex buffer is given to us
-        if (cmd.index_buffer.id == std::numeric_limits<uint16_t>::max())
+        if (cmd.vertex_buffer.id == std::numeric_limits<uint16_t>::max())
         {
             return;
         }
@@ -441,7 +559,11 @@ namespace moka
                 const auto data = std::get<texture>(parameter.data);
                 glUniform1i(location, GLint(current_texture_unit));
                 glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
-                glBindTexture(GL_TEXTURE_2D, GLuint(data.id));
+
+                auto& meta_data = texture_data_[data.id];
+
+                glBindTexture(moka_to_gl(meta_data.target), GLuint(data.id));
+
                 ++current_texture_unit;
                 break;
             }
@@ -498,6 +620,11 @@ namespace moka
         }
 
         previous_command_ = cmd;
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit draw_command");
+        }
     }
 
     program gl_graphics_api::make_program(const shader& vertex_handle, const shader& fragment_handle)
@@ -536,6 +663,11 @@ namespace moka
             log_.info(info_log);
         }
 
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_program");
+        }
+
         return result;
     }
 
@@ -561,6 +693,13 @@ namespace moka
             using namespace std::string_literals;
 
             glGetShaderInfoLog(id, 512, nullptr, info_log);
+
+            log_.error(info_log);
+        }
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_shader");
         }
 
         return result;
@@ -573,7 +712,7 @@ namespace moka
 
         GLuint handle;
 
-        vertex_buffer_data data;
+        vertex_metadata data;
         data.layout = std::move(layout);
         data.buffer_use = use;
         data.size = size;
@@ -588,6 +727,11 @@ namespace moka
         glBufferData(GL_ARRAY_BUFFER, size, vertices, moka_to_gl(use));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_vertex_buffer");
+        }
+
         return result;
     }
 
@@ -598,7 +742,7 @@ namespace moka
 
         GLuint handle;
 
-        index_buffer_data data;
+        index_metadata data;
         data.buffer_use = use;
         data.size = size;
         data.type = type;
@@ -613,18 +757,34 @@ namespace moka
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, moka_to_gl(use));
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_index_buffer");
+        }
+
         return result;
     }
 
     void gl_graphics_api::submit(command_list&& commands)
     {
         commands.accept(*this);
+
+        reset_gl_state();
+    }
+
+    void gl_graphics_api::reset_gl_state()
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDrawBuffer(GL_BACK);
     }
 
     void gl_graphics_api::submit_and_swap(command_list&& commands)
     {
         commands.accept(*this);
         window_.swap_buffer();
+
+        reset_gl_state();
+
         previous_command_ = {};
     }
 
@@ -643,92 +803,205 @@ namespace moka
         }
     }
 
-    constexpr GLenum moka_to_gl(const min_filter_mode type)
+    constexpr GLenum moka_to_gl(const min_filter type)
     {
         switch (type)
         {
-        case min_filter_mode::nearest:
+        case min_filter::nearest:
             return GL_NEAREST;
-        case min_filter_mode::linear:
+        case min_filter::linear:
             return GL_LINEAR;
-        case min_filter_mode::nearest_mipmap_nearest:
+        case min_filter::nearest_mipmap_nearest:
             return GL_NEAREST_MIPMAP_NEAREST;
-        case min_filter_mode::linear_mipmap_nearest:
+        case min_filter::linear_mipmap_nearest:
             return GL_LINEAR_MIPMAP_NEAREST;
-        case min_filter_mode::nearest_mipmap_linear:
+        case min_filter::nearest_mipmap_linear:
             return GL_NEAREST_MIPMAP_LINEAR;
-        case min_filter_mode::linear_mipmap_linear:
+        case min_filter::linear_mipmap_linear:
             return GL_LINEAR_MIPMAP_LINEAR;
         default:
             return 0;
         }
     }
 
-    constexpr GLenum moka_to_gl(const mag_filter_mode type)
+    constexpr GLenum moka_to_gl(const mag_filter type)
     {
         switch (type)
         {
-        case mag_filter_mode::nearest:
+        case mag_filter::nearest:
             return GL_NEAREST;
-        case mag_filter_mode::linear:
+        case mag_filter::linear:
             return GL_LINEAR;
         default:
             return 0;
         }
     }
 
-    texture gl_graphics_api::make_texture(
-        const texture_target target,
-        void* pixels,
-        const texture_type type,
-        const int width,
-        const int height,
-        const base_pixel_format base_format,
-        const internal_pixel_format internal_format,
-        const texture_filter_mode filter_mode,
-        const texture_wrap_mode wrap_mode,
-        const bool has_mipmaps)
+    texture gl_graphics_api::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data)
     {
-        const auto gl_target = moka_to_gl(target);
+        const auto gl_target = moka_to_gl(metadata.target);
 
         unsigned int texture;
         glGenTextures(1, &texture);
         glBindTexture(gl_target, texture);
 
-        glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(wrap_mode.x));
-        glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(wrap_mode.y));
-        glTexParameteri(gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(filter_mode.min));
-        glTexParameteri(gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(filter_mode.mag));
+        for (size_t i = 0; i < metadata.data.size(); i++)
+        {
+            const auto pixels = data[i];
+            const auto& tex_image = metadata.data[i];
 
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+            glTexImage2D(
+                moka_to_gl(metadata.data[i].target),
+                tex_image.mip_level,
+                moka_to_gl(tex_image.internal_format),
+                tex_image.width,
+                tex_image.height,
+                tex_image.border,
+                moka_to_gl(tex_image.base_format),
+                moka_to_gl(tex_image.type),
+                pixels);
+        }
 
-        glTexImage2D(
-            gl_target, 0, moka_to_gl(internal_format), width, height, 0, moka_to_gl(base_format), moka_to_gl(type), pixels);
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(metadata.wrap.s));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(metadata.wrap.t));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_R, moka_to_gl(metadata.wrap.r));
+        glTexParameteri(
+            gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(metadata.filter_mode.min));
+        glTexParameteri(
+            gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(metadata.filter_mode.mag));
 
-        if (has_mipmaps)
+        if (metadata.generate_mipmaps)
         {
             glGenerateMipmap(gl_target);
         }
 
-        return moka::texture{static_cast<uint16_t>(texture)};
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_texture");
+        }
+
+        const auto id = static_cast<uint16_t>(texture);
+
+        texture_data_[id] = std::move(metadata);
+
+        return moka::texture{id};
+    }
+
+    frame_buffer gl_graphics_api::make_frame_buffer(render_texture_data* render_textures, const size_t render_texture_count)
+    {
+        unsigned int capture_fbo;
+        glGenFramebuffers(1, &capture_fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, capture_fbo);
+
+        for (size_t i = 0; i < render_texture_count; i++)
+        {
+            auto& render_texture = render_textures[i];
+
+            unsigned int capture_rbo;
+            glGenRenderbuffers(1, &capture_rbo);
+            glBindRenderbuffer(GL_RENDERBUFFER, capture_rbo);
+
+            glRenderbufferStorage(
+                GL_RENDERBUFFER,
+                moka_to_gl(render_texture.format),
+                render_texture.width,
+                render_texture.height);
+
+            glFramebufferRenderbuffer(
+                GL_FRAMEBUFFER, moka_to_gl(render_texture.attachment), GL_RENDERBUFFER, capture_rbo);
+        }
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("make_frame_buffer");
+        }
+
+        return frame_buffer{static_cast<uint16_t>(capture_fbo)};
     }
 
     void GLAPIENTRY gl_graphics_api::message_callback(
-        GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+        const GLenum source,
+        const GLenum type,
+        const GLuint id,
+        const GLenum severity,
+        const GLsizei length,
+        const GLchar* message,
+        const void* user_param)
     {
+        std::string msg_source;
+        switch (source)
+        {
+        case GL_DEBUG_SOURCE_API:
+            msg_source = "API";
+            break;
+        case GL_DEBUG_SOURCE_SHADER_COMPILER:
+            msg_source = "SHADER_COMPILER";
+            break;
+        case GL_DEBUG_SOURCE_THIRD_PARTY:
+            msg_source = "THIRD_PARTY";
+            break;
+        case GL_DEBUG_SOURCE_APPLICATION:
+            msg_source = "APPLICATION";
+            break;
+        case GL_DEBUG_SOURCE_OTHER:
+            msg_source = "OTHER";
+            break;
+        default:;
+        }
+
+        std::string msg_type;
+        switch (type)
+        {
+        case GL_DEBUG_TYPE_ERROR:
+            msg_type = "ERROR";
+            break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+            msg_type = "DEPRECATED_BEHAVIOR";
+            break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+            msg_type = "UNDEFINED_BEHAVIOR";
+            break;
+        case GL_DEBUG_TYPE_PORTABILITY:
+            msg_type = "PORTABILITY";
+            break;
+        case GL_DEBUG_TYPE_PERFORMANCE:
+            msg_type = "PERFORMANCE";
+            break;
+        case GL_DEBUG_TYPE_OTHER:
+            msg_type = "OTHER";
+            break;
+        default:;
+        }
+
         switch (severity)
         {
         case GL_DEBUG_SEVERITY_HIGH:
-            log_.error(message);
+            log_.error(
+                "message: {}, type: {}, source: {}",
+                message,
+                msg_type.c_str(),
+                msg_source.c_str());
             break;
         case GL_DEBUG_SEVERITY_MEDIUM:
-            log_.warn(message);
+            log_.warn(
+                "message: {}, type: {}, source: {}",
+                message,
+                msg_type.c_str(),
+                msg_source.c_str());
             break;
         case GL_DEBUG_SEVERITY_LOW:
-            log_.debug(message);
+            log_.debug(
+                "message: {}, type: {}, source: {}",
+                message,
+                msg_type.c_str(),
+                msg_source.c_str());
             break;
         default:
-            log_.trace(message);
+            log_.trace(
+                "glDebugMessage: {}, type: {}, source: {}",
+                message,
+                msg_type.c_str(),
+                msg_source.c_str());
             break;
         }
     }
@@ -755,10 +1028,22 @@ namespace moka
         glBindVertexArray(vao_);
 
         glEnable(GL_MULTISAMPLE);
+
+        glDepthFunc(GL_LEQUAL);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("gl_graphics_api");
+        }
     }
 
     gl_graphics_api::~gl_graphics_api()
     {
         glDeleteVertexArrays(1, &vao_);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("~gl_graphics_api");
+        }
     }
 } // namespace moka

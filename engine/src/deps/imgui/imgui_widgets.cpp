@@ -51,12 +51,12 @@ Index of this file:
 // Clang/GCC warnings with -Weverything
 #ifdef __clang__
 #pragma clang diagnostic ignored \
-    "-Wformat-nonliteral" // warning : base_pixel_format string is not a string literal              // passing non-literal to vsnformat(). yes, user passing incorrect base_pixel_format strings can crash the code.
+    "-Wformat-nonliteral" // warning : host_format string is not a string literal // passing non-literal to vsnformat(). yes, user passing incorrect host_format strings can crash the code.
 #pragma clang diagnostic ignored \
     "-Wsign-conversion" // warning : implicit conversion changes signedness //
 #elif defined(__GNUC__)
 #pragma GCC diagnostic ignored \
-    "-Wformat-nonliteral" // warning: base_pixel_format not a string literal, base_pixel_format string not checked
+    "-Wformat-nonliteral" // warning: host_format not a string literal, host_format string not checked
 #if __GNUC__ >= 8
 #pragma GCC diagnostic ignored \
     "-Wclass-memaccess" // warning: 'memset/memcpy' clearing/writing an object of type 'xxxx' with no trivial copy-assignment; use assignment or value-initialization instead
@@ -1804,17 +1804,17 @@ static const ImGuiDataTypeInfo GDataTypeInfo[] = {
 };
 IM_STATIC_ASSERT(IM_ARRAYSIZE(GDataTypeInfo) == ImGuiDataType_COUNT);
 
-// FIXME-LEGACY: Prior to 1.61 our DragInt() function internally used floats and because of this the compile-time default value for base_pixel_format was "%.0f".
+// FIXME-LEGACY: Prior to 1.61 our DragInt() function internally used floats and because of this the compile-time default value for host_format was "%.0f".
 // Even though we changed the compile-time default, we expect users to have carried %f around, which would break the display of DragInt() calls.
-// To honor backward compatibility we are rewriting the base_pixel_format string, unless IMGUI_DISABLE_OBSOLETE_FUNCTIONS is enabled. What could possibly go wrong?!
+// To honor backward compatibility we are rewriting the host_format string, unless IMGUI_DISABLE_OBSOLETE_FUNCTIONS is enabled. What could possibly go wrong?!
 static const char* PatchFormatStringFloatToInt(const char* fmt)
 {
     if (fmt[0] == '%' && fmt[1] == '.' && fmt[2] == '0' && fmt[3] == 'f' &&
         fmt[4] == 0) // Fast legacy path for "%.0f" which is expected to be the most common case.
         return "%d";
     const char* fmt_start = ImParseFormatFindStart(fmt); // Find % (if any, and ignore %%)
-    const char* fmt_end = ImParseFormatFindEnd(
-        fmt_start); // Find end of base_pixel_format specifier, which itself is an exercise of confidence/recklessness (because snprintf is dependent on libc or user).
+    const char* fmt_end =
+        ImParseFormatFindEnd(fmt_start); // Find end of host_format specifier, which itself is an exercise of confidence/recklessness (because snprintf is dependent on libc or user).
     if (fmt_end > fmt_start && fmt_end[-1] == 'f')
     {
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
@@ -1825,7 +1825,7 @@ static const char* PatchFormatStringFloatToInt(const char* fmt)
             g.TempBuffer, IM_ARRAYSIZE(g.TempBuffer), "%.*s%%d%s", (int)(fmt_start - fmt), fmt, fmt_end); // Honor leading and trailing decorations, but lose alignment/precision.
         return g.TempBuffer;
 #else
-        IM_ASSERT(0 && "DragInt(): Invalid base_pixel_format string!"); // Old versions used a default parameter of "%.0f", please replace with e.g. "%d"
+        IM_ASSERT(0 && "DragInt(): Invalid host_format string!"); // Old versions used a default parameter of "%.0f", please replace with e.g. "%d"
 #endif
     }
     return fmt;
@@ -1967,7 +1967,7 @@ static bool DataTypeApplyOpFromText(
     }
     else if (data_type == ImGuiDataType_Float)
     {
-        // For floats we have to ignore base_pixel_format with precision (e.g. "%.2f") because sscanf doesn't take them in
+        // For floats we have to ignore host_format with precision (e.g. "%.2f") because sscanf doesn't take them in
         format = "%f";
         float* v = (float*)data_ptr;
         float arg0f = *v, arg1f = 0.0f;
@@ -2058,7 +2058,7 @@ template <typename TYPE, typename SIGNEDTYPE>
 TYPE ImGui::RoundScalarWithFormatT(const char* format, ImGuiDataType data_type, TYPE v)
 {
     const char* fmt_start = ImParseFormatFindStart(format);
-    if (fmt_start[0] != '%' || fmt_start[1] == '%') // Don't apply if the value is not visible in the base_pixel_format string
+    if (fmt_start[0] != '%' || fmt_start[1] == '%') // Don't apply if the value is not visible in the host_format string
         return v;
     char v_str[64];
     ImFormatString(v_str, IM_ARRAYSIZE(v_str), fmt_start, v);
@@ -2170,7 +2170,7 @@ bool ImGui::DragBehaviorT(
         v_cur += (TYPE)g.DragCurrentAccum;
     }
 
-    // Round to user desired precision based on base_pixel_format string
+    // Round to user desired precision based on host_format string
     v_cur = RoundScalarWithFormatT<TYPE, SIGNEDTYPE>(format, data_type, v_cur);
 
     // Preserve remainder after rounding has been applied. This also allow slow tweaking of values.
@@ -2331,8 +2331,8 @@ bool ImGui::DragScalar(
     }
     const bool hovered = ItemHoverable(frame_bb, id);
 
-    // Default base_pixel_format string when passing NULL
-    // Patch old "%.0f" base_pixel_format string to use "%d", read function comments for more details.
+    // Default host_format string when passing NULL
+    // Patch old "%.0f" host_format string to use "%d", read function comments for more details.
     IM_ASSERT(data_type >= 0 && data_type < ImGuiDataType_COUNT);
     if (format == NULL)
         format = GDataTypeInfo[data_type].PrintFmt;
@@ -2374,7 +2374,7 @@ bool ImGui::DragScalar(
     RenderNavHighlight(frame_bb, id);
     RenderFrame(frame_bb.Min, frame_bb.Max, frame_col, true, style.FrameRounding);
 
-    // Display value using user-provided display base_pixel_format so user can add prefix/suffix/decorations to the value.
+    // Display value using user-provided display host_format so user can add prefix/suffix/decorations to the value.
     char value_buf[64];
     const char* value_buf_end =
         value_buf + DataTypeFormatString(
@@ -2786,7 +2786,7 @@ bool ImGui::SliderBehaviorT(
                 }
             }
 
-            // Round to user desired precision based on base_pixel_format string
+            // Round to user desired precision based on host_format string
             v_new = RoundScalarWithFormatT<TYPE, SIGNEDTYPE>(format, data_type, v_new);
 
             // Apply result
@@ -2902,8 +2902,8 @@ bool ImGui::SliderScalar(
         return false;
     }
 
-    // Default base_pixel_format string when passing NULL
-    // Patch old "%.0f" base_pixel_format string to use "%d", read function comments for more details.
+    // Default host_format string when passing NULL
+    // Patch old "%.0f" host_format string to use "%d", read function comments for more details.
     IM_ASSERT(data_type >= 0 && data_type < ImGuiDataType_COUNT);
     if (format == NULL)
         format = GDataTypeInfo[data_type].PrintFmt;
@@ -2953,7 +2953,7 @@ bool ImGui::SliderScalar(
         GetColorU32(g.ActiveId == id ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab),
         style.GrabRounding);
 
-    // Display value using user-provided display base_pixel_format so user can add prefix/suffix/decorations to the value.
+    // Display value using user-provided display host_format so user can add prefix/suffix/decorations to the value.
     char value_buf[64];
     const char* value_buf_end =
         value_buf + DataTypeFormatString(
@@ -3086,8 +3086,8 @@ bool ImGui::VSliderScalar(
     if (!ItemAdd(frame_bb, id))
         return false;
 
-    // Default base_pixel_format string when passing NULL
-    // Patch old "%.0f" base_pixel_format string to use "%d", read function comments for more details.
+    // Default host_format string when passing NULL
+    // Patch old "%.0f" host_format string to use "%d", read function comments for more details.
     IM_ASSERT(data_type >= 0 && data_type < ImGuiDataType_COUNT);
     if (format == NULL)
         format = GDataTypeInfo[data_type].PrintFmt;
@@ -3124,7 +3124,7 @@ bool ImGui::VSliderScalar(
         GetColorU32(g.ActiveId == id ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab),
         style.GrabRounding);
 
-    // Display value using user-provided display base_pixel_format so user can add prefix/suffix/decorations to the value.
+    // Display value using user-provided display host_format so user can add prefix/suffix/decorations to the value.
     // For the vertical slider we allow centered text to overlap the frame padding
     char value_buf[64];
     const char* value_buf_end =
@@ -3195,7 +3195,7 @@ const char* ImParseFormatFindStart(const char* fmt)
 
 const char* ImParseFormatFindEnd(const char* fmt)
 {
-    // Printf/scanf types modifiers: I/L/h/j/l/t/w/z. Other uppercase letters qualify as types aka end of the base_pixel_format.
+    // Printf/scanf types modifiers: I/L/h/j/l/t/w/z. Other uppercase letters qualify as types aka end of the host_format.
     if (fmt[0] != '%')
         return fmt;
     const unsigned int ignored_uppercase_mask = (1 << ('I' - 'A')) | (1 << ('L' - 'A'));
@@ -3212,7 +3212,7 @@ const char* ImParseFormatFindEnd(const char* fmt)
     return fmt;
 }
 
-// Extract the base_pixel_format out of a base_pixel_format string with leading or trailing decorations
+// Extract the host_format out of a host_format string with leading or trailing decorations
 //  fmt = "blah blah"  -> return fmt
 //  fmt = "%.3f"       -> return fmt
 //  fmt = "hello %.3f" -> return fmt + 6
@@ -3229,7 +3229,7 @@ const char* ImParseFormatTrimDecorations(const char* fmt, char* buf, int buf_siz
     return buf;
 }
 
-// Parse display precision back from the display base_pixel_format string
+// Parse display precision back from the display host_format string
 // FIXME: This is still used by some navigation code path to infer a minimum tweak step, but we should aim to rework widgets so it isn't needed.
 int ImParseFormatPrecision(const char* fmt, int default_precision)
 {
@@ -3292,7 +3292,7 @@ bool ImGui::InputScalarAsWidgetReplacement(
     return false;
 }
 
-// NB: base_pixel_format here must be a simple "%xx" base_pixel_format string with no prefix/suffix (unlike the Drag/Slider functions "base_pixel_format" argument)
+// NB: host_format here must be a simple "%xx" host_format string with no prefix/suffix (unlike the Drag/Slider functions "host_format" argument)
 bool ImGui::InputScalar(
     const char* label,
     ImGuiDataType data_type,
@@ -3431,7 +3431,7 @@ bool ImGui::InputFloat4(const char* label, float v[4], const char* format, ImGui
     return InputScalarN(label, ImGuiDataType_Float, v, 4, NULL, NULL, format, extra_flags);
 }
 
-// Prefer using "const char* base_pixel_format" directly, which is more flexible and consistent with other API.
+// Prefer using "const char* host_format" directly, which is more flexible and consistent with other API.
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
 bool ImGui::InputFloat(const char* label, float* v, float step, float step_fast, int decimal_precision, ImGuiInputTextFlags extra_flags)
 {
@@ -4026,7 +4026,7 @@ bool ImGui::InputTextEx(
         if (g.ActiveId != id)
         {
             // Start edition
-            // Take a copy of the initial buffer value (both in original UTF-8 base_pixel_format and converted to wchar)
+            // Take a copy of the initial buffer value (both in original UTF-8 host_format and converted to wchar)
             // From the moment we focused we are ignoring the content of 'buf' (unless we are in read-only mode)
             const int prev_len_w = edit_state.CurLenW;
             const int init_buf_len = (int)strlen(buf);

@@ -46,8 +46,8 @@
 #endif
 #if defined(__clang__) || defined(__GNUC__)
 #define IM_FMTARGS(FMT) \
-    __attribute__((base_pixel_format(printf, FMT, FMT + 1))) // Apply printf-style warnings to user functions.
-#define IM_FMTLIST(FMT) __attribute__((base_pixel_format(printf, FMT, 0)))
+    __attribute__((host_format(printf, FMT, FMT + 1))) // Apply printf-style warnings to user functions.
+#define IM_FMTLIST(FMT) __attribute__((host_format(printf, FMT, 0)))
 #else
 #define IM_FMTARGS(FMT)
 #define IM_FMTLIST(FMT)
@@ -431,7 +431,7 @@ namespace ImGui
 
     // Widgets: Drags (tip: ctrl+click on a drag box to input with keyboard. manually input values aren't clamped, can go off-bounds)
     // For all the Float2/Float3/Float4/Int2/Int3/Int4 versions of every functions, note that a 'float v[X]' function argument is the same as 'float* v', the array syntax is just a way to document the number of elements that are expected to be accessible. You can pass address of your first element out of a contiguous set, e.g. &myvector.x
-    // Adjust base_pixel_format string to decorate the value with a prefix, a suffix, or adapt the editing and display precision e.g. "%.3f" -> 1.234; "%5.2f secs" -> 01.23 secs; "Biscuit: %.0f" -> Biscuit: 1; etc.
+    // Adjust host_format string to decorate the value with a prefix, a suffix, or adapt the editing and display precision e.g. "%.3f" -> 1.234; "%5.2f secs" -> 01.23 secs; "Biscuit: %.0f" -> Biscuit: 1; etc.
     // Speed are per-pixel of mouse movement (v_speed=0.2f: mouse needs to move by 5 pixels to increase value by 1). For gamepad/keyboard navigation, minimum speed is Max(v_speed, minimum_step_at_given_precision).
     IMGUI_API bool DragFloat(
         const char* label,
@@ -533,14 +533,14 @@ namespace ImGui
         float power = 1.0f);
 
     // Widgets: Sliders (tip: ctrl+click on a slider to input with keyboard. manually input values aren't clamped, can go off-bounds)
-    // Adjust base_pixel_format string to decorate the value with a prefix, a suffix, or adapt the editing and display precision e.g. "%.3f" -> 1.234; "%5.2f secs" -> 01.23 secs; "Biscuit: %.0f" -> Biscuit: 1; etc.
+    // Adjust host_format string to decorate the value with a prefix, a suffix, or adapt the editing and display precision e.g. "%.3f" -> 1.234; "%5.2f secs" -> 01.23 secs; "Biscuit: %.0f" -> Biscuit: 1; etc.
     IMGUI_API bool SliderFloat(
         const char* label,
         float* v,
         float v_min,
         float v_max,
         const char* format = "%.3f",
-        float power = 1.0f); // adjust base_pixel_format to decorate the value with a prefix or a suffix for in-slider labels or unit display. Use power!=1.0 for power curve sliders
+        float power = 1.0f); // adjust host_format to decorate the value with a prefix or a suffix for in-slider labels or unit display. Use power!=1.0 for power curve sliders
     IMGUI_API bool SliderFloat2(
         const char* label,
         float v[2],
@@ -701,7 +701,7 @@ namespace ImGui
         const ImVec4& col,
         ImGuiColorEditFlags flags = 0,
         ImVec2 size = ImVec2(0, 0)); // display a colored square/button, hover for details, return true when pressed.
-    IMGUI_API void SetColorEditOptions(ImGuiColorEditFlags flags); // initialize current options (generally on application startup) if you want to select a default base_pixel_format, picker type, etc. User will be able to change many settings, unless you pass the _NoOptions flag to your calls.
+    IMGUI_API void SetColorEditOptions(ImGuiColorEditFlags flags); // initialize current options (generally on application startup) if you want to select a default host_format, picker type, etc. User will be able to change many settings, unless you pass the _NoOptions flag to your calls.
 
     // Widgets: Trees
     // TreeNode functions return true when the node is open, in which case you need to also call TreePop() when you are finished displaying the tree node contents.
@@ -802,7 +802,7 @@ namespace ImGui
         float scale_max = FLT_MAX,
         ImVec2 graph_size = ImVec2(0, 0));
 
-    // Widgets: Value() Helpers. Output single value in "name: value" base_pixel_format (tip: freely declare more in your code to handle your types. you can add functions to the ImGui namespace)
+    // Widgets: Value() Helpers. Output single value in "name: value" host_format (tip: freely declare more in your code to handle your types. you can add functions to the ImGui namespace)
     IMGUI_API void Value(const char* prefix, bool b);
     IMGUI_API void Value(const char* prefix, int v);
     IMGUI_API void Value(const char* prefix, unsigned int v);
@@ -827,9 +827,8 @@ namespace ImGui
     IMGUI_API void SetTooltipV(const char* fmt, va_list args) IM_FMTLIST(1);
 
     // Popups
-    IMGUI_API void OpenPopup(
-        const char* str_id); // call to mark popup as open (don't call every frame!).
-                             // popups are closed when user click outside, or if CloseCurrentPopup() is called within a BeginPopup()/EndPopup() block. By default, Selectable()/MenuItem() are calling CloseCurrentPopup(). Popup identifiers are relative to the current ID-stack (so OpenPopup and BeginPopup needs to be at the same level).
+    IMGUI_API void OpenPopup(const char* str_id); // call to mark popup as open (don't call every frame!).
+                                                  // popups are closed when user click outside, or if CloseCurrentPopup() is called within a BeginPopup()/EndPopup() block. By default, Selectable()/MenuItem() are calling CloseCurrentPopup(). Popup identifiers are relative to the current ID-stack (so OpenPopup and BeginPopup needs to be at the same level).
     IMGUI_API bool BeginPopup(const char* str_id, ImGuiWindowFlags flags = 0); // return true if the popup is open, and you can start outputting to it. only call EndPopup() if BeginPopup() returns true!
     IMGUI_API bool BeginPopupContextItem(const char* str_id = NULL, int mouse_button = 1); // helper to open and begin popup when clicked on last item. if you can pass a NULL str_id only if the previous item had an id. If you want to use that on a non-interactive item such as Text() you need to pass in an explicit ID here. read comments in .cpp!
     IMGUI_API bool BeginPopupContextWindow(
@@ -1676,7 +1675,7 @@ namespace ImGui
         float step,
         float step_fast,
         int decimal_precision,
-        ImGuiInputTextFlags extra_flags = 0); // Use the 'const char* base_pixel_format' version instead of 'decimal_precision'!
+        ImGuiInputTextFlags extra_flags = 0); // Use the 'const char* host_format' version instead of 'decimal_precision'!
     IMGUI_API bool InputFloat2(const char* label, float v[2], int decimal_precision, ImGuiInputTextFlags extra_flags = 0);
     IMGUI_API bool InputFloat3(const char* label, float v[3], int decimal_precision, ImGuiInputTextFlags extra_flags = 0);
     IMGUI_API bool InputFloat4(const char* label, float v[4], int decimal_precision, ImGuiInputTextFlags extra_flags = 0);
@@ -2043,7 +2042,7 @@ struct ImGuiOnceUponAFrame
     if (imgui_oaf)
 #endif
 
-// Helper: Parse and apply text filters. In base_pixel_format "aaaaa[,bbbb][,ccccc]"
+// Helper: Parse and apply text filters. In host_format "aaaaa[,bbbb][,ccccc]"
 struct ImGuiTextFilter
 {
     IMGUI_API ImGuiTextFilter(const char* default_filter = "");
@@ -2468,7 +2467,7 @@ struct ImDrawVert
     ImU32 col;
 };
 #else
-// You can override the vertex base_pixel_format layout by defining IMGUI_OVERRIDE_DRAWVERT_STRUCT_LAYOUT in imconfig.h
+// You can override the vertex host_format layout by defining IMGUI_OVERRIDE_DRAWVERT_STRUCT_LAYOUT in imconfig.h
 // The code expect ImVec2 pos (8 bytes), ImVec2 uv (8 bytes), ImU32 col (4 bytes), but you can re-order them or add other fields as needed to simplify integration in your engine.
 // The type has to be described within the macro (you can either declare the struct or use a typedef)
 // NOTE: IMGUI DOESN'T CLEAR THE STRUCTURE AND DOESN'T CALL A CONSTRUCTOR SO ANY CUSTOM FIELD WILL BE UNINITIALIZED. IF YOU ADD EXTRA FIELDS (SUCH AS A 'Z' COORDINATES) YOU WILL NEED TO CLEAR THEM DURING RENDER OR TO IGNORE THEM.
@@ -2799,7 +2798,7 @@ enum ImFontAtlasFlags_
 //  - Optionally, call any of the AddFont*** functions. If you don't call any, the default font embedded in the code will be loaded for you.
 //  - Call GetTexDataAsAlpha8() or GetTexDataAsRGBA32() to build and retrieve pixels data.
 //  - Upload the pixels data into a texture within your graphics system (see imgui_impl_xxxx.cpp examples)
-//  - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a base_pixel_format natural to your graphics API.
+//  - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a host_format natural to your graphics API.
 //    This value will be passed back to you during rendering to identify the texture. Read FAQ entry about ImTextureID for more details.
 // Common pitfalls:
 // - If you pass a 'glyph_ranges' array to AddFont*** functions, you need to make sure that your array persist up until the
@@ -2844,7 +2843,7 @@ struct ImFontAtlas
     // Build atlas, retrieve pixel data.
     // User is in charge of copying the pixels into graphics memory (e.g. create a texture with your engine). Then store your texture handle with SetTexID().
     // The pitch is always = Width * BytesPerPixels (1 or 4)
-    // Building in RGBA32 base_pixel_format is provided for convenience and compatibility, but note that unless you manually manipulate or copy color data into
+    // Building in RGBA32 host_format is provided for convenience and compatibility, but note that unless you manually manipulate or copy color data into
     // the texture (e.g. when using the AddCustomRect*** api), then the RGB pixels emitted will always be white (~75% of memory/bandwidth waste.
     IMGUI_API bool Build(); // Build pixels data. This is called automatically for you by the GetTexData*** functions.
     IMGUI_API bool IsBuilt()

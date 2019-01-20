@@ -3,12 +3,14 @@
 #include <graphics/command/draw_command.hpp>
 #include <graphics/command/fill_index_buffer_command.hpp>
 #include <graphics/command/fill_vertex_buffer_command.hpp>
+#include <graphics/command/frame_buffer_command.hpp>
+#include <graphics/command/frame_buffer_texture_command.hpp>
 #include <graphics/command/scissor_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 
 namespace moka
 {
-    command_buffer::command_buffer(sort_key id) : id_(id)
+    command_buffer::command_buffer(const sort_key id) : id_(id)
     {
     }
 
@@ -37,33 +39,43 @@ namespace moka
         }
     }
 
+    frame_buffer_command& command_buffer::frame_buffer()
+    {
+        return emplace_back<frame_buffer_command>();
+    }
+
+    frame_buffer_texture_command& command_buffer::frame_buffer_texture()
+    {
+        return emplace_back<frame_buffer_texture_command>();
+    }
+
     clear_command& command_buffer::clear()
     {
-        return emplace_back<moka::clear_command>();
+        return emplace_back<clear_command>();
     }
 
     draw_command& command_buffer::draw()
     {
-        return emplace_back<moka::draw_command>();
+        return emplace_back<draw_command>();
     }
 
     scissor_command& command_buffer::scissor()
     {
-        return emplace_back<moka::scissor_command>();
+        return emplace_back<scissor_command>();
     }
 
     viewport_command& command_buffer::viewport()
     {
-        return emplace_back<moka::viewport_command>();
+        return emplace_back<viewport_command>();
     }
 
     fill_index_buffer_command& command_buffer::fill_index_buffer()
     {
-        return emplace_back<moka::fill_index_buffer_command>();
+        return emplace_back<fill_index_buffer_command>();
     }
 
     fill_vertex_buffer_command& command_buffer::fill_vertex_buffer()
     {
-        return emplace_back<moka::fill_vertex_buffer_command>();
+        return emplace_back<fill_vertex_buffer_command>();
     }
 } // namespace moka

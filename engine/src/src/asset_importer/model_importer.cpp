@@ -24,38 +24,38 @@ namespace moka
         index_buffer = 34963
     };
 
-    constexpr base_pixel_format stb_to_moka(const int format)
+    constexpr host_format stb_to_moka(const int format)
     {
         switch (format)
         {
         case STBI_grey:
-            return base_pixel_format::r;
+            return host_format::r;
         case STBI_grey_alpha:
-            return base_pixel_format::rg;
+            return host_format::rg;
         case STBI_rgb:
-            return base_pixel_format::rgb;
+            return host_format::rgb;
         case STBI_rgb_alpha:
-            return base_pixel_format::rgba;
+            return host_format::rgba;
         case STBI_default:
-            return base_pixel_format::auto_detect;
+            return host_format::auto_detect;
         default:;
         }
         throw std::runtime_error("Invalid pixel_format value");
     }
 
-    constexpr int moka_to_stb(const base_pixel_format format)
+    constexpr int moka_to_stb(const host_format format)
     {
         switch (format)
         {
-        case base_pixel_format::r:
+        case host_format::r:
             return STBI_grey;
-        case base_pixel_format::rg:
+        case host_format::rg:
             return STBI_grey_alpha;
-        case base_pixel_format::rgb:
+        case host_format::rgb:
             return STBI_rgb;
-        case base_pixel_format::rgba:
+        case host_format::rgba:
             return STBI_rgb_alpha;
-        case base_pixel_format::auto_detect:
+        case host_format::auto_detect:
             return STBI_default;
         default:;
         }
@@ -63,11 +63,7 @@ namespace moka
     }
 
     std::byte* texture_load(
-        const std::filesystem::path& path,
-        int& width,
-        int& height,
-        base_pixel_format& format,
-        const base_pixel_format requested_format)
+        const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -83,11 +79,7 @@ namespace moka
     }
 
     float* texture_load_hdr(
-        const std::filesystem::path& path,
-        int& width,
-        int& height,
-        base_pixel_format& format,
-        const base_pixel_format requested_format)
+        const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -330,10 +322,6 @@ namespace moka
             mat_builder.set_vertex_shader(root_directory / vertex);
             mat_builder.set_fragment_shader(root_directory / fragment);
 
-            const texture_wrap_mode wrap{wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge};
-
-            const texture_filter_mode filter{mag_filter_mode::linear, min_filter_mode::linear};
-
             if (primitive.material != -1)
             {
                 auto material = model.materials[primitive.material];
@@ -367,18 +355,24 @@ namespace moka
 
                             auto image_data = model.images[texture_source];
 
-                            auto diffuse_map = device.make_texture(
-                                texture_target::texture_2d,
-                                image_data.image.data(),
-                                texture_type::uint8,
-                                image_data.width,
-                                image_data.height,
-                                stb_to_moka(image_data.component),
-                                internal_pixel_format::rgba,
-                                filter,
-                                wrap,
-                                true,
-                                false);
+                            auto diffuse_map =
+                                device.build_texture()
+                                    .add_image_data(
+                                        image_target::texture_2d,
+                                        0,
+                                        device_format::rgba,
+                                        image_data.width,
+                                        image_data.height,
+                                        0,
+                                        host_format::rgba,
+                                        pixel_type::uint8,
+                                        image_data.image.data())
+                                    .set_wrap_s(wrap_mode::clamp_to_edge)
+                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_mipmaps(true)
+                                    .set_min_filter(min_filter::linear_mipmap_linear)
+                                    .set_mag_filter(mag_filter::linear)
+                                    .build();
 
                             mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
                         }
@@ -420,18 +414,24 @@ namespace moka
 
                             auto image_data = model.images[texture_source];
 
-                            auto metallic_roughness_map = device.make_texture(
-                                texture_target::texture_2d,
-                                image_data.image.data(),
-                                texture_type::uint8,
-                                image_data.width,
-                                image_data.height,
-                                stb_to_moka(image_data.component),
-                                internal_pixel_format::rgba,
-                                filter,
-                                wrap,
-                                true,
-                                false);
+                            auto metallic_roughness_map =
+                                device.build_texture()
+                                    .add_image_data(
+                                        image_target::texture_2d,
+                                        0,
+                                        device_format::rgba,
+                                        image_data.width,
+                                        image_data.height,
+                                        0,
+                                        host_format::rgba,
+                                        pixel_type::uint8,
+                                        image_data.image.data())
+                                    .set_wrap_s(wrap_mode::clamp_to_edge)
+                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_mipmaps(true)
+                                    .set_min_filter(min_filter::linear_mipmap_linear)
+                                    .set_mag_filter(mag_filter::linear)
+                                    .build();
 
                             mat_builder.add_texture(
                                 material_property::metallic_roughness_map, metallic_roughness_map);
@@ -463,18 +463,24 @@ namespace moka
 
                             auto image_data = model.images[texture_source];
 
-                            auto normal_map = device.make_texture(
-                                texture_target::texture_2d,
-                                image_data.image.data(),
-                                texture_type::uint8,
-                                image_data.width,
-                                image_data.height,
-                                stb_to_moka(image_data.component),
-                                internal_pixel_format::rgba,
-                                filter,
-                                wrap,
-                                true,
-                                false);
+                            auto normal_map =
+                                device.build_texture()
+                                    .add_image_data(
+                                        image_target::texture_2d,
+                                        0,
+                                        device_format::rgba,
+                                        image_data.width,
+                                        image_data.height,
+                                        0,
+                                        host_format::rgba,
+                                        pixel_type::uint8,
+                                        image_data.image.data())
+                                    .set_wrap_s(wrap_mode::clamp_to_edge)
+                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_mipmaps(true)
+                                    .set_min_filter(min_filter::linear_mipmap_linear)
+                                    .set_mag_filter(mag_filter::linear)
+                                    .build();
 
                             mat_builder.add_texture(material_property::normal_map, normal_map);
                         }
@@ -498,18 +504,24 @@ namespace moka
 
                             auto image_data = model.images[texture_source];
 
-                            auto occlusion_map = device.make_texture(
-                                texture_target::texture_2d,
-                                image_data.image.data(),
-                                texture_type::uint8,
-                                image_data.width,
-                                image_data.height,
-                                stb_to_moka(image_data.component),
-                                internal_pixel_format::rgba,
-                                filter,
-                                wrap,
-                                true,
-                                false);
+                            auto occlusion_map =
+                                device.build_texture()
+                                    .add_image_data(
+                                        image_target::texture_2d,
+                                        0,
+                                        device_format::rgba,
+                                        image_data.width,
+                                        image_data.height,
+                                        0,
+                                        host_format::rgba,
+                                        pixel_type::uint8,
+                                        image_data.image.data())
+                                    .set_wrap_s(wrap_mode::clamp_to_edge)
+                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_mipmaps(true)
+                                    .set_min_filter(min_filter::linear_mipmap_linear)
+                                    .set_mag_filter(mag_filter::linear)
+                                    .build();
 
                             mat_builder.add_texture(material_property::ao_map, occlusion_map);
                         }
@@ -542,18 +554,24 @@ namespace moka
 
                             auto image_data = model.images[texture_source];
 
-                            auto emissive_map = device.make_texture(
-                                texture_target::texture_2d,
-                                image_data.image.data(),
-                                texture_type::uint8,
-                                image_data.width,
-                                image_data.height,
-                                stb_to_moka(image_data.component),
-                                internal_pixel_format::rgba,
-                                filter,
-                                wrap,
-                                true,
-                                false);
+                            auto emissive_map =
+                                device.build_texture()
+                                    .add_image_data(
+                                        image_target::texture_2d,
+                                        0,
+                                        device_format::rgba,
+                                        image_data.width,
+                                        image_data.height,
+                                        0,
+                                        host_format::rgba,
+                                        pixel_type::uint8,
+                                        image_data.image.data())
+                                    .set_wrap_s(wrap_mode::clamp_to_edge)
+                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_mipmaps(true)
+                                    .set_min_filter(min_filter::linear_mipmap_linear)
+                                    .set_mag_filter(mag_filter::linear)
+                                    .build();
 
                             mat_builder.add_texture(
                                 material_property::emissive_map, emissive_map);

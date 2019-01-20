@@ -7,8 +7,9 @@
 
 namespace moka
 {
-    struct vertex_layout final
+    class vertex_layout final
     {
+    public:
         using builder = vertex_layout_builder;
         using iterator = std::vector<vertex_attribute>::iterator;
         using const_iterator = std::vector<vertex_attribute>::const_iterator;

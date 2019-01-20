@@ -1,11 +1,11 @@
 #pragma once
 
+#include "graphics/buffer/frame_buffer.hpp"
 #include <asset_importer/texture_importer.hpp>
 #include <graphics/buffer/buffer_usage.hpp>
 #include <graphics/buffer/index_buffer.hpp>
 #include <graphics/buffer/vertex_buffer.hpp>
 #include <graphics/buffer/vertex_layout.hpp>
-#include <graphics/colour.hpp>
 #include <graphics/device/graphics_visitor.hpp>
 #include <graphics/program.hpp>
 #include <graphics/shader.hpp>
@@ -13,7 +13,7 @@
 
 namespace moka
 {
-    struct vertex_layout;
+    class vertex_layout;
     class command_list;
 
     enum class alpha_mode : uint8_t
@@ -152,38 +152,50 @@ namespace moka
     {
     public:
         virtual ~graphics_api() = default;
+
         graphics_api() = default;
+
         graphics_api(const graphics_api& rhs) = default;
+
         graphics_api(graphics_api&& rhs) = default;
+
         graphics_api& operator=(const graphics_api& rhs) = default;
+
         graphics_api& operator=(graphics_api&& rhs) = default;
 
+        void visit(frame_buffer_command& cmd) override = 0;
+
+        void visit(frame_buffer_texture_command& cmd) override = 0;
+
         void visit(clear_command& cmd) override = 0;
+
         void visit(draw_command& cmd) override = 0;
+
         void visit(viewport_command& cmd) override = 0;
+
         void visit(scissor_command& cmd) override = 0;
+
         void visit(fill_vertex_buffer_command& cmd) override = 0;
+
         void visit(fill_index_buffer_command& cmd) override = 0;
 
         virtual void submit(command_list&& commands) = 0;
+
         virtual void submit_and_swap(command_list&& commands) = 0;
 
+        virtual frame_buffer make_frame_buffer(
+            render_texture_data* render_textures, size_t render_texture_count) = 0;
+
         virtual program make_program(const shader& vertex_handle, const shader& fragment_handle) = 0;
+
         virtual shader make_shader(shader_type type, const std::string& source) = 0;
+
         virtual vertex_buffer make_vertex_buffer(
             const void* vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;
+
         virtual index_buffer make_index_buffer(
             const void* indices, size_t size, index_type type, buffer_usage use) = 0;
-        virtual texture make_texture(
-            texture_target target,
-            void* pixels,
-            texture_type type,
-            int width,
-            int height,
-            base_pixel_format base_format,
-            internal_pixel_format internal_format,
-            texture_filter_mode filter_mode,
-            texture_wrap_mode wrap_mode,
-            bool has_mipmaps) = 0;
+
+        virtual texture make_texture(void** data, texture_metadata&& metadata, bool free_host_data) = 0;
     };
 } // namespace moka

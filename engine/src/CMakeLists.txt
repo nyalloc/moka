@@ -43,11 +43,13 @@ set(GRAPHICS_API_SRC
 )
 
 set(GRAPHICS_BUFFER_SRC
+    "includes/graphics/buffer/frame_buffer.hpp"
     "includes/graphics/buffer/index_buffer.hpp"
     "includes/graphics/buffer/vertex_attribute.hpp"
     "includes/graphics/buffer/vertex_buffer.hpp"
     "includes/graphics/buffer/vertex_layout.hpp"
     "includes/graphics/buffer/vertex_layout_builder.hpp"
+	"src/graphics/buffer/frame_buffer.cpp"
     "src/graphics/buffer/index_buffer.cpp"
     "src/graphics/buffer/vertex_attribute.cpp"
     "src/graphics/buffer/vertex_buffer.cpp"
@@ -78,6 +80,7 @@ set(GRAPHICS_COMMAND_SRC
     "includes/graphics/command/draw_command.hpp"
     "includes/graphics/command/fill_index_buffer_command.hpp"
     "includes/graphics/command/fill_vertex_buffer_command.hpp"
+    "includes/graphics/command/frame_buffer_command.hpp"
     "includes/graphics/command/scissor_command.hpp"
     "includes/graphics/command/sort_key.hpp"
     "includes/graphics/command/viewport_command.hpp"
@@ -87,6 +90,7 @@ set(GRAPHICS_COMMAND_SRC
     "src/graphics/command/draw_command.cpp"
     "src/graphics/command/fill_index_buffer_command.cpp"
     "src/graphics/command/fill_vertex_buffer_command.cpp"
+    "src/graphics/command/frame_buffer_command.cpp"
     "src/graphics/command/graphics_command.cpp"
     "src/graphics/command/viewport_command.cpp"
     "src/graphics/command/sort_key.cpp"

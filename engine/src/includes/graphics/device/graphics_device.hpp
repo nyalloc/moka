@@ -1,5 +1,6 @@
 #pragma once
 
+#include "graphics/buffer/frame_buffer.hpp"
 #include <application/window.hpp>
 #include <graphics/api/graphics_api.hpp>
 #include <graphics/command/command_list.hpp>
@@ -25,7 +26,7 @@ namespace moka
         std::unique_ptr<graphics_api> graphics_api_;
 
     public:
-        graphics_device(window& window, graphics_backend graphics_backend = graphics_backend::opengl);
+        explicit graphics_device(window& window, graphics_backend graphics_backend = graphics_backend::opengl);
 
         vertex_buffer make_vertex_buffer(
             const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
@@ -36,18 +37,13 @@ namespace moka
 
         program make_program(shader vertex_handle, shader fragment_handle) const;
 
-        texture make_texture(
-            texture_target target,
-            void* pixels,
-            texture_type type,
-            int width,
-            int height,
-            base_pixel_format base_format,
-            internal_pixel_format internal_format,
-            texture_filter_mode filter_mode,
-            texture_wrap_mode wrap_mode,
-            bool has_mipmaps,
-            bool free_memory) const;
+        texture make_texture(void** data, texture_metadata&& metadata, bool free_host_data) const;
+
+        texture_builder build_texture();
+
+        frame_buffer make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count);
+
+        frame_buffer_builder build_frame_buffer();
 
         void destroy(program handle);
 

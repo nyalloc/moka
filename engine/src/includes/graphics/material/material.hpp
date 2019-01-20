@@ -14,19 +14,19 @@ namespace moka
         points
     };
 
-    struct polygon_mode
+    struct polygon_mode final
     {
         polygon_draw_mode mode = polygon_draw_mode::fill;
         face faces = face::front_and_back;
     };
 
-    struct culling
+    struct culling final
     {
         bool enabled = true;
         face faces = face::back;
     };
 
-    struct blend
+    struct blend final
     {
         bool enabled = false;
         blend_equation equation = blend_equation::func_add;
@@ -36,7 +36,7 @@ namespace moka
 
     class material_builder;
 
-    class material
+    class material final
     {
     protected:
         alpha_mode alpha_mode_ = alpha_mode::opaque;

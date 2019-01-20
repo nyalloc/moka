@@ -47,6 +47,18 @@ namespace moka
         return *this;
     }
 
+    material_builder& material_builder::set_fragment_shader(const char* fragment_shader)
+    {
+        fragment_shader_src_ = fragment_shader;
+        return *this;
+    }
+
+    material_builder& material_builder::set_vertex_shader(const char* vertex_shader)
+    {
+        vertex_shader_src_ = vertex_shader;
+        return *this;
+    }
+
     material_builder& material_builder::set_vertex_shader(const std::string& vertex_shader)
     {
         vertex_shader_src_ = vertex_shader;
@@ -113,6 +125,12 @@ namespace moka
     {
         polygon_mode_.faces = faces;
         polygon_mode_.mode = mode;
+        return *this;
+    }
+
+    material_builder& material_builder::add_uniform(const std::string& name, const parameter_type type)
+    {
+        parameters_[name] = material_parameter{name, type};
         return *this;
     }
 

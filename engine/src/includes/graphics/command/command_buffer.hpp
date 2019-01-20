@@ -38,6 +38,10 @@ namespace moka
 
         void accept(graphics_visitor& device);
 
+        frame_buffer_command& frame_buffer();
+
+        frame_buffer_texture_command& frame_buffer_texture();
+
         clear_command& clear();
 
         draw_command& draw();

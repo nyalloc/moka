@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <graphics/api/graphics_api.hpp>
 #include <variant>
 
@@ -19,7 +20,8 @@ namespace moka
 
         ~material_parameter();
 
-        material_parameter(const std::string& name, parameter_type type, const parameter& data, size_t count = 1);
+        material_parameter(
+            const std::string& name, parameter_type type, const parameter& data = {}, size_t count = 1);
 
         material_parameter(const std::string& name, float data, size_t count = 1);
 
