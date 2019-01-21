@@ -14,20 +14,14 @@
 
 using namespace moka;
 
-struct directional_light final
-{
-    glm::vec3 ambient = colour::light_slate_grey();
-    glm::vec3 direction = {0, 0, -1};
-    glm::vec3 diffuse = colour::dim_grey();
-    glm::vec3 specular = colour::white();
-};
-
-model make_hdr_environment_map(graphics_device& device, const std::filesystem::path& texture_path)
+model make_hdr_environment_map(graphics_device& device, const std::filesystem::path& texture_path, texture& cubemap)
 {
     // we need to take a 2D texture, then turn it into an environment map.
     // to do this, we need to use a shader that will project the 2d texture onto the sides of a cube.
     // we will then render this cube from all 6 directions and capture the result in a frame buffer.
     // we can then use the 6 textures to stitch together our cubemap.
+
+    auto environment_size = 512;
 
     auto height = 0;
     auto width = 0;
@@ -161,18 +155,73 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
         }
     )";
 
+    const auto cube_to_irradiance_vert = R"(
+
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+
+        out vec3 WorldPos;
+
+        uniform mat4 projection;
+        uniform mat4 view;
+
+        void main()
+        {
+            WorldPos = aPos;  
+            gl_Position =  projection * view * vec4(WorldPos, 1.0);
+        }
+
+    )";
+
+    const auto cube_to_irradiance_frag = R"(
+
+        #version 330 core
+        out vec4 FragColor;
+        in vec3 WorldPos;
+
+        uniform samplerCube environmentMap;
+
+        const float PI = 3.14159265359;
+
+        void main()
+        {		
+	        // The world vector acts as the normal of a tangent surface
+            // from the origin, aligned to WorldPos. Given this normal, calculate all
+            // incoming radiance of the environment. The result of this radiance
+            // is the radiance of light coming from -Normal direction, which is what
+            // we use in the PBR shader to sample irradiance.
+            vec3 N = normalize(WorldPos);
+
+            vec3 irradiance = vec3(0.0);   
+            
+            // tangent space calculation from origin point
+            vec3 up    = vec3(0.0, 1.0, 0.0);
+            vec3 right = cross(up, N);
+            up            = cross(N, right);
+               
+            float sampleDelta = 0.025;
+            float nrSamples = 0.0;
+            for(float phi = 0.0; phi < 2.0 * PI; phi += sampleDelta)
+            {
+                for(float theta = 0.0; theta < 0.5 * PI; theta += sampleDelta)
+                {
+                    // spherical to cartesian (in tangent space)
+                    vec3 tangentSample = vec3(sin(theta) * cos(phi),  sin(theta) * sin(phi), cos(theta));
+                    // tangent space to world
+                    vec3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * N; 
+
+                    irradiance += texture(environmentMap, sampleVec).rgb * cos(theta) * sin(theta);
+                    nrSamples++;
+                }
+            }
+            irradiance = PI * irradiance * (1.0 / float(nrSamples));
+            
+            FragColor = vec4(irradiance, 1.0);
+        }
+
+    )";
+
     const auto projection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
-
-    auto hdr_material = material::builder{device, shaders}
-                            .set_vertex_shader(hdr_to_cube_vert)
-                            .set_fragment_shader(hdr_to_cube_frag)
-                            .add_uniform("projection", projection)
-                            .add_uniform("view", parameter_type::mat4)
-                            .add_uniform("map", hdr)
-                            .set_culling_enabled(false)
-                            .build();
-
-    command_list cube_draw;
 
     glm::mat4 capture_views[] = {
         lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)),
@@ -191,105 +240,203 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
         image_target::cubemap_negative_z,
     };
 
-    auto texture_builder = device.build_texture();
+    // set up cubemap from hdr environment map -----------------------
+
+    auto hdr_material = material::builder{device, shaders}
+                            .set_vertex_shader(hdr_to_cube_vert)
+                            .set_fragment_shader(hdr_to_cube_frag)
+                            .add_uniform("projection", projection)
+                            .add_uniform("view", parameter_type::mat4)
+                            .add_uniform("map", hdr)
+                            .set_culling_enabled(false)
+                            .build();
+
+    command_list hdr_map_list;
+
+    auto hdr_texture_builder = device.build_texture();
 
     for (auto& image_target : image_targets)
     {
-        texture_builder.add_image_data(
-            image_target, 0, device_format::rgb16f, 512, 512, 0, host_format::rgb, pixel_type::float32, nullptr);
+        hdr_texture_builder.add_image_data(
+            image_target,
+            0,
+            device_format::rgb16f,
+            environment_size,
+            environment_size,
+            0,
+            host_format::rgb,
+            pixel_type::float32,
+            nullptr);
     }
 
-    auto cubemap = texture_builder.set_target(texture_target::cubemap)
-                       .set_wrap_s(wrap_mode::clamp_to_edge)
-                       .set_wrap_t(wrap_mode::clamp_to_edge)
-                       .set_wrap_r(wrap_mode::clamp_to_edge)
-                       .set_min_filter(min_filter::linear)
-                       .set_mag_filter(mag_filter::linear)
-                       .build();
+    auto hdr_cubemap = hdr_texture_builder.set_target(texture_target::cubemap)
+                           .set_wrap_s(wrap_mode::clamp_to_edge)
+                           .set_wrap_t(wrap_mode::clamp_to_edge)
+                           .set_wrap_r(wrap_mode::clamp_to_edge)
+                           .set_min_filter(min_filter::linear)
+                           .set_mag_filter(mag_filter::linear)
+                           .build();
 
-    const auto frame_buffer =
+    const auto hdr_frame_buffer =
         device.build_frame_buffer()
-            .add_depth_attachment(frame_format::depth_component24, 512, 512)
+            .add_depth_attachment(frame_format::depth_component24, environment_size, environment_size)
             .build();
 
-    cube_draw.viewport().set_rectangle({0, 0, 512, 512});
+    hdr_map_list.viewport().set_rectangle(0, 0, environment_size, environment_size);
 
-    cube_draw.frame_buffer().set_frame_buffer(frame_buffer);
+    hdr_map_list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
 
+    // each draw call renders to the side of a cubemap
     for (auto i = 0; i < 6; i++)
     {
         hdr_material["view"] = capture_views[i];
 
         auto image_target = image_targets[i];
 
-        cube_draw.frame_buffer_texture()
-            .set_texture(cubemap)
+        hdr_map_list.frame_buffer_texture()
+            .set_texture(hdr_cubemap)
             .set_attachment(frame_attachment::color)
             .set_target(image_target)
             .set_mip_level(0);
 
-        cube_draw.clear().set_clear_color(true).set_clear_depth(true);
+        hdr_map_list.clear().set_clear_color(true).set_clear_depth(true);
 
-        cube_draw.draw()
+        hdr_map_list.draw()
             .set_vertex_buffer(buffer)
             .set_vertex_count(36)
             .set_primitive_type(primitive_type::triangles)
             .set_material(hdr_material);
     }
 
-    device.submit(std::move(cube_draw), false);
+    device.submit(std::move(hdr_map_list), false);
 
+    // irradiance cubemap --------------------------------
+
+    auto irradiance_material = material::builder{device, shaders}
+                                   .set_vertex_shader(cube_to_irradiance_vert)
+                                   .set_fragment_shader(cube_to_irradiance_frag)
+                                   .add_uniform("projection", projection)
+                                   .add_uniform("view", parameter_type::mat4)
+                                   .add_uniform("environmentMap", hdr_cubemap)
+                                   .set_culling_enabled(false)
+                                   .build();
+
+    command_list irradiance_list;
+
+    auto irradiance_size = 128;
+
+    auto irradiance_texture_builder = device.build_texture();
+
+    for (auto& image_target : image_targets)
+    {
+        irradiance_texture_builder.add_image_data(
+            image_target,
+            0,
+            device_format::rgb16f,
+            irradiance_size,
+            irradiance_size,
+            0,
+            host_format::rgb,
+            pixel_type::float32,
+            nullptr);
+    }
+
+    auto irradiance_cubemap =
+        irradiance_texture_builder.set_target(texture_target::cubemap)
+            .set_wrap_s(wrap_mode::clamp_to_edge)
+            .set_wrap_t(wrap_mode::clamp_to_edge)
+            .set_wrap_r(wrap_mode::clamp_to_edge)
+            .set_min_filter(min_filter::linear)
+            .set_mag_filter(mag_filter::linear)
+            .build();
+
+    const auto irradiance_frame_buffer =
+        device.build_frame_buffer()
+            .add_depth_attachment(frame_format::depth_component24, irradiance_size, irradiance_size)
+            .build();
+
+    irradiance_list.viewport().set_rectangle(0, 0, irradiance_size, irradiance_size);
+
+    irradiance_list.frame_buffer().set_frame_buffer(irradiance_frame_buffer);
+
+    // each draw call renders to the side of a cubemap
+    for (auto i = 0; i < 6; i++)
+    {
+        irradiance_material["view"] = capture_views[i];
+
+        auto image_target = image_targets[i];
+
+        irradiance_list.frame_buffer_texture()
+            .set_texture(irradiance_cubemap)
+            .set_attachment(frame_attachment::color)
+            .set_target(image_target)
+            .set_mip_level(0);
+
+        irradiance_list.clear().set_clear_color(true).set_clear_depth(true);
+
+        irradiance_list.draw()
+            .set_vertex_buffer(buffer)
+            .set_vertex_count(36)
+            .set_primitive_type(primitive_type::triangles)
+            .set_material(irradiance_material);
+    }
+
+    device.submit(std::move(irradiance_list), false);
+
+    // cubemap ------------------------------------------
     auto cubemap_vert = R"(
 
-        #version 330 core
+            #version 330 core
 
-        layout (location = 0) in vec3 aPos;
+            layout (location = 0) in vec3 aPos;
 
-        uniform mat4 projection;
-        uniform mat4 view;
+            uniform mat4 projection;
+            uniform mat4 view;
 
-        out vec3 localPos;
+            out vec3 localPos;
 
-        void main()
-        {
-            localPos = aPos;
+            void main()
+            {
+                localPos = aPos;
 
-            mat4 rotView = mat4(mat3(view)); // remove translation from the view matrix
-            vec4 clipPos = projection * rotView * vec4(localPos, 1.0);
+                mat4 rotView = mat4(mat3(view)); // remove translation from the view matrix
+                vec4 clipPos = projection * rotView * vec4(localPos, 1.0);
 
-            gl_Position = clipPos.xyww;
-        }
-    )";
+                gl_Position = clipPos.xyww;
+            }
+        )";
 
     auto cubemap_frag = R"(
 
-        #version 330 core
+            #version 330 core
 
-        out vec4 FragColor;
+            out vec4 FragColor;
 
-        in vec3 localPos;
-          
-        uniform samplerCube environmentMap;
-          
-        void main()
-        {
-            vec3 envColor = texture(environmentMap, localPos).rgb;
-            
-            envColor = envColor / (envColor + vec3(1.0));
-            envColor = pow(envColor, vec3(1.0/2.2)); 
-          
-            FragColor = vec4(envColor, 1.0);
-        }
-    )";
+            in vec3 localPos;
+              
+            uniform samplerCube environmentMap;
+              
+            void main()
+            {
+                vec3 envColor = texture(environmentMap, localPos).rgb;
+                
+                envColor = envColor / (envColor + vec3(1.0));
+                envColor = pow(envColor, vec3(1.0/2.2)); 
+              
+                FragColor = vec4(envColor, 1.0);
+            }
+        )";
 
     auto cubemap_material = material::builder{device, shaders}
                                 .set_vertex_shader(cubemap_vert)
                                 .set_fragment_shader(cubemap_frag)
                                 .add_uniform("projection", parameter_type::mat4)
                                 .add_uniform("view", parameter_type::mat4)
-                                .add_uniform("environmentMap", cubemap)
+                                .add_uniform("environmentMap", hdr_cubemap)
                                 .set_culling_enabled(false)
                                 .build();
+
+    cubemap = irradiance_cubemap;
 
     return model(mesh(primitive(buffer, 36, std::move(cubemap_material))));
 }
@@ -304,11 +451,11 @@ class app final : public application
 
     model model_;
 
+    texture cubemap_;
+
     model cube_;
 
     glm::vec4 color_{0.8f, 0.8f, 0.8f, 1.0f};
-
-    directional_light light_;
 
     imgui imgui_;
 
@@ -323,8 +470,9 @@ public:
           model_(model_importer_.load(
               app::data_path() / "Models" / "FlightHelmet" / "FlightHelmet.gltf",
               app::data_path() / "Materials" / "pbr.material")),
+          cubemap_(),
           cube_(make_hdr_environment_map(
-              graphics_, app::data_path() / "Textures" / "siggraph.hdr")),
+              graphics_, app::data_path() / "Textures" / "footprint_court.hdr", cubemap_)),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
     }
@@ -385,20 +533,6 @@ public:
             ImGui::EndMainMenuBar();
         }
 
-        ImGui::Begin("Scene");
-        {
-            ImGui::ColorEdit4("Clear Color", &color_[0]);
-            ImGui::Separator();
-            ImGui::Text("Directional Light");
-            ImGui::ColorEdit3("Ambient", &light_.ambient[0]);
-            ImGui::ColorEdit3("Diffuse", &light_.diffuse[0]);
-            ImGui::ColorEdit3("Specular", &light_.specular[0]);
-            ImGui::DragFloat3("Direction", &light_.direction[0], 0.01, -1, 1);
-        }
-        ImGui::End();
-
-        light_.direction = normalize(light_.direction);
-
         graphics_.submit_and_swap(imgui_.draw());
     }
 
@@ -424,15 +558,11 @@ public:
                 const auto distance = glm::distance(
                     mesh.get_transform().get_position(), camera_.get_position());
 
+                material["irradiance_map"] = cubemap_;
                 material["model"] = mesh.get_transform();
                 material["view"] = camera_.get_view();
                 material["projection"] = camera_.get_projection();
                 material["view_pos"] = camera_.get_position();
-
-                material["light.ambient"] = light_.ambient;
-                material["light.direction"] = light_.direction;
-                material["light.diffuse"] = light_.diffuse;
-                material["light.specular"] = light_.specular;
 
                 const auto sort_key = generate_sort_key(
                     distance, material.get_program().id, material.get_alpha_mode());

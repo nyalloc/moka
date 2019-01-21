@@ -1028,6 +1028,7 @@ namespace moka
         glBindVertexArray(vao_);
 
         glEnable(GL_MULTISAMPLE);
+        glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
         glDepthFunc(GL_LEQUAL);
 

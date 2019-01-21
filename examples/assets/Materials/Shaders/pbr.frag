@@ -35,13 +35,8 @@ struct pbr_material
     #endif
 };
 
-struct directional_light
-{
-    vec3 ambient;
-    vec3 direction;
-    vec3 diffuse;
-    vec3 specular;
-};
+// IBL
+uniform samplerCube irradiance_map;
 
 in vec3 in_frag_pos;  
 in vec3 in_normal;  
@@ -55,7 +50,6 @@ out vec4 frag_color;
 
 uniform vec3 view_pos;
 uniform pbr_material material;
-uniform directional_light light;
 
 vec4 get_albedo()
 {
@@ -173,30 +167,6 @@ vec3 fresnel_schlick_roughness(float cos_theta, vec3 f0, float roughness)
     return f0 + (max(vec3(1.0 - roughness), f0) - f0) * pow(1.0 - cos_theta, 5.0);
 }   
 
-vec3 calc_directional_light(vec3 f0, vec3 n, vec3 v, vec3 r, vec3 albedo, float metallic, float roughness)
-{
-	vec3 l = normalize(light.direction);
-	vec3 h = normalize(v + l);
-	vec3 radiance = light.diffuse;
-	
-	float ndf = distribution_ggx(n, h, roughness);
-	float g = geometry_smith(n, v, l, roughness);
-	vec3 f = fresnel_schlick(max(dot(h, v), 0.0f), f0);
-	
-	vec3 nominator = ndf * g * f;
-	float denominator = 4 * max(dot(n, v), 0.0f) * max(dot(n, l), 0.0f) + 0.001;
-	vec3 specular = nominator / denominator;
-	
-	vec3 ks = f;
-	vec3 kd = vec3(1.0f) - ks;
-	
-	kd *= 1.0f - metallic;
-	
-	float n_dot_l = max(dot(n, l), 0.0f);
-	
-	return (kd * albedo / PI + specular) * radiance * n_dot_l;
-}
-
 void main()
 {
     if(discard_fragment())
@@ -216,15 +186,20 @@ void main()
 	vec3 f0 = vec3(0.04f);
 	f0 = mix(f0, albedo, metallic);
 	
-	vec3 lo = calc_directional_light(f0, n, v, r, albedo, metallic, roughness);
+    vec3 lo = vec3(0.0f);
 	
-	vec3 ambient = vec3(0.03f) * albedo * ao;
-	
-	vec3 color = ambient + lo;
-	
-	color = color / (color + vec3(1.0f));
-	
-	color = pow(color, vec3(1.0f/2.2f));
-	
-    frag_color = vec4(color, 1.0f);
+    vec3 kS = fresnel_schlick(max(dot(n, v), 0.0f), f0);
+    vec3 kD = 1.0f - kS;
+    kD *= 1.0f - metallic;	  
+    vec3 irradiance = texture(irradiance_map, n).rgb;
+    vec3 diffuse = irradiance * albedo;
+    vec3 ambient = (kD * diffuse) * ao;
+    
+    vec3 color = ambient + lo;
+
+    color = color / (color + vec3(1.0f));
+
+    color = pow(color, vec3(1.0f / 2.2f)); 
+
+    frag_color = vec4(color , 1.0f);
 }

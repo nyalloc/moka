@@ -9,13 +9,13 @@ namespace moka
     {
         mouse& mouse_;
 
-        float current_translate_z_ = 3.0f;
+        float current_translate_z_ = 0.5f;
         float current_rotate_x_ = -glm::pi<float>();
-        float current_rotate_y_ = 0.3f;
+        float current_rotate_y_ = 0.2f;
 
-        float translate_z_ = 3.0f;
+        float translate_z_ = 0.5f;
         float rotate_x_ = -glm::pi<float>();
-        float rotate_y_ = 0.3f;
+        float rotate_y_ = 0.2f;
 
         bool auto_scroll_ = true;
 
