@@ -14,12 +14,17 @@
 
 using namespace moka;
 
-model make_hdr_environment_map(graphics_device& device, const std::filesystem::path& texture_path, texture& cubemap)
+model make_hdr_environment_map(
+    graphics_device& device,
+    const std::filesystem::path& texture_path,
+    texture& irradiance_,
+    texture& brdf,
+    texture& prefiltered)
 {
     // we need to take a 2D texture, then turn it into an environment map.
     // to do this, we need to use a shader that will project the 2d texture onto the sides of a cube.
     // we will then render this cube from all 6 directions and capture the result in a frame buffer.
-    // we can then use the 6 textures to stitch together our cubemap.
+    // we can then use the 6 textures to stitch together our irradiance_.
 
     auto environment_size = 512;
 
@@ -48,7 +53,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
                          .build();
 
     // clang-format off
-    float vertices[] = 
+    float cube_vertices[] = 
     {
         // back face-----------------------------------------------------------|
         -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, //< bottom-left  |
@@ -98,15 +103,15 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
 
     const auto size = sizeof(float);
 
-    auto layout =
+    auto cube_layout =
         vertex_layout::builder{}
-            .add_attribute(0, attribute_type::float32, 3, false, 8 * size, 0)
-            .add_attribute(1, attribute_type::float32, 3, false, 8 * size, 3 * size)
-            .add_attribute(2, attribute_type::float32, 2, false, 8 * size, 6 * size)
+            .add_attribute(0, 3, attribute_type::float32, false, 8 * size, 0)
+            .add_attribute(1, 3, attribute_type::float32, false, 8 * size, 3 * size)
+            .add_attribute(2, 2, attribute_type::float32, false, 8 * size, 6 * size)
             .build();
 
-    const auto buffer = device.make_vertex_buffer(
-        vertices, sizeof vertices, std::move(layout), buffer_usage::static_draw);
+    const auto cube_buffer = device.make_vertex_buffer(
+        cube_vertices, sizeof cube_vertices, std::move(cube_layout), buffer_usage::static_draw);
 
     std::map<std::string, program> shaders;
 
@@ -240,7 +245,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
         image_target::cubemap_negative_z,
     };
 
-    // set up cubemap from hdr environment map -----------------------
+    // set up irradiance_ from hdr environment map -----------------------
 
     auto hdr_material = material::builder{device, shaders}
                             .set_vertex_shader(hdr_to_cube_vert)
@@ -286,7 +291,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
 
     hdr_map_list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
 
-    // each draw call renders to the side of a cubemap
+    // each draw call renders to the side of a irradiance_
     for (auto i = 0; i < 6; i++)
     {
         hdr_material["view"] = capture_views[i];
@@ -302,7 +307,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
         hdr_map_list.clear().set_clear_color(true).set_clear_depth(true);
 
         hdr_map_list.draw()
-            .set_vertex_buffer(buffer)
+            .set_vertex_buffer(cube_buffer)
             .set_vertex_count(36)
             .set_primitive_type(primitive_type::triangles)
             .set_material(hdr_material);
@@ -310,7 +315,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
 
     device.submit(std::move(hdr_map_list), false);
 
-    // irradiance cubemap --------------------------------
+    // irradiance irradiance_ --------------------------------
 
     auto irradiance_material = material::builder{device, shaders}
                                    .set_vertex_shader(cube_to_irradiance_vert)
@@ -359,7 +364,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
 
     irradiance_list.frame_buffer().set_frame_buffer(irradiance_frame_buffer);
 
-    // each draw call renders to the side of a cubemap
+    // each draw call renders to the side of a irradiance_
     for (auto i = 0; i < 6; i++)
     {
         irradiance_material["view"] = capture_views[i];
@@ -375,7 +380,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
         irradiance_list.clear().set_clear_color(true).set_clear_depth(true);
 
         irradiance_list.draw()
-            .set_vertex_buffer(buffer)
+            .set_vertex_buffer(cube_buffer)
             .set_vertex_count(36)
             .set_primitive_type(primitive_type::triangles)
             .set_material(irradiance_material);
@@ -383,7 +388,7 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
 
     device.submit(std::move(irradiance_list), false);
 
-    // cubemap ------------------------------------------
+    // irradiance_ ------------------------------------------
     auto cubemap_vert = R"(
 
             #version 330 core
@@ -415,13 +420,15 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
             in vec3 localPos;
               
             uniform samplerCube environmentMap;
+
+            uniform float gamma;
               
             void main()
             {
                 vec3 envColor = texture(environmentMap, localPos).rgb;
                 
                 envColor = envColor / (envColor + vec3(1.0));
-                envColor = pow(envColor, vec3(1.0/2.2)); 
+                envColor = pow(envColor, vec3(1.0/gamma)); 
               
                 FragColor = vec4(envColor, 1.0);
             }
@@ -436,9 +443,431 @@ model make_hdr_environment_map(graphics_device& device, const std::filesystem::p
                                 .set_culling_enabled(false)
                                 .build();
 
-    cubemap = irradiance_cubemap;
+    irradiance_ = irradiance_cubemap;
 
-    return model(mesh(primitive(buffer, 36, std::move(cubemap_material))));
+    const auto brdf_vert = R"(
+    
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+        layout (location = 1) in vec2 aTexCoords;
+
+        out vec2 TexCoords;
+
+        void main()
+        {
+            TexCoords = aTexCoords;
+	        gl_Position = vec4(aPos, 1.0);
+        }
+    
+    )";
+
+    const auto brdf_frag = R"(
+    
+        #version 330 core
+        out vec2 FragColor;
+        in vec2 TexCoords;
+
+        const float PI = 3.14159265359;
+        // ----------------------------------------------------------------------------
+        // http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
+        // efficient VanDerCorpus calculation.
+        float RadicalInverse_VdC(uint bits) 
+        {
+             bits = (bits << 16u) | (bits >> 16u);
+             bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
+             bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
+             bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
+             bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
+             return float(bits) * 2.3283064365386963e-10; // / 0x100000000
+        }
+        // ----------------------------------------------------------------------------
+        vec2 Hammersley(uint i, uint N)
+        {
+	        return vec2(float(i)/float(N), RadicalInverse_VdC(i));
+        }
+        // ----------------------------------------------------------------------------
+        vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
+        {
+	        float a = roughness*roughness;
+	        
+	        float phi = 2.0 * PI * Xi.x;
+	        float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
+	        float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
+	        
+	        // from spherical coordinates to cartesian coordinates - halfway vector
+	        vec3 H;
+	        H.x = cos(phi) * sinTheta;
+	        H.y = sin(phi) * sinTheta;
+	        H.z = cosTheta;
+	        
+	        // from tangent-space H vector to world-space sample vector
+	        vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+	        vec3 tangent   = normalize(cross(up, N));
+	        vec3 bitangent = cross(N, tangent);
+	        
+	        vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
+	        return normalize(sampleVec);
+        }
+        // ----------------------------------------------------------------------------
+        float GeometrySchlickGGX(float NdotV, float roughness)
+        {
+            // note that we use a different k for IBL
+            float a = roughness;
+            float k = (a * a) / 2.0;
+
+            float nom   = NdotV;
+            float denom = NdotV * (1.0 - k) + k;
+
+            return nom / denom;
+        }
+        // ----------------------------------------------------------------------------
+        float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+        {
+            float NdotV = max(dot(N, V), 0.0);
+            float NdotL = max(dot(N, L), 0.0);
+            float ggx2 = GeometrySchlickGGX(NdotV, roughness);
+            float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+
+            return ggx1 * ggx2;
+        }
+        // ----------------------------------------------------------------------------
+        vec2 IntegrateBRDF(float NdotV, float roughness)
+        {
+            vec3 V;
+            V.x = sqrt(1.0 - NdotV*NdotV);
+            V.y = 0.0;
+            V.z = NdotV;
+
+            float A = 0.0;
+            float B = 0.0; 
+
+            vec3 N = vec3(0.0, 0.0, 1.0);
+            
+            const uint SAMPLE_COUNT = 1024u;
+            for(uint i = 0u; i < SAMPLE_COUNT; ++i)
+            {
+                // generates a sample vector that's biased towards the
+                // preferred alignment direction (importance sampling).
+                vec2 Xi = Hammersley(i, SAMPLE_COUNT);
+                vec3 H = ImportanceSampleGGX(Xi, N, roughness);
+                vec3 L = normalize(2.0 * dot(V, H) * H - V);
+
+                float NdotL = max(L.z, 0.0);
+                float NdotH = max(H.z, 0.0);
+                float VdotH = max(dot(V, H), 0.0);
+
+                if(NdotL > 0.0)
+                {
+                    float G = GeometrySmith(N, V, L, roughness);
+                    float G_Vis = (G * VdotH) / (NdotH * NdotV);
+                    float Fc = pow(1.0 - VdotH, 5.0);
+
+                    A += (1.0 - Fc) * G_Vis;
+                    B += Fc * G_Vis;
+                }
+            }
+            A /= float(SAMPLE_COUNT);
+            B /= float(SAMPLE_COUNT);
+            return vec2(A, B);
+        }
+        // ----------------------------------------------------------------------------
+        void main() 
+        {
+            vec2 integratedBRDF = IntegrateBRDF(TexCoords.x, TexCoords.y);
+            FragColor = integratedBRDF;
+        }
+    
+    )";
+
+    // brdf look up texture --------------------------------
+
+    auto brdf_material = material::builder{device, shaders}
+                             .set_vertex_shader(brdf_vert)
+                             .set_fragment_shader(brdf_frag)
+                             .build();
+
+    command_list brdf_list;
+
+    // clang-format off
+    float quad_vertices[] = 
+    {
+            // positions        // texture Coords
+            -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+             1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+             1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+    };
+    // clang-format on
+
+    auto quad_layout =
+        vertex_layout::builder{}
+            .add_attribute(0, 3, attribute_type::float32, false, 5 * size, 0)
+            .add_attribute(1, 2, attribute_type::float32, false, 5 * size, 3 * size)
+            .build();
+
+    const auto quad_buffer = device.make_vertex_buffer(
+        quad_vertices, sizeof quad_vertices, std::move(quad_layout), buffer_usage::static_draw);
+
+    auto brdf_size = 512;
+
+    // allocate space for the lookup texture
+    auto brdf_image = device.build_texture()
+                          .add_image_data(
+                              image_target::texture_2d,
+                              0,
+                              device_format::rg16f,
+                              brdf_size,
+                              brdf_size,
+                              0,
+                              host_format::rg,
+                              pixel_type::float32,
+                              nullptr)
+                          .set_target(texture_target::texture_2d)
+                          .set_wrap_s(wrap_mode::clamp_to_edge)
+                          .set_wrap_t(wrap_mode::clamp_to_edge)
+                          .set_min_filter(min_filter::linear)
+                          .set_mag_filter(mag_filter::linear)
+                          .build();
+
+    // create a framebuffer to render to
+    const auto brdf_frame_buffer =
+        device.build_frame_buffer()
+            .add_depth_attachment(frame_format::depth_component24, brdf_size, brdf_size)
+            .build();
+
+    brdf_list.frame_buffer().set_frame_buffer(brdf_frame_buffer);
+
+    brdf_list.viewport().set_rectangle(0, 0, brdf_size, brdf_size);
+
+    brdf_list.frame_buffer_texture()
+        .set_texture(brdf_image)
+        .set_attachment(frame_attachment::color)
+        .set_target(image_target::texture_2d)
+        .set_mip_level(0);
+
+    brdf_list.clear().set_clear_color(true).set_clear_depth(true);
+
+    brdf_list.draw()
+        .set_vertex_buffer(quad_buffer)
+        .set_vertex_count(4)
+        .set_primitive_type(primitive_type::triangle_strip)
+        .set_material(brdf_material);
+
+    device.submit(std::move(brdf_list), false);
+
+    brdf = brdf_image;
+
+    const auto prefilter_vert = R"(
+    
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+
+        out vec3 WorldPos;
+
+        uniform mat4 projection;
+        uniform mat4 view;
+
+        void main()
+        {
+            WorldPos = aPos;
+            gl_Position =  projection * view * vec4(WorldPos, 1.0);
+        }
+
+    )";
+
+    const auto prefilter_frag = R"(
+    
+        #version 330 core
+        out vec4 FragColor;
+        in vec3 WorldPos;
+
+        uniform samplerCube environmentMap;
+        uniform float roughness;
+
+        const float PI = 3.14159265359;
+        // ----------------------------------------------------------------------------
+        float DistributionGGX(vec3 N, vec3 H, float roughness)
+        {
+            float a = roughness*roughness;
+            float a2 = a*a;
+            float NdotH = max(dot(N, H), 0.0);
+            float NdotH2 = NdotH*NdotH;
+
+            float nom   = a2;
+            float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+            denom = PI * denom * denom;
+
+            return nom / denom;
+        }
+        // ----------------------------------------------------------------------------
+        // http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
+        // efficient VanDerCorpus calculation.
+        float RadicalInverse_VdC(uint bits)
+        {
+             bits = (bits << 16u) | (bits >> 16u);
+             bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
+             bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
+             bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
+             bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
+             return float(bits) * 2.3283064365386963e-10; // / 0x100000000
+        }
+        // ----------------------------------------------------------------------------
+        vec2 Hammersley(uint i, uint N)
+        {
+         return vec2(float(i)/float(N), RadicalInverse_VdC(i));
+        }
+        // ----------------------------------------------------------------------------
+        vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
+        {
+         float a = roughness*roughness;
+    
+         float phi = 2.0 * PI * Xi.x;
+         float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
+         float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
+    
+         // from spherical coordinates to cartesian coordinates - halfway vector
+         vec3 H;
+         H.x = cos(phi) * sinTheta;
+         H.y = sin(phi) * sinTheta;
+         H.z = cosTheta;
+    
+         // from tangent-space H vector to world-space sample vector
+         vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+         vec3 tangent   = normalize(cross(up, N));
+         vec3 bitangent = cross(N, tangent);
+    
+         vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
+         return normalize(sampleVec);
+        }
+        // ----------------------------------------------------------------------------
+        void main()
+        {
+            vec3 N = normalize(WorldPos);
+    
+            // make the simplyfying assumption that V equals R equals the normal
+            vec3 R = N;
+            vec3 V = R;
+
+            const uint SAMPLE_COUNT = 1024u;
+            vec3 prefilteredColor = vec3(0.0);
+            float totalWeight = 0.0;
+    
+            for(uint i = 0u; i < SAMPLE_COUNT; ++i)
+            {
+                // generates a sample vector that's biased towards the preferred alignment direction (importance sampling). 
+                vec2 Xi = Hammersley(i, SAMPLE_COUNT); 
+                vec3 H = ImportanceSampleGGX(Xi, N, roughness); 
+                vec3 L  = normalize(2.0 * dot(V, H) * H - V);
+
+                float NdotL = max(dot(N, L), 0.0);
+                if(NdotL > 0.0)
+                {
+                    // sample from the environment's mip level based on roughness/pdf
+                    float D   = DistributionGGX(N, H, roughness);
+                    float NdotH = max(dot(N, H), 0.0);
+                    float HdotV = max(dot(H, V), 0.0);
+                    float pdf = D * NdotH / (4.0 * HdotV) + 0.0001;
+
+                    float resolution = 512.0; // resolution of source cubemap (per face)
+                    float saTexel  = 4.0 * PI / (6.0 * resolution * resolution);
+                    float saSample = 1.0 / (float(SAMPLE_COUNT) * pdf + 0.0001);
+
+                    float mipLevel = roughness == 0.0 ? 0.0 : 0.5 * log2(saSample / saTexel);
+    
+                    prefilteredColor += textureLod(environmentMap, L, mipLevel).rgb * NdotL;
+                    totalWeight      += NdotL;
+                }
+            }
+
+            prefilteredColor = prefilteredColor / totalWeight;
+
+            FragColor = vec4(prefilteredColor, 1.0);
+        }
+
+    )";
+
+    command_list prefilter_list;
+
+    auto prefilter_size = 128;
+
+    auto prefilter_texture_builder = device.build_texture();
+
+    for (auto& image_target : image_targets)
+    {
+        prefilter_texture_builder.add_image_data(
+            image_target,
+            0,
+            device_format::rgb16f,
+            prefilter_size,
+            prefilter_size,
+            0,
+            host_format::rgb,
+            pixel_type::float32,
+            nullptr);
+    }
+
+    auto prefilter_cubemap =
+        prefilter_texture_builder.set_target(texture_target::cubemap)
+            .set_wrap_s(wrap_mode::clamp_to_edge)
+            .set_wrap_t(wrap_mode::clamp_to_edge)
+            .set_wrap_r(wrap_mode::clamp_to_edge)
+            .set_min_filter(min_filter::linear_mipmap_linear)
+            .set_mag_filter(mag_filter::linear)
+            .set_mipmaps(true)
+            .build();
+
+    auto prefilter_material = material::builder{device, shaders}
+                                  .set_vertex_shader(prefilter_vert)
+                                  .set_fragment_shader(prefilter_frag)
+                                  .add_uniform("roughness", parameter_type::float32)
+                                  .add_uniform("environmentMap", hdr_cubemap)
+                                  .add_uniform("projection", projection)
+                                  .add_uniform("view", parameter_type::mat4)
+                                  .set_culling_enabled(false)
+                                  .build();
+
+    const size_t max_mip_levels = 5;
+    for (size_t mip = 0; mip < max_mip_levels; ++mip)
+    {
+        const size_t mip_width = prefilter_size * std::pow(0.5, mip);
+        const size_t mip_height = prefilter_size * std::pow(0.5, mip);
+
+        const auto prefilter_frame_buffer =
+            device.build_frame_buffer()
+                .add_depth_attachment(frame_format::depth_component24, mip_width, mip_height)
+                .build();
+
+        prefilter_list.frame_buffer().set_frame_buffer(prefilter_frame_buffer);
+
+        prefilter_list.viewport().set_rectangle(0, 0, mip_width, mip_height);
+
+        auto roughness = static_cast<float>(mip) / static_cast<float>(max_mip_levels - 1);
+        prefilter_material["roughness"] = roughness;
+        for (unsigned int i = 0; i < 6; ++i)
+        {
+            prefilter_material["view"] = capture_views[i];
+
+            prefilter_list.frame_buffer_texture()
+                .set_attachment(frame_attachment::color)
+                .set_target(image_targets[i])
+                .set_texture(prefilter_cubemap)
+                .set_mip_level(mip);
+
+            prefilter_list.clear().set_clear_color(true).set_clear_depth(true);
+
+            prefilter_list.draw()
+                .set_vertex_buffer(cube_buffer)
+                .set_vertex_count(36)
+                .set_primitive_type(primitive_type::triangles)
+                .set_material(prefilter_material);
+        }
+    }
+
+    device.submit(std::move(prefilter_list), false);
+
+    prefiltered = prefilter_cubemap;
+
+    return model(mesh(primitive(cube_buffer, 36, std::move(cubemap_material))));
 }
 
 class app final : public application
@@ -451,13 +880,19 @@ class app final : public application
 
     model model_;
 
-    texture cubemap_;
+    texture irradiance_{};
+
+    texture brdf_{};
+
+    texture prefiltered_{};
 
     model cube_;
 
     glm::vec4 color_{0.8f, 0.8f, 0.8f, 1.0f};
 
     imgui imgui_;
+
+    float gamma_ = 2.2f;
 
 public:
     explicit app(const app_settings& settings)
@@ -468,11 +903,10 @@ public:
                       .build()),
           model_importer_(app::data_path(), graphics_),
           model_(model_importer_.load(
-              app::data_path() / "Models" / "FlightHelmet" / "FlightHelmet.gltf",
+              app::data_path() / "Models" / "BoomBox" / "BoomBox.gltf",
               app::data_path() / "Materials" / "pbr.material")),
-          cubemap_(),
           cube_(make_hdr_environment_map(
-              graphics_, app::data_path() / "Textures" / "footprint_court.hdr", cubemap_)),
+              graphics_, app::data_path() / "Textures" / "gym.hdr", irradiance_, brdf_, prefiltered_)),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
     }
@@ -533,6 +967,8 @@ public:
             ImGui::EndMainMenuBar();
         }
 
+        ImGui::SliderFloat("Gamma", &gamma_, 0.0f, 10.0f, "ratio = %.3f");
+
         graphics_.submit_and_swap(imgui_.draw());
     }
 
@@ -558,7 +994,10 @@ public:
                 const auto distance = glm::distance(
                     mesh.get_transform().get_position(), camera_.get_position());
 
-                material["irradiance_map"] = cubemap_;
+                material["gamma"] = gamma_;
+                material["irradiance_map"] = irradiance_;
+                material["prefilter_map"] = prefiltered_;
+                material["brdf_lut"] = brdf_;
                 material["model"] = mesh.get_transform();
                 material["view"] = camera_.get_view();
                 material["projection"] = camera_.get_projection();
@@ -579,6 +1018,7 @@ public:
             {
                 auto& material = primitive.get_material();
 
+                material["gamma"] = gamma_;
                 material["view"] = camera_.get_view();
                 material["projection"] = camera_.get_projection();
 

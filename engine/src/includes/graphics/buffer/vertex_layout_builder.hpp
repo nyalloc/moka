@@ -14,7 +14,7 @@ namespace moka
 
     public:
         vertex_layout_builder& add_attribute(
-            size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset);
+            size_t index, size_t size, attribute_type type, bool normalized, size_t stride, size_t offset);
 
         vertex_layout build();
     };

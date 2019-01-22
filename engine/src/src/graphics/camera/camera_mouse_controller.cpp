@@ -46,7 +46,7 @@ namespace moka
 
             if (scroll.y != 0 && !io.WantCaptureMouse)
             {
-                translate_z_ += scroll.y * delta_time;
+                translate_z_ -= scroll.y * delta_time;
             }
         }
 

@@ -37,6 +37,9 @@ struct pbr_material
 
 // IBL
 uniform samplerCube irradiance_map;
+uniform samplerCube prefilter_map;
+uniform sampler2D brdf_lut;
+uniform float gamma;
 
 in vec3 in_frag_pos;  
 in vec3 in_normal;  
@@ -175,6 +178,7 @@ void main()
     }  
         
 	vec3 albedo = get_albedo().rgb;
+	vec3 emissive = get_emissive().rgb;
 	float metallic = get_metallic();
 	float roughness = get_roughness();
 	float ao = get_ao();
@@ -188,18 +192,26 @@ void main()
 	
     vec3 lo = vec3(0.0f);
 	
-    vec3 kS = fresnel_schlick(max(dot(n, v), 0.0f), f0);
+    vec3 kS = fresnel_schlick_roughness(max(dot(n, v), 0.0f), f0, roughness);
     vec3 kD = 1.0f - kS;
     kD *= 1.0f - metallic;	  
+	
     vec3 irradiance = texture(irradiance_map, n).rgb;
     vec3 diffuse = irradiance * albedo;
-    vec3 ambient = (kD * diffuse) * ao;
-    
-    vec3 color = ambient + lo;
+	
+	const float MAX_REFLECTION_LOD = 4.0f;
+	
+	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * MAX_REFLECTION_LOD).rgb;   
+	vec2 brdf  = texture(brdf_lut, vec2(max(dot(n, v), 0.0f), roughness)).rg;
+    vec3 specular = prefiltered_color * (kS * brdf.x + brdf.y);
 
+    vec3 ambient = (kD * diffuse + specular) * ao;
+    
+    vec3 color = ambient + lo + emissive;
+	
     color = color / (color + vec3(1.0f));
 
-    color = pow(color, vec3(1.0f / 2.2f)); 
+    color = pow(color, vec3(1.0f / gamma)); 
 
-    frag_color = vec4(color , 1.0f);
+    frag_color = vec4(color, 1.0f);
 }

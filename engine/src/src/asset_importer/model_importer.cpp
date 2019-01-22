@@ -194,8 +194,8 @@ namespace moka
                     model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     3,
-                    attribute_type::float32,
                     get_size(vertices_accessor.type),
+                    attribute_type::float32,
                     vertices_accessor.normalized,
                     0,
                     vertex_buffer.size());
@@ -218,8 +218,8 @@ namespace moka
                     model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     2,
-                    attribute_type::float32,
                     get_size(vertices_accessor.type),
+                    attribute_type::float32,
                     vertices_accessor.normalized,
                     0,
                     vertex_buffer.size());
@@ -242,8 +242,8 @@ namespace moka
                     model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     1,
-                    attribute_type::float32,
                     get_size(vertices_accessor.type),
+                    attribute_type::float32,
                     vertices_accessor.normalized,
                     0,
                     vertex_buffer.size());
@@ -266,8 +266,8 @@ namespace moka
                     model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     0,
-                    attribute_type::float32,
                     get_size(vertices_accessor.type),
+                    attribute_type::float32,
                     vertices_accessor.normalized,
                     0,
                     vertex_buffer.size());
@@ -360,7 +360,7 @@ namespace moka
                                     .add_image_data(
                                         image_target::texture_2d,
                                         0,
-                                        device_format::rgba,
+                                        device_format::srgb8_alpha8,
                                         image_data.width,
                                         image_data.height,
                                         0,
@@ -532,7 +532,7 @@ namespace moka
                         emissive_factor_itr != material.additionalValues.end())
                     {
                         auto data = emissive_factor_itr->second.number_array;
-                        glm::vec4 emissive_factor(data[0], data[1], data[2], data[3]);
+                        glm::vec4 emissive_factor(data[0], data[1], data[2], 1.0f);
                         mat_builder.add_uniform("material.emissive_factor", emissive_factor);
                     }
 
@@ -559,7 +559,7 @@ namespace moka
                                     .add_image_data(
                                         image_target::texture_2d,
                                         0,
-                                        device_format::rgba,
+                                        device_format::srgb8_alpha8,
                                         image_data.width,
                                         image_data.height,
                                         0,

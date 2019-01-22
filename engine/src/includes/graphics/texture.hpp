@@ -162,10 +162,13 @@ namespace moka
     {
         r,
         rg,
+        rg16f,
         rgb,
+        srgb8,
         rgb16f,
         bgr,
         rgba,
+        srgb8_alpha8,
         bgra,
     };
 

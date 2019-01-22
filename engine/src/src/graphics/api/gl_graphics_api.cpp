@@ -145,14 +145,20 @@ namespace moka
             return GL_R;
         case device_format::rg:
             return GL_RG;
+        case device_format::rg16f:
+            return GL_RG16F;
         case device_format::rgb:
             return GL_RGB;
+        case device_format::srgb8:
+            return GL_SRGB8;
         case device_format::rgb16f:
             return GL_RGB16F;
         case device_format::bgr:
             return GL_BGR;
         case device_format::rgba:
             return GL_RGBA;
+        case device_format::srgb8_alpha8:
+            return GL_SRGB8_ALPHA8;
         case device_format::bgra:
             return GL_BGRA;
         default:
