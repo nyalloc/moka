@@ -324,7 +324,7 @@ namespace moka
 
             if (primitive.material != -1)
             {
-                auto material = model.materials[primitive.material];
+                auto& material = model.materials[primitive.material];
 
                 if (!material.values.empty())
                 {
@@ -332,7 +332,7 @@ namespace moka
                             material.values.find("baseColorFactor");
                         base_color_factor_itr != material.values.end())
                     {
-                        auto data = base_color_factor_itr->second.number_array;
+                        auto& data = base_color_factor_itr->second.number_array;
                         glm::vec4 diffuse_factor(data[0], data[1], data[2], data[3]);
                         mat_builder.add_uniform("material.diffuse_factor", diffuse_factor);
                     }
@@ -341,17 +341,18 @@ namespace moka
                             material.values.find("baseColorTexture");
                         base_color_texture_itr != material.values.end())
                     {
-                        auto texture_name = base_color_texture_itr->first;
-                        auto texture_value = base_color_texture_itr->second;
+                        auto& texture_name = base_color_texture_itr->first;
+                        auto& texture_value = base_color_texture_itr->second;
 
                         auto properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto index = index_itr->second;
-                            auto texture = model.textures[size_t(index)];
-                            auto texture_source = texture.source;
+                            auto& index = index_itr->second;
+                            auto& texture = model.textures[size_t(index)];
+                            auto& texture_source = texture.source;
+                            auto& sampler = model.samplers[texture.sampler];
 
                             auto image_data = model.images[texture_source];
 
@@ -364,11 +365,11 @@ namespace moka
                                         image_data.width,
                                         image_data.height,
                                         0,
-                                        host_format::rgba,
+                                        stb_to_moka(image_data.component),
                                         pixel_type::uint8,
                                         image_data.image.data())
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
+                                    .set_wrap_s(wrap_mode::repeat) // read correct wrap and filter from GLTF file!!!
+                                    .set_wrap_t(wrap_mode::repeat)
                                     .set_mipmaps(true)
                                     .set_min_filter(min_filter::linear_mipmap_linear)
                                     .set_mag_filter(mag_filter::linear)
@@ -382,7 +383,7 @@ namespace moka
                             material.values.find("metallicFactor");
                         metallic_factor_itr != material.values.end())
                     {
-                        auto data = metallic_factor_itr->second.number_value;
+                        auto& data = metallic_factor_itr->second.number_value;
                         auto metallic_factor(static_cast<float>(data));
                         mat_builder.add_uniform("material.metalness_factor", metallic_factor);
                     }
@@ -391,7 +392,7 @@ namespace moka
                             material.values.find("roughnessFactor");
                         roughness_factor_itr != material.values.end())
                     {
-                        auto data = roughness_factor_itr->second.number_value;
+                        auto& data = roughness_factor_itr->second.number_value;
                         auto roughness_factor(static_cast<float>(data));
                         mat_builder.add_uniform("material.roughness_factor", roughness_factor);
                     }
@@ -400,19 +401,19 @@ namespace moka
                             material.values.find("metallicRoughnessTexture");
                         metallic_roughness_texture_itr != material.values.end())
                     {
-                        auto texture_name = metallic_roughness_texture_itr->first;
-                        auto texture_value = metallic_roughness_texture_itr->second;
+                        auto& texture_name = metallic_roughness_texture_itr->first;
+                        auto& texture_value = metallic_roughness_texture_itr->second;
 
-                        auto properties = texture_value.json_double_value;
+                        auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto index = index_itr->second;
-                            auto texture = model.textures[size_t(index)];
-                            auto texture_source = texture.source;
+                            auto& index = index_itr->second;
+                            auto& texture = model.textures[size_t(index)];
+                            auto& texture_source = texture.source;
 
-                            auto image_data = model.images[texture_source];
+                            auto& image_data = model.images[texture_source];
 
                             auto metallic_roughness_map =
                                 device.build_texture()
@@ -423,9 +424,9 @@ namespace moka
                                         image_data.width,
                                         image_data.height,
                                         0,
-                                        host_format::rgba,
+                                        stb_to_moka(image_data.component),
                                         pixel_type::uint8,
-                                        image_data.image.data())
+                                        (void*)image_data.image.data())
                                     .set_wrap_s(wrap_mode::clamp_to_edge)
                                     .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
@@ -449,19 +450,19 @@ namespace moka
                     if (auto normal_texture_itr = material.additionalValues.find("normalTexture");
                         normal_texture_itr != material.additionalValues.end())
                     {
-                        auto texture_name = normal_texture_itr->first;
-                        auto texture_value = normal_texture_itr->second;
+                        auto& texture_name = normal_texture_itr->first;
+                        auto& texture_value = normal_texture_itr->second;
 
-                        auto properties = texture_value.json_double_value;
+                        auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto index = index_itr->second;
-                            auto texture = model.textures[size_t(index)];
-                            auto texture_source = texture.source;
+                            auto& index = index_itr->second;
+                            auto& texture = model.textures[size_t(index)];
+                            auto& texture_source = texture.source;
 
-                            auto image_data = model.images[texture_source];
+                            auto& image_data = model.images[texture_source];
 
                             auto normal_map =
                                 device.build_texture()
@@ -472,9 +473,9 @@ namespace moka
                                         image_data.width,
                                         image_data.height,
                                         0,
-                                        host_format::rgba,
+                                        stb_to_moka(image_data.component),
                                         pixel_type::uint8,
-                                        image_data.image.data())
+                                        (void*)image_data.image.data())
                                     .set_wrap_s(wrap_mode::clamp_to_edge)
                                     .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
@@ -490,19 +491,19 @@ namespace moka
                             material.additionalValues.find("occlusionTexture");
                         occlusion_texture_itr != material.additionalValues.end())
                     {
-                        auto texture_name = occlusion_texture_itr->first;
-                        auto texture_value = occlusion_texture_itr->second;
+                        auto& texture_name = occlusion_texture_itr->first;
+                        auto& texture_value = occlusion_texture_itr->second;
 
-                        auto properties = texture_value.json_double_value;
+                        auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto index = index_itr->second;
-                            auto texture = model.textures[size_t(index)];
-                            auto texture_source = texture.source;
+                            auto& index = index_itr->second;
+                            auto& texture = model.textures[size_t(index)];
+                            auto& texture_source = texture.source;
 
-                            auto image_data = model.images[texture_source];
+                            auto& image_data = model.images[texture_source];
 
                             auto occlusion_map =
                                 device.build_texture()
@@ -513,9 +514,9 @@ namespace moka
                                         image_data.width,
                                         image_data.height,
                                         0,
-                                        host_format::rgba,
+                                        stb_to_moka(image_data.component),
                                         pixel_type::uint8,
-                                        image_data.image.data())
+                                        (void*)image_data.image.data())
                                     .set_wrap_s(wrap_mode::clamp_to_edge)
                                     .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
@@ -540,19 +541,19 @@ namespace moka
                             material.additionalValues.find("emissiveTexture");
                         emissive_texture_itr != material.additionalValues.end())
                     {
-                        auto texture_name = emissive_texture_itr->first;
-                        auto texture_value = emissive_texture_itr->second;
+                        auto& texture_name = emissive_texture_itr->first;
+                        auto& texture_value = emissive_texture_itr->second;
 
-                        auto properties = texture_value.json_double_value;
+                        auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto index = index_itr->second;
-                            auto texture = model.textures[size_t(index)];
-                            auto texture_source = texture.source;
+                            auto& index = index_itr->second;
+                            auto& texture = model.textures[size_t(index)];
+                            auto& texture_source = texture.source;
 
-                            auto image_data = model.images[texture_source];
+                            auto& image_data = model.images[texture_source];
 
                             auto emissive_map =
                                 device.build_texture()
@@ -563,9 +564,9 @@ namespace moka
                                         image_data.width,
                                         image_data.height,
                                         0,
-                                        host_format::rgba,
+                                        stb_to_moka(image_data.component),
                                         pixel_type::uint8,
-                                        image_data.image.data())
+                                        (void*)image_data.image.data())
                                     .set_wrap_s(wrap_mode::clamp_to_edge)
                                     .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
