@@ -213,9 +213,5 @@ void main()
 
     color = pow(color, vec3(1.0f / gamma)); 
 
-	vec3 tex = texture(material.normal_map, in_texture_coord).rgb;
-	tex = normalize(tex * 2.0 - 1.0);
-	tex = normalize(tbn_matrix * tex);
-
-    frag_color = vec4(tex, 1.0f);
+    frag_color = vec4(color, 1.0f);
 }
