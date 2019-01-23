@@ -74,10 +74,10 @@ vec3 get_normal()
         // it will inform us if the texture has been flipped horizontally. If it has, we need to flip the green component.
         // otherwise the lighting calculations will be all wrong! They end up the opposite y direction.
     #else 
-        vec3 material_normal = normalize(in_normal);
+        vec3 material_normal = in_normal;
     #endif
     
-    return material_normal;
+    return normalize(material_normal);
 }
 
 vec4 get_emissive()
@@ -92,7 +92,7 @@ vec4 get_emissive()
 float get_roughness()
 {
     #ifdef METALLIC_ROUGHNESS_MAP
-        return texture(material.metallic_roughness_map, in_texture_coord).g * 1.0f;
+        return texture(material.metallic_roughness_map, in_texture_coord).g * material.roughness_factor;
     #else
         return material.roughness_factor;
     #endif
@@ -213,5 +213,9 @@ void main()
 
     color = pow(color, vec3(1.0f / gamma)); 
 
-    frag_color = vec4(color, 1.0f);
+	vec3 tex = texture(material.normal_map, in_texture_coord).rgb;
+	tex = normalize(tex * 2.0 - 1.0);
+	tex = normalize(tbn_matrix * tex);
+
+    frag_color = vec4(tex, 1.0f);
 }

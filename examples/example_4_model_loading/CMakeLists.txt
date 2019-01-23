@@ -6,24 +6,20 @@ enable_testing()
 
 project(example_4_model_loading)
 
-set(Example_Includes 
-	"./"
-	"../../engine/src/includes"
+set(EXAMPLE_INCLUDES   
+    "./" 
+    "../../engine/src/includes"
     "../../engine/src/deps/imgui"
     "../common"
 )
 
-include_directories(${Example_Includes})
+include_directories(${EXAMPLE_INCLUDES})
 
 add_executable(example_4_model_loading
     main.cpp 
     ../common/imgui.hpp 
     ../common/imgui.cpp
-    ../../engine/src/deps/imgui/imgui.h
-    ../../engine/src/deps/imgui/imgui.cpp
-    ../../engine/src/deps/imgui/imgui_demo.cpp
-    ../../engine/src/deps/imgui/imgui_widgets.cpp
-    ../../engine/src/deps/imgui/imgui_draw.cpp)
+)
 
 set_target_properties(example_4_model_loading PROPERTIES
     CXX_STANDARD 17

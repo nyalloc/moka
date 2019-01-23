@@ -3,12 +3,28 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(MOKA_INCLUDES
     "./includes/"
+    "./deps/imgui/"
+    "./deps/mikktspace/"
     "./deps/nlohmann/"
+    "./deps/stb/"
     "./deps/tiny_gltf/"
     "./deps/"
 )
 
 include_directories(${MOKA_INCLUDES})
+
+set(IMGUI_SRC
+    "deps/imgui/imgui.h"
+    "deps/imgui/imgui.cpp"
+    "deps/imgui/imgui_demo.cpp"
+    "deps/imgui/imgui_widgets.cpp"
+    "deps/imgui/imgui_draw.cpp"
+)
+
+set(MIKKTSPACE_SRC
+    "deps/mikktspace/mikktspace.h"
+    "deps/mikktspace/mikktspace.c"
+)
 
 set(APPLICATION_SRC
     "includes/application/app_settings.hpp"  
@@ -49,7 +65,7 @@ set(GRAPHICS_BUFFER_SRC
     "includes/graphics/buffer/vertex_buffer.hpp"
     "includes/graphics/buffer/vertex_layout.hpp"
     "includes/graphics/buffer/vertex_layout_builder.hpp"
-	"src/graphics/buffer/frame_buffer.cpp"
+    "src/graphics/buffer/frame_buffer.cpp"
     "src/graphics/buffer/index_buffer.cpp"
     "src/graphics/buffer/vertex_attribute.cpp"
     "src/graphics/buffer/vertex_buffer.cpp"
@@ -111,12 +127,12 @@ set(GRAPHICS_MATERIAL_SRC
     "includes/graphics/material/material_parameter.hpp"
     "includes/graphics/material/material_builder.hpp"
     "includes/graphics/material/material_properties.hpp"
-	"includes/graphics/material/parameter_collection.hpp"
+    "includes/graphics/material/parameter_collection.hpp"
     "src/graphics/material/material.cpp"
     "src/graphics/material/material_parameter.cpp"
     "src/graphics/material/material_builder.cpp"
     "src/graphics/material/material_properties.cpp"
-	"src/graphics/material/parameter_collection.cpp"
+    "src/graphics/material/parameter_collection.cpp"
 )
 
 set(GRAPHICS_SRC
@@ -161,9 +177,11 @@ set(ASSET_SRC
 )
 
 set(MOKA_SRC
+    ${IMGUI_SRC}
+    ${MIKKTSPACE_SRC}
     ${APPLICATION_SRC}
-    ${INPUT_SRC}
-	${GRAPHICS_SRC}
+    ${INPUT_SRC} 
+    ${GRAPHICS_SRC}
     ${TRAITS_SRC}
     ${MATHS_SRC}
     ${ASSET_SRC}

@@ -6,6 +6,7 @@
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material_builder.hpp>
 #include <json.hpp>
+#include <mikktspace.h>
 
 #define TINYGLTF_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -23,6 +24,55 @@ namespace moka
         vertex_buffer = 34962,
         index_buffer = 34963
     };
+
+    constexpr wrap_mode gltf_wrap_to_moka(const int format)
+    {
+        switch (format)
+        {
+        case TINYGLTF_TEXTURE_WRAP_CLAMP_TO_EDGE:
+            return wrap_mode::clamp_to_edge;
+        case TINYGLTF_TEXTURE_WRAP_REPEAT:
+            return wrap_mode::repeat;
+        case TINYGLTF_TEXTURE_WRAP_MIRRORED_REPEAT:
+            return wrap_mode::mirrored_repeat;
+        default:;
+        }
+        throw std::runtime_error("Invalid pixel_format value");
+    }
+
+    constexpr min_filter gltf_min_filter_to_moka(const int format)
+    {
+        switch (format)
+        {
+        case TINYGLTF_TEXTURE_FILTER_NEAREST:
+            return min_filter::nearest;
+        case TINYGLTF_TEXTURE_FILTER_LINEAR:
+            return min_filter::linear;
+        case TINYGLTF_TEXTURE_FILTER_NEAREST_MIPMAP_NEAREST:
+            return min_filter::nearest_mipmap_nearest;
+        case TINYGLTF_TEXTURE_FILTER_LINEAR_MIPMAP_NEAREST:
+            return min_filter::linear_mipmap_nearest;
+        case TINYGLTF_TEXTURE_FILTER_NEAREST_MIPMAP_LINEAR:
+            return min_filter::nearest_mipmap_linear;
+        case TINYGLTF_TEXTURE_FILTER_LINEAR_MIPMAP_LINEAR:
+            return min_filter::linear_mipmap_linear;
+        default:;
+        }
+        throw std::runtime_error("Invalid min filter value");
+    }
+
+    constexpr mag_filter gltf_mag_filter_to_moka(const int format)
+    {
+        switch (format)
+        {
+        case TINYGLTF_TEXTURE_FILTER_NEAREST:
+            return mag_filter::nearest;
+        case TINYGLTF_TEXTURE_FILTER_LINEAR:
+            return mag_filter::linear;
+        default:;
+        }
+        throw std::runtime_error("Invalid mag filter value");
+    }
 
     constexpr host_format stb_to_moka(const int format)
     {
@@ -207,6 +257,8 @@ namespace moka
                     std::back_inserter(vertex_buffer));
             }
 
+            // Implementation note: When tangents are not specified, client implementations should calculate tangents using default MikkTSpace algorithms.
+            // For best results, the mesh triangles should also be processed using default MikkTSpace algorithms.
             auto tangent = primitive.attributes.find("TANGENT");
             if (tangent != primitive.attributes.end())
             {
@@ -352,9 +404,19 @@ namespace moka
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
                             auto& texture_source = texture.source;
-                            auto& sampler = model.samplers[texture.sampler];
-
-                            auto image_data = model.images[texture_source];
+                            auto& image_data = model.images[texture_source];
+                            auto wrap_s = wrap_mode::clamp_to_edge;
+                            auto wrap_t = wrap_mode::clamp_to_edge;
+                            auto min = min_filter::linear_mipmap_linear;
+                            auto mag = mag_filter::linear;
+                            if (texture.sampler != -1)
+                            {
+                                auto& sampler = model.samplers[texture.sampler];
+                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                                min = gltf_min_filter_to_moka(sampler.minFilter);
+                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                            }
 
                             auto diffuse_map =
                                 device.build_texture()
@@ -367,12 +429,12 @@ namespace moka
                                         0,
                                         stb_to_moka(image_data.component),
                                         pixel_type::uint8,
-                                        image_data.image.data())
-                                    .set_wrap_s(wrap_mode::repeat) // read correct wrap and filter from GLTF file!!!
-                                    .set_wrap_t(wrap_mode::repeat)
+                                        (void*)image_data.image.data())
                                     .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear_mipmap_linear)
-                                    .set_mag_filter(mag_filter::linear)
+                                    .set_wrap_s(wrap_s)
+                                    .set_wrap_t(wrap_t)
+                                    .set_min_filter(min)
+                                    .set_mag_filter(mag)
                                     .build();
 
                             mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
@@ -412,8 +474,19 @@ namespace moka
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
                             auto& texture_source = texture.source;
-
                             auto& image_data = model.images[texture_source];
+                            auto wrap_s = wrap_mode::clamp_to_edge;
+                            auto wrap_t = wrap_mode::clamp_to_edge;
+                            auto min = min_filter::linear_mipmap_linear;
+                            auto mag = mag_filter::linear;
+                            if (texture.sampler != -1)
+                            {
+                                auto& sampler = model.samplers[texture.sampler];
+                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                                min = gltf_min_filter_to_moka(sampler.minFilter);
+                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                            }
 
                             auto metallic_roughness_map =
                                 device.build_texture()
@@ -427,11 +500,11 @@ namespace moka
                                         stb_to_moka(image_data.component),
                                         pixel_type::uint8,
                                         (void*)image_data.image.data())
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear_mipmap_linear)
-                                    .set_mag_filter(mag_filter::linear)
+                                    .set_wrap_s(wrap_s)
+                                    .set_wrap_t(wrap_t)
+                                    .set_min_filter(min)
+                                    .set_mag_filter(mag)
                                     .build();
 
                             mat_builder.add_texture(
@@ -461,27 +534,37 @@ namespace moka
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
                             auto& texture_source = texture.source;
-
                             auto& image_data = model.images[texture_source];
+                            auto wrap_s = wrap_mode::clamp_to_edge;
+                            auto wrap_t = wrap_mode::clamp_to_edge;
+                            auto min = min_filter::linear_mipmap_linear;
+                            auto mag = mag_filter::linear;
+                            if (texture.sampler != -1)
+                            {
+                                auto& sampler = model.samplers[texture.sampler];
+                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                                min = gltf_min_filter_to_moka(sampler.minFilter);
+                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                            }
 
-                            auto normal_map =
-                                device.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::rgba,
-                                        image_data.width,
-                                        image_data.height,
-                                        0,
-                                        stb_to_moka(image_data.component),
-                                        pixel_type::uint8,
-                                        (void*)image_data.image.data())
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
-                                    .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear_mipmap_linear)
-                                    .set_mag_filter(mag_filter::linear)
-                                    .build();
+                            auto normal_map = device.build_texture()
+                                                  .add_image_data(
+                                                      image_target::texture_2d,
+                                                      0,
+                                                      device_format::rgba,
+                                                      image_data.width,
+                                                      image_data.height,
+                                                      0,
+                                                      stb_to_moka(image_data.component),
+                                                      pixel_type::uint8,
+                                                      (void*)image_data.image.data())
+                                                  .set_mipmaps(true)
+                                                  .set_wrap_s(wrap_s)
+                                                  .set_wrap_t(wrap_t)
+                                                  .set_min_filter(min)
+                                                  .set_mag_filter(mag)
+                                                  .build();
 
                             mat_builder.add_texture(material_property::normal_map, normal_map);
                         }
@@ -502,8 +585,19 @@ namespace moka
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
                             auto& texture_source = texture.source;
-
                             auto& image_data = model.images[texture_source];
+                            auto wrap_s = wrap_mode::clamp_to_edge;
+                            auto wrap_t = wrap_mode::clamp_to_edge;
+                            auto min = min_filter::linear_mipmap_linear;
+                            auto mag = mag_filter::linear;
+                            if (texture.sampler != -1)
+                            {
+                                auto& sampler = model.samplers[texture.sampler];
+                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                                min = gltf_min_filter_to_moka(sampler.minFilter);
+                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                            }
 
                             auto occlusion_map =
                                 device.build_texture()
@@ -517,11 +611,11 @@ namespace moka
                                         stb_to_moka(image_data.component),
                                         pixel_type::uint8,
                                         (void*)image_data.image.data())
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear_mipmap_linear)
-                                    .set_mag_filter(mag_filter::linear)
+                                    .set_wrap_s(wrap_s)
+                                    .set_wrap_t(wrap_t)
+                                    .set_min_filter(min)
+                                    .set_mag_filter(mag)
                                     .build();
 
                             mat_builder.add_texture(material_property::ao_map, occlusion_map);
@@ -552,8 +646,19 @@ namespace moka
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
                             auto& texture_source = texture.source;
-
                             auto& image_data = model.images[texture_source];
+                            auto wrap_s = wrap_mode::clamp_to_edge;
+                            auto wrap_t = wrap_mode::clamp_to_edge;
+                            auto min = min_filter::linear_mipmap_linear;
+                            auto mag = mag_filter::linear;
+                            if (texture.sampler != -1)
+                            {
+                                auto& sampler = model.samplers[texture.sampler];
+                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                                min = gltf_min_filter_to_moka(sampler.minFilter);
+                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                            }
 
                             auto emissive_map =
                                 device.build_texture()
@@ -567,11 +672,11 @@ namespace moka
                                         stb_to_moka(image_data.component),
                                         pixel_type::uint8,
                                         (void*)image_data.image.data())
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
                                     .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear_mipmap_linear)
-                                    .set_mag_filter(mag_filter::linear)
+                                    .set_wrap_s(wrap_s)
+                                    .set_wrap_t(wrap_t)
+                                    .set_min_filter(min)
+                                    .set_mag_filter(mag)
                                     .build();
 
                             mat_builder.add_texture(
