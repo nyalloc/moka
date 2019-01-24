@@ -202,7 +202,7 @@ model make_hdr_environment_map(
             // tangent space calculation from origin point
             vec3 up    = vec3(0.0, 1.0, 0.0);
             vec3 right = cross(up, N);
-            up            = cross(N, right);
+            up         = cross(N, right);
                
             float sampleDelta = 0.025;
             float nrSamples = 0.0;
@@ -328,7 +328,7 @@ model make_hdr_environment_map(
 
     command_list irradiance_list;
 
-    auto irradiance_size = 128;
+    auto irradiance_size = 32;
 
     auto irradiance_texture_builder = device.build_texture();
 
@@ -422,15 +422,18 @@ model make_hdr_environment_map(
             uniform samplerCube environmentMap;
 
             uniform float gamma;
-              
+
+            uniform float exposure;
+
             void main()
             {
                 vec3 envColor = texture(environmentMap, localPos).rgb;
                 
-                envColor = envColor / (envColor + vec3(1.0));
-                envColor = pow(envColor, vec3(1.0/gamma)); 
-              
-                FragColor = vec4(envColor, 1.0);
+                vec3 mapped = vec3(1.0f) - exp(-envColor * exposure);
+            
+                mapped = pow(mapped, vec3(1.0f / gamma));
+
+                FragColor = vec4(mapped, 1.0f);
             }
         )";
 
@@ -456,7 +459,7 @@ model make_hdr_environment_map(
         void main()
         {
             TexCoords = aTexCoords;
-	        gl_Position = vec4(aPos, 1.0);
+            gl_Position = vec4(aPos, 1.0);
         }
     
     )";
@@ -483,30 +486,30 @@ model make_hdr_environment_map(
         // ----------------------------------------------------------------------------
         vec2 Hammersley(uint i, uint N)
         {
-	        return vec2(float(i)/float(N), RadicalInverse_VdC(i));
+            return vec2(float(i)/float(N), RadicalInverse_VdC(i));
         }
         // ----------------------------------------------------------------------------
         vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
         {
-	        float a = roughness*roughness;
+            float a = roughness*roughness;
 	        
-	        float phi = 2.0 * PI * Xi.x;
-	        float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
-	        float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
+            float phi = 2.0 * PI * Xi.x;
+            float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
+            float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
 	        
 	        // from spherical coordinates to cartesian coordinates - halfway vector
-	        vec3 H;
-	        H.x = cos(phi) * sinTheta;
-	        H.y = sin(phi) * sinTheta;
-	        H.z = cosTheta;
-	        
-	        // from tangent-space H vector to world-space sample vector
-	        vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
-	        vec3 tangent   = normalize(cross(up, N));
-	        vec3 bitangent = cross(N, tangent);
-	        
-	        vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
-	        return normalize(sampleVec);
+            vec3 H;
+            H.x = cos(phi) * sinTheta;
+            H.y = sin(phi) * sinTheta;
+            H.z = cosTheta;
+
+            // from tangent-space H vector to world-space sample vector
+            vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+            vec3 tangent   = normalize(cross(up, N));
+            vec3 bitangent = cross(N, tangent);
+
+            vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
+            return normalize(sampleVec);
         }
         // ----------------------------------------------------------------------------
         float GeometrySchlickGGX(float NdotV, float roughness)
@@ -893,6 +896,10 @@ class app final : public application
     imgui imgui_;
 
     float gamma_ = 2.2f;
+    float exposure_ = 1.0f;
+
+    bool environment_ = true;
+    bool rotate_ = true;
 
 public:
     explicit app(const app_settings& settings)
@@ -968,6 +975,10 @@ public:
         }
 
         ImGui::SliderFloat("Gamma", &gamma_, 0.0f, 10.0f, "ratio = %.3f");
+        ImGui::SliderFloat("Exposure", &exposure_, 0.0f, 10.0f, "ratio = %.3f");
+        ImGui::Checkbox("Auto Rotate Camera", &rotate_);
+        ImGui::Checkbox("Draw Environment", &environment_);
+        ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&color_));
 
         graphics_.submit_and_swap(imgui_.draw());
     }
@@ -980,10 +991,7 @@ public:
 
         scene_draw.scissor().set_rectangle(viewport_);
 
-        scene_draw.clear()
-            .set_color(color::antique_white())
-            .set_clear_color(true)
-            .set_clear_depth(true);
+        scene_draw.clear().set_color(color_).set_clear_color(true).set_clear_depth(true);
 
         for (auto& mesh : model_)
         {
@@ -995,10 +1003,11 @@ public:
                     mesh.get_transform().get_position(), camera_.get_position());
 
                 material["gamma"] = gamma_;
+                material["exposure"] = exposure_;
                 material["irradiance_map"] = irradiance_;
                 material["prefilter_map"] = prefiltered_;
                 material["brdf_lut"] = brdf_;
-                material["model"] = mesh.get_transform();
+                material["model"] = mesh.get_transform().to_matrix();
                 material["view"] = camera_.get_view();
                 material["projection"] = camera_.get_projection();
                 material["view_pos"] = camera_.get_position();
@@ -1012,19 +1021,23 @@ public:
             }
         }
 
-        for (auto& mesh : cube_)
+        if (environment_)
         {
-            for (auto& primitive : mesh)
+            for (auto& mesh : cube_)
             {
-                auto& material = primitive.get_material();
+                for (auto& primitive : mesh)
+                {
+                    auto& material = primitive.get_material();
 
-                material["gamma"] = gamma_;
-                material["view"] = camera_.get_view();
-                material["projection"] = camera_.get_projection();
+                    material["gamma"] = gamma_;
+                    material["exposure"] = exposure_;
+                    material["view"] = camera_.get_view();
+                    material["projection"] = camera_.get_projection();
 
-                auto& buffer = scene_draw.make_command_buffer();
+                    auto& buffer = scene_draw.make_command_buffer();
 
-                primitive.draw(buffer);
+                    primitive.draw(buffer);
+                }
             }
         }
 

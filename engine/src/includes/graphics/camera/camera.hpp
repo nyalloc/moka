@@ -2,42 +2,43 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <graphics/camera/camera_builder.hpp>
 #include <graphics/transform.hpp>
 #include <memory>
-#include <graphics/camera/camera_builder.hpp>
 
 namespace moka
 {
-	// A camera. This wrapper class provides a simple wrapper interface to access any camera object.
-	// An example of the bridge pattern, this abstraction can vary independently of its implementation.
-	class camera
-	{
-		std::unique_ptr<base_camera> camera_;
-	public:
-		virtual ~camera();
+    // A camera. This wrapper class provides a simple wrapper interface to access any camera object.
+    // An example of the bridge pattern, this abstraction can vary independently of its implementation.
+    class camera
+    {
+        std::unique_ptr<base_camera> camera_;
 
-		using builder = camera_builder;
+    public:
+        virtual ~camera();
 
-		camera(const camera& camera) = delete;
+        using builder = camera_builder;
 
-		camera(camera&& camera) noexcept;
+        camera(const camera& camera) = delete;
 
-		camera& operator = (const camera& camera) = delete;
+        camera(camera&& camera) noexcept;
 
-		camera& operator = (camera&& camera) = delete;
+        camera& operator=(const camera& camera) = delete;
 
-		camera(std::unique_ptr<base_camera>&& camera);
+        camera& operator=(camera&& camera) = delete;
 
-		glm::mat4 get_view() const;
+        camera(std::unique_ptr<base_camera>&& camera);
 
-		const glm::quat& get_rotation() const;
+        glm::mat4 get_view() const;
 
-		const glm::vec3& get_position() const;
+        const glm::quat& get_rotation() const;
 
-		const glm::mat4& get_projection() const;
+        const glm::vec3& get_position() const;
 
-		const transform& get_transform() const;
+        const glm::mat4& get_projection() const;
 
-		void update(float delta_time) const;
-	};
-}
+        const transform& get_transform() const;
+
+        void update(float delta_time) const;
+    };
+} // namespace moka

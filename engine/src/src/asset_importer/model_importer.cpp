@@ -360,7 +360,7 @@ namespace moka
             mat_builder.add_uniform(
                 "material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
             mat_builder.add_uniform(
-                "material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+                "material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
             mat_builder.add_uniform("material.roughness_factor", 1.0f);
             mat_builder.add_uniform("material.metalness_factor", 1.0f);
 

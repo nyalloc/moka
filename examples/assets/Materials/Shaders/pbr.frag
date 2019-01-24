@@ -40,6 +40,7 @@ uniform samplerCube irradiance_map;
 uniform samplerCube prefilter_map;
 uniform sampler2D brdf_lut;
 uniform float gamma;
+uniform float exposure;
 
 in vec3 in_frag_pos;  
 in vec3 in_normal;  
@@ -209,9 +210,9 @@ void main()
     
     vec3 color = ambient + lo + emissive;
 	
-    color = color / (color + vec3(1.0f));
-
-    color = pow(color, vec3(1.0f / gamma)); 
-
-    frag_color = vec4(color, 1.0f);
+    vec3 mapped = vec3(1.0f) - exp(-color * exposure);
+	
+    mapped = pow(mapped, vec3(1.0f / gamma));
+  
+    frag_color = vec4(mapped, 1.0f);
 }
