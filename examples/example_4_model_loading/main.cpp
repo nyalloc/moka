@@ -891,7 +891,7 @@ class app final : public application
 
     model cube_;
 
-    glm::vec4 color_{0.8f, 0.8f, 0.8f, 1.0f};
+    glm::vec4 color_ = color::burnt_sienna();
 
     imgui imgui_;
 

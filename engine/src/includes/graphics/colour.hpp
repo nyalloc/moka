@@ -220,6 +220,11 @@ namespace moka
             return {222, 184, 135};
         }
 
+        static constexpr colour burnt_sienna() noexcept
+        {
+            return {233, 116, 81};
+        }
+
         static constexpr colour cadet_blue() noexcept
         {
             return {95, 158, 160};
