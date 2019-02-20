@@ -11,11 +11,11 @@ namespace moka
 
         float current_translate_z_ = 0.5f;
         float current_rotate_x_ = -glm::pi<float>();
-        float current_rotate_y_ = 0.2f;
+        float current_rotate_y_ = -0.18f;
 
         float translate_z_ = 0.5f;
         float rotate_x_ = -glm::pi<float>();
-        float rotate_y_ = 0.2f;
+        float rotate_y_ = -0.18f;
 
         bool auto_scroll_ = true;
 

@@ -20,6 +20,8 @@ namespace moka
 
         void swap_buffer() const;
 
+        rectangle get_viewport();
+
         explicit impl(const window_settings& settings);
 
         ~impl();
@@ -74,6 +76,13 @@ namespace moka
         SDL_GL_SwapWindow(window_);
     }
 
+    rectangle window::impl::get_viewport()
+    {
+        int w, h;
+        SDL_GetWindowSize(window_, &w, &h);
+        return rectangle{0, 0, w, h};
+    }
+
     window::impl::impl(const window_settings& settings) : settings_(settings)
     {
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -89,13 +98,20 @@ namespace moka
         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
 
+        uint32_t flags = SDL_WINDOW_OPENGL;
+
+        if (settings.fullscreen)
+        {
+            flags = flags | SDL_WINDOW_FULLSCREEN;
+        }
+
         window_ = SDL_CreateWindow(
             settings.name.c_str(),
             settings.position.x,
             settings.position.y,
             settings.resolution.x,
             settings.resolution.y,
-            SDL_WINDOW_OPENGL);
+            flags);
     }
 
     window::impl::~impl()
@@ -116,6 +132,11 @@ namespace moka
     float window::impl::aspect() const
     {
         return static_cast<float>(settings_.resolution.x) / settings_.resolution.y;
+    }
+
+    rectangle window::get_viewport()
+    {
+        return impl_->get_viewport();
     }
 
     window::window(const window_settings& settings) : impl_(new impl(settings))

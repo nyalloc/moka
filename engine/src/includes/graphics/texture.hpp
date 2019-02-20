@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace moka
 {
@@ -188,35 +189,17 @@ namespace moka
     {
         uint16_t id;
 
-        bool operator==(const texture& rhs) const
-        {
-            return id == rhs.id;
-        }
+        bool operator==(const texture& rhs) const;
 
-        bool operator!=(const texture& rhs) const
-        {
-            return id != rhs.id;
-        }
+        bool operator!=(const texture& rhs) const;
 
-        bool operator>(const texture& rhs) const
-        {
-            return id > rhs.id;
-        }
+        bool operator>(const texture& rhs) const;
 
-        bool operator<(const texture& rhs) const
-        {
-            return id < rhs.id;
-        }
+        bool operator<(const texture& rhs) const;
 
-        bool operator>=(const texture& rhs) const
-        {
-            return id >= rhs.id;
-        }
+        bool operator>=(const texture& rhs) const;
 
-        bool operator<=(const texture& rhs) const
-        {
-            return id <= rhs.id;
-        }
+        bool operator<=(const texture& rhs) const;
     };
 
     struct image_metadata final

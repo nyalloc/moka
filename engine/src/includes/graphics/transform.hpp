@@ -2,26 +2,28 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
 
 namespace moka
 {
-    class transform
+    class transform final
     {
         glm::vec3 position_;
         glm::vec3 scale_;
         glm::quat rotation_;
+        bool dirty_; // used for recalculating transform hierarchies!
 
-        // transform* parent_;
     public:
         transform(const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-            : position_(position), scale_(scale), rotation_(glm::normalize(rotation))
+            : position_(position),
+              scale_(scale),
+              rotation_(glm::normalize(rotation)),
+              dirty_(false)
         {
         }
 
         transform()
-            : position_{0.0f, 0.0f, 0.0f}, scale_{1.0f, 1.0f, 1.0f}, rotation_{1.0f, glm::vec3()}
+            : position_{0.0f, 0.0f, 0.0f}, scale_{1.0f, 1.0f, 1.0f}, rotation_{1.0f, glm::vec3()}, dirty_(false)
         {
         }
 
@@ -32,6 +34,16 @@ namespace moka
         transform& operator=(transform&& rhs) = default;
 
         ~transform() = default;
+
+        bool is_dirty() const
+        {
+            return dirty_;
+        }
+
+        void set_dirty(const bool dirty)
+        {
+            dirty_ = dirty;
+        }
 
         const glm::vec3& get_position() const
         {
@@ -65,16 +77,19 @@ namespace moka
         void set_position(const glm::vec3& position)
         {
             position_ = position;
+            dirty_ = true;
         }
 
         void set_scale(const glm::vec3& scale)
         {
             scale_ = scale;
+            dirty_ = true;
         }
 
         void set_rotation(const glm::quat& rotation)
         {
             rotation_ = glm::normalize(rotation);
+            dirty_ = true;
         }
 
         static glm::vec3 world_front()
@@ -148,6 +163,7 @@ namespace moka
             auto diff = position_ - point;
             diff = rotation * diff;
             position_ = point + diff;
+            dirty_ = true;
         }
 
         void rotate_around(const glm::vec3& point, const glm::vec3& axis, const float angle)
@@ -158,6 +174,7 @@ namespace moka
         void look_at(const glm::vec3& world_location, const glm::vec3& world_up = transform::world_up())
         {
             rotation_ = glm::quat_cast(glm::lookAt(-position_, world_location, world_up));
+            dirty_ = true;
         }
     };
 } // namespace moka

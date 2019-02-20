@@ -3,6 +3,36 @@
 
 namespace moka
 {
+    bool texture::operator==(const texture& rhs) const
+    {
+        return id == rhs.id;
+    }
+
+    bool texture::operator!=(const texture& rhs) const
+    {
+        return id != rhs.id;
+    }
+
+    bool texture::operator>(const texture& rhs) const
+    {
+        return id > rhs.id;
+    }
+
+    bool texture::operator<(const texture& rhs) const
+    {
+        return id < rhs.id;
+    }
+
+    bool texture::operator>=(const texture& rhs) const
+    {
+        return id >= rhs.id;
+    }
+
+    bool texture::operator<=(const texture& rhs) const
+    {
+        return id <= rhs.id;
+    }
+
     texture_builder::texture_builder(graphics_device& device) : device_(device)
     {
     }

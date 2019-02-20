@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics/buffer/frame_buffer.hpp"
+#include "graphics/material/material_parameter.hpp"
 #include <asset_importer/texture_importer.hpp>
 #include <graphics/buffer/buffer_usage.hpp>
 #include <graphics/buffer/index_buffer.hpp>
@@ -108,17 +109,6 @@ namespace moka
         func_reverse_subtract,
         min,
         max
-    };
-
-    enum class parameter_type : uint8_t
-    {
-        texture, //!< sampler
-        vec3,    //!< 3 floats vector uniform
-        vec4,    //!< 4 floats vector uniform
-        mat3,    //!< 3x3 matrix uniform
-        mat4,    //!< 4x4 matrix uniform
-        float32, //! single floating point uniform
-        null     //!< value not yet assigned to
     };
 
     enum class face : uint8_t

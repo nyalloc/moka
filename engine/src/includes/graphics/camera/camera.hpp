@@ -39,6 +39,8 @@ namespace moka
 
         const transform& get_transform() const;
 
+        void set_perspective(float radians, float aspect);
+
         void update(float delta_time) const;
     };
 } // namespace moka

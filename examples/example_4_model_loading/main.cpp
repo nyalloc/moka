@@ -2,8 +2,6 @@
 #include <application/open_file.hpp>
 #include <asset_importer/model_importer.hpp>
 #include <filesystem>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <graphics/camera/camera.hpp>
 #include <graphics/color.hpp>
 #include <graphics/device/graphics_device.hpp>
@@ -879,8 +877,6 @@ class app final : public application
 
     asset_importer<model> model_importer_;
 
-    rectangle viewport_ = {0, 0, 1280, 720};
-
     model model_;
 
     texture irradiance_{};
@@ -900,6 +896,8 @@ class app final : public application
 
     bool environment_ = true;
     bool rotate_ = true;
+
+    float fov_ = 70.0f;
 
 public:
     explicit app(const app_settings& settings)
@@ -974,11 +972,58 @@ public:
             ImGui::EndMainMenuBar();
         }
 
-        ImGui::SliderFloat("Gamma", &gamma_, 0.0f, 10.0f, "ratio = %.3f");
-        ImGui::SliderFloat("Exposure", &exposure_, 0.0f, 10.0f, "ratio = %.3f");
-        ImGui::Checkbox("Auto Rotate Camera", &rotate_);
-        ImGui::Checkbox("Draw Environment", &environment_);
-        ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&color_));
+        ImGui::Begin("Render Settings");
+        {
+            ImGui::SliderFloat("Gamma", &gamma_, 0.0f, 10.0f, "%.3f");
+            ImGui::SliderFloat("Exposure", &exposure_, 0.0f, 10.0f, "%.3f");
+            ImGui::SliderFloat(
+                "Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
+            ImGui::Checkbox("Camera Auto Rotate", &rotate_);
+            ImGui::Checkbox("Draw Environment", &environment_);
+            ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&color_));
+        }
+        ImGui::End();
+
+        ImGui::Begin("Scene");
+        {
+            if (ImGui::CollapsingHeader("Nodes"))
+            {
+                if (ImGui::TreeNode("Root"))
+                {
+                    if (ImGui::TreeNode("FlightHelmet"))
+                    {
+                        ImGui::TreePop();
+                    }
+
+                    if (ImGui::TreeNode("Camera"))
+                    {
+                        ImGui::TreePop();
+                    }
+
+                    if (ImGui::TreeNode("HDR Skybox"))
+                    {
+                        ImGui::TreePop();
+                    }
+
+                    ImGui::TreePop();
+                }
+            }
+            if (ImGui::CollapsingHeader("Materials"))
+            {
+                if (ImGui::TreeNode("Shader"))
+                {
+                    ImGui::TreePop();
+                }
+            }
+            if (ImGui::CollapsingHeader("Textures"))
+            {
+                if (ImGui::TreeNode("Blah.png"))
+                {
+                    ImGui::TreePop();
+                }
+            }
+        }
+        ImGui::End();
 
         graphics_.submit_and_swap(imgui_.draw());
     }
@@ -987,9 +1032,11 @@ public:
     {
         command_list scene_draw;
 
-        scene_draw.viewport().set_rectangle(viewport_);
+        const auto viewport = window_.get_viewport();
 
-        scene_draw.scissor().set_rectangle(viewport_);
+        scene_draw.viewport().set_rectangle(viewport);
+
+        scene_draw.scissor().set_rectangle(viewport);
 
         scene_draw.clear().set_color(color_).set_clear_color(true).set_clear_depth(true);
 
@@ -1048,6 +1095,7 @@ public:
 
     void update(const game_time delta_time) override
     {
+        camera_.set_perspective(glm::radians(fov_), window_.aspect());
         camera_.update(delta_time);
     }
 
@@ -1062,6 +1110,9 @@ public:
 
 int main(const int argc, char* argv[])
 {
-    const app_settings settings(argc, argv);
+    app_settings settings(argc, argv);
+    settings.window_settings.resolution = {1600, 900};
+    settings.window_settings.fullscreen = false;
+
     return app{settings}.run();
 }

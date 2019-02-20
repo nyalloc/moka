@@ -178,8 +178,8 @@ void main()
         discard;
     }  
         
-	vec3 albedo = get_albedo().rgb;
-	vec3 emissive = get_emissive().rgb;
+	vec4 albedo = get_albedo();
+	vec4 emissive = get_emissive();
 	float metallic = get_metallic();
 	float roughness = get_roughness();
 	float ao = get_ao();
@@ -189,30 +189,32 @@ void main()
 	vec3 r = reflect(-v, n);
 	
 	vec3 f0 = vec3(0.04f);
-	f0 = mix(f0, albedo, metallic);
+	f0 = mix(f0, albedo.rgb, metallic);
 	
-    vec3 lo = vec3(0.0f);
+    vec4 lo = vec4(0.0f);
 	
     vec3 kS = fresnel_schlick_roughness(max(dot(n, v), 0.0f), f0, roughness);
     vec3 kD = 1.0f - kS;
     kD *= 1.0f - metallic;	  
 	
-    vec3 irradiance = texture(irradiance_map, n).rgb;
-    vec3 diffuse = irradiance * albedo;
+    vec4 irradiance = texture(irradiance_map, n);
+    vec4 diffuse = irradiance * albedo;
 	
 	const float MAX_REFLECTION_LOD = 4.0f;
 	
 	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * MAX_REFLECTION_LOD).rgb;   
 	vec2 brdf  = texture(brdf_lut, vec2(max(dot(n, v), 0.0f), roughness)).rg;
-    vec3 specular = prefiltered_color * (kS * brdf.x + brdf.y);
+    vec4 specular = vec4(prefiltered_color * (kS * brdf.x + brdf.y), 1.0f);
 
-    vec3 ambient = (kD * diffuse + specular) * ao;
+    vec4 ambient = (vec4(kD, 1.0f) * diffuse + specular) * ao;
     
-    vec3 color = ambient + lo + emissive;
+    vec4 color = ambient + lo + emissive;
 	
-    vec3 mapped = vec3(1.0f) - exp(-color * exposure);
+    vec4 mapped = vec4(1.0f) - exp(-color * exposure);
 	
-    mapped = pow(mapped, vec3(1.0f / gamma));
+	vec3 corrected_color = vec3(1.0f / gamma);
+	
+    mapped = pow(mapped, vec4(corrected_color, 1.0f));
   
-    frag_color = vec4(mapped, 1.0f);
+    frag_color = mapped;
 }
