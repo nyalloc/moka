@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/quaternion.hpp>
 
 namespace moka
@@ -175,6 +176,25 @@ namespace moka
         {
             rotation_ = glm::quat_cast(glm::lookAt(-position_, world_location, world_up));
             dirty_ = true;
+        }
+
+        static transform from_matrix(const glm::mat4& m)
+        {
+            transform t;
+
+            glm::vec3 scale;
+            glm::quat rotation;
+            glm::vec3 translation;
+            glm::vec3 skew;
+            glm::vec4 perspective;
+            glm::decompose(m, scale, rotation, translation, skew, perspective);
+            rotation = glm::conjugate(rotation);
+
+            t.set_position(translation);
+            t.set_scale(scale);
+            t.set_rotation(rotation);
+
+            return t;
         }
     };
 } // namespace moka

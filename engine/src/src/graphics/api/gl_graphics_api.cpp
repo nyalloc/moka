@@ -485,6 +485,12 @@ namespace moka
         }
     }
 
+    void gl_graphics_api::visit(generate_mipmaps_command& cmd)
+    {
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cmd.tex.id);
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    }
+
     void gl_graphics_api::visit(draw_command& cmd)
     {
         // early exit if a bogus vertex buffer is given to us

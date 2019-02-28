@@ -168,4 +168,14 @@ namespace moka
     {
         return make_command_buffer(key).fill_vertex_buffer();
     }
+
+    generate_mipmaps_command& command_list::generate_mipmaps()
+    {
+        return make_command_buffer().generate_mipmaps();
+    }
+
+    generate_mipmaps_command& command_list::generate_mipmaps(sort_key key)
+    {
+        return make_command_buffer(key).generate_mipmaps();
+    }
 } // namespace moka

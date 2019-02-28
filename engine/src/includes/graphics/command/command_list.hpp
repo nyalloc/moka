@@ -1,5 +1,6 @@
 #pragma once
 
+#include "generate_mipmaps_command.hpp"
 #include <graphics/command/clear_command.hpp>
 #include <graphics/command/command_buffer.hpp>
 #include <graphics/command/command_list.hpp>
@@ -94,5 +95,9 @@ namespace moka
         fill_vertex_buffer_command& fill_vertex_buffer();
 
         fill_vertex_buffer_command& fill_vertex_buffer(sort_key key);
+
+        generate_mipmaps_command& generate_mipmaps();
+
+        generate_mipmaps_command& generate_mipmaps(sort_key key);
     };
 } // namespace moka

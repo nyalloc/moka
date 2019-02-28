@@ -12,6 +12,7 @@
 
 #include <windows.h> // For common windows data types and function headers
 #define STRICT_TYPED_ITEMIDS
+#include <iosfwd>
 #include <knownfolders.h> // for KnownFolder APIs/datatypes/function headers
 #include <new>
 #include <propidl.h>     // for the Property System APIs
@@ -21,14 +22,12 @@
 #include <shlwapi.h>
 #include <shobjidl.h> // for IFileDialogEvents and IFileDialogControlEvents
 #include <shtypes.h>  // for COMDLG_FILTERSPEC
-#include <strsafe.h>  // for StringCchPrintfW
+#include <sstream>
+#include <strsafe.h> // for StringCchPrintfW
 
 #pragma comment( \
     linker,      \
     "\"/manifestdependency:type='Win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-
-const COMDLG_FILTERSPEC c_rgSaveTypes[] = {{L"3D Object (*.gltf)", L"*.gltf"},
-                                           {L"All Documents (*.*)", L"*.*"}};
 
 // Indices of file types
 #define INDEX_WORDDOC 1
@@ -356,7 +355,7 @@ HRESULT _WriteDataToCustomFile(PCWSTR pszFileName)
 /* Common File Dialog Snippets ***************************************************************************************************/
 
 // This code snippet demonstrates how to work with the common file dialog interface
-HRESULT BasicFileOpen()
+HRESULT FileOpen(std::string& path, file_type type)
 {
     // CoCreate the File Open Dialog object.
     IFileDialog* pfd = NULL;
@@ -386,6 +385,22 @@ HRESULT BasicFileOpen()
                     hr = pfd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
                     if (SUCCEEDED(hr))
                     {
+                        COMDLG_FILTERSPEC c_rgSaveTypes[2];
+
+                        switch (type)
+                        {
+                        case file_type::gltf:
+                            c_rgSaveTypes[0] = {L"3D Object (*.gltf)",
+                                                L"*.gltf"};
+                            break;
+                        case file_type::hdr:
+                            c_rgSaveTypes[0] = {L"HDR (*.hdr)", L"*.hdr"};
+
+                            break;
+                        }
+
+                        c_rgSaveTypes[1] = {L"All Documents (*.*)", L"*.*"};
+
                         // Set the file types to display only. Notice that, this is a 1-based array.
                         hr = pfd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
                         if (SUCCEEDED(hr))
@@ -414,15 +429,10 @@ HRESULT BasicFileOpen()
                                                 SIGDN_FILESYSPATH, &pszFilePath);
                                             if (SUCCEEDED(hr))
                                             {
-                                                TaskDialog(
-                                                    NULL,
-                                                    NULL,
-                                                    L"CommonFileDialogApp",
-                                                    pszFilePath,
-                                                    NULL,
-                                                    TDCBF_OK_BUTTON,
-                                                    TD_INFORMATION_ICON,
-                                                    NULL);
+                                                std::stringstream ss;
+                                                ss << pszFilePath;
+                                                path = ss.str();
+
                                                 CoTaskMemFree(pszFilePath);
                                             }
                                             psiResult->Release();
@@ -443,521 +453,7 @@ HRESULT BasicFileOpen()
     return hr;
 }
 
-// The Common Places area in the File Dialog is extensible.
-// This code snippet demonstrates how to extend the Common Places area.
-// Look at CDialogEventHandler::OnItemSelected to see how messages pertaining to
-// the added controls can be processed.
-HRESULT AddItemsToCommonPlaces()
+bool open_file(std::string& path, file_type type)
 {
-    // CoCreate the File Open Dialog object.
-    IFileDialog* pfd = NULL;
-    HRESULT hr = CoCreateInstance(
-        CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
-    if (SUCCEEDED(hr))
-    {
-        // Always use known folders instead of hard-coding physical file paths.
-        // In this case we are using Public Music KnownFolder.
-        IKnownFolderManager* pkfm = NULL;
-        hr = CoCreateInstance(
-            CLSID_KnownFolderManager, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pkfm));
-        if (SUCCEEDED(hr))
-        {
-            // Get the known folder.
-            IKnownFolder* pKnownFolder = NULL;
-            hr = pkfm->GetFolder(FOLDERID_PublicMusic, &pKnownFolder);
-            if (SUCCEEDED(hr))
-            {
-                // File Dialog APIs need an IShellItem that represents the location.
-                IShellItem* psi = NULL;
-                hr = pKnownFolder->GetShellItem(0, IID_PPV_ARGS(&psi));
-                if (SUCCEEDED(hr))
-                {
-                    // Add the place to the bottom of default list in Common File Dialog.
-                    hr = pfd->AddPlace(psi, FDAP_BOTTOM);
-                    if (SUCCEEDED(hr))
-                    {
-                        // Show the File Dialog.
-                        hr = pfd->Show(NULL);
-                        if (SUCCEEDED(hr))
-                        {
-                            //
-                            // You can add your own code here to handle the results.
-                            //
-                        }
-                    }
-                    psi->Release();
-                }
-                pKnownFolder->Release();
-            }
-            pkfm->Release();
-        }
-        pfd->Release();
-    }
-
-    LPWSTR* name = nullptr;
-    pfd->GetFileName(name);
-
-    return hr;
-}
-
-// This code snippet demonstrates how to add custom controls in the Common File Dialog.
-HRESULT AddCustomControls()
-{
-    // CoCreate the File Open Dialog object.
-    IFileDialog* pfd = NULL;
-    HRESULT hr = CoCreateInstance(
-        CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
-    if (SUCCEEDED(hr))
-    {
-        // Create an event handling object, and hook it up to the dialog.
-        IFileDialogEvents* pfde = NULL;
-        DWORD dwCookie = 0;
-        hr = CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&pfde));
-        if (SUCCEEDED(hr))
-        {
-            // Hook up the event handler.
-            hr = pfd->Advise(pfde, &dwCookie);
-            if (SUCCEEDED(hr))
-            {
-                // Set up a Customization.
-                IFileDialogCustomize* pfdc = NULL;
-                hr = pfd->QueryInterface(IID_PPV_ARGS(&pfdc));
-                if (SUCCEEDED(hr))
-                {
-                    // Create a Visual Group.
-                    hr = pfdc->StartVisualGroup(CONTROL_GROUP, L"Sample Group");
-                    if (SUCCEEDED(hr))
-                    {
-                        // Add a radio-button list.
-                        hr = pfdc->AddRadioButtonList(CONTROL_RADIOBUTTONLIST);
-                        if (SUCCEEDED(hr))
-                        {
-                            // Set the state of the added radio-button list.
-                            hr = pfdc->SetControlState(
-                                CONTROL_RADIOBUTTONLIST, CDCS_VISIBLE | CDCS_ENABLED);
-                            if (SUCCEEDED(hr))
-                            {
-                                // Add individual buttons to the radio-button list.
-                                hr = pfdc->AddControlItem(
-                                    CONTROL_RADIOBUTTONLIST,
-                                    CONTROL_RADIOBUTTON1,
-                                    L"Change Title to Longhorn");
-                                if (SUCCEEDED(hr))
-                                {
-                                    hr = pfdc->AddControlItem(
-                                        CONTROL_RADIOBUTTONLIST,
-                                        CONTROL_RADIOBUTTON2,
-                                        L"Change Title to Vista");
-                                    if (SUCCEEDED(hr))
-                                    {
-                                        // Set the default selection to option 1.
-                                        hr = pfdc->SetSelectedControlItem(
-                                            CONTROL_RADIOBUTTONLIST, CONTROL_RADIOBUTTON1);
-                                    }
-                                }
-                            }
-                        }
-                        // End the visual group.
-                        pfdc->EndVisualGroup();
-                    }
-                    pfdc->Release();
-                }
-
-                if (FAILED(hr))
-                {
-                    // Unadvise here in case we encounter failures before we get a chance to show the dialog.
-                    pfd->Unadvise(dwCookie);
-                }
-            }
-            pfde->Release();
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            // Now show the dialog.
-            hr = pfd->Show(NULL);
-            if (SUCCEEDED(hr))
-            {
-                //
-                // You can add your own code here to handle the results.
-                //
-            }
-            // Unhook the event handler.
-            pfd->Unadvise(dwCookie);
-        }
-        pfd->Release();
-    }
-    return hr;
-}
-
-// This code snippet demonstrates how to add default metadata in the Common File
-// Dialog. Look at CDialogEventHandler::OnTypeChange to see to change the
-// order/list of properties displayed in the Common File Dialog.
-HRESULT SetDefaultValuesForProperties()
-{
-    // CoCreate the File Open Dialog object.
-    IFileSaveDialog* pfsd = NULL;
-    HRESULT hr = CoCreateInstance(
-        CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfsd));
-    if (SUCCEEDED(hr))
-    {
-        // Create an event handling object, and hook it up to the dialog.
-        IFileDialogEvents* pfde = NULL;
-        DWORD dwCookie = 0;
-        hr = CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&pfde));
-        if (SUCCEEDED(hr))
-        {
-            // Hook up the event handler.
-            hr = pfsd->Advise(pfde, &dwCookie);
-            if (SUCCEEDED(hr))
-            {
-                // Set the file types to display.
-                hr = pfsd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
-                if (SUCCEEDED(hr))
-                {
-                    hr = pfsd->SetFileTypeIndex(INDEX_WORDDOC);
-                    if (SUCCEEDED(hr))
-                    {
-                        hr = pfsd->SetDefaultExtension(L"doc");
-                        if (SUCCEEDED(hr))
-                        {
-                            IPropertyStore* pps = NULL;
-
-                            // The InMemory Property Store is a Property Store that is
-                            // kept in the memory instead of persisted in a file stream.
-                            hr = PSCreateMemoryPropertyStore(IID_PPV_ARGS(&pps));
-                            if (SUCCEEDED(hr))
-                            {
-                                PROPVARIANT propvarValue = {};
-                                hr = InitPropVariantFromString(
-                                    L"SampleKeywordsValue", &propvarValue);
-                                if (SUCCEEDED(hr))
-                                {
-                                    // Set the value to the property store of the item.
-                                    hr = pps->SetValue(PKEY_Keywords, propvarValue);
-                                    if (SUCCEEDED(hr))
-                                    {
-                                        // Commit does the actual writing back to the in memory store.
-                                        hr = pps->Commit();
-                                        if (SUCCEEDED(hr))
-                                        {
-                                            // Hand these properties to the File Dialog.
-                                            hr = pfsd->SetCollectedProperties(NULL, TRUE);
-                                            if (SUCCEEDED(hr))
-                                            {
-                                                hr = pfsd->SetProperties(pps);
-                                            }
-                                        }
-                                    }
-                                    PropVariantClear(&propvarValue);
-                                }
-                                pps->Release();
-                            }
-                        }
-                    }
-                }
-
-                if (FAILED(hr))
-                {
-                    // Unadvise here in case we encounter failures before we get a chance to show the dialog.
-                    pfsd->Unadvise(dwCookie);
-                }
-            }
-            pfde->Release();
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            // Now show the dialog.
-            hr = pfsd->Show(NULL);
-            if (SUCCEEDED(hr))
-            {
-                //
-                // You can add your own code here to handle the results.
-                //
-            }
-            // Unhook the event handler.
-            pfsd->Unadvise(dwCookie);
-        }
-        pfsd->Release();
-    }
-    return hr;
-}
-
-// The following code snippet demonstrates two things:
-// 1.  How to write properties using property handlers.
-// 2.  Replicating properties in the "Save As" scenario where the user choses to save an existing file
-//     with a different name.  We need to make sure we replicate not just the data,
-//     but also the properties of the original file.
-HRESULT WritePropertiesUsingHandlers()
-{
-    // CoCreate the File Open Dialog object.
-    IFileSaveDialog* pfsd;
-    HRESULT hr = CoCreateInstance(
-        CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfsd));
-    if (SUCCEEDED(hr))
-    {
-        WCHAR szFullPathToTestFile[MAX_PATH] = {};
-
-        // For this exercise, let's just support only one file type to make things simpler.
-        // Also, let's use the jpg host_format for sample purpose because the Windows ships with
-        // property handlers for jpg files.
-        const COMDLG_FILTERSPEC rgSaveTypes[] = {
-            {L"Photo Document (*.jpg)", L"*.jpg"}};
-
-        // Set the file types to display.
-        hr = pfsd->SetFileTypes(ARRAYSIZE(rgSaveTypes), rgSaveTypes);
-        if (SUCCEEDED(hr))
-        {
-            hr = pfsd->SetFileTypeIndex(0);
-            if (SUCCEEDED(hr))
-            {
-                // Set default file extension.
-                hr = pfsd->SetDefaultExtension(L"jpg");
-                if (SUCCEEDED(hr))
-                {
-                    // Ensure the dialog only returns items that can be represented by file system paths.
-                    DWORD dwFlags;
-                    hr = pfsd->GetOptions(&dwFlags);
-                    if (SUCCEEDED(hr))
-                    {
-                        hr = pfsd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
-
-                        // Let's first get the current property set of the file we are replicating
-                        // and give it to the file dialog object.
-                        //
-                        // For simplicity sake, let's just get the property set from a pre-existing jpg file (in the Pictures folder).
-                        // In the real-world, you would actually add code to get the property set of the file
-                        // that is currently open and is being replicated.
-                        if (SUCCEEDED(hr))
-                        {
-                            PWSTR pszPicturesFolderPath;
-                            hr = SHGetKnownFolderPath(
-                                FOLDERID_SamplePictures, 0, NULL, &pszPicturesFolderPath);
-                            if (SUCCEEDED(hr))
-                            {
-                                hr = PathCombineW(
-                                         szFullPathToTestFile,
-                                         pszPicturesFolderPath,
-                                         L"Flower.jpg")
-                                         ? S_OK
-                                         : E_FAIL;
-                                if (SUCCEEDED(hr))
-                                {
-                                    IPropertyStore* pps;
-                                    hr = SHGetPropertyStoreFromParsingName(
-                                        szFullPathToTestFile, NULL, GPS_DEFAULT, IID_PPV_ARGS(&pps));
-                                    if (FAILED(hr))
-                                    {
-                                        // Flower.jpg is probably not in the Pictures folder.
-                                        TaskDialog(
-                                            NULL,
-                                            NULL,
-                                            L"CommonFileDialogApp",
-                                            L"Create Flower.jpg in the "
-                                            L"Pictures folder and try again.",
-                                            NULL,
-                                            TDCBF_OK_BUTTON,
-                                            TD_ERROR_ICON,
-                                            NULL);
-                                    }
-                                    else
-                                    {
-                                        // Call SetProperties on the file dialog object for getting back later.
-                                        pfsd->SetCollectedProperties(NULL, TRUE);
-                                        pfsd->SetProperties(pps);
-                                        pps->Release();
-                                    }
-                                }
-                                CoTaskMemFree(pszPicturesFolderPath);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            hr = pfsd->Show(NULL);
-            if (SUCCEEDED(hr))
-            {
-                IShellItem* psiResult;
-                hr = pfsd->GetResult(&psiResult);
-                if (SUCCEEDED(hr))
-                {
-                    PWSTR pszNewFileName;
-                    hr = psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszNewFileName);
-                    if (SUCCEEDED(hr))
-                    {
-                        // This is where you add code to write data to your file.
-                        // For simplicity, let's just copy a pre-existing dummy jpg file.
-                        //
-                        // In the real-world, you would actually add code to replicate the data of
-                        // file that is currently open.
-                        hr = CopyFileW(szFullPathToTestFile, pszNewFileName, FALSE)
-                                 ? S_OK
-                                 : HRESULT_FROM_WIN32(GetLastError());
-                        if (SUCCEEDED(hr))
-                        {
-                            // Now apply the properties.
-                            //
-                            // Get the property store first by calling GetPropertyStore and pass it on to ApplyProperties.
-                            // This will make the registered propety handler for the specified file type (jpg)
-                            // do all the work of writing the properties for you.
-                            //
-                            // Property handlers for the specified file type should be registered for this
-                            // to work.
-                            IPropertyStore* pps;
-
-                            // When we call GetProperties, we get back all the properties that we originally set
-                            // (in our call to SetProperties above) plus the ones user modified in the file dialog.
-                            hr = pfsd->GetProperties(&pps);
-                            if (SUCCEEDED(hr))
-                            {
-                                // Now apply the properties making use of the registered property handler for the file type.
-                                //
-                                // hWnd is used as parent for any error dialogs that might popup when writing properties.
-                                // Pass NULL for IFileOperationProgressSink as we don't want to register any callback for progress notifications.
-                                hr = pfsd->ApplyProperties(psiResult, pps, NULL, NULL);
-                                pps->Release();
-                            }
-                        }
-                        CoTaskMemFree(pszNewFileName);
-                    }
-                    psiResult->Release();
-                }
-            }
-        }
-        pfsd->Release();
-    }
-    return hr;
-}
-
-// This code snippet demonstrates how to write properties without using property handlers.
-HRESULT WritePropertiesWithoutUsingHandlers()
-{
-    // CoCreate the File Open Dialog object.
-    IFileSaveDialog* pfsd;
-    HRESULT hr = CoCreateInstance(
-        CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfsd));
-    if (SUCCEEDED(hr))
-    {
-        // For this exercise, let's use a custom file type.
-        const COMDLG_FILTERSPEC rgSaveTypes[] = {
-            {L"MyApp Document (*.myApp)", L"*.myApp"}};
-
-        // Set the file types to display.
-        hr = pfsd->SetFileTypes(ARRAYSIZE(rgSaveTypes), rgSaveTypes);
-        if (SUCCEEDED(hr))
-        {
-            hr = pfsd->SetFileTypeIndex(0);
-            if (SUCCEEDED(hr))
-            {
-                // Set default file extension.
-                hr = pfsd->SetDefaultExtension(L"myApp");
-                if (SUCCEEDED(hr))
-                {
-                    // Ensure the dialog only returns items that can be represented by file system paths.
-                    DWORD dwFlags;
-                    hr = pfsd->GetOptions(&dwFlags);
-                    if (SUCCEEDED(hr))
-                    {
-                        hr = pfsd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
-                        if (SUCCEEDED(hr))
-                        {
-                            // Set the properties you want the FileSave dialog to collect from the user.
-                            IPropertyDescriptionList* pdl;
-                            hr = PSGetPropertyDescriptionListFromString(
-                                L"prop:System.Keywords", IID_PPV_ARGS(&pdl));
-                            if (SUCCEEDED(hr))
-                            {
-                                // TRUE as second param == show default properties as well, but show Keyword first.
-                                hr = pfsd->SetCollectedProperties(pdl, TRUE);
-                                pdl->Release();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            // Now show the dialog.
-            hr = pfsd->Show(NULL);
-            if (SUCCEEDED(hr))
-            {
-                IShellItem* psiResult;
-                hr = pfsd->GetResult(&psiResult);
-                if (SUCCEEDED(hr))
-                {
-                    // Get the path to the file.
-                    PWSTR pszNewFileName;
-                    hr = psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszNewFileName);
-                    if (SUCCEEDED(hr))
-                    {
-                        // Write data to the file.
-                        hr = _WriteDataToCustomFile(pszNewFileName);
-                        if (SUCCEEDED(hr))
-                        {
-                            // Now get the property store and write each individual property to the file.
-                            IPropertyStore* pps;
-                            hr = pfsd->GetProperties(&pps);
-                            if (SUCCEEDED(hr))
-                            {
-                                DWORD cProps = 0;
-                                hr = pps->GetCount(&cProps);
-
-                                // Loop over property set and write each property/value pair to the file.
-                                for (DWORD i = 0; i < cProps && SUCCEEDED(hr); i++)
-                                {
-                                    PROPERTYKEY key;
-                                    hr = pps->GetAt(i, &key);
-                                    if (SUCCEEDED(hr))
-                                    {
-                                        PWSTR pszPropertyName;
-                                        hr = PSGetNameFromPropertyKey(key, &pszPropertyName);
-                                        if (SUCCEEDED(hr))
-                                        {
-                                            // Get the value of the property.
-                                            PROPVARIANT propvarValue;
-                                            PropVariantInit(&propvarValue);
-                                            hr = pps->GetValue(key, &propvarValue);
-                                            if (SUCCEEDED(hr))
-                                            {
-                                                WCHAR wszValue[MAX_PATH];
-
-                                                // Always use property system APIs to do the conversion for you.
-                                                hr = PropVariantToString(
-                                                    propvarValue, wszValue, ARRAYSIZE(wszValue));
-                                                if (SUCCEEDED(hr))
-                                                {
-                                                    // Write the property to the file.
-                                                    hr = _WritePropertyToCustomFile(
-                                                        pszNewFileName, pszPropertyName, wszValue);
-                                                }
-                                            }
-                                            PropVariantClear(&propvarValue);
-                                            CoTaskMemFree(pszPropertyName);
-                                        }
-                                    }
-                                }
-                                pps->Release();
-                            }
-                        }
-                        CoTaskMemFree(pszNewFileName);
-                    }
-                    psiResult->Release();
-                }
-            }
-        }
-        pfsd->Release();
-    }
-    return hr;
-}
-
-void open_file()
-{
-    BasicFileOpen();
+    return SUCCEEDED(FileOpen(path, type));
 }

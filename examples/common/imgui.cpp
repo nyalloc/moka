@@ -295,9 +295,12 @@ namespace moka
                         static_cast<int>(clip_rect.z - clip_rect.x),
                         static_cast<int>(clip_rect.w - clip_rect.y));
 
-                    const texture handle{reinterpret_cast<uint16_t>(cmd->TextureId)};
-
-                    material_["u_tex0"] = handle;
+                    if (cmd->TextureId)
+                    {
+                        const texture handle{static_cast<uint16_t>(
+                            reinterpret_cast<intptr_t>(cmd->TextureId))};
+                        material_["u_tex0"] = handle;
+                    }
 
                     buff.clear().set_clear_depth(true);
 

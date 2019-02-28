@@ -78,4 +78,9 @@ namespace moka
     {
         return emplace_back<fill_vertex_buffer_command>();
     }
+
+    generate_mipmaps_command& command_buffer::generate_mipmaps()
+    {
+        return emplace_back<generate_mipmaps_command>();
+    }
 } // namespace moka

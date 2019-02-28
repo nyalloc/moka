@@ -53,6 +53,8 @@ namespace moka
         fill_index_buffer_command& fill_index_buffer();
 
         fill_vertex_buffer_command& fill_vertex_buffer();
+
+        generate_mipmaps_command& generate_mipmaps();
     };
 
     template <typename T>

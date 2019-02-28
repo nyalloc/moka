@@ -1,12 +1,12 @@
 #include <asset_importer/model_importer.hpp>
 #include <asset_importer/texture_importer.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <graphics/api/graphics_api.hpp>
 #include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/buffer/vertex_layout_builder.hpp>
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material_builder.hpp>
 #include <json.hpp>
-#include <mikktspace.h>
 
 #define TINYGLTF_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -158,7 +158,7 @@ namespace moka
         const tinygltf::Model& model,
         const tinygltf::Mesh& mesh,
         graphics_device& device,
-        transform& trans,
+        const glm::mat4& trans,
         const std::filesystem::path& root_directory,
         const std::filesystem::path& material_path,
         std::map<std::string, program>& shaders)
@@ -181,7 +181,8 @@ namespace moka
                 model.buffers[indices_buffer_view.buffer].data;
 
             std::move(
-                indices_buffer.begin() + indices_buffer_view.byteOffset,
+                indices_buffer.begin() + indices_buffer_view.byteOffset +
+                    indices_accessor.byteOffset,
                 indices_buffer.begin() + indices_buffer_view.byteOffset +
                     indices_buffer_view.byteLength,
                 std::back_inserter(index_buffer));
@@ -251,7 +252,8 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
                     vertices_buffer.begin() + vertices_buffer_view.byteOffset +
                         vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
@@ -277,10 +279,74 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
                     vertices_buffer.begin() + vertices_buffer_view.byteOffset +
                         vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
+            }
+            else
+            {
+                // struct mikktspace_in
+                //{
+                //    const tinygltf::Model& model;
+                //    const tinygltf::Primitive& primitive;
+                //};
+
+                // SMikkTSpaceInterface i;
+                // i.m_getNumFaces = [](const SMikkTSpaceContext* x) -> int {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //    return 0;
+                //};
+                // i.m_getNumVerticesOfFace = [](const SMikkTSpaceContext* x,
+                //                              const int iface) -> int {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //    return 0;
+                //};
+                // i.m_getPosition = [](const SMikkTSpaceContext* x,
+                //                     float pos[],
+                //                     const int iface,
+                //                     const int ivert) -> void {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //};
+                // i.m_getNormal = [](const SMikkTSpaceContext* x,
+                //                   float pos[],
+                //                   const int iface,
+                //                   const int ivert) -> void {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //};
+                // i.m_getTexCoord = [](const SMikkTSpaceContext* x,
+                //                     float pos[],
+                //                     const int iface,
+                //                     const int ivert) -> void {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //};
+                // i.m_setTSpaceBasic = [](const SMikkTSpaceContext* x,
+                //                        const float tangent[],
+                //                        const float sign,
+                //                        const int iface,
+                //                        const int ivert) -> void {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //};
+                // i.m_setTSpace = [](const SMikkTSpaceContext* x,
+                //                   const float tangent[],
+                //                   const float bitangent[],
+                //                   const float mags,
+                //                   const float magt,
+                //                   const tbool orientation_preserving,
+                //                   const int iface,
+                //                   const int ivert) -> void {
+                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
+                //};
+
+                // SMikkTSpaceContext context;
+                // context.m_pInterface = &i;
+
+                // mikktspace_in in{model, primitive};
+
+                // context.m_pUserData = (void*)&in;
+
+                // genTangSpaceDefault(&context);
             }
 
             auto normal = primitive.attributes.find("NORMAL");
@@ -301,7 +367,8 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
                     vertices_buffer.begin() + vertices_buffer_view.byteOffset +
                         vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
@@ -325,7 +392,8 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
                     vertices_buffer.begin() + vertices_buffer_view.byteOffset +
                         vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
@@ -741,7 +809,83 @@ namespace moka
                 mat_builder.build());
         }
 
-        return moka::mesh{std::move(primitives), std::move(trans)};
+        return moka::mesh{std::move(primitives), transform::from_matrix(transform)};
+    }
+
+    glm::mat4 get_transform(const tinygltf::Node& n)
+    {
+        auto model_translation = n.translation;
+        auto model_rotation = n.rotation;
+        auto model_scale = n.scale;
+        auto model_matrix = n.matrix;
+
+        if (!model_matrix.empty())
+        {
+            glm::mat4 matrix(
+                model_matrix[0],
+                model_matrix[1],
+                model_matrix[2],
+                model_matrix[3],
+                model_matrix[4],
+                model_matrix[5],
+                model_matrix[6],
+                model_matrix[7],
+                model_matrix[8],
+                model_matrix[9],
+                model_matrix[10],
+                model_matrix[11],
+                model_matrix[12],
+                model_matrix[13],
+                model_matrix[14],
+                model_matrix[15]);
+            return matrix;
+        }
+
+        transform trans;
+        if (!model_translation.empty())
+        {
+            std::vector<float> translation(
+                model_translation.begin(), model_translation.end());
+            trans.set_position({translation[0], translation[1], translation[2]});
+        }
+        if (!model_scale.empty())
+        {
+            std::vector<float> scale(model_scale.begin(), model_scale.end());
+            trans.set_scale({scale[0], scale[1], scale[2]});
+        }
+        if (!model_rotation.empty())
+        {
+            std::vector<float> rotation(model_rotation.begin(), model_rotation.end());
+            trans.set_rotation({rotation[3], rotation[0], rotation[1], rotation[2]});
+        }
+
+        return trans.to_matrix();
+    }
+
+    void add_node(
+        const glm::mat4& parent_transform,
+        std::vector<mesh>& meshes,
+        const int node_id,
+        const tinygltf::Model& model,
+        graphics_device& device,
+        const std::filesystem::path& root_directory,
+        const std::filesystem::path& material_path,
+        std::map<std::string, program>& shaders)
+    {
+        const auto mesh_id = model.nodes[node_id].mesh;
+
+        if (mesh_id == -1)
+            return;
+
+        const auto trans = parent_transform * get_transform(model.nodes[node_id]);
+
+        for (const auto i : model.nodes[node_id].children)
+        {
+            add_node(trans, meshes, i, model, device, root_directory, material_path, shaders);
+        }
+
+        meshes.emplace_back(load_mesh(
+            model, model.meshes[mesh_id], device, trans, root_directory, material_path, shaders));
     }
 
     model load_model(
@@ -753,38 +897,35 @@ namespace moka
     {
         std::vector<mesh> meshes;
 
-        for (size_t i = 0; i < model.nodes.size(); i++)
+        for (const auto& scene : model.scenes)
         {
-            const auto mesh_id = model.nodes[i].mesh;
-
-            if (mesh_id == -1)
-                continue;
-
-            auto model_translation = model.nodes[i].translation;
-            auto model_rotation = model.nodes[i].rotation;
-            auto model_scale = model.nodes[i].scale;
-
-            transform trans;
-            if (!model_translation.empty())
+            for (const auto& node : scene.nodes)
             {
-                std::vector<float> translation(
-                    model_translation.begin(), model_translation.end());
-                trans.set_position({translation[0], translation[1], translation[2]});
-            }
-            if (!model_scale.empty())
-            {
-                std::vector<float> scale(model_scale.begin(), model_scale.end());
-                trans.set_scale({scale[0], scale[1], scale[2]});
-            }
-            if (!model_rotation.empty())
-            {
-                std::vector<float> rotation(
-                    model_rotation.begin(), model_rotation.end());
-                trans.set_rotation({rotation[3], rotation[0], rotation[1], rotation[2]});
-            }
+                auto transform = get_transform(model.nodes[node]);
 
-            meshes.emplace_back(load_mesh(
-                model, model.meshes[mesh_id], device, trans, root_directory, material_path, shaders));
+                if (model.nodes[node].mesh != -1)
+                {
+                    const auto mesh_id = model.nodes[node].mesh;
+
+                    if (mesh_id == -1)
+                        continue;
+
+                    const auto trans = get_transform(model.nodes[node]);
+
+                    for (const auto i : model.nodes[node].children)
+                    {
+                        add_node(trans, meshes, i, model, device, root_directory, material_path, shaders);
+                    }
+
+                    meshes.emplace_back(load_mesh(
+                        model, model.meshes[mesh_id], device, trans, root_directory, material_path, shaders));
+                }
+
+                for (const auto i : model.nodes[node].children)
+                {
+                    add_node(transform, meshes, i, model, device, root_directory, material_path, shaders);
+                }
+            }
         }
 
         return moka::model{std::move(meshes)};

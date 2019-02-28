@@ -51,7 +51,7 @@ namespace moka
         }
 
         rotate_y_ = glm::clamp(rotate_y_, glm::radians(-89.0f), glm::radians(89.0f));
-        translate_z_ = glm::clamp(translate_z_, 0.3f, 5.0f);
+        translate_z_ = glm::clamp(translate_z_, 0.3f, 100.0f);
 
         current_rotate_x_ = glm::mix(current_rotate_x_, rotate_x_, delta_time * 5);
         current_rotate_y_ = glm::mix(current_rotate_y_, rotate_y_, delta_time * 5);

@@ -95,8 +95,10 @@ namespace moka
         void visit(scissor_command& cmd) override;
         void visit(fill_vertex_buffer_command& cmd) override;
         void visit(fill_index_buffer_command& cmd) override;
-        static void check_errors(const char* caller);
         void visit(frame_buffer_command& cmd) override;
         void visit(frame_buffer_texture_command& cmd) override;
+        void visit(generate_mipmaps_command& cmd) override;
+
+        static void check_errors(const char* caller);
     };
 } // namespace moka

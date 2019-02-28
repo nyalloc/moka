@@ -9,11 +9,11 @@ namespace moka
     {
         mouse& mouse_;
 
-        float current_translate_z_ = 0.5f;
+        float current_translate_z_ = 5.0f;
         float current_rotate_x_ = -glm::pi<float>();
         float current_rotate_y_ = -0.18f;
 
-        float translate_z_ = 0.5f;
+        float translate_z_ = 5.0f;
         float rotate_x_ = -glm::pi<float>();
         float rotate_y_ = -0.18f;
 

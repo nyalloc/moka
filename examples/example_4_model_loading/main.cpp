@@ -24,7 +24,7 @@ model make_hdr_environment_map(
     // we will then render this cube from all 6 directions and capture the result in a frame buffer.
     // we can then use the 6 textures to stitch together our irradiance_.
 
-    auto environment_size = 512;
+    auto environment_size = 1024;
 
     auto height = 0;
     auto width = 0;
@@ -95,7 +95,6 @@ model make_hdr_environment_map(
          1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, //< bottom-right |
         -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, //< top-left     |
         -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  //< bottom-left  |
-        // --------------------------------------------------------------------|
     };
     // clang-format on
 
@@ -243,8 +242,6 @@ model make_hdr_environment_map(
         image_target::cubemap_negative_z,
     };
 
-    // set up irradiance_ from hdr environment map -----------------------
-
     auto hdr_material = material::builder{device, shaders}
                             .set_vertex_shader(hdr_to_cube_vert)
                             .set_fragment_shader(hdr_to_cube_frag)
@@ -253,6 +250,9 @@ model make_hdr_environment_map(
                             .add_uniform("map", hdr)
                             .set_culling_enabled(false)
                             .build();
+
+    // pbr: convert HDR equirectangular environment map to cubemap equivalent
+    // ----------------------------------------------------------------------
 
     command_list hdr_map_list;
 
@@ -276,7 +276,7 @@ model make_hdr_environment_map(
                            .set_wrap_s(wrap_mode::clamp_to_edge)
                            .set_wrap_t(wrap_mode::clamp_to_edge)
                            .set_wrap_r(wrap_mode::clamp_to_edge)
-                           .set_min_filter(min_filter::linear)
+                           .set_min_filter(min_filter::linear_mipmap_linear)
                            .set_mag_filter(mag_filter::linear)
                            .build();
 
@@ -289,7 +289,6 @@ model make_hdr_environment_map(
 
     hdr_map_list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
 
-    // each draw call renders to the side of a irradiance_
     for (auto i = 0; i < 6; i++)
     {
         hdr_material["view"] = capture_views[i];
@@ -311,9 +310,12 @@ model make_hdr_environment_map(
             .set_material(hdr_material);
     }
 
+    hdr_map_list.generate_mipmaps().set_texture(hdr_cubemap);
+
     device.submit(std::move(hdr_map_list), false);
 
-    // irradiance irradiance_ --------------------------------
+    // pbr: create an irradiance cubemap, and re-scale capture FBO to irradiance scale.
+    // --------------------------------------------------------------------------------
 
     auto irradiance_material = material::builder{device, shaders}
                                    .set_vertex_shader(cube_to_irradiance_vert)
@@ -490,22 +492,24 @@ model make_hdr_environment_map(
         vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
         {
             float a = roughness*roughness;
-	        
+    
             float phi = 2.0 * PI * Xi.x;
             float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
             float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
-	        
-	        // from spherical coordinates to cartesian coordinates - halfway vector
+    
+            // from spherical coordinates to cartesian coordinates - halfway vector
             vec3 H;
             H.x = cos(phi) * sinTheta;
             H.y = sin(phi) * sinTheta;
             H.z = cosTheta;
 
+            H = normalize(H);
+    
             // from tangent-space H vector to world-space sample vector
             vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
             vec3 tangent   = normalize(cross(up, N));
             vec3 bitangent = cross(N, tangent);
-
+    
             vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
             return normalize(sampleVec);
         }
@@ -544,7 +548,7 @@ model make_hdr_environment_map(
 
             vec3 N = vec3(0.0, 0.0, 1.0);
             
-            const uint SAMPLE_COUNT = 1024u;
+            const uint SAMPLE_COUNT = 2048u;
             for(uint i = 0u; i < SAMPLE_COUNT; ++i)
             {
                 // generates a sample vector that's biased towards the
@@ -715,30 +719,32 @@ model make_hdr_environment_map(
         // ----------------------------------------------------------------------------
         vec2 Hammersley(uint i, uint N)
         {
-         return vec2(float(i)/float(N), RadicalInverse_VdC(i));
+            return vec2(float(i)/float(N), RadicalInverse_VdC(i));
         }
         // ----------------------------------------------------------------------------
         vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
         {
-         float a = roughness*roughness;
+            float a = roughness*roughness;
     
-         float phi = 2.0 * PI * Xi.x;
-         float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
-         float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
+            float phi = 2.0 * PI * Xi.x;
+            float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
+            float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
     
-         // from spherical coordinates to cartesian coordinates - halfway vector
-         vec3 H;
-         H.x = cos(phi) * sinTheta;
-         H.y = sin(phi) * sinTheta;
-         H.z = cosTheta;
+            // from spherical coordinates to cartesian coordinates - halfway vector
+            vec3 H;
+            H.x = cos(phi) * sinTheta;
+            H.y = sin(phi) * sinTheta;
+            H.z = cosTheta;
+
+            H = normalize(H);
     
-         // from tangent-space H vector to world-space sample vector
-         vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
-         vec3 tangent   = normalize(cross(up, N));
-         vec3 bitangent = cross(N, tangent);
+            // from tangent-space H vector to world-space sample vector
+            vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+            vec3 tangent   = normalize(cross(up, N));
+            vec3 bitangent = cross(N, tangent);
     
-         vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
-         return normalize(sampleVec);
+            vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
+            return normalize(sampleVec);
         }
         // ----------------------------------------------------------------------------
         void main()
@@ -749,7 +755,7 @@ model make_hdr_environment_map(
             vec3 R = N;
             vec3 V = R;
 
-            const uint SAMPLE_COUNT = 1024u;
+            const uint SAMPLE_COUNT = 2048u;
             vec3 prefilteredColor = vec3(0.0);
             float totalWeight = 0.0;
     
@@ -764,12 +770,12 @@ model make_hdr_environment_map(
                 if(NdotL > 0.0)
                 {
                     // sample from the environment's mip level based on roughness/pdf
-                    float D   = DistributionGGX(N, H, roughness);
+                    float D   = DistributionGGX(N, H, roughness) / PI;
                     float NdotH = max(dot(N, H), 0.0);
                     float HdotV = max(dot(H, V), 0.0);
                     float pdf = D * NdotH / (4.0 * HdotV) + 0.0001;
 
-                    float resolution = 512.0; // resolution of source cubemap (per face)
+                    float resolution = 1024.0; // resolution of source cubemap (per face)
                     float saTexel  = 4.0 * PI / (6.0 * resolution * resolution);
                     float saSample = 1.0 / (float(SAMPLE_COUNT) * pdf + 0.0001);
 
@@ -780,8 +786,11 @@ model make_hdr_environment_map(
                 }
             }
 
-            prefilteredColor = prefilteredColor / totalWeight;
-
+            if(totalWeight > 0.0f)
+            {
+                prefilteredColor = prefilteredColor / totalWeight;
+            }  
+    
             FragColor = vec4(prefilteredColor, 1.0);
         }
 
@@ -789,7 +798,7 @@ model make_hdr_environment_map(
 
     command_list prefilter_list;
 
-    auto prefilter_size = 128;
+    auto prefilter_size = 256;
 
     auto prefilter_texture_builder = device.build_texture();
 
@@ -827,11 +836,11 @@ model make_hdr_environment_map(
                                   .set_culling_enabled(false)
                                   .build();
 
-    const size_t max_mip_levels = 5;
+    const size_t max_mip_levels = 9;
     for (size_t mip = 0; mip < max_mip_levels; ++mip)
     {
-        const size_t mip_width = prefilter_size * std::pow(0.5, mip);
-        const size_t mip_height = prefilter_size * std::pow(0.5, mip);
+        const auto mip_width = size_t(prefilter_size * std::pow(0.5, mip));
+        const auto mip_height = size_t(prefilter_size * std::pow(0.5, mip));
 
         const auto prefilter_frame_buffer =
             device.build_frame_buffer()
@@ -911,7 +920,7 @@ public:
               app::data_path() / "Models" / "FlightHelmet" / "FlightHelmet.gltf",
               app::data_path() / "Materials" / "pbr.material")),
           cube_(make_hdr_environment_map(
-              graphics_, app::data_path() / "Textures" / "gym.hdr", irradiance_, brdf_, prefiltered_)),
+              graphics_, app::data_path() / "Textures" / "abandoned.hdr", irradiance_, brdf_, prefiltered_)),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
     }
@@ -942,26 +951,6 @@ public:
 
         if (ImGui::BeginMainMenuBar())
         {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("Open"))
-                {
-                    open_file();
-                }
-
-                if (ImGui::MenuItem("Exit"))
-                {
-                }
-
-                ImGui::EndMenu();
-            }
-            if (ImGui::BeginMenu("Edit"))
-            {
-                if (ImGui::MenuItem("Options"))
-                {
-                }
-                ImGui::EndMenu();
-            }
             if (ImGui::BeginMenu("View"))
             {
                 if (ImGui::MenuItem("Options"))
@@ -972,6 +961,25 @@ public:
             ImGui::EndMainMenuBar();
         }
 
+        auto& io = ImGui::GetIO();
+
+        ImGui::SetNextWindowBgAlpha(0.3f); // Transparent background
+        if (ImGui::Begin(
+                "Overlay",
+                nullptr,
+                (0 != -1 ? ImGuiWindowFlags_NoMove : 0) | ImGuiWindowFlags_NoTitleBar |
+                    ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize |
+                    ImGuiWindowFlags_NoSavedSettings |
+                    ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
+        {
+            ImGui::Text(
+                "Real-Time Physically-Based Rendering\n"
+                "Stuart Adams\n"
+                "@stuartdadams\n"
+                "www.stuartdadams.co.uk");
+        }
+        ImGui::End();
+
         ImGui::Begin("Render Settings");
         {
             ImGui::SliderFloat("Gamma", &gamma_, 0.0f, 10.0f, "%.3f");
@@ -980,46 +988,22 @@ public:
                 "Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
             ImGui::Checkbox("Camera Auto Rotate", &rotate_);
             ImGui::Checkbox("Draw Environment", &environment_);
-            ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&color_));
-        }
-        ImGui::End();
+            ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&color_), ImGuiColorEditFlags_PickerHueWheel);
 
-        ImGui::Begin("Scene");
-        {
-            if (ImGui::CollapsingHeader("Nodes"))
+            if (ImGui::Button("Load .hdr environment map"))
             {
-                if (ImGui::TreeNode("Root"))
+                std::string path;
+                if (open_file(path, file_type::hdr))
                 {
-                    if (ImGui::TreeNode("FlightHelmet"))
-                    {
-                        ImGui::TreePop();
-                    }
-
-                    if (ImGui::TreeNode("Camera"))
-                    {
-                        ImGui::TreePop();
-                    }
-
-                    if (ImGui::TreeNode("HDR Skybox"))
-                    {
-                        ImGui::TreePop();
-                    }
-
-                    ImGui::TreePop();
+                    log_.info("Loading .hdr environment map: {}", path);
                 }
             }
-            if (ImGui::CollapsingHeader("Materials"))
+            if (ImGui::Button("Load .gltf model"))
             {
-                if (ImGui::TreeNode("Shader"))
+                std::string path;
+                if (open_file(path, file_type::gltf))
                 {
-                    ImGui::TreePop();
-                }
-            }
-            if (ImGui::CollapsingHeader("Textures"))
-            {
-                if (ImGui::TreeNode("Blah.png"))
-                {
-                    ImGui::TreePop();
+                    log_.info("Loading .gltf model: {}", path);
                 }
             }
         }
