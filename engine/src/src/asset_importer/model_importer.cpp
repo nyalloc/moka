@@ -5,7 +5,7 @@
 #include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/buffer/vertex_layout_builder.hpp>
 #include <graphics/device/graphics_device.hpp>
-#include <graphics/material/material_builder.hpp>
+#include <graphics/material/material.hpp>
 #include <json.hpp>
 
 #define TINYGLTF_IMPLEMENTATION
@@ -487,16 +487,6 @@ namespace moka
             Where should this shader table live? graphics_device is a strong contender
             */
 
-            material_builder mat_builder(device);
-
-            mat_builder.add_uniform("view_pos", glm::vec3(0.0f));
-            mat_builder.add_uniform(
-                "material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            mat_builder.add_uniform(
-                "material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-            mat_builder.add_uniform("material.roughness_factor", 1.0f);
-            mat_builder.add_uniform("material.metalness_factor", 1.0f);
-
             std::ifstream i(material_path);
             json j;
             i >> j;
@@ -504,8 +494,15 @@ namespace moka
             auto vertex = j["vertex"]["file"].get<std::string>();
             auto fragment = j["fragment"]["file"].get<std::string>();
 
-            mat_builder.set_vertex_shader(root_directory / vertex);
-            mat_builder.set_fragment_shader(root_directory / fragment);
+            auto mat_builder =
+                device.build_material()
+                    .add_uniform("view_pos", glm::vec3(0.0f))
+                    .add_uniform("material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
+                    .add_uniform("material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f))
+                    .add_uniform("material.roughness_factor", 1.0f)
+                    .add_uniform("material.metalness_factor", 1.0f)
+                    .set_vertex_shader(root_directory / vertex)
+                    .set_fragment_shader(root_directory / fragment);
 
             auto& material_cache = device.get_material_cache();
             auto& texture_cache = device.get_texture_cache();
@@ -659,8 +656,9 @@ namespace moka
                         else if (alpha_str == "MASK")
                         {
                             alpha = alpha_mode::mask;
-                            mat_builder.add_uniform("material.alpha_cutoff", alpha_cutoff);
-                            mat_builder.set_blend_enabled(true);
+                            mat_builder
+                                .add_uniform("material.alpha_cutoff", alpha_cutoff)
+                                .set_blend_enabled(true);
                         }
                         else if (alpha_str == "BLEND")
                         {

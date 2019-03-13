@@ -105,22 +105,18 @@ namespace moka
 			}
 		)";
 
-        material::builder builder(graphics_device_);
-
-        builder.set_fragment_shader(fragment_shader);
-        builder.set_vertex_shader(vertex_shader);
-
-        builder.set_blend_enabled(true);
-        builder.set_blend_equation(blend_equation::func_add);
-        builder.set_blend_function(
-            blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha);
-        builder.set_culling_enabled(false);
-        builder.set_polygon_mode(face::front_and_back, polygon_draw_mode::fill);
-
-        builder.set_depth_test_enabled(false);
-        builder.set_scissor_test_enabled(true);
-
-        material_ = builder.build();
+        material_ =
+            graphics_device_.build_material()
+                .set_fragment_shader(fragment_shader)
+                .set_vertex_shader(vertex_shader)
+                .set_blend_enabled(true)
+                .set_blend_equation(blend_equation::func_add)
+                .set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha)
+                .set_culling_enabled(false)
+                .set_polygon_mode(face::front_and_back, polygon_draw_mode::fill)
+                .set_depth_test_enabled(false)
+                .set_scissor_test_enabled(true)
+                .build();
 
         unsigned char* pixels;
         int width, height;

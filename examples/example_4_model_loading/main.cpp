@@ -242,7 +242,7 @@ model make_hdr_environment_map(
         image_target::cubemap_negative_z,
     };
 
-    auto hdr_material = material::builder{device}
+    auto hdr_material = device.build_material()
                             .set_vertex_shader(hdr_to_cube_vert)
                             .set_fragment_shader(hdr_to_cube_frag)
                             .add_uniform("projection", projection)
@@ -319,7 +319,7 @@ model make_hdr_environment_map(
     // pbr: create an irradiance cubemap, and re-scale capture FBO to irradiance scale.
     // --------------------------------------------------------------------------------
 
-    auto irradiance_material = material::builder{device}
+    auto irradiance_material = device.build_material()
                                    .set_vertex_shader(cube_to_irradiance_vert)
                                    .set_fragment_shader(cube_to_irradiance_frag)
                                    .add_uniform("projection", projection)
@@ -441,7 +441,7 @@ model make_hdr_environment_map(
             }
         )";
 
-    auto cubemap_material = material::builder{device}
+    auto cubemap_material = device.build_material()
                                 .set_vertex_shader(cubemap_vert)
                                 .set_fragment_shader(cubemap_frag)
                                 .add_uniform("projection", parameter_type::mat4)
@@ -590,7 +590,7 @@ model make_hdr_environment_map(
 
     // brdf look up texture --------------------------------
 
-    auto brdf_material = material::builder{device}
+    auto brdf_material = device.build_material()
                              .set_vertex_shader(brdf_vert)
                              .set_fragment_shader(brdf_frag)
                              .build();
@@ -830,7 +830,7 @@ model make_hdr_environment_map(
             .set_mipmaps(true)
             .build();
 
-    auto prefilter_material = material::builder{device}
+    auto prefilter_material = device.build_material()
                                   .set_vertex_shader(prefilter_vert)
                                   .set_fragment_shader(prefilter_frag)
                                   .add_uniform("roughness", parameter_type::float32)
