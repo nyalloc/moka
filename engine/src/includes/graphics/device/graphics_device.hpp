@@ -41,18 +41,19 @@ namespace moka
             textures_.reserve(initial_capacity);
         }
 
-        void add_material(texture handle, const texture_id& id)
+        void add_texture(texture handle, const texture_id& id)
         {
             const auto index = textures_.size();
             textures_.emplace_back(std::move(handle));
+            texture_lookup[id] = index;
         }
 
-        bool exists(const texture_id& id)
+        bool exists(const texture_id& id) const
         {
             return texture_lookup.find(id) != texture_lookup.end();
         }
 
-        texture get_texture(const texture_id& id)
+        texture get_texture(const texture_id& id) const
         {
             return textures_[texture_lookup.at(id)];
         }
@@ -83,12 +84,12 @@ namespace moka
             shaders_.emplace_back(std::move(handle));
         }
 
-        bool exists(const program_id& id)
+        bool exists(const program_id& id) const
         {
             return shader_lookup.find(id) != shader_lookup.end();
         }
 
-        program_handle get_program(const program_id& id)
+        program_handle get_program(const program_id& id) const
         {
             return shaders_[shader_lookup.at(id)];
         }
@@ -111,7 +112,7 @@ namespace moka
         {
             const auto index = materials_.size();
             materials_.emplace_back(std::move(t));
-            return index;
+            return material_handle(index);
         }
 
         material* get_material(material_handle handle)

@@ -72,8 +72,8 @@ namespace moka
 
         theme();
 
-        io.DisplaySize.x = window.get_size().x;
-        io.DisplaySize.y = window.get_size().y;
+        io.DisplaySize.x = static_cast<float>(window.get_size().x);
+        io.DisplaySize.y = static_cast<float>(window.get_size().y);
 
         const std::string vertex_shader =
             R"(
@@ -167,8 +167,8 @@ namespace moka
     {
         auto& io = ImGui::GetIO();
 
-        io.DisplaySize.x = window_.get_size().x;
-        io.DisplaySize.y = window_.get_size().y;
+        io.DisplaySize.x = static_cast<float>(window_.get_size().x);
+        io.DisplaySize.y = static_cast<float>(window_.get_size().y);
 
         const auto& mouse_state = mouse_.get_state();
         const auto& position = mouse_state.get_position();
@@ -177,8 +177,7 @@ namespace moka
 
         io.MousePos.x = static_cast<float>(position.x);
         io.MousePos.y = static_cast<float>(position.y);
-
-        io.MouseWheel = scroll.y;
+        io.MouseWheel = static_cast<float>(scroll.y);
 
         IM_ASSERT(io.Fonts->IsBuilt());
 
@@ -217,6 +216,7 @@ namespace moka
 
         const auto fb_width = static_cast<int>(
             draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
+
         const auto fb_height = static_cast<int>(
             draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
 

@@ -154,13 +154,79 @@ namespace moka
     {
     }
 
+    void load_texture(
+        const std::filesystem::path& path,
+        texture_cache& texture_cache,
+        const tinygltf::Parameter& texture_value,
+        const tinygltf::Model& model,
+        graphics_device& device,
+        material_builder& mat_builder,
+        material_property property)
+    {
+        auto properties = texture_value.json_double_value;
+
+        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+        {
+            auto& index = index_itr->second;
+            auto& texture = model.textures[size_t(index)];
+            auto& texture_source = texture.source;
+            auto& image_data = model.images[texture_source];
+            auto uri = path / image_data.uri;
+
+            if (!texture_cache.exists(uri.string().c_str()))
+            {
+                auto wrap_s = wrap_mode::clamp_to_edge;
+                auto wrap_t = wrap_mode::clamp_to_edge;
+                auto min = min_filter::linear_mipmap_linear;
+                auto mag = mag_filter::linear;
+                if (texture.sampler != -1)
+                {
+                    auto& sampler = model.samplers[texture.sampler];
+                    wrap_s = gltf_wrap_to_moka(sampler.wrapS);
+                    wrap_t = gltf_wrap_to_moka(sampler.wrapT);
+                    min = gltf_min_filter_to_moka(sampler.minFilter);
+                    mag = gltf_mag_filter_to_moka(sampler.magFilter);
+                }
+
+                auto diffuse_map = device.build_texture()
+                                       .add_image_data(
+                                           image_target::texture_2d,
+                                           0,
+                                           device_format::srgb8_alpha8,
+                                           image_data.width,
+                                           image_data.height,
+                                           0,
+                                           stb_to_moka(image_data.component),
+                                           pixel_type::uint8,
+                                           (void*)image_data.image.data())
+                                       .set_mipmaps(true)
+                                       .set_wrap_s(wrap_s)
+                                       .set_wrap_t(wrap_t)
+                                       .set_min_filter(min)
+                                       .set_mag_filter(mag)
+                                       .build();
+
+                texture_cache.add_texture(diffuse_map, uri.string().c_str());
+
+                mat_builder.add_texture(property, diffuse_map);
+            }
+            else
+            {
+                auto diffuse_map = texture_cache.get_texture(uri.string().c_str());
+
+                mat_builder.add_texture(property, diffuse_map);
+            }
+        }
+    }
+
     mesh load_mesh(
         const tinygltf::Model& model,
         const tinygltf::Mesh& mesh,
         graphics_device& device,
         const glm::mat4& trans,
         const std::filesystem::path& root_directory,
-        const std::filesystem::path& material_path)
+        const std::filesystem::path& material_path,
+        const std::filesystem::path& parent_path)
     {
         auto transform = trans;
 
@@ -441,6 +507,9 @@ namespace moka
             mat_builder.set_vertex_shader(root_directory / vertex);
             mat_builder.set_fragment_shader(root_directory / fragment);
 
+            auto& material_cache = device.get_material_cache();
+            auto& texture_cache = device.get_texture_cache();
+
             if (primitive.material != -1)
             {
                 auto& material = model.materials[primitive.material];
@@ -460,52 +529,14 @@ namespace moka
                             material.values.find("baseColorTexture");
                         base_color_texture_itr != material.values.end())
                     {
-                        auto& texture_name = base_color_texture_itr->first;
-                        auto& texture_value = base_color_texture_itr->second;
-
-                        auto properties = texture_value.json_double_value;
-
-                        if (auto index_itr = properties.find("index");
-                            index_itr != properties.end())
-                        {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto wrap_s = wrap_mode::clamp_to_edge;
-                            auto wrap_t = wrap_mode::clamp_to_edge;
-                            auto min = min_filter::linear_mipmap_linear;
-                            auto mag = mag_filter::linear;
-                            if (texture.sampler != -1)
-                            {
-                                auto& sampler = model.samplers[texture.sampler];
-                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
-                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
-                                min = gltf_min_filter_to_moka(sampler.minFilter);
-                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
-                            }
-
-                            auto diffuse_map =
-                                device.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::srgb8_alpha8,
-                                        image_data.width,
-                                        image_data.height,
-                                        0,
-                                        stb_to_moka(image_data.component),
-                                        pixel_type::uint8,
-                                        (void*)image_data.image.data())
-                                    .set_mipmaps(true)
-                                    .set_wrap_s(wrap_s)
-                                    .set_wrap_t(wrap_t)
-                                    .set_min_filter(min)
-                                    .set_mag_filter(mag)
-                                    .build();
-
-                            mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
-                        }
+                        load_texture(
+                            parent_path,
+                            texture_cache,
+                            base_color_texture_itr->second,
+                            model,
+                            device,
+                            mat_builder,
+                            material_property::diffuse_map);
                     }
 
                     if (auto metallic_factor_itr =
@@ -530,53 +561,14 @@ namespace moka
                             material.values.find("metallicRoughnessTexture");
                         metallic_roughness_texture_itr != material.values.end())
                     {
-                        auto& texture_name = metallic_roughness_texture_itr->first;
-                        auto& texture_value = metallic_roughness_texture_itr->second;
-
-                        auto& properties = texture_value.json_double_value;
-
-                        if (auto index_itr = properties.find("index");
-                            index_itr != properties.end())
-                        {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto wrap_s = wrap_mode::clamp_to_edge;
-                            auto wrap_t = wrap_mode::clamp_to_edge;
-                            auto min = min_filter::linear_mipmap_linear;
-                            auto mag = mag_filter::linear;
-                            if (texture.sampler != -1)
-                            {
-                                auto& sampler = model.samplers[texture.sampler];
-                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
-                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
-                                min = gltf_min_filter_to_moka(sampler.minFilter);
-                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
-                            }
-
-                            auto metallic_roughness_map =
-                                device.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::rgba,
-                                        image_data.width,
-                                        image_data.height,
-                                        0,
-                                        stb_to_moka(image_data.component),
-                                        pixel_type::uint8,
-                                        (void*)image_data.image.data())
-                                    .set_mipmaps(true)
-                                    .set_wrap_s(wrap_s)
-                                    .set_wrap_t(wrap_t)
-                                    .set_min_filter(min)
-                                    .set_mag_filter(mag)
-                                    .build();
-
-                            mat_builder.add_texture(
-                                material_property::metallic_roughness_map, metallic_roughness_map);
-                        }
+                        load_texture(
+                            parent_path,
+                            texture_cache,
+                            metallic_roughness_texture_itr->second,
+                            model,
+                            device,
+                            mat_builder,
+                            material_property::metallic_roughness_map);
                     }
                 }
 
@@ -590,103 +582,28 @@ namespace moka
                     if (auto normal_texture_itr = material.additionalValues.find("normalTexture");
                         normal_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = normal_texture_itr->first;
-                        auto& texture_value = normal_texture_itr->second;
-
-                        auto& properties = texture_value.json_double_value;
-
-                        if (auto index_itr = properties.find("index");
-                            index_itr != properties.end())
-                        {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto wrap_s = wrap_mode::clamp_to_edge;
-                            auto wrap_t = wrap_mode::clamp_to_edge;
-                            auto min = min_filter::linear_mipmap_linear;
-                            auto mag = mag_filter::linear;
-                            if (texture.sampler != -1)
-                            {
-                                auto& sampler = model.samplers[texture.sampler];
-                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
-                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
-                                min = gltf_min_filter_to_moka(sampler.minFilter);
-                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
-                            }
-
-                            auto normal_map = device.build_texture()
-                                                  .add_image_data(
-                                                      image_target::texture_2d,
-                                                      0,
-                                                      device_format::rgba,
-                                                      image_data.width,
-                                                      image_data.height,
-                                                      0,
-                                                      stb_to_moka(image_data.component),
-                                                      pixel_type::uint8,
-                                                      (void*)image_data.image.data())
-                                                  .set_mipmaps(true)
-                                                  .set_wrap_s(wrap_s)
-                                                  .set_wrap_t(wrap_t)
-                                                  .set_min_filter(min)
-                                                  .set_mag_filter(mag)
-                                                  .build();
-
-                            mat_builder.add_texture(material_property::normal_map, normal_map);
-                        }
+                        load_texture(
+                            parent_path,
+                            texture_cache,
+                            normal_texture_itr->second,
+                            model,
+                            device,
+                            mat_builder,
+                            material_property::normal_map);
                     }
 
                     if (auto occlusion_texture_itr =
                             material.additionalValues.find("occlusionTexture");
                         occlusion_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = occlusion_texture_itr->first;
-                        auto& texture_value = occlusion_texture_itr->second;
-
-                        auto& properties = texture_value.json_double_value;
-
-                        if (auto index_itr = properties.find("index");
-                            index_itr != properties.end())
-                        {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto wrap_s = wrap_mode::clamp_to_edge;
-                            auto wrap_t = wrap_mode::clamp_to_edge;
-                            auto min = min_filter::linear_mipmap_linear;
-                            auto mag = mag_filter::linear;
-                            if (texture.sampler != -1)
-                            {
-                                auto& sampler = model.samplers[texture.sampler];
-                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
-                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
-                                min = gltf_min_filter_to_moka(sampler.minFilter);
-                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
-                            }
-
-                            auto occlusion_map =
-                                device.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::rgba,
-                                        image_data.width,
-                                        image_data.height,
-                                        0,
-                                        stb_to_moka(image_data.component),
-                                        pixel_type::uint8,
-                                        (void*)image_data.image.data())
-                                    .set_mipmaps(true)
-                                    .set_wrap_s(wrap_s)
-                                    .set_wrap_t(wrap_t)
-                                    .set_min_filter(min)
-                                    .set_mag_filter(mag)
-                                    .build();
-
-                            mat_builder.add_texture(material_property::ao_map, occlusion_map);
-                        }
+                        load_texture(
+                            parent_path,
+                            texture_cache,
+                            occlusion_texture_itr->second,
+                            model,
+                            device,
+                            mat_builder,
+                            material_property::ao_map);
                     }
 
                     if (auto emissive_factor_itr =
@@ -702,53 +619,14 @@ namespace moka
                             material.additionalValues.find("emissiveTexture");
                         emissive_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = emissive_texture_itr->first;
-                        auto& texture_value = emissive_texture_itr->second;
-
-                        auto& properties = texture_value.json_double_value;
-
-                        if (auto index_itr = properties.find("index");
-                            index_itr != properties.end())
-                        {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto wrap_s = wrap_mode::clamp_to_edge;
-                            auto wrap_t = wrap_mode::clamp_to_edge;
-                            auto min = min_filter::linear_mipmap_linear;
-                            auto mag = mag_filter::linear;
-                            if (texture.sampler != -1)
-                            {
-                                auto& sampler = model.samplers[texture.sampler];
-                                wrap_s = gltf_wrap_to_moka(sampler.wrapS);
-                                wrap_t = gltf_wrap_to_moka(sampler.wrapT);
-                                min = gltf_min_filter_to_moka(sampler.minFilter);
-                                mag = gltf_mag_filter_to_moka(sampler.magFilter);
-                            }
-
-                            auto emissive_map =
-                                device.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::srgb8_alpha8,
-                                        image_data.width,
-                                        image_data.height,
-                                        0,
-                                        stb_to_moka(image_data.component),
-                                        pixel_type::uint8,
-                                        (void*)image_data.image.data())
-                                    .set_mipmaps(true)
-                                    .set_wrap_s(wrap_s)
-                                    .set_wrap_t(wrap_t)
-                                    .set_min_filter(min)
-                                    .set_mag_filter(mag)
-                                    .build();
-
-                            mat_builder.add_texture(
-                                material_property::emissive_map, emissive_map);
-                        }
+                        load_texture(
+                            parent_path,
+                            texture_cache,
+                            emissive_texture_itr->second,
+                            model,
+                            device,
+                            mat_builder,
+                            material_property::emissive_map);
                     }
 
                     // The alpha cutoff value of the material.
@@ -868,7 +746,8 @@ namespace moka
         const tinygltf::Model& model,
         graphics_device& device,
         const std::filesystem::path& root_directory,
-        const std::filesystem::path& material_path)
+        const std::filesystem::path& material_path,
+        const std::filesystem::path& parent_path)
     {
         const auto mesh_id = model.nodes[node_id].mesh;
 
@@ -879,11 +758,11 @@ namespace moka
 
         for (const auto i : model.nodes[node_id].children)
         {
-            add_node(trans, meshes, i, model, device, root_directory, material_path);
+            add_node(trans, meshes, i, model, device, root_directory, material_path, parent_path);
         }
 
         meshes.emplace_back(load_mesh(
-            model, model.meshes[mesh_id], device, trans, root_directory, material_path));
+            model, model.meshes[mesh_id], device, trans, root_directory, material_path, parent_path));
     }
 
     model load_model(
@@ -891,7 +770,7 @@ namespace moka
         graphics_device& device,
         const std::filesystem::path& root_directory,
         const std::filesystem::path& material_path,
-        std::map<std::string, program_handle>& shaders_)
+        const std::filesystem::path& parent_path)
     {
         std::vector<mesh> meshes;
 
@@ -912,16 +791,16 @@ namespace moka
 
                     for (const auto i : model.nodes[node].children)
                     {
-                        add_node(trans, meshes, i, model, device, root_directory, material_path);
+                        add_node(trans, meshes, i, model, device, root_directory, material_path, parent_path);
                     }
 
                     meshes.emplace_back(load_mesh(
-                        model, model.meshes[mesh_id], device, trans, root_directory, material_path));
+                        model, model.meshes[mesh_id], device, trans, root_directory, material_path, parent_path));
                 }
 
                 for (const auto i : model.nodes[node].children)
                 {
-                    add_node(transform, meshes, i, model, device, root_directory, material_path);
+                    add_node(transform, meshes, i, model, device, root_directory, material_path, parent_path);
                 }
             }
         }
@@ -974,6 +853,7 @@ namespace moka
             std::cout << "Failed to parse glTF: " << std::endl;
         }
 
-        return load_model(model, device_, root_directory_, material_path, shaders_);
+        return load_model(
+            model, device_, root_directory_, material_path, model_path.parent_path());
     }
 } // namespace moka
