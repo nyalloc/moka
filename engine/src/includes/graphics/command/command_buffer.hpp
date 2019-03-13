@@ -55,6 +55,8 @@ namespace moka
         fill_vertex_buffer_command& fill_vertex_buffer();
 
         generate_mipmaps_command& generate_mipmaps();
+
+        set_material_parameters_command& set_material_parameters();
     };
 
     template <typename T>

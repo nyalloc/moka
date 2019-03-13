@@ -12,6 +12,7 @@
 #include <graphics/command/fill_index_buffer_command.hpp>
 #include <graphics/command/fill_vertex_buffer_command.hpp>
 #include <graphics/command/scissor_command.hpp>
+#include <graphics/command/set_material_properties_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 #include <graphics/material/material.hpp>
 #include <string>
@@ -491,6 +492,21 @@ namespace moka
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     }
 
+    void gl_graphics_api::visit(set_material_parameters_command& cmd)
+    {
+        auto& cache = device_.get_material_cache();
+
+        auto* material = cache.get_material(cmd.material);
+
+        if (material)
+        {
+            for (size_t i = 0; i < cmd.parameters.size(); ++i)
+            {
+                (*material)[cmd.parameters[i].name] = cmd.parameters[i];
+            }
+        }
+    }
+
     void gl_graphics_api::visit(draw_command& cmd)
     {
         // early exit if a bogus vertex buffer is given to us
@@ -526,92 +542,108 @@ namespace moka
 
         glEnableVertexAttribArray(0);
 
-        auto& material = cmd.mat;
-        auto& previous = previous_command_.mat;
+        auto& material_handle = cmd.mat;
+        auto& previous_handle = previous_command_.mat;
 
-        // if this is a different shader, update the program state
-        if (material.get_program().id != previous.get_program().id)
+        auto& material_cache = device_.get_material_cache();
+        auto* material = material_cache.get_material(material_handle);
+        auto* previous = material_cache.get_material(previous_handle);
+
+        if (material)
         {
-            glUseProgram(material.get_program().id);
-        }
-
-        auto& blend = material.get_blend();
-        blend.enabled ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
-        glBlendEquation(moka_to_gl(blend.equation));
-        glBlendFunc(moka_to_gl(blend.source), moka_to_gl(blend.destination));
-
-        auto& polygon_mode = material.get_polygon_mode();
-        glPolygonMode(moka_to_gl(polygon_mode.faces), moka_to_gl(polygon_mode.mode));
-
-        auto& culling = material.get_culling();
-        culling.enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-        glCullFace(moka_to_gl(culling.faces));
-
-        material.get_depth_test() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-        material.get_scissor_test() ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
-
-        const auto size = material.size();
-
-        size_t current_texture_unit = 0;
-
-        for (size_t i = 0; i < size; i++)
-        {
-            auto& parameter = material[i];
-
-            const auto location = glGetUniformLocation(
-                GLuint(material.get_program().id), parameter.name.c_str());
-
-            if (location == -1)
-                continue;
-
-            switch (parameter.type)
+            if (previous)
             {
-            case parameter_type::texture:
-            {
-                const auto data = std::get<texture>(parameter.data);
-                glUniform1i(location, GLint(current_texture_unit));
-                glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
-
-                auto& meta_data = texture_data_[data.id];
-
-                glBindTexture(moka_to_gl(meta_data.target), GLuint(data.id));
-
-                ++current_texture_unit;
-                break;
+                // if this is a different shader, update the program state
+                if (material->get_program().id != previous->get_program().id)
+                {
+                    glUseProgram(material->get_program().id);
+                }
             }
-            case parameter_type::float32:
+            else
             {
-                auto data = std::get<float>(parameter.data);
-                glUniform1fv(location, GLsizei(parameter.count), &data);
-                break;
+                glUseProgram(material->get_program().id);
             }
-            case parameter_type::vec3:
+
+            auto& blend = material->get_blend();
+            blend.enabled ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
+            glBlendEquation(moka_to_gl(blend.equation));
+            glBlendFunc(moka_to_gl(blend.source), moka_to_gl(blend.destination));
+
+            auto& polygon_mode = material->get_polygon_mode();
+            glPolygonMode(
+                moka_to_gl(polygon_mode.faces), moka_to_gl(polygon_mode.mode));
+
+            auto& culling = material->get_culling();
+            culling.enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+            glCullFace(moka_to_gl(culling.faces));
+
+            material->get_depth_test() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+            material->get_scissor_test() ? glEnable(GL_SCISSOR_TEST)
+                                         : glDisable(GL_SCISSOR_TEST);
+
+            const auto size = material->size();
+
+            size_t current_texture_unit = 0;
+
+            for (size_t i = 0; i < size; i++)
             {
-                auto data = std::get<glm::vec3>(parameter.data);
-                glUniform3fv(location, GLsizei(parameter.count), glm::value_ptr(data));
-                break;
-            }
-            case parameter_type::vec4:
-            {
-                auto data = std::get<glm::vec4>(parameter.data);
-                glUniform4fv(location, GLsizei(parameter.count), glm::value_ptr(data));
-                break;
-            }
-            case parameter_type::mat3:
-            {
-                auto data = std::get<glm::mat3>(parameter.data);
-                glUniformMatrix3fv(
-                    location, GLsizei(parameter.count), false, glm::value_ptr(data));
-                break;
-            }
-            case parameter_type::mat4:
-            {
-                auto data = std::get<glm::mat4>(parameter.data);
-                glUniformMatrix4fv(
-                    location, GLsizei(parameter.count), false, glm::value_ptr(data));
-                break;
-            }
-            default:;
+                auto& parameter = (*material)[i];
+
+                const auto location = glGetUniformLocation(
+                    GLuint(material->get_program().id), parameter.name.c_str());
+
+                if (location == -1)
+                    continue;
+
+                switch (parameter.type)
+                {
+                case parameter_type::texture:
+                {
+                    const auto data = std::get<texture>(parameter.data);
+                    glUniform1i(location, GLint(current_texture_unit));
+                    glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
+
+                    auto& meta_data = texture_data_[data.id];
+
+                    glBindTexture(moka_to_gl(meta_data.target), GLuint(data.id));
+
+                    ++current_texture_unit;
+                    break;
+                }
+                case parameter_type::float32:
+                {
+                    auto data = std::get<float>(parameter.data);
+                    glUniform1fv(location, GLsizei(parameter.count), &data);
+                    break;
+                }
+                case parameter_type::vec3:
+                {
+                    auto data = std::get<glm::vec3>(parameter.data);
+                    glUniform3fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+                    break;
+                }
+                case parameter_type::vec4:
+                {
+                    auto data = std::get<glm::vec4>(parameter.data);
+                    glUniform4fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+                    break;
+                }
+                case parameter_type::mat3:
+                {
+                    auto data = std::get<glm::mat3>(parameter.data);
+                    glUniformMatrix3fv(
+                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                    break;
+                }
+                case parameter_type::mat4:
+                {
+                    auto data = std::get<glm::mat4>(parameter.data);
+                    glUniformMatrix4fv(
+                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                    break;
+                }
+                default:;
+                }
             }
         }
 
@@ -639,11 +671,11 @@ namespace moka
         }
     }
 
-    program gl_graphics_api::make_program(const shader& vertex_handle, const shader& fragment_handle)
+    program_handle gl_graphics_api::make_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle)
     {
         const auto id = glCreateProgram();
 
-        const program result{static_cast<uint16_t>(id)};
+        const program_handle result{static_cast<uint16_t>(id)};
 
         // Attach shaders as necessary.
 
@@ -683,7 +715,7 @@ namespace moka
         return result;
     }
 
-    shader gl_graphics_api::make_shader(const shader_type type, const std::string& source)
+    shader_handle gl_graphics_api::make_shader(const shader_type type, const std::string& source)
     {
         int success;
 
@@ -691,7 +723,7 @@ namespace moka
 
         const auto id = glCreateShader(moka_to_gl(type));
 
-        const shader result{static_cast<uint16_t>(id)};
+        const shader_handle result{static_cast<uint16_t>(id)};
 
         auto source_chars = source.c_str();
 
@@ -1020,7 +1052,8 @@ namespace moka
 
     logger gl_graphics_api::log_("OpenGL");
 
-    gl_graphics_api::gl_graphics_api(window& window) : window_(window)
+    gl_graphics_api::gl_graphics_api(window& window, graphics_device& device)
+        : window_(window), device_(device)
     {
         glewExperimental = GL_TRUE;
         if (glewInit() != GLEW_OK)

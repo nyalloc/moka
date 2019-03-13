@@ -7,6 +7,8 @@
 
 namespace moka
 {
+    using material_handle = uint16_t;
+
     enum class polygon_draw_mode
     {
         fill,
@@ -40,7 +42,7 @@ namespace moka
     {
     protected:
         alpha_mode alpha_mode_ = alpha_mode::opaque;
-        program program_ = {std::numeric_limits<uint16_t>::max()};
+        program_handle program_ = {std::numeric_limits<uint16_t>::max()};
         parameter_collection parameters_;
         blend blend_;
         culling culling_;
@@ -67,7 +69,7 @@ namespace moka
         material& operator=(material&& rhs) noexcept;
 
         material(
-            program program,
+            program_handle program_handle,
             parameter_collection&& parameters,
             alpha_mode alpha_mode,
             const blend& blend,
@@ -76,11 +78,11 @@ namespace moka
             bool depth_test,
             bool scissor_test);
 
-        explicit material(program program);
+        explicit material(program_handle program_handle);
 
         alpha_mode get_alpha_mode() const;
 
-        program get_program() const;
+        program_handle get_program() const;
 
         size_t size() const;
 

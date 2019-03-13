@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material.hpp>
 #include <graphics/material/material_properties.hpp>
 #include <graphics/texture.hpp>
@@ -11,12 +10,13 @@
 
 namespace moka
 {
+    class graphics_device;
+
     class material_builder
     {
         graphics_device& graphics_device_;
 
         std::vector<material_property> texture_maps_;
-        std::map<std::string, program>& shaders_;
 
         parameter_collection parameters_;
         std::string fragment_shader_src_;
@@ -32,7 +32,7 @@ namespace moka
     public:
         static std::string get_property_name(material_property property);
 
-        material_builder(graphics_device& device, std::map<std::string, program>& shaders);
+        material_builder(graphics_device& device);
 
         material_builder& set_vertex_shader(const std::filesystem::path& vertex_shader);
 
@@ -82,6 +82,6 @@ namespace moka
 
         static bool replace(std::string& source, const std::string& target, const std::string& replacement);
 
-        material build();
+        material_handle build();
     };
 } // namespace moka

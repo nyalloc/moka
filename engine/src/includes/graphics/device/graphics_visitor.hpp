@@ -11,6 +11,7 @@ namespace moka
     class frame_buffer_command;
     class frame_buffer_texture_command;
     class generate_mipmaps_command;
+    class set_material_parameters_command;
 
     class graphics_visitor
     {
@@ -25,5 +26,6 @@ namespace moka
         virtual void visit(frame_buffer_command& cmd) = 0;
         virtual void visit(frame_buffer_texture_command& cmd) = 0;
         virtual void visit(generate_mipmaps_command& cmd) = 0;
+        virtual void visit(set_material_parameters_command& cmd) = 0;
     };
 } // namespace moka

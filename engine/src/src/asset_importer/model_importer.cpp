@@ -160,8 +160,7 @@ namespace moka
         graphics_device& device,
         const glm::mat4& trans,
         const std::filesystem::path& root_directory,
-        const std::filesystem::path& material_path,
-        std::map<std::string, program>& shaders)
+        const std::filesystem::path& material_path)
     {
         auto transform = trans;
 
@@ -422,7 +421,7 @@ namespace moka
             Where should this shader table live? graphics_device is a strong contender
             */
 
-            material_builder mat_builder(device, shaders);
+            material_builder mat_builder(device);
 
             mat_builder.add_uniform("view_pos", glm::vec3(0.0f));
             mat_builder.add_uniform(
@@ -869,8 +868,7 @@ namespace moka
         const tinygltf::Model& model,
         graphics_device& device,
         const std::filesystem::path& root_directory,
-        const std::filesystem::path& material_path,
-        std::map<std::string, program>& shaders)
+        const std::filesystem::path& material_path)
     {
         const auto mesh_id = model.nodes[node_id].mesh;
 
@@ -881,11 +879,11 @@ namespace moka
 
         for (const auto i : model.nodes[node_id].children)
         {
-            add_node(trans, meshes, i, model, device, root_directory, material_path, shaders);
+            add_node(trans, meshes, i, model, device, root_directory, material_path);
         }
 
         meshes.emplace_back(load_mesh(
-            model, model.meshes[mesh_id], device, trans, root_directory, material_path, shaders));
+            model, model.meshes[mesh_id], device, trans, root_directory, material_path));
     }
 
     model load_model(
@@ -893,7 +891,7 @@ namespace moka
         graphics_device& device,
         const std::filesystem::path& root_directory,
         const std::filesystem::path& material_path,
-        std::map<std::string, program>& shaders)
+        std::map<std::string, program_handle>& shaders_)
     {
         std::vector<mesh> meshes;
 
@@ -914,16 +912,16 @@ namespace moka
 
                     for (const auto i : model.nodes[node].children)
                     {
-                        add_node(trans, meshes, i, model, device, root_directory, material_path, shaders);
+                        add_node(trans, meshes, i, model, device, root_directory, material_path);
                     }
 
                     meshes.emplace_back(load_mesh(
-                        model, model.meshes[mesh_id], device, trans, root_directory, material_path, shaders));
+                        model, model.meshes[mesh_id], device, trans, root_directory, material_path));
                 }
 
                 for (const auto i : model.nodes[node].children)
                 {
-                    add_node(transform, meshes, i, model, device, root_directory, material_path, shaders);
+                    add_node(transform, meshes, i, model, device, root_directory, material_path);
                 }
             }
         }

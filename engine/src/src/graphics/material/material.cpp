@@ -33,7 +33,7 @@ namespace moka
     }
 
     material::material(
-        program program,
+        program_handle program_handle,
         parameter_collection&& parameters,
         alpha_mode alpha_mode,
         const blend& blend,
@@ -42,7 +42,7 @@ namespace moka
         bool depth_test,
         bool scissor_test)
         : alpha_mode_(alpha_mode),
-          program_(program),
+          program_(program_handle),
           parameters_(std::move(parameters)),
           blend_(blend),
           culling_(culling),
@@ -52,7 +52,7 @@ namespace moka
     {
     }
 
-    material::material(program program) : program_(program)
+    material::material(program_handle program_handle) : program_(program_handle)
     {
     }
 
@@ -61,7 +61,7 @@ namespace moka
         return alpha_mode_;
     }
 
-    program material::get_program() const
+    program_handle material::get_program() const
     {
         return program_;
     }

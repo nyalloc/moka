@@ -89,6 +89,16 @@ namespace moka
         return make_command_buffer(current_key_ + 1);
     }
 
+    set_material_parameters_command& command_list::set_material_parameters()
+    {
+        return make_command_buffer().set_material_parameters();
+    }
+
+    set_material_parameters_command& command_list::set_material_parameters(sort_key key)
+    {
+        return make_command_buffer(key).set_material_parameters();
+    }
+
     clear_command& command_list::clear()
     {
         return make_command_buffer().clear();

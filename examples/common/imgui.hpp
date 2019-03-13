@@ -1,36 +1,34 @@
 #pragma once
 
-#include <imgui.h>
-#include <graphics/material/material.hpp>
 #include <graphics/device/graphics_device.hpp>
+#include <graphics/material/material.hpp>
+#include <imgui.h>
 
 namespace moka
 {
-	class keyboard;
-	class mouse;
+    class keyboard;
+    class mouse;
 
-	class imgui
-	{
-		window& window_;
-		keyboard& keyboard_;
-		mouse& mouse_;
+    class imgui
+    {
+        window& window_;
+        keyboard& keyboard_;
+        mouse& mouse_;
 
-		material material_;
+        material_handle material_;
 
-		index_buffer index_buffer_;
-		vertex_buffer vertex_buffer_;
+        index_buffer index_buffer_;
+        vertex_buffer vertex_buffer_;
 
-		graphics_device& graphics_device_;
+        graphics_device& graphics_device_;
 
-		texture font_atlas_{};
-	public:
-		imgui(window& window
-			, keyboard& keyboard
-			, mouse& mouse
-			, graphics_device& graphics_device);
+        texture font_atlas_{};
 
-		void new_frame(float data_time) const;
+    public:
+        imgui(window& window, keyboard& keyboard, mouse& mouse, graphics_device& graphics_device);
 
-		command_list draw();
-	};
-}
+        void new_frame(float data_time) const;
+
+        command_list draw();
+    };
+} // namespace moka

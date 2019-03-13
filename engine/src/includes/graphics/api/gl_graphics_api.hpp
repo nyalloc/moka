@@ -9,6 +9,7 @@
 #include <graphics/buffer/vertex_buffer.hpp>
 #include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/command/draw_command.hpp>
+#include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material.hpp>
 #include <graphics/program.hpp>
 #include <graphics/shader.hpp>
@@ -38,6 +39,8 @@ namespace moka
         index_type type = index_type::uint16;
     };
 
+    class graphics_device;
+
     /**
      * \brief Convert the interface of OpenGL into the moka rendring API.
      * Allows moka rendering functionality to work at a higher level without being coupled to an OpenGL backend.
@@ -45,6 +48,7 @@ namespace moka
     class gl_graphics_api final : public graphics_api
     {
         window& window_;
+        graphics_device& device_;
 
         static logger log_;
 
@@ -66,7 +70,7 @@ namespace moka
         draw_command previous_command_;
 
     public:
-        gl_graphics_api(window& window);
+        gl_graphics_api(window& window, graphics_device& device_);
 
         gl_graphics_api(const gl_graphics_api& gl_graphics_api) = delete;
         gl_graphics_api(gl_graphics_api&& gl_graphics_api) = delete;
@@ -75,8 +79,8 @@ namespace moka
 
         virtual ~gl_graphics_api();
 
-        program make_program(const shader& vertex_handle, const shader& fragment_handle) override;
-        shader make_shader(shader_type type, const std::string& source) override;
+        program_handle make_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) override;
+        shader_handle make_shader(shader_type type, const std::string& source) override;
         vertex_buffer make_vertex_buffer(
             const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) override;
         index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) override;
@@ -98,6 +102,7 @@ namespace moka
         void visit(frame_buffer_command& cmd) override;
         void visit(frame_buffer_texture_command& cmd) override;
         void visit(generate_mipmaps_command& cmd) override;
+        void visit(set_material_parameters_command& cmd) override;
 
         static void check_errors(const char* caller);
     };

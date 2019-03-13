@@ -110,7 +110,7 @@ model make_hdr_environment_map(
     const auto cube_buffer = device.make_vertex_buffer(
         cube_vertices, sizeof cube_vertices, std::move(cube_layout), buffer_usage::static_draw);
 
-    std::map<std::string, program> shaders;
+    std::map<std::string, program_handle> shaders_;
 
     const auto hdr_to_cube_vert = R"(
 
@@ -242,7 +242,7 @@ model make_hdr_environment_map(
         image_target::cubemap_negative_z,
     };
 
-    auto hdr_material = material::builder{device, shaders}
+    auto hdr_material = material::builder{device}
                             .set_vertex_shader(hdr_to_cube_vert)
                             .set_fragment_shader(hdr_to_cube_frag)
                             .add_uniform("projection", projection)
@@ -291,7 +291,9 @@ model make_hdr_environment_map(
 
     for (auto i = 0; i < 6; i++)
     {
-        hdr_material["view"] = capture_views[i];
+        hdr_map_list.set_material_parameters()
+            .set_material(hdr_material)
+            .set_parameter("view", capture_views[i]);
 
         auto image_target = image_targets[i];
 
@@ -317,7 +319,7 @@ model make_hdr_environment_map(
     // pbr: create an irradiance cubemap, and re-scale capture FBO to irradiance scale.
     // --------------------------------------------------------------------------------
 
-    auto irradiance_material = material::builder{device, shaders}
+    auto irradiance_material = material::builder{device}
                                    .set_vertex_shader(cube_to_irradiance_vert)
                                    .set_fragment_shader(cube_to_irradiance_frag)
                                    .add_uniform("projection", projection)
@@ -367,7 +369,9 @@ model make_hdr_environment_map(
     // each draw call renders to the side of a irradiance_
     for (auto i = 0; i < 6; i++)
     {
-        irradiance_material["view"] = capture_views[i];
+        irradiance_list.set_material_parameters()
+            .set_material(irradiance_material)
+            .set_parameter("view", capture_views[i]);
 
         auto image_target = image_targets[i];
 
@@ -437,7 +441,7 @@ model make_hdr_environment_map(
             }
         )";
 
-    auto cubemap_material = material::builder{device, shaders}
+    auto cubemap_material = material::builder{device}
                                 .set_vertex_shader(cubemap_vert)
                                 .set_fragment_shader(cubemap_frag)
                                 .add_uniform("projection", parameter_type::mat4)
@@ -586,7 +590,7 @@ model make_hdr_environment_map(
 
     // brdf look up texture --------------------------------
 
-    auto brdf_material = material::builder{device, shaders}
+    auto brdf_material = material::builder{device}
                              .set_vertex_shader(brdf_vert)
                              .set_fragment_shader(brdf_frag)
                              .build();
@@ -826,7 +830,7 @@ model make_hdr_environment_map(
             .set_mipmaps(true)
             .build();
 
-    auto prefilter_material = material::builder{device, shaders}
+    auto prefilter_material = material::builder{device}
                                   .set_vertex_shader(prefilter_vert)
                                   .set_fragment_shader(prefilter_frag)
                                   .add_uniform("roughness", parameter_type::float32)
@@ -852,10 +856,16 @@ model make_hdr_environment_map(
         prefilter_list.viewport().set_rectangle(0, 0, mip_width, mip_height);
 
         auto roughness = static_cast<float>(mip) / static_cast<float>(max_mip_levels - 1);
-        prefilter_material["roughness"] = roughness;
+
+        prefilter_list.set_material_parameters()
+            .set_material(prefilter_material)
+            .set_parameter("roughness", roughness);
+
         for (unsigned int i = 0; i < 6; ++i)
         {
-            prefilter_material["view"] = capture_views[i];
+            prefilter_list.set_material_parameters()
+                .set_material(prefilter_material)
+                .set_parameter("view", capture_views[i]);
 
             prefilter_list.frame_buffer_texture()
                 .set_attachment(frame_attachment::color)
@@ -877,7 +887,7 @@ model make_hdr_environment_map(
 
     prefiltered = prefilter_cubemap;
 
-    return model(mesh(primitive(cube_buffer, 36, std::move(cubemap_material))));
+    return model(mesh(primitive(cube_buffer, 36, cubemap_material)));
 }
 
 class app final : public application
@@ -917,10 +927,10 @@ public:
                       .build()),
           model_importer_(app::data_path(), graphics_),
           model_(model_importer_.load(
-              app::data_path() / "Models" / "FlightHelmet" / "FlightHelmet.gltf",
+              app::data_path() / "Models" / "MetalRoughSpheres" / "MetalRoughSpheres.gltf",
               app::data_path() / "Materials" / "pbr.material")),
           cube_(make_hdr_environment_map(
-              graphics_, app::data_path() / "Textures" / "abandoned.hdr", irradiance_, brdf_, prefiltered_)),
+              graphics_, app::data_path() / "Textures" / "vignaioli.hdr", irradiance_, brdf_, prefiltered_)),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
     }
@@ -1028,25 +1038,29 @@ public:
         {
             for (auto& primitive : mesh)
             {
-                auto& material = primitive.get_material();
+                auto material = primitive.get_material();
 
                 const auto distance = glm::distance(
                     mesh.get_transform().get_position(), camera_.get_position());
 
-                material["gamma"] = gamma_;
-                material["exposure"] = exposure_;
-                material["irradiance_map"] = irradiance_;
-                material["prefilter_map"] = prefiltered_;
-                material["brdf_lut"] = brdf_;
-                material["model"] = mesh.get_transform().to_matrix();
-                material["view"] = camera_.get_view();
-                material["projection"] = camera_.get_projection();
-                material["view_pos"] = camera_.get_position();
+                scene_draw.set_material_parameters()
+                    .set_material(material)
+                    .set_parameter("gamma", gamma_)
+                    .set_parameter("exposure", exposure_)
+                    .set_parameter("irradiance_map", irradiance_)
+                    .set_parameter("prefilter_map", prefiltered_)
+                    .set_parameter("brdf_lut", brdf_)
+                    .set_parameter("model", mesh.get_transform().to_matrix())
+                    .set_parameter("view", camera_.get_view())
+                    .set_parameter("projection", camera_.get_projection())
+                    .set_parameter("view_pos", camera_.get_position());
 
-                const auto sort_key = generate_sort_key(
-                    distance, material.get_program().id, material.get_alpha_mode());
+                auto* mat = graphics_.get_material_cache().get_material(material);
 
-                auto& buffer = scene_draw.make_command_buffer(sort_key);
+                auto key = generate_sort_key(
+                    distance, mat->get_program().id, mat->get_alpha_mode());
+
+                auto& buffer = scene_draw.make_command_buffer(key);
 
                 primitive.draw(buffer);
             }
@@ -1058,12 +1072,14 @@ public:
             {
                 for (auto& primitive : mesh)
                 {
-                    auto& material = primitive.get_material();
+                    auto material = primitive.get_material();
 
-                    material["gamma"] = gamma_;
-                    material["exposure"] = exposure_;
-                    material["view"] = camera_.get_view();
-                    material["projection"] = camera_.get_projection();
+                    scene_draw.set_material_parameters()
+                        .set_material(material)
+                        .set_parameter("gamma", gamma_)
+                        .set_parameter("exposure", exposure_)
+                        .set_parameter("view", camera_.get_view())
+                        .set_parameter("projection", camera_.get_projection());
 
                     auto& buffer = scene_draw.make_command_buffer();
 

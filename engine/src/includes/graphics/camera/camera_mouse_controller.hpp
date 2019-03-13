@@ -9,15 +9,15 @@ namespace moka
     {
         mouse& mouse_;
 
-        float current_translate_z_ = 5.0f;
-        float current_rotate_x_ = -glm::pi<float>();
-        float current_rotate_y_ = -0.18f;
+        float current_translate_z_ = 10.0f;
+        float current_rotate_x_ = -2 * glm::pi<float>();
+        float current_rotate_y_ = -0.0f;
 
-        float translate_z_ = 5.0f;
-        float rotate_x_ = -glm::pi<float>();
-        float rotate_y_ = -0.18f;
+        float translate_z_ = 10.0f;
+        float rotate_x_ = -2 * glm::pi<float>();
+        float rotate_y_ = -0.0f;
 
-        bool auto_scroll_ = true;
+        bool auto_scroll_ = false;
 
     public:
         ~camera_mouse_controller() = default;

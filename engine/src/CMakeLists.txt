@@ -52,6 +52,7 @@ set(INPUT_SRC
 )
 
 set(GRAPHICS_API_SRC
+    "includes/graphics/context.hpp"
     "includes/graphics/api/gl_graphics_api.hpp"
     "includes/graphics/api/graphics_api.hpp"
     "src/graphics/api/gl_graphics_api.cpp"
@@ -98,7 +99,9 @@ set(GRAPHICS_COMMAND_SRC
     "includes/graphics/command/fill_vertex_buffer_command.hpp"
     "includes/graphics/command/frame_buffer_command.hpp"
     "includes/graphics/command/frame_buffer_texture_command.hpp"
+    "includes/graphics/command/generate_mipmaps_command.hpp"
     "includes/graphics/command/scissor_command.hpp"
+	"includes/graphics/command/set_material_properties_command.hpp"
     "includes/graphics/command/sort_key.hpp"
     "includes/graphics/command/viewport_command.hpp"
     "src/graphics/command/clear_command.cpp"
@@ -109,8 +112,10 @@ set(GRAPHICS_COMMAND_SRC
     "src/graphics/command/fill_vertex_buffer_command.cpp"
     "src/graphics/command/frame_buffer_command.cpp"
     "src/graphics/command/frame_buffer_texture_command.cpp"
+    "src/graphics/command/generate_mipmaps_command.cpp"
     "src/graphics/command/graphics_command.cpp"
     "src/graphics/command/viewport_command.cpp"
+	"src/graphics/command/set_material_properties_command.cpp"
     "src/graphics/command/sort_key.cpp"
     "src/graphics/command/scissor_command.cpp"
 )

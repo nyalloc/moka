@@ -28,12 +28,7 @@ namespace moka
         return primitives_.end();
     }
 
-    material& primitive::get_material()
-    {
-        return material_;
-    }
-
-    const material& primitive::get_material() const
+    material_handle primitive::get_material() const
     {
         return material_;
     }
@@ -68,22 +63,22 @@ namespace moka
         const index_type index_type,
         const uint32_t index_count,
         const uint32_t index_buffer_offset,
-        material&& material)
+        material_handle material)
         : vertex_buffer_(vertex_buffer),
           vertex_count_(vertex_count),
           index_buffer_(index_buffer),
           index_type_(index_type),
           index_count_(index_count),
           index_buffer_offset_(index_buffer_offset),
-          material_(std::move(material))
+          material_(material)
     {
     }
 
-    primitive::primitive(const vertex_buffer vertex_buffer, const uint32_t vertex_count, material&& material)
+    primitive::primitive(const vertex_buffer vertex_buffer, const uint32_t vertex_count, material_handle material)
         : vertex_buffer_(vertex_buffer),
           vertex_count_(vertex_count),
           index_type_(),
-          material_(std::move(material))
+          material_(material)
     {
     }
 

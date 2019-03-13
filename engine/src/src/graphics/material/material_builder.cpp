@@ -1,4 +1,5 @@
 #include <fstream>
+#include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material.hpp>
 #include <graphics/material/material_builder.hpp>
 #include <sstream>
@@ -24,8 +25,8 @@ namespace moka
         }
     }
 
-    material_builder::material_builder(graphics_device& device, std::map<std::string, program>& shaders)
-        : graphics_device_(device), shaders_{shaders}
+    material_builder::material_builder(graphics_device& device)
+        : graphics_device_(device)
     {
     }
 
@@ -189,7 +190,7 @@ namespace moka
         return true;
     }
 
-    material material_builder::build()
+    material_handle material_builder::build()
     {
         std::string compiler_flags;
 
@@ -226,17 +227,19 @@ namespace moka
             }
         }
 
-        program program{};
+        program_handle program_handle{};
 
         replace(vertex_shader_src_, "#moka_compilation_flags\n", compiler_flags);
         replace(fragment_shader_src_, "#moka_compilation_flags\n", compiler_flags);
 
         const auto key = vertex_shader_src_ + fragment_shader_src_;
 
-        const auto it = shaders_.find(key);
-        if (it != shaders_.end())
+        auto& cache = graphics_device_.get_shader_cache();
+
+        const auto it = cache.exists(key);
+        if (it)
         {
-            program = it->second;
+            program_handle = cache.get_program(key);
         }
         else
         {
@@ -246,11 +249,14 @@ namespace moka
             const auto fragment_shader = graphics_device_.make_shader(
                 shader_type::fragment, fragment_shader_src_);
 
-            program = graphics_device_.make_program(vertex_shader, fragment_shader);
+            program_handle = graphics_device_.make_program(vertex_shader, fragment_shader);
 
-            shaders_[key] = program;
+            cache.add_program(program_handle, key);
         }
 
-        return {program, std::move(parameters_), alpha_mode_, blend_, culling_, polygon_mode_, depth_test_, scissor_test_};
+        material mat = {
+            program_handle, std::move(parameters_), alpha_mode_, blend_, culling_, polygon_mode_, depth_test_, scissor_test_};
+
+        return graphics_device_.get_material_cache().add_material(std::move(mat));
     }
 } // namespace moka

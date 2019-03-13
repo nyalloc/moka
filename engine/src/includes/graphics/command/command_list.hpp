@@ -10,6 +10,7 @@
 #include <graphics/command/frame_buffer_command.hpp>
 #include <graphics/command/frame_buffer_texture_command.hpp>
 #include <graphics/command/scissor_command.hpp>
+#include <graphics/command/set_material_properties_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 #include <vector>
 
@@ -63,6 +64,10 @@ namespace moka
         command_buffer& make_command_buffer();
 
         command_buffer& make_command_buffer(sort_key key);
+
+        set_material_parameters_command& set_material_parameters();
+
+        set_material_parameters_command& set_material_parameters(sort_key key);
 
         frame_buffer_command& frame_buffer();
 

@@ -6,6 +6,7 @@
 #include <graphics/command/frame_buffer_command.hpp>
 #include <graphics/command/frame_buffer_texture_command.hpp>
 #include <graphics/command/scissor_command.hpp>
+#include <graphics/command/set_material_properties_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 
 namespace moka
@@ -82,5 +83,10 @@ namespace moka
     generate_mipmaps_command& command_buffer::generate_mipmaps()
     {
         return emplace_back<generate_mipmaps_command>();
+    }
+
+    set_material_parameters_command& command_buffer::set_material_parameters()
+    {
+        return emplace_back<set_material_parameters_command>();
     }
 } // namespace moka

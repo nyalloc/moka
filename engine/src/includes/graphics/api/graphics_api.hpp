@@ -176,9 +176,10 @@ namespace moka
         virtual frame_buffer make_frame_buffer(
             render_texture_data* render_textures, size_t render_texture_count) = 0;
 
-        virtual program make_program(const shader& vertex_handle, const shader& fragment_handle) = 0;
+        virtual program_handle make_program(
+            const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
 
-        virtual shader make_shader(shader_type type, const std::string& source) = 0;
+        virtual shader_handle make_shader(shader_type type, const std::string& source) = 0;
 
         virtual vertex_buffer make_vertex_buffer(
             const void* vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;

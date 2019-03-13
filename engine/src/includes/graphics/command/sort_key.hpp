@@ -12,9 +12,9 @@ namespace moka
     public:
         sort_key();
 
-        explicit sort_key(program program, alpha_mode alpha_mode, float depth);
+        explicit sort_key(program_handle program_handle, alpha_mode alpha_mode, float depth);
 
-        program program() const;
+        program_handle program_handle() const;
 
         bool operator>(const sort_key& rhs) const;
 

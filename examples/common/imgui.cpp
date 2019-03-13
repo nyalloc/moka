@@ -105,9 +105,7 @@ namespace moka
 			}
 		)";
 
-        std::map<std::string, program> shaders;
-
-        material::builder builder(graphics_device_, shaders);
+        material::builder builder(graphics_device_);
 
         builder.set_fragment_shader(fragment_shader);
         builder.set_vertex_shader(vertex_shader);
@@ -253,7 +251,8 @@ namespace moka
                                 0.0f,
                                 1.0f};
 
-        material_["u_projection"] = proj;
+        buff.set_material_parameters().set_material(material_).set_parameter(
+            "u_projection", proj);
 
         const auto pos = draw_data->DisplayPos;
         for (auto n = 0; n < draw_data->CmdListsCount; ++n)
@@ -299,7 +298,9 @@ namespace moka
                     {
                         const texture handle{static_cast<uint16_t>(
                             reinterpret_cast<intptr_t>(cmd->TextureId))};
-                        material_["u_tex0"] = handle;
+
+                        buff.set_material_parameters().set_material(material_).set_parameter(
+                            "u_tex0", handle);
                     }
 
                     buff.clear().set_clear_depth(true);
