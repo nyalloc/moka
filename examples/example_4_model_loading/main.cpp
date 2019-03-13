@@ -930,7 +930,7 @@ public:
               app::data_path() / "Models" / "MetalRoughSpheres" / "MetalRoughSpheres.gltf",
               app::data_path() / "Materials" / "pbr.material")),
           cube_(make_hdr_environment_map(
-              graphics_, app::data_path() / "Textures" / "vignaioli.hdr", irradiance_, brdf_, prefiltered_)),
+              graphics_, app::data_path() / "Textures" / "gym.hdr", irradiance_, brdf_, prefiltered_)),
           imgui_(window_, keyboard_, mouse_, graphics_)
     {
     }
@@ -1057,12 +1057,15 @@ public:
 
                 auto* mat = graphics_.get_material_cache().get_material(material);
 
-                auto key = generate_sort_key(
-                    distance, mat->get_program().id, mat->get_alpha_mode());
+                if (mat)
+                {
+                    auto key = generate_sort_key(
+                        distance, mat->get_program().id, mat->get_alpha_mode());
 
-                auto& buffer = scene_draw.make_command_buffer(key);
+                    auto& buffer = scene_draw.make_command_buffer(key);
 
-                primitive.draw(buffer);
+                    primitive.draw(buffer);
+                }
             }
         }
 
