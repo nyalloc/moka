@@ -96,9 +96,10 @@ namespace moka
     }
 
     vertex_buffer graphics_device::make_vertex_buffer(
-        const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use) const
+        const void* cube_vertices, const size_t size, vertex_layout&& layout, const buffer_usage use) const
     {
-        return graphics_api_->make_vertex_buffer(vertices, size, std::move(layout), use);
+        return graphics_api_->make_vertex_buffer(
+            cube_vertices, size, std::move(layout), use);
     }
 
     index_buffer graphics_device::make_index_buffer(

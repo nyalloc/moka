@@ -182,7 +182,7 @@ namespace moka
         virtual shader_handle make_shader(shader_type type, const std::string& source) = 0;
 
         virtual vertex_buffer make_vertex_buffer(
-            const void* vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;
+            const void* cube_vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;
 
         virtual index_buffer make_index_buffer(
             const void* indices, size_t size, index_type type, buffer_usage use) = 0;

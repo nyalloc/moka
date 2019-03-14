@@ -53,6 +53,7 @@ set(INPUT_SRC
 
 set(GRAPHICS_API_SRC
     "includes/graphics/pbr.hpp"
+	"includes/graphics/pbr_constants.hpp"
 	"src/graphics/pbr.cpp"
     "includes/graphics/context.hpp"
     "includes/graphics/api/gl_graphics_api.hpp"
@@ -155,6 +156,7 @@ set(GRAPHICS_SRC
     "includes/graphics/model.hpp"
     "includes/graphics/program.hpp"
     "includes/graphics/shader.hpp"
+    "includes/graphics/default_shaders.hpp"
     "includes/graphics/texture.hpp"
     "includes/graphics/transform.hpp"
     "includes/graphics/utilities.hpp"
@@ -163,6 +165,7 @@ set(GRAPHICS_SRC
     "src/graphics/model.cpp"
     "src/graphics/program.cpp"
     "src/graphics/shader.cpp"
+    "src/graphics/default_shaders.cpp"
     "src/graphics/texture.cpp"
     "src/graphics/transform.cpp"
     "src/graphics/utilities.cpp"
@@ -175,9 +178,11 @@ set(TRAITS_SRC
 )
 
 set(ASSET_SRC
+    "includes/asset_importer/shader_importer.hpp" 
     "includes/asset_importer/asset_importer.hpp" 
     "includes/asset_importer/texture_importer.hpp" 
     "includes/asset_importer/model_importer.hpp"
+	"src/asset_importer/shader_importer.cpp"
     "src/asset_importer/texture_importer.cpp"
     "src/asset_importer/asset_importer.cpp" 
     "src/asset_importer/model_importer.cpp"

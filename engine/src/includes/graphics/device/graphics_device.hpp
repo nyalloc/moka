@@ -160,7 +160,7 @@ namespace moka
         explicit graphics_device(window& window, graphics_backend graphics_backend = graphics_backend::opengl);
 
         vertex_buffer make_vertex_buffer(
-            const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
+            const void* cube_vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
 
         index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) const;
 

@@ -750,7 +750,7 @@ namespace moka
     }
 
     vertex_buffer gl_graphics_api::make_vertex_buffer(
-        const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
+        const void* cube_vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
     {
         vertex_buffer result;
 
@@ -768,7 +768,7 @@ namespace moka
         vertex_buffer_data_[result.id] = std::move(data);
 
         glBindBuffer(GL_ARRAY_BUFFER, handle);
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, moka_to_gl(use));
+        glBufferData(GL_ARRAY_BUFFER, size, cube_vertices, moka_to_gl(use));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         if constexpr (application_traits::is_debug_build)
