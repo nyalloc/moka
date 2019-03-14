@@ -927,7 +927,7 @@ public:
                       .build()),
           model_importer_(app::data_path(), graphics_),
           model_(model_importer_.load(
-              app::data_path() / "Models" / "MetalRoughSpheres" / "MetalRoughSpheres.gltf",
+              app::data_path() / "Models" / "BoomBox" / "BoomBox.gltf",
               app::data_path() / "Materials" / "pbr.material")),
           cube_(make_hdr_environment_map(
               graphics_, app::data_path() / "Textures" / "gym.hdr", irradiance_, brdf_, prefiltered_)),
