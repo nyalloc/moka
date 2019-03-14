@@ -8,6 +8,6 @@ namespace moka
     {
         window_settings window_settings;
 
-        app_settings(int argc, char* argv[]);
+        app_settings();
     };
 } // namespace moka

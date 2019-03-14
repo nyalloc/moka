@@ -3,7 +3,7 @@
 
 namespace moka
 {
-    app_settings::app_settings(int argc, char* argv[])
+    app_settings::app_settings()
     {
     }
 } // namespace moka

@@ -52,6 +52,8 @@ set(INPUT_SRC
 )
 
 set(GRAPHICS_API_SRC
+    "includes/graphics/pbr.hpp"
+	"src/graphics/pbr.cpp"
     "includes/graphics/context.hpp"
     "includes/graphics/api/gl_graphics_api.hpp"
     "includes/graphics/api/graphics_api.hpp"
