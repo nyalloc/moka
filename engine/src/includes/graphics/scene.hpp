@@ -100,14 +100,13 @@ namespace moka
                 {
                     auto material = primitive.get_material();
 
-                    const auto distance =
-                        glm::distance(mesh.get_transform().get_position(), camera_.get_position());
-
                     auto* mat = device.get_material_cache().get_material(material);
 
                     if (mat)
                     {
-                        auto pos = mesh.get_transform().get_position();
+                        auto pos = mesh.get_transform().get_world_position();
+
+                        const auto distance = glm::distance2(pos, view_pos);
 
                         const auto sort_key =
                             generate_sort_key(distance, mat->get_program().id, mat->get_alpha_mode());
