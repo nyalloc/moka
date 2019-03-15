@@ -18,18 +18,14 @@ namespace moka
     {
         const auto size = sizeof(float);
 
-        auto cube_layout =
-            vertex_layout::builder{}
-                .add_attribute(0, 3, attribute_type::float32, false, 8 * size, 0)
-                .add_attribute(1, 3, attribute_type::float32, false, 8 * size, 3 * size)
-                .add_attribute(2, 2, attribute_type::float32, false, 8 * size, 6 * size)
-                .build();
+        auto cube_layout = vertex_layout::builder{}
+                               .add_attribute(0, 3, attribute_type::float32, false, 8 * size, 0)
+                               .add_attribute(1, 3, attribute_type::float32, false, 8 * size, 3 * size)
+                               .add_attribute(2, 2, attribute_type::float32, false, 8 * size, 6 * size)
+                               .build();
 
         return device.make_vertex_buffer(
-            constants::cube_vertices,
-            sizeof constants::cube_vertices,
-            std::move(cube_layout),
-            buffer_usage::static_draw);
+            constants::cube_vertices, sizeof constants::cube_vertices, std::move(cube_layout), buffer_usage::static_draw);
     }
 
     model pbr_util::make_skybox(texture cubemap)
@@ -76,23 +72,16 @@ namespace moka
 
         const auto data = texture_load_hdr(root / texture_path, width, height, format);
 
-        const auto hdr = device.build_texture()
-                             .add_image_data(
-                                 image_target::texture_2d,
-                                 0,
-                                 device_format::rgb16f,
-                                 width,
-                                 height,
-                                 0,
-                                 host_format::rgb,
-                                 pixel_type::float32,
-                                 data)
-                             .set_wrap_s(wrap_mode::clamp_to_edge)
-                             .set_wrap_t(wrap_mode::clamp_to_edge)
-                             .set_min_filter(min_filter::linear)
-                             .set_mag_filter(mag_filter::linear)
-                             .free_host_data(true)
-                             .build();
+        const auto hdr =
+            device.build_texture()
+                .add_image_data(
+                    image_target::texture_2d, 0, device_format::rgb16f, width, height, 0, host_format::rgb, pixel_type::float32, data)
+                .set_wrap_s(wrap_mode::clamp_to_edge)
+                .set_wrap_t(wrap_mode::clamp_to_edge)
+                .set_min_filter(min_filter::linear)
+                .set_mag_filter(mag_filter::linear)
+                .free_host_data(true)
+                .build();
 
         auto hdr_material = device.build_material()
                                 .set_vertex_shader(shaders::make_cubemap::vert)
@@ -110,25 +99,16 @@ namespace moka
         for (auto& image_target : constants::image_targets)
         {
             hdr_texture_builder.add_image_data(
-                image_target,
-                0,
-                device_format::rgb16f,
-                environment_size,
-                environment_size,
-                0,
-                host_format::rgb,
-                pixel_type::float32,
-                nullptr);
+                image_target, 0, device_format::rgb16f, environment_size, environment_size, 0, host_format::rgb, pixel_type::float32, nullptr);
         }
 
-        auto hdr_cubemap =
-            hdr_texture_builder.set_target(texture_target::cubemap)
-                .set_wrap_s(wrap_mode::clamp_to_edge)
-                .set_wrap_t(wrap_mode::clamp_to_edge)
-                .set_wrap_r(wrap_mode::clamp_to_edge)
-                .set_min_filter(min_filter::linear_mipmap_linear)
-                .set_mag_filter(mag_filter::linear)
-                .build();
+        auto hdr_cubemap = hdr_texture_builder.set_target(texture_target::cubemap)
+                               .set_wrap_s(wrap_mode::clamp_to_edge)
+                               .set_wrap_t(wrap_mode::clamp_to_edge)
+                               .set_wrap_r(wrap_mode::clamp_to_edge)
+                               .set_min_filter(min_filter::linear_mipmap_linear)
+                               .set_mag_filter(mag_filter::linear)
+                               .build();
 
         const auto hdr_frame_buffer =
             device.build_frame_buffer()
@@ -141,9 +121,7 @@ namespace moka
 
         for (auto i = 0; i < 6; i++)
         {
-            hdr_map_list.set_material_parameters()
-                .set_material(hdr_material)
-                .set_parameter("view", constants::capture_views[i]);
+            hdr_map_list.set_material_parameters().set_material(hdr_material).set_parameter("view", constants::capture_views[i]);
 
             auto image_target = constants::image_targets[i];
 
@@ -164,6 +142,8 @@ namespace moka
 
         hdr_map_list.generate_mipmaps().set_texture(hdr_cubemap);
 
+        hdr_map_list.frame_buffer().set_frame_buffer({0});
+
         device.submit(std::move(hdr_map_list), false);
 
         return hdr_cubemap;
@@ -171,15 +151,14 @@ namespace moka
 
     texture pbr_util::make_irradiance_environment_map(texture hdr_environment_map)
     {
-        auto irradiance_material =
-            device.build_material()
-                .set_vertex_shader(shaders::make_irradiance_map::vert)
-                .set_fragment_shader(shaders::make_irradiance_map::frag)
-                .add_uniform("projection", constants::projection)
-                .add_uniform("view", parameter_type::mat4)
-                .add_uniform("environmentMap", hdr_environment_map)
-                .set_culling_enabled(false)
-                .build();
+        auto irradiance_material = device.build_material()
+                                       .set_vertex_shader(shaders::make_irradiance_map::vert)
+                                       .set_fragment_shader(shaders::make_irradiance_map::frag)
+                                       .add_uniform("projection", constants::projection)
+                                       .add_uniform("view", parameter_type::mat4)
+                                       .add_uniform("environmentMap", hdr_environment_map)
+                                       .set_culling_enabled(false)
+                                       .build();
 
         command_list irradiance_list;
 
@@ -190,25 +169,16 @@ namespace moka
         for (auto& image_target : constants::image_targets)
         {
             irradiance_texture_builder.add_image_data(
-                image_target,
-                0,
-                device_format::rgb16f,
-                irradiance_size,
-                irradiance_size,
-                0,
-                host_format::rgb,
-                pixel_type::float32,
-                nullptr);
+                image_target, 0, device_format::rgb16f, irradiance_size, irradiance_size, 0, host_format::rgb, pixel_type::float32, nullptr);
         }
 
-        auto irradiance_cubemap =
-            irradiance_texture_builder.set_target(texture_target::cubemap)
-                .set_wrap_s(wrap_mode::clamp_to_edge)
-                .set_wrap_t(wrap_mode::clamp_to_edge)
-                .set_wrap_r(wrap_mode::clamp_to_edge)
-                .set_min_filter(min_filter::linear)
-                .set_mag_filter(mag_filter::linear)
-                .build();
+        auto irradiance_cubemap = irradiance_texture_builder.set_target(texture_target::cubemap)
+                                      .set_wrap_s(wrap_mode::clamp_to_edge)
+                                      .set_wrap_t(wrap_mode::clamp_to_edge)
+                                      .set_wrap_r(wrap_mode::clamp_to_edge)
+                                      .set_min_filter(min_filter::linear)
+                                      .set_mag_filter(mag_filter::linear)
+                                      .build();
 
         const auto irradiance_frame_buffer =
             device.build_frame_buffer()
@@ -243,6 +213,8 @@ namespace moka
                 .set_material(irradiance_material);
         }
 
+        irradiance_list.frame_buffer().set_frame_buffer({0});
+
         device.submit(std::move(irradiance_list), false);
 
         return irradiance_cubemap;
@@ -259,37 +231,27 @@ namespace moka
         for (auto& image_target : constants::image_targets)
         {
             prefilter_texture_builder.add_image_data(
-                image_target,
-                0,
-                device_format::rgb16f,
-                prefilter_size,
-                prefilter_size,
-                0,
-                host_format::rgb,
-                pixel_type::float32,
-                nullptr);
+                image_target, 0, device_format::rgb16f, prefilter_size, prefilter_size, 0, host_format::rgb, pixel_type::float32, nullptr);
         }
 
-        auto prefilter_cubemap =
-            prefilter_texture_builder.set_target(texture_target::cubemap)
-                .set_wrap_s(wrap_mode::clamp_to_edge)
-                .set_wrap_t(wrap_mode::clamp_to_edge)
-                .set_wrap_r(wrap_mode::clamp_to_edge)
-                .set_min_filter(min_filter::linear_mipmap_linear)
-                .set_mag_filter(mag_filter::linear)
-                .set_mipmaps(true)
-                .build();
+        auto prefilter_cubemap = prefilter_texture_builder.set_target(texture_target::cubemap)
+                                     .set_wrap_s(wrap_mode::clamp_to_edge)
+                                     .set_wrap_t(wrap_mode::clamp_to_edge)
+                                     .set_wrap_r(wrap_mode::clamp_to_edge)
+                                     .set_min_filter(min_filter::linear_mipmap_linear)
+                                     .set_mag_filter(mag_filter::linear)
+                                     .set_mipmaps(true)
+                                     .build();
 
-        auto prefilter_material =
-            device.build_material()
-                .set_vertex_shader(shaders::make_specular_map::vert)
-                .set_fragment_shader(shaders::make_specular_map::frag)
-                .add_uniform("roughness", parameter_type::float32)
-                .add_uniform("environmentMap", hdr_environment_map)
-                .add_uniform("projection", constants::projection)
-                .add_uniform("view", parameter_type::mat4)
-                .set_culling_enabled(false)
-                .build();
+        auto prefilter_material = device.build_material()
+                                      .set_vertex_shader(shaders::make_specular_map::vert)
+                                      .set_fragment_shader(shaders::make_specular_map::frag)
+                                      .add_uniform("roughness", parameter_type::float32)
+                                      .add_uniform("environmentMap", hdr_environment_map)
+                                      .add_uniform("projection", constants::projection)
+                                      .add_uniform("view", parameter_type::mat4)
+                                      .set_culling_enabled(false)
+                                      .build();
 
         const size_t max_mip_levels = 9;
         for (size_t mip = 0; mip < max_mip_levels; ++mip)
@@ -306,8 +268,7 @@ namespace moka
 
             prefilter_list.viewport().set_rectangle(0, 0, mip_width, mip_height);
 
-            auto roughness =
-                static_cast<float>(mip) / static_cast<float>(max_mip_levels - 1);
+            auto roughness = static_cast<float>(mip) / static_cast<float>(max_mip_levels - 1);
 
             prefilter_list.set_material_parameters()
                 .set_material(prefilter_material)
@@ -335,6 +296,8 @@ namespace moka
             }
         }
 
+        prefilter_list.frame_buffer().set_frame_buffer({0});
+
         device.submit(std::move(prefilter_list), false);
 
         return prefilter_cubemap;
@@ -356,36 +319,25 @@ namespace moka
         auto quad_layout =
             vertex_layout::builder{}
                 .add_attribute(0, 3, attribute_type::float32, false, 5 * sizeof(float), 0)
-                .add_attribute(
-                    1, 2, attribute_type::float32, false, 5 * sizeof(float), 3 * sizeof(float))
+                .add_attribute(1, 2, attribute_type::float32, false, 5 * sizeof(float), 3 * sizeof(float))
                 .build();
 
         const auto quad_buffer = device.make_vertex_buffer(
-            constants::quad_vertices,
-            sizeof constants::quad_vertices,
-            std::move(quad_layout),
-            buffer_usage::static_draw);
+            constants::quad_vertices, sizeof constants::quad_vertices, std::move(quad_layout), buffer_usage::static_draw);
 
         auto brdf_size = 512;
 
         // allocate space for the lookup texture
-        auto brdf_image = device.build_texture()
-                              .add_image_data(
-                                  image_target::texture_2d,
-                                  0,
-                                  device_format::rg16f,
-                                  brdf_size,
-                                  brdf_size,
-                                  0,
-                                  host_format::rg,
-                                  pixel_type::float32,
-                                  nullptr)
-                              .set_target(texture_target::texture_2d)
-                              .set_wrap_s(wrap_mode::clamp_to_edge)
-                              .set_wrap_t(wrap_mode::clamp_to_edge)
-                              .set_min_filter(min_filter::linear)
-                              .set_mag_filter(mag_filter::linear)
-                              .build();
+        auto brdf_image =
+            device.build_texture()
+                .add_image_data(
+                    image_target::texture_2d, 0, device_format::rg16f, brdf_size, brdf_size, 0, host_format::rg, pixel_type::float32, nullptr)
+                .set_target(texture_target::texture_2d)
+                .set_wrap_s(wrap_mode::clamp_to_edge)
+                .set_wrap_t(wrap_mode::clamp_to_edge)
+                .set_min_filter(min_filter::linear)
+                .set_mag_filter(mag_filter::linear)
+                .build();
 
         // create a framebuffer to render to
         const auto brdf_frame_buffer =
@@ -410,6 +362,8 @@ namespace moka
             .set_vertex_count(4)
             .set_primitive_type(primitive_type::triangle_strip)
             .set_material(brdf_material);
+
+        brdf_list.frame_buffer().set_frame_buffer({0});
 
         device.submit(std::move(brdf_list), false);
 

@@ -105,43 +105,34 @@ namespace moka
 			}
 		)";
 
-        material_ =
-            graphics_device_.build_material()
-                .set_fragment_shader(fragment_shader)
-                .set_vertex_shader(vertex_shader)
-                .set_blend_enabled(true)
-                .set_blend_equation(blend_equation::func_add)
-                .set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha)
-                .set_culling_enabled(false)
-                .set_polygon_mode(face::front_and_back, polygon_draw_mode::fill)
-                .set_depth_test_enabled(false)
-                .set_scissor_test_enabled(true)
-                .build();
+        material_ = graphics_device_.build_material()
+                        .set_fragment_shader(fragment_shader)
+                        .set_vertex_shader(vertex_shader)
+                        .set_blend_enabled(true)
+                        .set_blend_equation(blend_equation::func_add)
+                        .set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha)
+                        .set_culling_enabled(false)
+                        .set_polygon_mode(face::front_and_back, polygon_draw_mode::fill)
+                        .set_depth_test_enabled(false)
+                        .set_scissor_test_enabled(true)
+                        .build();
 
         unsigned char* pixels;
         int width, height;
         io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-        const auto font_atlas = graphics_device_.build_texture()
-                                    .add_image_data(
-                                        image_target::texture_2d,
-                                        0,
-                                        device_format::rgba,
-                                        width,
-                                        height,
-                                        0,
-                                        host_format::rgba,
-                                        pixel_type::uint8,
-                                        pixels)
-                                    .set_wrap_s(wrap_mode::clamp_to_edge)
-                                    .set_wrap_t(wrap_mode::clamp_to_edge)
-                                    .set_mipmaps(true)
-                                    .set_min_filter(min_filter::linear)
-                                    .set_mag_filter(mag_filter::linear)
-                                    .build();
+        const auto font_atlas =
+            graphics_device_.build_texture()
+                .add_image_data(
+                    image_target::texture_2d, 0, device_format::rgba, width, height, 0, host_format::rgba, pixel_type::uint8, pixels)
+                .set_wrap_s(wrap_mode::clamp_to_edge)
+                .set_wrap_t(wrap_mode::clamp_to_edge)
+                .set_mipmaps(true)
+                .set_min_filter(min_filter::linear)
+                .set_mag_filter(mag_filter::linear)
+                .build();
 
-        io.Fonts->TexID =
-            reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas.id));
+        io.Fonts->TexID = reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas.id));
 
         auto pos_size = IM_OFFSETOF(ImDrawVert, pos);
         auto uv_size = IM_OFFSETOF(ImDrawVert, uv);
@@ -152,18 +143,18 @@ namespace moka
             vertex_attribute{1, attribute_type::float32, 2, false, sizeof(ImDrawVert), uv_size},
             vertex_attribute{2, attribute_type::uint8, 4, true, sizeof(ImDrawVert), col_size}};
 
-        index_buffer_ = graphics_device_.make_index_buffer(
-            nullptr, 0, index_type::uint16, buffer_usage::stream_draw);
+        index_buffer_ =
+            graphics_device_.make_index_buffer(nullptr, 0, index_type::uint16, buffer_usage::stream_draw);
 
-        vertex_buffer_ = graphics_device_.make_vertex_buffer(
-            nullptr, 0, std::move(layout), buffer_usage::stream_draw);
+        vertex_buffer_ =
+            graphics_device_.make_vertex_buffer(nullptr, 0, std::move(layout), buffer_usage::stream_draw);
     }
 
     void imgui::new_frame(float delta_time) const
     {
         if (delta_time <= 0)
         {
-            delta_time = 0;
+            delta_time = 1.0f / 60;
         }
 
         auto& io = ImGui::GetIO();
@@ -215,11 +206,10 @@ namespace moka
 
         auto& io = ::ImGui::GetIO();
 
-        const auto fb_width = static_cast<int>(
-            draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
+        const auto fb_width = static_cast<int>(draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
 
-        const auto fb_height = static_cast<int>(
-            draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
+        const auto fb_height =
+            static_cast<int>(draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
 
         if (fb_width <= 0 || fb_height <= 0)
         {
@@ -252,8 +242,7 @@ namespace moka
                                 0.0f,
                                 1.0f};
 
-        buff.set_material_parameters().set_material(material_).set_parameter(
-            "u_projection", proj);
+        buff.set_material_parameters().set_material(material_).set_parameter("u_projection", proj);
 
         const auto pos = draw_data->DisplayPos;
         for (auto n = 0; n < draw_data->CmdListsCount; ++n)
@@ -286,8 +275,8 @@ namespace moka
                     cmd->ClipRect.y - pos.y,
                     cmd->ClipRect.z - pos.x,
                     cmd->ClipRect.w - pos.y);
-                if (clip_rect.x < fb_width && clip_rect.y < fb_height &&
-                    clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
+                if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f &&
+                    clip_rect.w >= 0.0f)
                 {
                     buff.scissor().set_rectangle(
                         static_cast<int>(clip_rect.x),
@@ -297,8 +286,7 @@ namespace moka
 
                     if (cmd->TextureId)
                     {
-                        const texture handle{static_cast<uint16_t>(
-                            reinterpret_cast<intptr_t>(cmd->TextureId))};
+                        const texture handle{static_cast<uint16_t>(reinterpret_cast<intptr_t>(cmd->TextureId))};
 
                         buff.set_material_parameters().set_material(material_).set_parameter(
                             "u_tex0", handle);

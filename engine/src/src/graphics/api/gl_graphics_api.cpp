@@ -474,11 +474,7 @@ namespace moka
     void gl_graphics_api::visit(frame_buffer_texture_command& cmd)
     {
         glFramebufferTexture2D(
-            GL_FRAMEBUFFER,
-            moka_to_gl(cmd.attachment),
-            moka_to_gl(cmd.target),
-            GLuint{cmd.tex.id},
-            cmd.level);
+            GL_FRAMEBUFFER, moka_to_gl(cmd.attachment), moka_to_gl(cmd.target), GLuint{cmd.tex.id}, cmd.level);
 
         if constexpr (application_traits::is_debug_build)
         {
@@ -570,16 +566,14 @@ namespace moka
             glBlendFunc(moka_to_gl(blend.source), moka_to_gl(blend.destination));
 
             auto& polygon_mode = material->get_polygon_mode();
-            glPolygonMode(
-                moka_to_gl(polygon_mode.faces), moka_to_gl(polygon_mode.mode));
+            glPolygonMode(moka_to_gl(polygon_mode.faces), moka_to_gl(polygon_mode.mode));
 
             auto& culling = material->get_culling();
             culling.enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
             glCullFace(moka_to_gl(culling.faces));
 
             material->get_depth_test() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-            material->get_scissor_test() ? glEnable(GL_SCISSOR_TEST)
-                                         : glDisable(GL_SCISSOR_TEST);
+            material->get_scissor_test() ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
 
             const auto size = material->size();
 
@@ -589,8 +583,8 @@ namespace moka
             {
                 auto& parameter = (*material)[i];
 
-                const auto location = glGetUniformLocation(
-                    GLuint(material->get_program().id), parameter.name.c_str());
+                const auto location =
+                    glGetUniformLocation(GLuint(material->get_program().id), parameter.name.c_str());
 
                 if (location == -1)
                     continue;
@@ -631,15 +625,13 @@ namespace moka
                 case parameter_type::mat3:
                 {
                     auto data = std::get<glm::mat3>(parameter.data);
-                    glUniformMatrix3fv(
-                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                    glUniformMatrix3fv(location, GLsizei(parameter.count), false, glm::value_ptr(data));
                     break;
                 }
                 case parameter_type::mat4:
                 {
                     auto data = std::get<glm::mat4>(parameter.data);
-                    glUniformMatrix4fv(
-                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                    glUniformMatrix4fv(location, GLsizei(parameter.count), false, glm::value_ptr(data));
                     break;
                 }
                 default:;
@@ -659,9 +651,11 @@ namespace moka
         }
         else
         {
-            glDrawArrays(
-                moka_to_gl(cmd.prim_type), GLint(cmd.first_vertex), GLsizei(cmd.vertex_count));
+            glDrawArrays(moka_to_gl(cmd.prim_type), GLint(cmd.first_vertex), GLsizei(cmd.vertex_count));
         }
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
         previous_command_ = cmd;
 
@@ -909,10 +903,8 @@ namespace moka
         glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(metadata.wrap.s));
         glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(metadata.wrap.t));
         glTexParameteri(gl_target, GL_TEXTURE_WRAP_R, moka_to_gl(metadata.wrap.r));
-        glTexParameteri(
-            gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(metadata.filter_mode.min));
-        glTexParameteri(
-            gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(metadata.filter_mode.mag));
+        glTexParameteri(gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(metadata.filter_mode.min));
+        glTexParameteri(gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(metadata.filter_mode.mag));
 
         if (metadata.generate_mipmaps)
         {
@@ -1020,32 +1012,17 @@ namespace moka
         switch (severity)
         {
         case GL_DEBUG_SEVERITY_HIGH:
-            log_.error(
-                "message: {}, type: {}, source: {}",
-                message,
-                msg_type.c_str(),
-                msg_source.c_str());
+            log_.error("message: {}, type: {}, source: {}", message, msg_type.c_str(), msg_source.c_str());
             break;
         case GL_DEBUG_SEVERITY_MEDIUM:
-            log_.warn(
-                "message: {}, type: {}, source: {}",
-                message,
-                msg_type.c_str(),
-                msg_source.c_str());
+            log_.warn("message: {}, type: {}, source: {}", message, msg_type.c_str(), msg_source.c_str());
             break;
         case GL_DEBUG_SEVERITY_LOW:
-            log_.debug(
-                "message: {}, type: {}, source: {}",
-                message,
-                msg_type.c_str(),
-                msg_source.c_str());
+            log_.debug("message: {}, type: {}, source: {}", message, msg_type.c_str(), msg_source.c_str());
             break;
         default:
             log_.trace(
-                "glDebugMessage: {}, type: {}, source: {}",
-                message,
-                msg_type.c_str(),
-                msg_source.c_str());
+                "glDebugMessage: {}, type: {}, source: {}", message, msg_type.c_str(), msg_source.c_str());
             break;
         }
     }

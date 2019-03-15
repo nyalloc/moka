@@ -16,10 +16,7 @@ namespace moka
 
     public:
         transform(const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-            : position_(position),
-              scale_(scale),
-              rotation_(glm::normalize(rotation)),
-              dirty_(false)
+            : position_(position), scale_(scale), rotation_(glm::normalize(rotation)), dirty_(false)
         {
         }
 
@@ -49,6 +46,11 @@ namespace moka
         const glm::vec3& get_position() const
         {
             return position_;
+        }
+
+        glm::vec3 get_world_position() const
+        {
+            return position_ * rotation_ * scale_;
         }
 
         const glm::vec3& get_scale() const

@@ -4,9 +4,8 @@
 namespace moka
 {
     camera_mouse_controller::camera_mouse_controller(mouse& mouse, const glm::mat4& perspective)
-        : mouse_(mouse)
+        : mouse_(mouse), basic_camera(moka::transform(), perspective)
     {
-        projection_ = perspective;
     }
 
     void camera_mouse_controller::set_auto_rotate(bool rotate)
@@ -50,14 +49,11 @@ namespace moka
 
         current_rotate_x_ = glm::mix(current_rotate_x_, rotate_x_, delta_time * 5);
         current_rotate_y_ = glm::mix(current_rotate_y_, rotate_y_, delta_time * 5);
-        current_translate_z_ =
-            glm::mix(current_translate_z_, translate_z_, delta_time * 5);
+        current_translate_z_ = glm::mix(current_translate_z_, translate_z_, delta_time * 5);
 
         transform_.set_position(glm::vec3{0, 0, current_translate_z_});
-        transform_.rotate_around(
-            transform::world_origin(), transform::world_right(), current_rotate_y_);
-        transform_.rotate_around(
-            transform::world_origin(), transform::world_up(), current_rotate_x_);
+        transform_.rotate_around(transform::world_origin(), transform::world_right(), current_rotate_y_);
+        transform_.rotate_around(transform::world_origin(), transform::world_up(), current_rotate_x_);
         transform_.look_at(transform::world_origin());
     }
 } // namespace moka

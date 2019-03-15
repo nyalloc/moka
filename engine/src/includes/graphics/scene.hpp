@@ -12,6 +12,7 @@
 #include <graphics/material/material_builder.hpp>
 #include <graphics/model.hpp>
 #include <graphics/pbr.hpp>
+#include <iostream>
 
 namespace moka
 {
@@ -46,19 +47,18 @@ namespace moka
         {
             // http://realtimecollisiondetection.net/blog/?p=86
             // sort by alpha, then by depth, then by material
-            return static_cast<sort_key>(material_id) |
-                   static_cast<sort_key>(depth_to_bits(depth)) << 16 |
+            return static_cast<sort_key>(material_id) | static_cast<sort_key>(depth_to_bits(depth)) << 16 |
                    static_cast<sort_key>(alpha == alpha_mode::blend) << 48;
         }
 
     public:
+        // need to expose these to bind them to imgui - might re-evaluate this later!
         glm::vec4 color_ = color::burnt_sienna();
         bool environment_ = true;
         float gamma_ = 2.2f;
         float exposure_ = 1.0f;
 
-        scene(graphics_device& device, const std::filesystem::path& root)
-            : device(device)
+        scene(graphics_device& device, const std::filesystem::path& root) : device(device)
         {
             pbr_util util(device, root);
 
@@ -84,6 +84,8 @@ namespace moka
 
         void draw(const basic_camera& camera_, const rectangle& viewport)
         {
+            const auto& view_pos = camera_.get_position();
+
             command_list scene_draw;
 
             scene_draw.viewport().set_rectangle(viewport);
@@ -98,29 +100,31 @@ namespace moka
                 {
                     auto material = primitive.get_material();
 
-                    const auto distance = glm::distance(
-                        mesh.get_transform().get_position(), camera_.get_position());
-
-                    scene_draw.set_material_parameters()
-                        .set_material(material)
-                        .set_parameter("gamma", gamma_)
-                        .set_parameter("exposure", exposure_)
-                        .set_parameter("irradiance_map", irradiance_)
-                        .set_parameter("prefilter_map", prefiltered_)
-                        .set_parameter("brdf_lut", brdf_)
-                        .set_parameter("model", mesh.get_transform().to_matrix())
-                        .set_parameter("view", camera_.get_view())
-                        .set_parameter("projection", camera_.get_projection())
-                        .set_parameter("view_pos", camera_.get_position());
+                    const auto distance =
+                        glm::distance(mesh.get_transform().get_position(), camera_.get_position());
 
                     auto* mat = device.get_material_cache().get_material(material);
 
                     if (mat)
                     {
-                        auto key = generate_sort_key(
-                            distance, mat->get_program().id, mat->get_alpha_mode());
+                        auto pos = mesh.get_transform().get_position();
 
-                        auto& buffer = scene_draw.make_command_buffer(key);
+                        const auto sort_key =
+                            generate_sort_key(distance, mat->get_program().id, mat->get_alpha_mode());
+
+                        auto& buffer = scene_draw.make_command_buffer(sort_key);
+
+                        buffer.set_material_parameters()
+                            .set_material(material)
+                            .set_parameter("gamma", gamma_)
+                            .set_parameter("exposure", exposure_)
+                            .set_parameter("irradiance_map", irradiance_)
+                            .set_parameter("prefilter_map", prefiltered_)
+                            .set_parameter("brdf_lut", brdf_)
+                            .set_parameter("model", mesh.get_transform().to_matrix())
+                            .set_parameter("view", camera_.get_view())
+                            .set_parameter("projection", camera_.get_projection())
+                            .set_parameter("view_pos", view_pos);
 
                         primitive.draw(buffer);
                     }
@@ -135,14 +139,14 @@ namespace moka
                     {
                         auto material = primitive.get_material();
 
-                        scene_draw.set_material_parameters()
+                        auto& buffer = scene_draw.make_command_buffer();
+
+                        buffer.set_material_parameters()
                             .set_material(material)
                             .set_parameter("gamma", gamma_)
                             .set_parameter("exposure", exposure_)
                             .set_parameter("view", camera_.get_view())
                             .set_parameter("projection", camera_.get_projection());
-
-                        auto& buffer = scene_draw.make_command_buffer();
 
                         primitive.draw(buffer);
                     }
