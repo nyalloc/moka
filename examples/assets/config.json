@@ -1,0 +1,6 @@
+{
+  "config": {
+    "model": "Models/FlightHelmet/FlightHelmet.gltf",
+    "environment": "Textures/abandoned.hdr"
+  }
+}

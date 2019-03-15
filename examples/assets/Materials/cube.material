@@ -1,0 +1,8 @@
+{
+  "vertex": {
+    "file": "Materials/Shaders/cube.vert"
+  },
+  "fragment": {
+    "file": "Materials/Shaders/cube.frag"
+  }
+}

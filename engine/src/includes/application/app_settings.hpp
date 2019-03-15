@@ -4,13 +4,10 @@
 
 namespace moka
 {
-	class app_settings
-	{
-		window_settings window_settings_;
-	public:
+    struct app_settings
+    {
+        window_settings window_settings;
 
-		const window_settings& get_window_settings() const;
-
-		app_settings(int argc, char* argv[]);
-	};
-}
+        app_settings();
+    };
+} // namespace moka

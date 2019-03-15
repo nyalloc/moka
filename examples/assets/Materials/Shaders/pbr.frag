@@ -35,13 +35,12 @@ struct pbr_material
     #endif
 };
 
-struct directional_light
-{
-    vec3 ambient;
-    vec3 direction;
-    vec3 diffuse;
-    vec3 specular;
-};
+// IBL
+uniform samplerCube irradiance_map;
+uniform samplerCube prefilter_map;
+uniform sampler2D brdf_lut;
+uniform float gamma;
+uniform float exposure;
 
 in vec3 in_frag_pos;  
 in vec3 in_normal;  
@@ -55,7 +54,6 @@ out vec4 frag_color;
 
 uniform vec3 view_pos;
 uniform pbr_material material;
-uniform directional_light light;
 
 vec4 get_albedo()
 {
@@ -77,10 +75,10 @@ vec3 get_normal()
         // it will inform us if the texture has been flipped horizontally. If it has, we need to flip the green component.
         // otherwise the lighting calculations will be all wrong! They end up the opposite y direction.
     #else 
-        vec3 material_normal = normalize(in_normal);
+        vec3 material_normal = in_normal;
     #endif
     
-    return material_normal;
+    return normalize(material_normal);
 }
 
 vec4 get_emissive()
@@ -95,7 +93,7 @@ vec4 get_emissive()
 float get_roughness()
 {
     #ifdef METALLIC_ROUGHNESS_MAP
-        return texture(material.metallic_roughness_map, in_texture_coord).g * 1.0f;
+        return texture(material.metallic_roughness_map, in_texture_coord).g * material.roughness_factor;
     #else
         return material.roughness_factor;
     #endif
@@ -173,30 +171,6 @@ vec3 fresnel_schlick_roughness(float cos_theta, vec3 f0, float roughness)
     return f0 + (max(vec3(1.0 - roughness), f0) - f0) * pow(1.0 - cos_theta, 5.0);
 }   
 
-vec3 calc_directional_light(vec3 f0, vec3 n, vec3 v, vec3 r, vec3 albedo, float metallic, float roughness)
-{
-	vec3 l = normalize(light.direction);
-	vec3 h = normalize(v + l);
-	vec3 radiance = light.diffuse;
-	
-	float ndf = distribution_ggx(n, h, roughness);
-	float g = geometry_smith(n, v, l, roughness);
-	vec3 f = fresnel_schlick(max(dot(h, v), 0.0f), f0);
-	
-	vec3 nominator = ndf * g * f;
-	float denominator = 4 * max(dot(n, v), 0.0f) * max(dot(n, l), 0.0f) + 0.001;
-	vec3 specular = nominator / denominator;
-	
-	vec3 ks = f;
-	vec3 kd = vec3(1.0f) - ks;
-	
-	kd *= 1.0f - metallic;
-	
-	float n_dot_l = max(dot(n, l), 0.0f);
-	
-	return (kd * albedo / PI + specular) * radiance * n_dot_l;
-}
-
 void main()
 {
     if(discard_fragment())
@@ -204,7 +178,8 @@ void main()
         discard;
     }  
         
-	vec3 albedo = get_albedo().rgb;
+	vec4 albedo = get_albedo();
+	vec4 emissive = get_emissive();
 	float metallic = get_metallic();
 	float roughness = get_roughness();
 	float ao = get_ao();
@@ -214,17 +189,32 @@ void main()
 	vec3 r = reflect(-v, n);
 	
 	vec3 f0 = vec3(0.04f);
-	f0 = mix(f0, albedo, metallic);
+	f0 = mix(f0, albedo.rgb, metallic);
 	
-	vec3 lo = calc_directional_light(f0, n, v, r, albedo, metallic, roughness);
+    vec4 lo = vec4(0.0f);
 	
-	vec3 ambient = vec3(0.03f) * albedo * ao;
+    vec3 kS = fresnel_schlick_roughness(max(dot(n, v), 0.0f), f0, roughness);
+    vec3 kD = 1.0f - kS;
+    kD *= 1.0f - metallic;	  
 	
-	vec3 color = ambient + lo;
+    vec4 irradiance = texture(irradiance_map, n);
+    vec4 diffuse = irradiance * albedo;
 	
-	color = color / (color + vec3(1.0f));
+	const float MAX_REFLECTION_LOD = 8.0f;
 	
-	color = pow(color, vec3(1.0f/2.2f));
+	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * MAX_REFLECTION_LOD).rgb;   
+	vec2 brdf  = texture(brdf_lut, vec2(max(dot(n, v), 0.0f), roughness)).rg;
+    vec4 specular = vec4(prefiltered_color * (kS * brdf.x + brdf.y), 1.0f);
+
+    vec4 ambient = (vec4(kD, 1.0f) * diffuse + specular) * ao;
+    
+    vec4 color = ambient + lo + emissive;
 	
-    frag_color = vec4(color, 1.0f);
+    vec4 mapped = vec4(1.0f) - exp(-color * exposure);
+	
+	vec3 corrected_color = vec3(1.0f / gamma);
+	
+    mapped = pow(mapped, vec4(corrected_color, 1.0f));
+  
+    frag_color = mapped;
 }

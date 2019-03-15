@@ -10,6 +10,53 @@
 
 namespace moka
 {
+    void theme()
+    {
+        ImVec4* colors = ImGui::GetStyle().Colors;
+        colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
+        colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+        colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 0.94f);
+        colors[ImGuiCol_ChildBg] = ImVec4(1.00f, 1.00f, 1.00f, 0.00f);
+        colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+        colors[ImGuiCol_Border] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+        colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+        colors[ImGuiCol_FrameBg] = ImVec4(0.20f, 0.21f, 0.22f, 0.54f);
+        colors[ImGuiCol_FrameBgHovered] = ImVec4(0.40f, 0.40f, 0.40f, 0.40f);
+        colors[ImGuiCol_FrameBgActive] = ImVec4(0.18f, 0.18f, 0.18f, 0.67f);
+        colors[ImGuiCol_TitleBg] = ImVec4(0.04f, 0.04f, 0.04f, 1.00f);
+        colors[ImGuiCol_TitleBgActive] = ImVec4(0.29f, 0.29f, 0.29f, 1.00f);
+        colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
+        colors[ImGuiCol_MenuBarBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+        colors[ImGuiCol_ScrollbarBg] = ImVec4(0.02f, 0.02f, 0.02f, 0.53f);
+        colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+        colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.41f, 0.41f, 0.41f, 1.00f);
+        colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
+        colors[ImGuiCol_CheckMark] = ImVec4(0.94f, 0.94f, 0.94f, 1.00f);
+        colors[ImGuiCol_SliderGrab] = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
+        colors[ImGuiCol_SliderGrabActive] = ImVec4(0.86f, 0.86f, 0.86f, 1.00f);
+        colors[ImGuiCol_Button] = ImVec4(0.44f, 0.44f, 0.44f, 0.40f);
+        colors[ImGuiCol_ButtonHovered] = ImVec4(0.46f, 0.47f, 0.48f, 1.00f);
+        colors[ImGuiCol_ButtonActive] = ImVec4(0.42f, 0.42f, 0.42f, 1.00f);
+        colors[ImGuiCol_Header] = ImVec4(0.70f, 0.70f, 0.70f, 0.31f);
+        colors[ImGuiCol_HeaderHovered] = ImVec4(0.70f, 0.70f, 0.70f, 0.80f);
+        colors[ImGuiCol_HeaderActive] = ImVec4(0.48f, 0.50f, 0.52f, 1.00f);
+        colors[ImGuiCol_Separator] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+        colors[ImGuiCol_SeparatorHovered] = ImVec4(0.72f, 0.72f, 0.72f, 0.78f);
+        colors[ImGuiCol_SeparatorActive] = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
+        colors[ImGuiCol_ResizeGrip] = ImVec4(0.91f, 0.91f, 0.91f, 0.25f);
+        colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.81f, 0.81f, 0.81f, 0.67f);
+        colors[ImGuiCol_ResizeGripActive] = ImVec4(0.46f, 0.46f, 0.46f, 0.95f);
+        colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
+        colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
+        colors[ImGuiCol_PlotHistogram] = ImVec4(0.73f, 0.60f, 0.15f, 1.00f);
+        colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
+        colors[ImGuiCol_TextSelectedBg] = ImVec4(0.87f, 0.87f, 0.87f, 0.35f);
+        colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+        colors[ImGuiCol_DragDropTarget] = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
+        colors[ImGuiCol_NavHighlight] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
+        colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
+    }
+
     imgui::imgui(window& window, keyboard& keyboard, mouse& mouse, graphics_device& graphics_device)
         : window_(window), keyboard_(keyboard), mouse_(mouse), graphics_device_(graphics_device)
     {
@@ -23,59 +70,10 @@ namespace moka
             std::cout << "Null ptr to default font" << std::endl;
         }
 
-        ImVec4* colors = ImGui::GetStyle().Colors;
-        ImGui::GetStyle().FramePadding = ImVec2(4.0f, 2.0f);
-        ImGui::GetStyle().ItemSpacing = ImVec2(8.0f, 2.0f);
-        ImGui::GetStyle().WindowRounding = 2.0f;
-        ImGui::GetStyle().ChildRounding = 2.0f;
-        ImGui::GetStyle().FrameRounding = 0.0f;
-        ImGui::GetStyle().ScrollbarRounding = 0.0f;
-        ImGui::GetStyle().GrabRounding = 1.0f;
-        ImGui::GetStyle().WindowBorderSize = 1.0f;
-        ImGui::GetStyle().FrameBorderSize = 1.0f;
-        colors[ImGuiCol_Text] = ImVec4(0.00f, 0.00f, 0.00f, 0.85f);
-        colors[ImGuiCol_TextDisabled] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
-        colors[ImGuiCol_WindowBg] = ImVec4(0.94f, 0.94f, 0.94f, 1.00f);
-        colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        colors[ImGuiCol_PopupBg] = ImVec4(1.00f, 1.00f, 1.00f, 0.98f);
-        colors[ImGuiCol_Border] = ImVec4(0.00f, 0.00f, 0.00f, 0.44f);
-        colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        colors[ImGuiCol_FrameBg] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
-        colors[ImGuiCol_FrameBgHovered] = ImVec4(0.64f, 0.65f, 0.66f, 0.40f);
-        colors[ImGuiCol_FrameBgActive] = ImVec4(0.64f, 0.65f, 0.66f, 0.40f);
-        colors[ImGuiCol_TitleBg] = ImVec4(0.82f, 0.82f, 0.82f, 1.00f);
-        colors[ImGuiCol_TitleBgActive] = ImVec4(0.71f, 0.70f, 0.70f, 1.00f);
-        colors[ImGuiCol_TitleBgCollapsed] = ImVec4(1.00f, 1.00f, 1.00f, 0.51f);
-        colors[ImGuiCol_MenuBarBg] = ImVec4(0.86f, 0.86f, 0.86f, 1.00f);
-        colors[ImGuiCol_ScrollbarBg] = ImVec4(0.98f, 0.98f, 0.98f, 0.53f);
-        colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.69f, 0.69f, 0.69f, 0.80f);
-        colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.49f, 0.49f, 0.49f, 0.80f);
-        colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.49f, 0.49f, 0.49f, 1.00f);
-        colors[ImGuiCol_CheckMark] = ImVec4(0.43f, 0.43f, 0.43f, 1.00f);
-        colors[ImGuiCol_SliderGrab] = ImVec4(0.63f, 0.63f, 0.63f, 0.78f);
-        colors[ImGuiCol_SliderGrabActive] = ImVec4(0.43f, 0.44f, 0.46f, 0.78f);
-        colors[ImGuiCol_Button] = ImVec4(0.61f, 0.61f, 0.62f, 0.40f);
-        colors[ImGuiCol_ButtonHovered] = ImVec4(0.57f, 0.57f, 0.57f, 0.52f);
-        colors[ImGuiCol_ButtonActive] = ImVec4(0.61f, 0.63f, 0.64f, 1.00f);
-        colors[ImGuiCol_Header] = ImVec4(0.64f, 0.64f, 0.65f, 0.31f);
-        colors[ImGuiCol_HeaderHovered] = ImVec4(0.58f, 0.58f, 0.59f, 0.55f);
-        colors[ImGuiCol_HeaderActive] = ImVec4(0.52f, 0.52f, 0.52f, 0.55f);
-        colors[ImGuiCol_Separator] = ImVec4(0.56f, 0.56f, 0.56f, 1.00f);
-        colors[ImGuiCol_SeparatorHovered] = ImVec4(0.17f, 0.17f, 0.17f, 0.89f);
-        colors[ImGuiCol_SeparatorActive] = ImVec4(0.17f, 0.17f, 0.17f, 0.89f);
-        colors[ImGuiCol_ResizeGrip] = ImVec4(0.80f, 0.80f, 0.80f, 0.56f);
-        colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.39f, 0.39f, 0.40f, 0.67f);
-        colors[ImGuiCol_ResizeGripActive] = ImVec4(0.39f, 0.39f, 0.40f, 0.67f);
-        colors[ImGuiCol_PlotLines] = ImVec4(0.39f, 0.39f, 0.39f, 1.00f);
-        colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
-        colors[ImGuiCol_PlotHistogram] = ImVec4(0.78f, 0.78f, 0.78f, 1.00f);
-        colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.56f, 0.56f, 0.56f, 1.00f);
-        colors[ImGuiCol_TextSelectedBg] = ImVec4(0.71f, 0.72f, 0.73f, 0.57f);
-        colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
-        colors[ImGuiCol_DragDropTarget] = ImVec4(0.16f, 0.16f, 0.17f, 0.95f);
+        theme();
 
-        io.DisplaySize.x = 1280;
-        io.DisplaySize.y = 720;
+        io.DisplaySize.x = static_cast<float>(window.get_size().x);
+        io.DisplaySize.y = static_cast<float>(window.get_size().y);
 
         const std::string vertex_shader =
             R"(
@@ -107,35 +105,34 @@ namespace moka
 			}
 		)";
 
-        std::map<std::string, program> shaders;
-
-        material::builder builder(graphics_device_, shaders);
-
-        builder.set_fragment_shader(fragment_shader);
-        builder.set_vertex_shader(vertex_shader);
-
-        builder.set_blend_enabled(true);
-        builder.set_blend_equation(blend_equation::func_add);
-        builder.set_blend_function(
-            blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha);
-        builder.set_culling_enabled(false);
-        builder.set_polygon_mode(face::front_and_back, polygon_draw_mode::fill);
-
-        builder.set_depth_test_enabled(false);
-        builder.set_scissor_test_enabled(true);
-
-        material_ = builder.build();
+        material_ = graphics_device_.build_material()
+                        .set_fragment_shader(fragment_shader)
+                        .set_vertex_shader(vertex_shader)
+                        .set_blend_enabled(true)
+                        .set_blend_equation(blend_equation::func_add)
+                        .set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha)
+                        .set_culling_enabled(false)
+                        .set_polygon_mode(face::front_and_back, polygon_draw_mode::fill)
+                        .set_depth_test_enabled(false)
+                        .set_scissor_test_enabled(true)
+                        .build();
 
         unsigned char* pixels;
         int width, height;
         io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-        const auto resolution = glm::ivec2{width, height};
-        font_atlas_ = graphics_device_.make_texture(
-            pixels, resolution, texture_components::rgb_alpha, {}, false, false);
+        const auto font_atlas =
+            graphics_device_.build_texture()
+                .add_image_data(
+                    image_target::texture_2d, 0, device_format::rgba, width, height, 0, host_format::rgba, pixel_type::uint8, pixels)
+                .set_wrap_s(wrap_mode::clamp_to_edge)
+                .set_wrap_t(wrap_mode::clamp_to_edge)
+                .set_mipmaps(true)
+                .set_min_filter(min_filter::linear)
+                .set_mag_filter(mag_filter::linear)
+                .build();
 
-        io.Fonts->TexID =
-            reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas_.id));
+        io.Fonts->TexID = reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas.id));
 
         auto pos_size = IM_OFFSETOF(ImDrawVert, pos);
         auto uv_size = IM_OFFSETOF(ImDrawVert, uv);
@@ -146,19 +143,24 @@ namespace moka
             vertex_attribute{1, attribute_type::float32, 2, false, sizeof(ImDrawVert), uv_size},
             vertex_attribute{2, attribute_type::uint8, 4, true, sizeof(ImDrawVert), col_size}};
 
-        index_buffer_ = graphics_device_.make_index_buffer(
-            nullptr, 0, index_type::uint16, buffer_usage::stream_draw);
+        index_buffer_ =
+            graphics_device_.make_index_buffer(nullptr, 0, index_type::uint16, buffer_usage::stream_draw);
 
-        vertex_buffer_ = graphics_device_.make_vertex_buffer(
-            nullptr, 0, std::move(layout), buffer_usage::stream_draw);
+        vertex_buffer_ =
+            graphics_device_.make_vertex_buffer(nullptr, 0, std::move(layout), buffer_usage::stream_draw);
     }
 
-    void imgui::new_frame(const float data_time) const
+    void imgui::new_frame(float delta_time) const
     {
+        if (delta_time <= 0)
+        {
+            delta_time = 1.0f / 60;
+        }
+
         auto& io = ImGui::GetIO();
 
-        io.DisplaySize.x = window_.get_size().x;
-        io.DisplaySize.y = window_.get_size().y;
+        io.DisplaySize.x = static_cast<float>(window_.get_size().x);
+        io.DisplaySize.y = static_cast<float>(window_.get_size().y);
 
         const auto& mouse_state = mouse_.get_state();
         const auto& position = mouse_state.get_position();
@@ -167,8 +169,7 @@ namespace moka
 
         io.MousePos.x = static_cast<float>(position.x);
         io.MousePos.y = static_cast<float>(position.y);
-
-        io.MouseWheel = scroll.y;
+        io.MouseWheel = static_cast<float>(scroll.y);
 
         IM_ASSERT(io.Fonts->IsBuilt());
 
@@ -179,7 +180,7 @@ namespace moka
             size.x > 0 ? static_cast<float>(display_size.x) / size.x : 0,
             size.y > 0 ? static_cast<float>(display_size.y) / size.y : 0);
 
-        io.DeltaTime = data_time;
+        io.DeltaTime = delta_time;
 
         io.MouseDown[0] = mouse_state.is_button_down(mouse_button::left);
         io.MouseDown[1] = mouse_state.is_button_down(mouse_button::right);
@@ -205,10 +206,10 @@ namespace moka
 
         auto& io = ::ImGui::GetIO();
 
-        const auto fb_width = static_cast<int>(
-            draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
-        const auto fb_height = static_cast<int>(
-            draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
+        const auto fb_width = static_cast<int>(draw_data->DisplaySize.x * io.DisplayFramebufferScale.x);
+
+        const auto fb_height =
+            static_cast<int>(draw_data->DisplaySize.y * io.DisplayFramebufferScale.y);
 
         if (fb_width <= 0 || fb_height <= 0)
         {
@@ -241,7 +242,7 @@ namespace moka
                                 0.0f,
                                 1.0f};
 
-        material_["u_projection"] = proj;
+        buff.set_material_parameters().set_material(material_).set_parameter("u_projection", proj);
 
         const auto pos = draw_data->DisplayPos;
         for (auto n = 0; n < draw_data->CmdListsCount; ++n)
@@ -274,8 +275,8 @@ namespace moka
                     cmd->ClipRect.y - pos.y,
                     cmd->ClipRect.z - pos.x,
                     cmd->ClipRect.w - pos.y);
-                if (clip_rect.x < fb_width && clip_rect.y < fb_height &&
-                    clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
+                if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f &&
+                    clip_rect.w >= 0.0f)
                 {
                     buff.scissor().set_rectangle(
                         static_cast<int>(clip_rect.x),
@@ -283,9 +284,13 @@ namespace moka
                         static_cast<int>(clip_rect.z - clip_rect.x),
                         static_cast<int>(clip_rect.w - clip_rect.y));
 
-                    const texture handle{reinterpret_cast<uint16_t>(cmd->TextureId)};
+                    if (cmd->TextureId)
+                    {
+                        const texture handle{static_cast<uint16_t>(reinterpret_cast<intptr_t>(cmd->TextureId))};
 
-                    material_["u_tex0"] = handle;
+                        buff.set_material_parameters().set_material(material_).set_parameter(
+                            "u_tex0", handle);
+                    }
 
                     buff.clear().set_clear_depth(true);
 

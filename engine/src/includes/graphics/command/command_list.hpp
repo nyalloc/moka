@@ -1,18 +1,22 @@
 #pragma once
 
+#include "generate_mipmaps_command.hpp"
 #include <graphics/command/clear_command.hpp>
 #include <graphics/command/command_buffer.hpp>
 #include <graphics/command/command_list.hpp>
 #include <graphics/command/draw_command.hpp>
 #include <graphics/command/fill_index_buffer_command.hpp>
 #include <graphics/command/fill_vertex_buffer_command.hpp>
+#include <graphics/command/frame_buffer_command.hpp>
+#include <graphics/command/frame_buffer_texture_command.hpp>
 #include <graphics/command/scissor_command.hpp>
+#include <graphics/command/set_material_properties_command.hpp>
 #include <graphics/command/viewport_command.hpp>
 #include <vector>
 
 namespace moka
 {
-    class command_list
+    class command_list final
     {
         bool is_sorted_ = false;
         sort_key current_key_ = 0;
@@ -57,9 +61,21 @@ namespace moka
 
         const_iterator end() const;
 
+        command_buffer& make_command_buffer();
+
         command_buffer& make_command_buffer(sort_key key);
 
-        command_buffer& make_command_buffer();
+        set_material_parameters_command& set_material_parameters();
+
+        set_material_parameters_command& set_material_parameters(sort_key key);
+
+        frame_buffer_command& frame_buffer();
+
+        frame_buffer_command& frame_buffer(sort_key key);
+
+        frame_buffer_texture_command& frame_buffer_texture();
+
+        frame_buffer_texture_command& frame_buffer_texture(sort_key key);
 
         clear_command& clear();
 
@@ -84,5 +100,9 @@ namespace moka
         fill_vertex_buffer_command& fill_vertex_buffer();
 
         fill_vertex_buffer_command& fill_vertex_buffer(sort_key key);
+
+        generate_mipmaps_command& generate_mipmaps();
+
+        generate_mipmaps_command& generate_mipmaps(sort_key key);
     };
 } // namespace moka

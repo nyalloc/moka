@@ -26,7 +26,6 @@ namespace moka
     void command_list::destroy()
     {
         command_packets_.clear();
-        // command_packets.shrink_to_fit();
     }
 
     void command_list::accept(graphics_visitor& device)
@@ -75,7 +74,7 @@ namespace moka
 
     command_buffer& command_list::make_command_buffer(const sort_key key)
     {
-        static int num_calls = 0;
+        static auto num_calls = 0;
         num_calls++;
         is_sorted_ = false;
 
@@ -90,6 +89,16 @@ namespace moka
         return make_command_buffer(current_key_ + 1);
     }
 
+    set_material_parameters_command& command_list::set_material_parameters()
+    {
+        return make_command_buffer().set_material_parameters();
+    }
+
+    set_material_parameters_command& command_list::set_material_parameters(sort_key key)
+    {
+        return make_command_buffer(key).set_material_parameters();
+    }
+
     clear_command& command_list::clear()
     {
         return make_command_buffer().clear();
@@ -98,6 +107,26 @@ namespace moka
     clear_command& command_list::clear(const sort_key key)
     {
         return make_command_buffer(key).clear();
+    }
+
+    frame_buffer_command& command_list::frame_buffer()
+    {
+        return make_command_buffer().frame_buffer();
+    }
+
+    frame_buffer_command& command_list::frame_buffer(const sort_key key)
+    {
+        return make_command_buffer(key).frame_buffer();
+    }
+
+    frame_buffer_texture_command& command_list::frame_buffer_texture()
+    {
+        return make_command_buffer().frame_buffer_texture();
+    }
+
+    frame_buffer_texture_command& command_list::frame_buffer_texture(const sort_key key)
+    {
+        return make_command_buffer(key).frame_buffer_texture();
     }
 
     draw_command& command_list::draw()
@@ -115,7 +144,7 @@ namespace moka
         return make_command_buffer().scissor();
     }
 
-    scissor_command& command_list::scissor(sort_key key)
+    scissor_command& command_list::scissor(const sort_key key)
     {
         return make_command_buffer(key).scissor();
     }
@@ -125,7 +154,7 @@ namespace moka
         return make_command_buffer().viewport();
     }
 
-    viewport_command& command_list::viewport(sort_key key)
+    viewport_command& command_list::viewport(const sort_key key)
     {
         return make_command_buffer(key).viewport();
     }
@@ -135,7 +164,7 @@ namespace moka
         return make_command_buffer().fill_index_buffer();
     }
 
-    fill_index_buffer_command& command_list::fill_index_buffer(sort_key key)
+    fill_index_buffer_command& command_list::fill_index_buffer(const sort_key key)
     {
         return make_command_buffer(key).fill_index_buffer();
     }
@@ -145,8 +174,18 @@ namespace moka
         return make_command_buffer().fill_vertex_buffer();
     }
 
-    fill_vertex_buffer_command& command_list::fill_vertex_buffer(sort_key key)
+    fill_vertex_buffer_command& command_list::fill_vertex_buffer(const sort_key key)
     {
         return make_command_buffer(key).fill_vertex_buffer();
+    }
+
+    generate_mipmaps_command& command_list::generate_mipmaps()
+    {
+        return make_command_buffer().generate_mipmaps();
+    }
+
+    generate_mipmaps_command& command_list::generate_mipmaps(sort_key key)
+    {
+        return make_command_buffer(key).generate_mipmaps();
     }
 } // namespace moka

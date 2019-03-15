@@ -10,7 +10,7 @@ namespace moka
     class draw_command final : public graphics_command
     {
     public:
-        material mat;
+        material_handle mat = std::numeric_limits<material_handle>::max();
 
         vertex_buffer vertex_buffer;
         uint32_t vertex_count = 0;
@@ -49,7 +49,7 @@ namespace moka
 
         draw_command& set_vertex_count(uint32_t count);
 
-        draw_command& set_material(const moka::material& material);
+        draw_command& set_material(moka::material_handle material);
 
         draw_command& set_vertex_buffer(moka::vertex_buffer vertex_buffer);
 

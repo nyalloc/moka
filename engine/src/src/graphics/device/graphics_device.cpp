@@ -1,12 +1,42 @@
 
-#include "application/profile.hpp"
 #include <application/window.hpp>
 #include <graphics/api/gl_graphics_api.hpp>
 #include <graphics/device/graphics_device.hpp>
 
 namespace moka
 {
-    std::unique_ptr<graphics_api> create(window& window, const graphics_backend graphics_backend)
+    texture_cache& graphics_device::get_texture_cache()
+    {
+        return textures_;
+    }
+
+    const texture_cache& graphics_device::get_texture_cache() const
+    {
+        return textures_;
+    }
+
+    program_cache& graphics_device::get_shader_cache()
+    {
+        return shaders_;
+    }
+
+    const program_cache& graphics_device::get_shader_cache() const
+    {
+        return shaders_;
+    }
+
+    material_cache& graphics_device::get_material_cache()
+    {
+        return materials_;
+    }
+
+    const material_cache& graphics_device::get_material_cache() const
+    {
+        return materials_;
+    }
+
+    graphics_device::graphics_device(window& window, const graphics_backend graphics_backend)
+        : materials_(*this), shaders_(*this), textures_(*this)
     {
         auto context = window.make_context();
 
@@ -14,31 +44,35 @@ namespace moka
         switch (graphics_backend)
         {
         case graphics_backend::direct3d_9:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::direct3d_11:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::direct3d_12:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::gnm:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::metal:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::opengl_es:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::opengl:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::vulkan:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = std::make_unique<gl_graphics_api>(window, *this);
+            break;
         case graphics_backend::null:
-            return nullptr;
+            graphics_api_ = nullptr;
+            break;
         default:
-            return std::make_unique<gl_graphics_api>(window);
+            graphics_api_ = nullptr;
         }
-    }
-
-    graphics_device::graphics_device(window& window, const graphics_backend graphics_backend)
-        : graphics_api_(create(window, graphics_backend))
-    {
     }
 
     void graphics_device::submit(command_list&& command_list, bool sort) const
@@ -62,9 +96,10 @@ namespace moka
     }
 
     vertex_buffer graphics_device::make_vertex_buffer(
-        const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use) const
+        const void* cube_vertices, const size_t size, vertex_layout&& layout, const buffer_usage use) const
     {
-        return graphics_api_->make_vertex_buffer(vertices, size, std::move(layout), use);
+        return graphics_api_->make_vertex_buffer(
+            cube_vertices, size, std::move(layout), use);
     }
 
     index_buffer graphics_device::make_index_buffer(
@@ -73,36 +108,57 @@ namespace moka
         return graphics_api_->make_index_buffer(indices, size, type, use);
     }
 
-    shader graphics_device::make_shader(const shader_type type, const std::string& source) const
+    shader_handle graphics_device::make_shader(const shader_type type, const std::string& source) const
     {
         return graphics_api_->make_shader(type, source);
     }
 
-    program graphics_device::make_program(const shader vertex_handle, const shader fragment_handle) const
+    program_handle graphics_device::make_program(
+        const shader_handle vertex_handle, const shader_handle fragment_handle) const
     {
         return graphics_api_->make_program(vertex_handle, fragment_handle);
     }
 
-    texture graphics_device::make_texture(
-        void* data,
-        const glm::ivec2& resolution,
-        const texture_components components,
-        const texture_wrap_mode wrap_mode,
-        const bool has_mipmaps,
-        const bool free_data) const
+    texture graphics_device::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data) const
     {
-        const auto handle = graphics_api_->make_texture(
-            data, resolution, components, wrap_mode, has_mipmaps);
+        auto size = metadata.data.size();
 
-        if (free_data)
+        const auto handle =
+            graphics_api_->make_texture(data, std::move(metadata), free_host_data);
+
+        // this does not seem very safe at all! what if make_texture throws! Leak city!
+        if (free_host_data)
         {
-            free_texture(data);
+            for (size_t i = 0; i < metadata.data.size(); i++)
+            {
+                free_texture(data[i]);
+            }
         }
 
         return handle;
     }
 
-    void graphics_device::destroy(program handle)
+    texture_builder graphics_device::build_texture()
+    {
+        return texture_builder{*this};
+    }
+
+    frame_buffer graphics_device::make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count)
+    {
+        return graphics_api_->make_frame_buffer(render_textures, render_texture_count);
+    }
+
+    frame_buffer_builder graphics_device::build_frame_buffer()
+    {
+        return frame_buffer_builder{*this};
+    }
+
+    material_builder graphics_device::build_material()
+    {
+        return material_builder{*this};
+    }
+
+    void graphics_device::destroy(program_handle handle)
     {
     }
 
@@ -114,7 +170,7 @@ namespace moka
     {
     }
 
-    void graphics_device::destroy(const shader handle)
+    void graphics_device::destroy(const shader_handle handle)
     {
     }
 } // namespace moka

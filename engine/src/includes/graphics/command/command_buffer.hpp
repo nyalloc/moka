@@ -38,6 +38,10 @@ namespace moka
 
         void accept(graphics_visitor& device);
 
+        frame_buffer_command& frame_buffer();
+
+        frame_buffer_texture_command& frame_buffer_texture();
+
         clear_command& clear();
 
         draw_command& draw();
@@ -49,6 +53,10 @@ namespace moka
         fill_index_buffer_command& fill_index_buffer();
 
         fill_vertex_buffer_command& fill_vertex_buffer();
+
+        generate_mipmaps_command& generate_mipmaps();
+
+        set_material_parameters_command& set_material_parameters();
     };
 
     template <typename T>

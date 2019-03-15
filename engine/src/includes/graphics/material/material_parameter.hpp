@@ -1,6 +1,8 @@
 #pragma once
 
-#include <graphics/api/graphics_api.hpp>
+#include <glm/glm.hpp>
+#include <graphics/texture.hpp>
+#include <string>
 #include <variant>
 
 namespace moka
@@ -8,7 +10,18 @@ namespace moka
     using parameter =
         std::variant<float, glm::vec3, glm::vec4, glm::mat3, glm::mat4, texture>;
 
-    struct material_parameter
+    enum class parameter_type : uint8_t
+    {
+        texture, //!< sampler
+        vec3,    //!< 3 floats vector uniform
+        vec4,    //!< 4 floats vector uniform
+        mat3,    //!< 3x3 matrix uniform
+        mat4,    //!< 4x4 matrix uniform
+        float32, //! single floating point uniform
+        null     //!< value not yet assigned to
+    };
+
+    struct material_parameter final
     {
         parameter_type type = parameter_type::null;
         std::string name;
@@ -19,7 +32,8 @@ namespace moka
 
         ~material_parameter();
 
-        material_parameter(const std::string& name, parameter_type type, const parameter& data, size_t count = 1);
+        material_parameter(
+            const std::string& name, parameter_type type, const parameter& data = {}, size_t count = 1);
 
         material_parameter(const std::string& name, float data, size_t count = 1);
 

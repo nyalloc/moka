@@ -3,12 +3,28 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(MOKA_INCLUDES
     "./includes/"
+    "./deps/imgui/"
+    "./deps/mikktspace/"
     "./deps/nlohmann/"
+    "./deps/stb/"
     "./deps/tiny_gltf/"
     "./deps/"
 )
 
 include_directories(${MOKA_INCLUDES})
+
+set(IMGUI_SRC
+    "deps/imgui/imgui.h"
+    "deps/imgui/imgui.cpp"
+    "deps/imgui/imgui_demo.cpp"
+    "deps/imgui/imgui_widgets.cpp"
+    "deps/imgui/imgui_draw.cpp"
+)
+
+set(MIKKTSPACE_SRC
+    "deps/mikktspace/mikktspace.h"
+    "deps/mikktspace/mikktspace.c"
+)
 
 set(APPLICATION_SRC
     "includes/application/app_settings.hpp"  
@@ -36,6 +52,11 @@ set(INPUT_SRC
 )
 
 set(GRAPHICS_API_SRC
+    "includes/graphics/scene.hpp"
+    "includes/graphics/pbr.hpp"
+	"includes/graphics/pbr_constants.hpp"
+	"src/graphics/pbr.cpp"
+    "includes/graphics/context.hpp"
     "includes/graphics/api/gl_graphics_api.hpp"
     "includes/graphics/api/graphics_api.hpp"
     "src/graphics/api/gl_graphics_api.cpp"
@@ -43,11 +64,13 @@ set(GRAPHICS_API_SRC
 )
 
 set(GRAPHICS_BUFFER_SRC
+    "includes/graphics/buffer/frame_buffer.hpp"
     "includes/graphics/buffer/index_buffer.hpp"
     "includes/graphics/buffer/vertex_attribute.hpp"
     "includes/graphics/buffer/vertex_buffer.hpp"
     "includes/graphics/buffer/vertex_layout.hpp"
     "includes/graphics/buffer/vertex_layout_builder.hpp"
+    "src/graphics/buffer/frame_buffer.cpp"
     "src/graphics/buffer/index_buffer.cpp"
     "src/graphics/buffer/vertex_attribute.cpp"
     "src/graphics/buffer/vertex_buffer.cpp"
@@ -56,17 +79,9 @@ set(GRAPHICS_BUFFER_SRC
 )
 
 set(GRAPHICS_CAMERA_SRC
-    "includes/graphics/camera/base_camera.hpp"
     "includes/graphics/camera/basic_camera.hpp"
-    "includes/graphics/camera/camera.hpp"
-    "includes/graphics/camera/camera_builder.hpp"
-    "includes/graphics/camera/camera_decorator.hpp"
     "includes/graphics/camera/camera_mouse_controller.hpp"
-    "src/graphics/camera/base_camera.cpp"
     "src/graphics/camera/basic_camera.cpp"
-    "src/graphics/camera/camera.cpp"
-    "src/graphics/camera/camera_builder.cpp"
-    "src/graphics/camera/camera_decorator.cpp"
     "src/graphics/camera/camera_mouse_controller.cpp"
 )
 
@@ -78,7 +93,11 @@ set(GRAPHICS_COMMAND_SRC
     "includes/graphics/command/draw_command.hpp"
     "includes/graphics/command/fill_index_buffer_command.hpp"
     "includes/graphics/command/fill_vertex_buffer_command.hpp"
+    "includes/graphics/command/frame_buffer_command.hpp"
+    "includes/graphics/command/frame_buffer_texture_command.hpp"
+    "includes/graphics/command/generate_mipmaps_command.hpp"
     "includes/graphics/command/scissor_command.hpp"
+	"includes/graphics/command/set_material_properties_command.hpp"
     "includes/graphics/command/sort_key.hpp"
     "includes/graphics/command/viewport_command.hpp"
     "src/graphics/command/clear_command.cpp"
@@ -87,8 +106,12 @@ set(GRAPHICS_COMMAND_SRC
     "src/graphics/command/draw_command.cpp"
     "src/graphics/command/fill_index_buffer_command.cpp"
     "src/graphics/command/fill_vertex_buffer_command.cpp"
+    "src/graphics/command/frame_buffer_command.cpp"
+    "src/graphics/command/frame_buffer_texture_command.cpp"
+    "src/graphics/command/generate_mipmaps_command.cpp"
     "src/graphics/command/graphics_command.cpp"
     "src/graphics/command/viewport_command.cpp"
+	"src/graphics/command/set_material_properties_command.cpp"
     "src/graphics/command/sort_key.cpp"
     "src/graphics/command/scissor_command.cpp"
 )
@@ -105,12 +128,12 @@ set(GRAPHICS_MATERIAL_SRC
     "includes/graphics/material/material_parameter.hpp"
     "includes/graphics/material/material_builder.hpp"
     "includes/graphics/material/material_properties.hpp"
-	"includes/graphics/material/parameter_collection.hpp"
+    "includes/graphics/material/parameter_collection.hpp"
     "src/graphics/material/material.cpp"
     "src/graphics/material/material_parameter.cpp"
     "src/graphics/material/material_builder.cpp"
     "src/graphics/material/material_properties.cpp"
-	"src/graphics/material/parameter_collection.cpp"
+    "src/graphics/material/parameter_collection.cpp"
 )
 
 set(GRAPHICS_SRC
@@ -126,6 +149,7 @@ set(GRAPHICS_SRC
     "includes/graphics/model.hpp"
     "includes/graphics/program.hpp"
     "includes/graphics/shader.hpp"
+    "includes/graphics/default_shaders.hpp"
     "includes/graphics/texture.hpp"
     "includes/graphics/transform.hpp"
     "includes/graphics/utilities.hpp"
@@ -134,6 +158,7 @@ set(GRAPHICS_SRC
     "src/graphics/model.cpp"
     "src/graphics/program.cpp"
     "src/graphics/shader.cpp"
+    "src/graphics/default_shaders.cpp"
     "src/graphics/texture.cpp"
     "src/graphics/transform.cpp"
     "src/graphics/utilities.cpp"
@@ -146,18 +171,22 @@ set(TRAITS_SRC
 )
 
 set(ASSET_SRC
+    "includes/asset_importer/shader_importer.hpp" 
     "includes/asset_importer/asset_importer.hpp" 
     "includes/asset_importer/texture_importer.hpp" 
     "includes/asset_importer/model_importer.hpp"
+	"src/asset_importer/shader_importer.cpp"
     "src/asset_importer/texture_importer.cpp"
     "src/asset_importer/asset_importer.cpp" 
     "src/asset_importer/model_importer.cpp"
 )
 
 set(MOKA_SRC
+    ${IMGUI_SRC}
+    ${MIKKTSPACE_SRC}
     ${APPLICATION_SRC}
-    ${INPUT_SRC}
-	${GRAPHICS_SRC}
+    ${INPUT_SRC} 
+    ${GRAPHICS_SRC}
     ${TRAITS_SRC}
     ${MATHS_SRC}
     ${ASSET_SRC}

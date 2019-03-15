@@ -101,7 +101,7 @@ namespace moka
         return *this;
     }
 
-    draw_command& draw_command::set_material(const material& material)
+    draw_command& draw_command::set_material(const material_handle material)
     {
         this->mat = material;
         return *this;

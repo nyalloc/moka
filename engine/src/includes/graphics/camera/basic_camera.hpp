@@ -1,40 +1,43 @@
 #pragma once
 
-#include <graphics/camera/base_camera.hpp>
+#include <glm/glm.hpp>
+#include <graphics/transform.hpp>
 
 namespace moka
 {
-	// a very basic camera - contains only the necessary data members to get things drawing on your screen.
-	// can be used as the base concrete type of a decorator-based camera
-	class basic_camera : public base_camera
-	{
-		transform transform_;
-		glm::mat4 projection_;
-	public:
-		basic_camera() = default;
+    // a very basic camera - contains only the necessary data members to get things drawing on your screen.
+    // can be used as the base concrete type of a decorator-based camera
+    class basic_camera
+    {
+    protected:
+        transform transform_;
+        glm::mat4 projection_;
 
-		basic_camera(
-			const transform& transform
-			, const glm::mat4& projection);
+    public:
+        basic_camera() = default;
 
-		void update(float delta_time) override;
+        basic_camera(const transform& transform, const glm::mat4& projection);
 
-		glm::mat4 get_view() const override;
+        virtual void update(float delta_time);
 
-		const glm::quat& get_rotation() const override;
+        virtual glm::mat4 get_view() const;
 
-		void set_rotation(const glm::quat& rotation) override;
+        virtual const glm::quat& get_rotation() const;
 
-		const glm::vec3& get_position() const override;
+        virtual void set_rotation(const glm::quat& rotation);
 
-		void set_position(const glm::vec3& position) override;
+        virtual const glm::vec3& get_position() const;
 
-		const glm::mat4& get_projection() const override;
+        virtual void set_position(const glm::vec3& position);
 
-		void set_projection(const glm::mat4& projection) override;
+        virtual const glm::mat4& get_projection() const;
 
-		void set_transform(const transform& transform) override;
+        virtual void set_projection(const glm::mat4& projection);
 
-		const transform& get_transform() const override;
-	};
-}
+        virtual void set_transform(const transform& transform);
+
+        virtual const transform& get_transform() const;
+
+        virtual void set_perspective(float radians, float aspect);
+    };
+} // namespace moka

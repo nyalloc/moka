@@ -18,12 +18,10 @@ namespace moka
 
         primitive_type type_ = primitive_type::triangles;
 
-        material material_;
+        material_handle material_;
 
     public:
-        material& get_material();
-
-        const material& get_material() const;
+        material_handle get_material() const;
 
         primitive(
             vertex_buffer vertex_buffer,
@@ -32,7 +30,9 @@ namespace moka
             index_type index_type,
             uint32_t index_count,
             uint32_t index_buffer_offset,
-            material&& material);
+            material_handle material);
+
+        primitive(vertex_buffer vertex_buffer, uint32_t vertex_count, material_handle material);
 
         void draw(command_buffer& list) const;
     };
@@ -57,7 +57,9 @@ namespace moka
 
         const_iterator end() const;
 
-        mesh(std::vector<primitive>&& primitives, transform&& transform);
+        explicit mesh(std::vector<primitive>&& primitives, transform&& transform = {});
+
+        explicit mesh(const primitive& prim, transform&& transform = {});
     };
 
     class model
@@ -79,7 +81,9 @@ namespace moka
 
         model() = default;
 
-        model(std::vector<mesh>&& meshes, transform&& transform = {});
+        explicit model(const mesh& meshes, transform&& transform = {});
+
+        explicit model(std::vector<mesh>&& meshes, transform&& transform = {});
 
         std::vector<mesh>& get_meshes();
     };
