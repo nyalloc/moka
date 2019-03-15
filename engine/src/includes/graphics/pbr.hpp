@@ -4,7 +4,7 @@
 #include <application/open_file.hpp>
 #include <asset_importer/model_importer.hpp>
 #include <filesystem>
-#include <graphics/camera/camera.hpp>
+#include <graphics/camera/basic_camera.hpp>
 #include <graphics/color.hpp>
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material_builder.hpp>
@@ -20,8 +20,12 @@ namespace moka
 
         vertex_buffer make_cube_buffer(buffer_usage use = buffer_usage::static_draw);
 
+        std::filesystem::path root;
+
     public:
-        pbr_util(graphics_device& device);
+        pbr_util(graphics_device& device, const std::filesystem::path& root);
+
+        model load_model(const std::filesystem::path& gltf, const std::filesystem::path& material);
 
         model make_skybox(texture cubemap);
 

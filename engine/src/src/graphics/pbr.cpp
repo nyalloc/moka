@@ -4,9 +4,14 @@
 
 namespace moka
 {
-    pbr_util::pbr_util(graphics_device& device)
-        : device(device), cube_buffer(make_cube_buffer())
+    pbr_util::pbr_util(graphics_device& device, const std::filesystem::path& root)
+        : device(device), cube_buffer(make_cube_buffer()), root(root)
     {
+    }
+
+    model pbr_util::load_model(const std::filesystem::path& gltf, const std::filesystem::path& material)
+    {
+        return asset_importer<model>{root, device}.load(gltf, material);
     }
 
     vertex_buffer pbr_util::make_cube_buffer(buffer_usage use)
@@ -69,7 +74,7 @@ namespace moka
         auto width = 0;
         host_format format;
 
-        const auto data = texture_load_hdr(texture_path, width, height, format);
+        const auto data = texture_load_hdr(root / texture_path, width, height, format);
 
         const auto hdr = device.build_texture()
                              .add_image_data(

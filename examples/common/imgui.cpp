@@ -159,8 +159,13 @@ namespace moka
             nullptr, 0, std::move(layout), buffer_usage::stream_draw);
     }
 
-    void imgui::new_frame(const float data_time) const
+    void imgui::new_frame(float delta_time) const
     {
+        if (delta_time <= 0)
+        {
+            delta_time = 0;
+        }
+
         auto& io = ImGui::GetIO();
 
         io.DisplaySize.x = static_cast<float>(window_.get_size().x);
@@ -184,7 +189,7 @@ namespace moka
             size.x > 0 ? static_cast<float>(display_size.x) / size.x : 0,
             size.y > 0 ? static_cast<float>(display_size.y) / size.y : 0);
 
-        io.DeltaTime = data_time;
+        io.DeltaTime = delta_time;
 
         io.MouseDown[0] = mouse_state.is_button_down(mouse_button::left);
         io.MouseDown[1] = mouse_state.is_button_down(mouse_button::right);

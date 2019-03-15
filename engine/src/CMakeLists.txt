@@ -52,6 +52,7 @@ set(INPUT_SRC
 )
 
 set(GRAPHICS_API_SRC
+    "includes/graphics/scene.hpp"
     "includes/graphics/pbr.hpp"
 	"includes/graphics/pbr_constants.hpp"
 	"src/graphics/pbr.cpp"
@@ -78,17 +79,9 @@ set(GRAPHICS_BUFFER_SRC
 )
 
 set(GRAPHICS_CAMERA_SRC
-    "includes/graphics/camera/base_camera.hpp"
     "includes/graphics/camera/basic_camera.hpp"
-    "includes/graphics/camera/camera.hpp"
-    "includes/graphics/camera/camera_builder.hpp"
-    "includes/graphics/camera/camera_decorator.hpp"
     "includes/graphics/camera/camera_mouse_controller.hpp"
-    "src/graphics/camera/base_camera.cpp"
     "src/graphics/camera/basic_camera.cpp"
-    "src/graphics/camera/camera.cpp"
-    "src/graphics/camera/camera_builder.cpp"
-    "src/graphics/camera/camera_decorator.cpp"
     "src/graphics/camera/camera_mouse_controller.cpp"
 )
 

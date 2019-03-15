@@ -4,7 +4,7 @@
 #include <application/open_file.hpp>
 #include <asset_importer/model_importer.hpp>
 #include <filesystem>
-#include <graphics/camera/camera.hpp>
+#include <graphics/camera/basic_camera.hpp>
 #include <graphics/color.hpp>
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material_builder.hpp>

@@ -1,11 +1,11 @@
 #pragma once
-#include <glm/gtc/type_ptr.hpp>
-#include <graphics/camera/camera_decorator.hpp>
+
+#include <graphics/camera/basic_camera.hpp>
 #include <input/mouse.hpp>
 
 namespace moka
 {
-    class camera_mouse_controller final : public camera_decorator
+    class camera_mouse_controller final : public basic_camera
     {
         mouse& mouse_;
 
@@ -17,7 +17,7 @@ namespace moka
         float rotate_x_ = -2 * glm::pi<float>();
         float rotate_y_ = -0.0f;
 
-        bool auto_scroll_ = false;
+        bool auto_rotate_ = false;
 
     public:
         ~camera_mouse_controller() = default;
@@ -26,9 +26,9 @@ namespace moka
         camera_mouse_controller& operator=(const camera_mouse_controller& camera) = delete;
         camera_mouse_controller& operator=(camera_mouse_controller&& camera) noexcept = delete;
 
-        camera_mouse_controller(std::unique_ptr<base_camera>&& camera, mouse& mouse);
+        camera_mouse_controller(mouse& mouse, const glm::mat4& perspective);
 
-        glm::mat4 get_view() const override;
+        void set_auto_rotate(bool rotate);
 
         void update(float delta_time) override;
     };

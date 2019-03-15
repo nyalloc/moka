@@ -1,13 +1,15 @@
 #pragma once
 
-#include <graphics/camera/base_camera.hpp>
+#include <glm/glm.hpp>
+#include <graphics/transform.hpp>
 
 namespace moka
 {
     // a very basic camera - contains only the necessary data members to get things drawing on your screen.
     // can be used as the base concrete type of a decorator-based camera
-    class basic_camera : public base_camera
+    class basic_camera
     {
+    protected:
         transform transform_;
         glm::mat4 projection_;
 
@@ -16,26 +18,26 @@ namespace moka
 
         basic_camera(const transform& transform, const glm::mat4& projection);
 
-        void update(float delta_time) override;
+        virtual void update(float delta_time);
 
-        glm::mat4 get_view() const override;
+        virtual glm::mat4 get_view() const;
 
-        const glm::quat& get_rotation() const override;
+        virtual const glm::quat& get_rotation() const;
 
-        void set_rotation(const glm::quat& rotation) override;
+        virtual void set_rotation(const glm::quat& rotation);
 
-        const glm::vec3& get_position() const override;
+        virtual const glm::vec3& get_position() const;
 
-        void set_position(const glm::vec3& position) override;
+        virtual void set_position(const glm::vec3& position);
 
-        const glm::mat4& get_projection() const override;
+        virtual const glm::mat4& get_projection() const;
 
-        void set_projection(const glm::mat4& projection) override;
+        virtual void set_projection(const glm::mat4& projection);
 
-        void set_transform(const transform& transform) override;
+        virtual void set_transform(const transform& transform);
 
-        const transform& get_transform() const override;
+        virtual const transform& get_transform() const;
 
-        void set_perspective(float radians, float aspect) override;
+        virtual void set_perspective(float radians, float aspect);
     };
 } // namespace moka

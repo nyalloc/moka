@@ -3,14 +3,15 @@
 
 namespace moka
 {
-    camera_mouse_controller::camera_mouse_controller(std::unique_ptr<base_camera>&& camera, mouse& mouse)
-        : camera_decorator(std::move(camera)), mouse_(mouse)
+    camera_mouse_controller::camera_mouse_controller(mouse& mouse, const glm::mat4& perspective)
+        : mouse_(mouse)
     {
+        projection_ = perspective;
     }
 
-    glm::mat4 camera_mouse_controller::get_view() const
+    void camera_mouse_controller::set_auto_rotate(bool rotate)
     {
-        return camera_->get_view();
+        auto_rotate_ = rotate;
     }
 
     void camera_mouse_controller::update(const float delta_time)
@@ -21,33 +22,27 @@ namespace moka
 
         const auto& io = ImGui::GetIO();
 
-        if (auto_scroll_)
+        if (mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
         {
-            rotate_x_ -= delta_time * 0.2f;
-
-            if ((mouse_state.is_button_down(mouse_button::left) ||
-                 mouse_state.is_button_down(mouse_button::right)) &&
-                !io.WantCaptureMouse)
-            {
-                auto_scroll_ = false;
-            }
+            rotate_x_ -= motion.x * delta_time;
+            rotate_y_ -= motion.y * delta_time;
         }
         else
         {
-            if (mouse_state.is_button_down(mouse_button::left) && !io.WantCaptureMouse)
+            if (auto_rotate_)
             {
-                rotate_x_ -= motion.x * delta_time;
-                rotate_y_ -= motion.y * delta_time;
+                rotate_x_ -= delta_time * 0.2f;
             }
-            else if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
-            {
-                translate_z_ += motion.y * delta_time;
-            }
+        }
 
-            if (scroll.y != 0 && !io.WantCaptureMouse)
-            {
-                translate_z_ -= scroll.y * delta_time;
-            }
+        if (mouse_state.is_button_down(mouse_button::right) && !io.WantCaptureMouse)
+        {
+            translate_z_ += motion.y * delta_time;
+        }
+
+        if (scroll.y != 0 && !io.WantCaptureMouse)
+        {
+            translate_z_ -= scroll.y * 5 * delta_time;
         }
 
         rotate_y_ = glm::clamp(rotate_y_, glm::radians(-89.0f), glm::radians(89.0f));
@@ -58,14 +53,11 @@ namespace moka
         current_translate_z_ =
             glm::mix(current_translate_z_, translate_z_, delta_time * 5);
 
-        auto trans = get_transform();
-
-        trans.set_position(glm::vec3{0, 0, current_translate_z_});
-        trans.rotate_around(transform::world_origin(), transform::world_right(), current_rotate_y_);
-        trans.rotate_around(transform::world_origin(), transform::world_up(), current_rotate_x_);
-
-        trans.look_at(transform::world_origin());
-
-        set_transform(trans);
+        transform_.set_position(glm::vec3{0, 0, current_translate_z_});
+        transform_.rotate_around(
+            transform::world_origin(), transform::world_right(), current_rotate_y_);
+        transform_.rotate_around(
+            transform::world_origin(), transform::world_up(), current_rotate_x_);
+        transform_.look_at(transform::world_origin());
     }
 } // namespace moka

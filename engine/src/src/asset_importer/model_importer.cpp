@@ -1028,7 +1028,10 @@ namespace moka
         std::string err;
         std::string warn;
 
-        const auto ext = model_path.extension();
+        auto absolute_model_path = root_directory_ / model_path;
+        auto absolute_material_path = root_directory_ / material_path;
+
+        const auto ext = absolute_model_path.extension();
 
         auto ret = false;
 
@@ -1036,13 +1039,15 @@ namespace moka
         {
             std::cout << "Reading binary glTF" << std::endl;
             // assume binary glTF.
-            ret = gltf_ctx.LoadBinaryFromFile(&model, &err, &warn, model_path.string());
+            ret = gltf_ctx.LoadBinaryFromFile(
+                &model, &err, &warn, absolute_model_path.string());
         }
         else if (ext == ".gltf")
         {
             std::cout << "Reading ASCII glTF" << std::endl;
             // assume ascii glTF.
-            ret = gltf_ctx.LoadASCIIFromFile(&model, &err, &warn, model_path.string());
+            ret = gltf_ctx.LoadASCIIFromFile(
+                &model, &err, &warn, absolute_model_path.string());
         }
         else
         {
@@ -1065,6 +1070,10 @@ namespace moka
         }
 
         return load_model(
-            model, device_, root_directory_, material_path, model_path.parent_path());
+            model,
+            device_,
+            root_directory_,
+            absolute_material_path,
+            absolute_model_path.parent_path());
     }
 } // namespace moka
