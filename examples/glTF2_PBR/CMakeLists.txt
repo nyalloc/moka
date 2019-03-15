@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(example_4_model_loading)
+project(glTF2_PBR)
 
 set(EXAMPLE_INCLUDES   
     "./" 
@@ -15,19 +15,19 @@ set(EXAMPLE_INCLUDES
 
 include_directories(${EXAMPLE_INCLUDES})
 
-add_executable(example_4_model_loading
+add_executable(glTF2_PBR
     main.cpp 
     ../common/imgui.hpp 
     ../common/imgui.cpp
 )
 
-set_target_properties(example_4_model_loading PROPERTIES
+set_target_properties(glTF2_PBR PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
 
-target_compile_features(example_4_model_loading PRIVATE cxx_std_17)
+target_compile_features(glTF2_PBR PRIVATE cxx_std_17)
 
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)
@@ -36,4 +36,4 @@ foreach(_source IN ITEMS ${MOKA_SRC})
 endforeach()
 
 set_target_properties(moka PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(example_4_model_loading PUBLIC moka)
+target_link_libraries(glTF2_PBR PUBLIC moka)

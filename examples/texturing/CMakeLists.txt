@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-project(example_3_cube)
+project(texturing)
 
 set(Example_Includes 
 	"./"
@@ -13,7 +13,7 @@ set(Example_Includes
 
 include_directories(${Example_Includes})
 
-add_executable(example_3_cube main.cpp)
+add_executable(texturing main.cpp)
 
 add_compile_options("/std:c++latest")
 
@@ -24,4 +24,4 @@ foreach(_source IN ITEMS ${MOKA_SRC})
 endforeach()
 
 set_target_properties(moka PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(example_3_cube PUBLIC moka)
+target_link_libraries(texturing PUBLIC moka)

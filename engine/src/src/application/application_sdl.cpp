@@ -124,6 +124,7 @@ namespace moka
             case SDL_QUIT:
             {
                 log_.debug("SDL_QUIT");
+                window_.exit();
                 break;
             }
             case SDL_MOUSEMOTION:
@@ -131,8 +132,7 @@ namespace moka
                 int x, y;
                 SDL_GetMouseState(&x, &y);
                 mouse_.state_.position_ = glm::ivec2{x, y};
-                mouse_.state_.motion_ =
-                    glm::ivec2{event.motion.xrel, event.motion.yrel};
+                mouse_.state_.motion_ = glm::ivec2{event.motion.xrel, event.motion.yrel};
 
                 log_.debug("SDL_MOUSEMOTION");
                 break;
