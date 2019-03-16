@@ -6,7 +6,6 @@
 #include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/buffer/vertex_layout_builder.hpp>
 #include <graphics/device/graphics_device.hpp>
-#include <graphics/material/material.hpp>
 #include <json.hpp>
 
 #define TINYGLTF_IMPLEMENTATION
@@ -163,8 +162,6 @@ namespace moka
         const std::filesystem::path& parent_path)
     {
         auto& texture_cache = device.get_texture_cache();
-        auto& shader_cache = device.get_shader_cache();
-        auto& material_cache = device.get_material_cache();
 
         auto transform = trans;
 
@@ -175,8 +172,8 @@ namespace moka
             std::vector<uint8_t> index_buffer;
             std::vector<uint8_t> vertex_buffer;
 
-            moka::vertex_buffer vertex_handle;
-            moka::index_buffer index_handle;
+            moka::vertex_buffer_handle vertex_handle;
+            moka::index_buffer_handle index_handle;
 
             const auto& indices_accessor = model.accessors[primitive.indices];
             const auto& indices_buffer_view = model.bufferViews[indices_accessor.bufferView];
@@ -440,7 +437,6 @@ namespace moka
                     if (auto base_color_texture_itr = material.values.find("baseColorTexture");
                         base_color_texture_itr != material.values.end())
                     {
-                        auto& texture_name = base_color_texture_itr->first;
                         auto& texture_value = base_color_texture_itr->second;
 
                         auto properties = texture_value.json_double_value;
@@ -453,7 +449,7 @@ namespace moka
                             auto& image_data = model.images[texture_source];
                             auto uri = parent_path / image_data.uri;
 
-                            if (!texture_cache.exists(uri.string().c_str()))
+                            if (!texture_cache.exists(uri.string()))
                             {
                                 auto wrap_s = wrap_mode::clamp_to_edge;
                                 auto wrap_t = wrap_mode::clamp_to_edge;
@@ -488,11 +484,11 @@ namespace moka
 
                                 mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
 
-                                texture_cache.add_texture(diffuse_map, uri.string().c_str());
+                                texture_cache.add_texture(diffuse_map, uri.string());
                             }
                             else
                             {
-                                auto diffuse_map = texture_cache.get_texture(uri.string().c_str());
+                                auto diffuse_map = texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
                             }
@@ -519,7 +515,6 @@ namespace moka
                             material.values.find("metallicRoughnessTexture");
                         metallic_roughness_texture_itr != material.values.end())
                     {
-                        auto& texture_name = metallic_roughness_texture_itr->first;
                         auto& texture_value = metallic_roughness_texture_itr->second;
 
                         auto& properties = texture_value.json_double_value;
@@ -532,7 +527,7 @@ namespace moka
                             auto& image_data = model.images[texture_source];
                             auto uri = parent_path / image_data.uri;
 
-                            if (!texture_cache.exists(uri.string().c_str()))
+                            if (!texture_cache.exists(uri.string()))
                             {
                                 auto wrap_s = wrap_mode::clamp_to_edge;
                                 auto wrap_t = wrap_mode::clamp_to_edge;
@@ -568,12 +563,11 @@ namespace moka
                                 mat_builder.add_texture(
                                     material_property::metallic_roughness_map, metallic_roughness_map);
 
-                                texture_cache.add_texture(metallic_roughness_map, uri.string().c_str());
+                                texture_cache.add_texture(metallic_roughness_map, uri.string());
                             }
                             else
                             {
-                                auto metallic_roughness_map =
-                                    texture_cache.get_texture(uri.string().c_str());
+                                auto metallic_roughness_map = texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(
                                     material_property::metallic_roughness_map, metallic_roughness_map);
@@ -592,7 +586,6 @@ namespace moka
                     if (auto normal_texture_itr = material.additionalValues.find("normalTexture");
                         normal_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = normal_texture_itr->first;
                         auto& texture_value = normal_texture_itr->second;
 
                         auto& properties = texture_value.json_double_value;
@@ -605,7 +598,7 @@ namespace moka
                             auto& image_data = model.images[texture_source];
                             auto uri = parent_path / image_data.uri;
 
-                            if (!texture_cache.exists(uri.string().c_str()))
+                            if (!texture_cache.exists(uri.string()))
                             {
                                 auto wrap_s = wrap_mode::clamp_to_edge;
                                 auto wrap_t = wrap_mode::clamp_to_edge;
@@ -640,11 +633,11 @@ namespace moka
 
                                 mat_builder.add_texture(material_property::normal_map, normal_map);
 
-                                texture_cache.add_texture(normal_map, uri.string().c_str());
+                                texture_cache.add_texture(normal_map, uri.string());
                             }
                             else
                             {
-                                auto normal_map = texture_cache.get_texture(uri.string().c_str());
+                                auto normal_map = texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(material_property::normal_map, normal_map);
                             }
@@ -655,7 +648,6 @@ namespace moka
                             material.additionalValues.find("occlusionTexture");
                         occlusion_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = occlusion_texture_itr->first;
                         auto& texture_value = occlusion_texture_itr->second;
 
                         auto& properties = texture_value.json_double_value;
@@ -668,7 +660,7 @@ namespace moka
                             auto& image_data = model.images[texture_source];
                             auto uri = parent_path / image_data.uri;
 
-                            if (!texture_cache.exists(uri.string().c_str()))
+                            if (!texture_cache.exists(uri.string()))
                             {
                                 auto wrap_s = wrap_mode::clamp_to_edge;
                                 auto wrap_t = wrap_mode::clamp_to_edge;
@@ -703,11 +695,11 @@ namespace moka
 
                                 mat_builder.add_texture(material_property::ao_map, occlusion_map);
 
-                                texture_cache.add_texture(occlusion_map, uri.string().c_str());
+                                texture_cache.add_texture(occlusion_map, uri.string());
                             }
                             else
                             {
-                                auto occlusion_map = texture_cache.get_texture(uri.string().c_str());
+                                auto occlusion_map = texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(material_property::ao_map, occlusion_map);
                             }
@@ -726,7 +718,6 @@ namespace moka
                             material.additionalValues.find("emissiveTexture");
                         emissive_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_name = emissive_texture_itr->first;
                         auto& texture_value = emissive_texture_itr->second;
 
                         auto& properties = texture_value.json_double_value;
@@ -739,7 +730,7 @@ namespace moka
                             auto& image_data = model.images[texture_source];
                             auto uri = parent_path / image_data.uri;
 
-                            if (!texture_cache.exists(uri.string().c_str()))
+                            if (!texture_cache.exists(uri.string()))
                             {
                                 auto wrap_s = wrap_mode::clamp_to_edge;
                                 auto wrap_t = wrap_mode::clamp_to_edge;
@@ -774,11 +765,11 @@ namespace moka
 
                                 mat_builder.add_texture(material_property::emissive_map, emissive_map);
 
-                                texture_cache.add_texture(emissive_map, uri.string().c_str());
+                                texture_cache.add_texture(emissive_map, uri.string());
                             }
                             else
                             {
-                                auto emissive_map = texture_cache.get_texture(uri.string().c_str());
+                                auto emissive_map = texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(material_property::emissive_map, emissive_map);
                             }
@@ -956,7 +947,7 @@ namespace moka
         return moka::model{std::move(meshes)};
     }
 
-    model asset_importer<model>::load(const std::filesystem::path& model_path, const std::filesystem::path& material_path)
+    model asset_importer<model>::load(const std::filesystem::path& model_path, const std::filesystem::path& material_path) const
     {
         tinygltf::Model model;
         tinygltf::TinyGLTF gltf_ctx;
@@ -964,8 +955,8 @@ namespace moka
         std::string err;
         std::string warn;
 
-        auto absolute_model_path = root_directory_ / model_path;
-        auto absolute_material_path = root_directory_ / material_path;
+        const auto absolute_model_path = root_directory_ / model_path;
+        const auto absolute_material_path = root_directory_ / material_path;
 
         const auto ext = absolute_model_path.extension();
 

@@ -4,7 +4,6 @@
 #include <application/window.hpp>
 #include <atomic>
 #include <iostream>
-#include <string>
 
 namespace moka
 {
@@ -20,19 +19,19 @@ namespace moka
 
         void swap_buffer() const;
 
-        rectangle get_viewport();
+        rectangle get_viewport() const;
 
         explicit impl(const window_settings& settings);
 
         ~impl();
 
-        void set_size(int width, int height);
+        void set_size(int width, int height) const;
 
         float aspect() const;
 
         context_handle make_context();
 
-        void set_current_context(const context_handle handle);
+        void set_current_context(context_handle handle);
 
         glm::ivec2 get_size() const;
 
@@ -76,10 +75,10 @@ namespace moka
         SDL_GL_SwapWindow(window_);
     }
 
-    rectangle window::impl::get_viewport()
+    rectangle window::impl::get_viewport() const
     {
         int w, h;
-        SDL_GetWindowSize(window_, &w, &h);
+        SDL_GL_GetDrawableSize(window_, &w, &h);
         return rectangle{0, 0, w, h};
     }
 
@@ -128,7 +127,7 @@ namespace moka
         SDL_Quit();
     }
 
-    void window::impl::set_size(const int width, const int height)
+    void window::impl::set_size(const int width, const int height) const
     {
         SDL_SetWindowSize(window_, width, height);
     }
@@ -138,7 +137,7 @@ namespace moka
         return static_cast<float>(settings_.resolution.x) / settings_.resolution.y;
     }
 
-    rectangle window::get_viewport()
+    rectangle window::get_viewport() const
     {
         return impl_->get_viewport();
     }

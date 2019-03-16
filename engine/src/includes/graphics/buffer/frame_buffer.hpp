@@ -22,21 +22,21 @@ namespace moka
         depth_stencil
     };
 
-    struct frame_buffer final
+    struct frame_buffer_handle final
     {
         uint16_t id = std::numeric_limits<uint16_t>::max();
 
-        bool operator==(const frame_buffer& rhs) const;
+        bool operator==(const frame_buffer_handle& rhs) const;
 
-        bool operator!=(const frame_buffer& rhs) const;
+        bool operator!=(const frame_buffer_handle& rhs) const;
 
-        bool operator>(const frame_buffer& rhs) const;
+        bool operator>(const frame_buffer_handle& rhs) const;
 
-        bool operator<(const frame_buffer& rhs) const;
+        bool operator<(const frame_buffer_handle& rhs) const;
 
-        bool operator>=(const frame_buffer& rhs) const;
+        bool operator>=(const frame_buffer_handle& rhs) const;
 
-        bool operator<=(const frame_buffer& rhs) const;
+        bool operator<=(const frame_buffer_handle& rhs) const;
     };
 
     struct render_texture_data final
@@ -85,7 +85,7 @@ namespace moka
             return *this;
         }
 
-        frame_buffer build();
+        frame_buffer_handle build();
 
     private:
         graphics_device& device_;

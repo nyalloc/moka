@@ -7,6 +7,9 @@
 
 namespace moka
 {
+    /**
+     * \brief Describes the layout of a single vertex in a vertex buffer.
+     */
     class vertex_layout final
     {
     public:
@@ -16,8 +19,16 @@ namespace moka
 
         vertex_layout() = default;
 
+        /**
+         * \brief Create a vertex_layout object.
+         * \param layout A initializer_list of vertex_attribute objects.
+         */
         vertex_layout(std::initializer_list<vertex_attribute> layout);
 
+        /**
+         * \brief Create a vertex_layout object.
+         * \param layout A vector of vertex_attribute objects.
+         */
         explicit vertex_layout(std::vector<vertex_attribute>&& layout);
 
         iterator begin() noexcept;
@@ -28,9 +39,14 @@ namespace moka
 
         const_iterator end() const noexcept;
 
+        /**
+         * \brief Get the size of a single vertex in this vertex layout
+         * \return The total size of a single vertex in this layout
+         */
         size_t total_size() const noexcept;
 
     private:
+        size_t total_size_ = 0;
         std::vector<vertex_attribute> layout_;
     };
 } // namespace moka

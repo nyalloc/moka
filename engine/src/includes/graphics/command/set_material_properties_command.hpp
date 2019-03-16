@@ -26,7 +26,7 @@ namespace moka
 
         set_material_parameters_command& set_parameter(const std::string& name, const glm::mat4& data);
 
-        set_material_parameters_command& set_parameter(const std::string& name, texture data);
+        set_material_parameters_command& set_parameter(const std::string& name, texture_handle data);
 
         void accept(graphics_visitor& visitor) override;
     };

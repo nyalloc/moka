@@ -45,18 +45,18 @@ class texture_application : public application
         "        FragColor = mix(tex1, tex2, tex2.a);               \n"
         "    }                                                      \0";
 
-    vertex_buffer vertex_buffer_;
-    index_buffer index_buffer_;
+    vertex_buffer_handle vertex_buffer_;
+    index_buffer_handle index_buffer_;
 
-    texture tile_texture_;
-    texture test_texture_;
+    texture_handle tile_texture_{};
+    texture_handle test_texture_{};
 
     material_handle material_;
 
     glm::vec4 white_;
 
 public:
-    texture_application(const app_settings& settings)
+    explicit texture_application(const app_settings& settings)
         : application(settings),
           vertex_buffer_(graphics_.make_vertex_buffer(
               vertices_, sizeof vertices_, std::move(vertex_layout_), buffer_usage::static_draw)),
@@ -67,7 +67,8 @@ public:
         int height;
         host_format format;
 
-        auto* data = texture_load(data_path() / "Textures" / "default.png", width, height, format);
+        auto* data = texture_load(
+            texture_application::data_path() / "Textures" / "default.png", width, height, format);
 
         tile_texture_ =
             graphics_.build_texture()
@@ -76,7 +77,7 @@ public:
                     image_target::texture_2d, 0, device_format::rgba, width, height, 0, format, pixel_type::uint8, data)
                 .build();
 
-        data = texture_load(data_path() / "Textures" / "corgi.png", width, height, format);
+        data = texture_load(texture_application::data_path() / "Textures" / "corgi.png", width, height, format);
 
         test_texture_ =
             graphics_.build_texture()
@@ -97,7 +98,7 @@ public:
 
     void draw(const game_time delta_time) override
     {
-        float current_time = seconds_elapsed();
+        const auto current_time = seconds_elapsed();
 
         command_list list;
 

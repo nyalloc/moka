@@ -7,7 +7,7 @@ namespace moka
     draw_command::~draw_command() = default;
 
     draw_command::draw_command(const draw_command& rhs)
-        : mat(rhs.mat),
+        : material(rhs.material),
           vertex_buffer(rhs.vertex_buffer),
           vertex_count(rhs.vertex_count),
           first_vertex(rhs.first_vertex),
@@ -21,7 +21,7 @@ namespace moka
 
     draw_command& draw_command::operator=(const draw_command& rhs)
     {
-        mat = rhs.mat;
+        material = rhs.material;
         vertex_buffer = rhs.vertex_buffer;
         vertex_count = rhs.vertex_count;
         first_vertex = rhs.first_vertex;
@@ -34,7 +34,7 @@ namespace moka
     }
 
     draw_command::draw_command(draw_command&& rhs) noexcept
-        : mat(std::move(rhs.mat)),
+        : material(std::move(rhs.material)),
           vertex_buffer(rhs.vertex_buffer),
           vertex_count(rhs.vertex_count),
           first_vertex(rhs.first_vertex),
@@ -48,7 +48,7 @@ namespace moka
 
     draw_command& draw_command::operator=(draw_command&& rhs) noexcept
     {
-        mat = std::move(rhs.mat);
+        material = std::move(rhs.material);
         vertex_buffer = rhs.vertex_buffer;
         vertex_count = rhs.vertex_count;
         first_vertex = rhs.first_vertex;
@@ -103,17 +103,17 @@ namespace moka
 
     draw_command& draw_command::set_material(const material_handle material)
     {
-        this->mat = material;
+        this->material = material;
         return *this;
     }
 
-    draw_command& draw_command::set_vertex_buffer(const moka::vertex_buffer vertex_buffer)
+    draw_command& draw_command::set_vertex_buffer(const moka::vertex_buffer_handle vertex_buffer)
     {
         this->vertex_buffer = vertex_buffer;
         return *this;
     }
 
-    draw_command& draw_command::set_index_buffer(moka::index_buffer index_buffer)
+    draw_command& draw_command::set_index_buffer(moka::index_buffer_handle index_buffer)
     {
         this->index_buffer = index_buffer;
         return *this;

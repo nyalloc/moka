@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/buffer/vertex_buffer.hpp>
+#include <graphics/buffer/vertex_buffer_handle.hpp>
 #include <graphics/command/graphics_command.hpp>
 
 namespace moka
@@ -8,7 +8,7 @@ namespace moka
     class fill_vertex_buffer_command final : public graphics_command
     {
     public:
-        vertex_buffer handle;
+        vertex_buffer_handle handle;
         const void* data;
         size_t size;
 
@@ -16,6 +16,6 @@ namespace moka
 
         void accept(graphics_visitor& visitor) override;
 
-        fill_vertex_buffer_command& set_buffer(vertex_buffer handle, const void* data, size_t size);
+        fill_vertex_buffer_command& set_buffer(vertex_buffer_handle handle, const void* data, size_t size);
     };
 } // namespace moka

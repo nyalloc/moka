@@ -10,8 +10,7 @@ namespace moka
         return *this;
     }
 
-    set_material_parameters_command& set_material_parameters_command::set_parameter(
-        const std::string& name, float data)
+    set_material_parameters_command& set_material_parameters_command::set_parameter(const std::string& name, float data)
     {
         parameters.emplace_back(material_parameter{name, data});
         return *this;
@@ -45,8 +44,7 @@ namespace moka
         return *this;
     }
 
-    set_material_parameters_command& set_material_parameters_command::set_parameter(
-        const std::string& name, texture data)
+    set_material_parameters_command& set_material_parameters_command::set_parameter(const std::string& name, texture_handle data)
     {
         parameters.emplace_back(material_parameter{name, data});
         return *this;

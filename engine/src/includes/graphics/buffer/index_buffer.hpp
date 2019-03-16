@@ -18,20 +18,20 @@ namespace moka
 		float32
 	};
 
-	struct index_buffer final
+	struct index_buffer_handle final
 	{
 		uint16_t id = std::numeric_limits<uint16_t>::max();
 
-		bool operator ==(const index_buffer& rhs) const;
+		bool operator ==(const index_buffer_handle& rhs) const;
 
-		bool operator !=(const index_buffer& rhs) const;
+		bool operator !=(const index_buffer_handle& rhs) const;
 
-		bool operator >(const index_buffer& rhs) const;
+		bool operator >(const index_buffer_handle& rhs) const;
 
-		bool operator <(const index_buffer& rhs) const;
+		bool operator <(const index_buffer_handle& rhs) const;
 
-		bool operator >=(const index_buffer& rhs) const;
+		bool operator >=(const index_buffer_handle& rhs) const;
 
-		bool operator <=(const index_buffer& rhs) const;
+		bool operator <=(const index_buffer_handle& rhs) const;
 	};
 }

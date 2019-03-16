@@ -17,18 +17,18 @@ namespace moka
 
         material_handle material_;
 
-        index_buffer index_buffer_;
-        vertex_buffer vertex_buffer_;
+        index_buffer_handle index_buffer_;
+        vertex_buffer_handle vertex_buffer_;
 
         graphics_device& graphics_device_;
 
-        texture font_atlas_{};
+        texture_handle font_atlas_{};
 
     public:
         imgui(window& window, keyboard& keyboard, mouse& mouse, graphics_device& graphics_device);
 
-        void new_frame(float data_time) const;
+        void new_frame(float delta_time) const;
 
-        command_list draw();
+        command_list draw() const;
     };
 } // namespace moka

@@ -1,22 +1,25 @@
 #pragma once
 
-#include "graphics/buffer/frame_buffer.hpp"
+#include "graphics/buffer/frame_buffer_handle.hpp"
 #include "graphics/material/material_parameter.hpp"
 #include <asset_importer/texture_importer.hpp>
 #include <graphics/buffer/buffer_usage.hpp>
-#include <graphics/buffer/index_buffer.hpp>
-#include <graphics/buffer/vertex_buffer.hpp>
+#include <graphics/buffer/index_buffer_handle.hpp>
+#include <graphics/buffer/vertex_buffer_handle.hpp>
 #include <graphics/buffer/vertex_layout.hpp>
 #include <graphics/device/graphics_visitor.hpp>
 #include <graphics/program.hpp>
 #include <graphics/shader.hpp>
-#include <graphics/texture.hpp>
+#include <graphics/texture_handle.hpp>
 
 namespace moka
 {
     class vertex_layout;
     class command_list;
 
+    /**
+     * \brief
+     */
     enum class alpha_mode : uint8_t
     {
         blend, // The rendered output is combined with the background using the normal painting operation(i.e.the Porter and Duff over operator). This mode is used to simulate geometry such as guaze cloth or animal fur.
@@ -129,7 +132,7 @@ namespace moka
 
     struct texture_binding
     {
-        texture handle;
+        texture_handle handle;
         size_t unit;
     };
 
@@ -140,19 +143,7 @@ namespace moka
      */
     class graphics_api : public graphics_visitor
     {
-    public:
-        virtual ~graphics_api() = default;
-
-        graphics_api() = default;
-
-        graphics_api(const graphics_api& rhs) = default;
-
-        graphics_api(graphics_api&& rhs) = default;
-
-        graphics_api& operator=(const graphics_api& rhs) = default;
-
-        graphics_api& operator=(graphics_api&& rhs) = default;
-
+    protected:
         void visit(frame_buffer_command& cmd) override = 0;
 
         void visit(frame_buffer_texture_command& cmd) override = 0;
@@ -169,24 +160,83 @@ namespace moka
 
         void visit(fill_index_buffer_command& cmd) override = 0;
 
+    public:
+        virtual ~graphics_api() = default;
+
+        graphics_api() = default;
+
+        graphics_api(const graphics_api& rhs) = default;
+
+        graphics_api(graphics_api&& rhs) = default;
+
+        graphics_api& operator=(const graphics_api& rhs) = default;
+
+        graphics_api& operator=(graphics_api&& rhs) = default;
+
+        /**
+         * \brief Submit a command_list to execute on the device.
+         * \param commands The command_list you wish to run.
+         */
         virtual void submit(command_list&& commands) = 0;
 
+        /**
+         * \brief Submit a command_list to execute on the device. The main framebuffer will be swapped after executing, advancing a frame.
+         * \param commands The command_list you wish to run.
+         */
         virtual void submit_and_swap(command_list&& commands) = 0;
 
-        virtual frame_buffer make_frame_buffer(
-            render_texture_data* render_textures, size_t render_texture_count) = 0;
+        /**
+         * \brief Create a new frame buffer.
+         * \param render_textures An array of render_texture_data.
+         * \param render_texture_count Size of the render_textures array.
+         * \return A new frame_buffer_handle representing a frame buffer on the device.
+         */
+        virtual frame_buffer_handle make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count) = 0;
 
-        virtual program_handle make_program(
-            const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
+        /**
+         * \brief Create a shader program from vertex & fragment shaders.
+         * \param vertex_handle The vertex shader that you want to link to this program.
+         * \param fragment_handle The fragment shader that you want to link to this program.
+         * \return A new program_handle representing a program on the device.
+         */
+        virtual program_handle make_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
 
+        /**
+         * \brief Create a shader from source code.
+         * \param type The type of shader you want to create.
+         * \param source The source code of the shader you want to create.
+         * \return A new shader_handle representing a shader on the device.
+         */
         virtual shader_handle make_shader(shader_type type, const std::string& source) = 0;
 
-        virtual vertex_buffer make_vertex_buffer(
-            const void* cube_vertices, size_t size, vertex_layout&& decl, buffer_usage use) = 0;
+        /**
+         * \brief Create a new vertex buffer.
+         * \param vertices The host memory buffer that will be used as vertex data.
+         * \param size The size of the host vertex buffer.
+         * \param layout The layout of the vertex data.
+         * \param use A buffer usage hint.
+         * \return A new vertex_buffer_handle representing an vertex buffer on the device.
+         */
+        virtual vertex_buffer_handle make_vertex_buffer(
+            const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) = 0;
 
-        virtual index_buffer make_index_buffer(
-            const void* indices, size_t size, index_type type, buffer_usage use) = 0;
+        /**
+         * \brief Create a new index buffer.
+         * \param indices The host memory buffer that will be used as index data.
+         * \param size The size of the host index buffer.
+         * \param type The layout of the index data.
+         * \param use A buffer usage hint.
+         * \return A new index_buffer_handle representing an index buffer on the device.
+         */
+        virtual index_buffer_handle make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) = 0;
 
-        virtual texture make_texture(void** data, texture_metadata&& metadata, bool free_host_data) = 0;
+        /**
+         * \brief Create a new texture.
+         * \param data The host memory buffer that will be used as texture data.
+         * \param metadata Metadata describing the texture data.
+         * \param free_host_data If true, free the host memory after uploading to the device. Otherwise allow the calling code to free it.
+         * \return A new texture_handle representing a texture on the device.
+         */
+        virtual texture_handle make_texture(void** data, texture_metadata&& metadata, bool free_host_data) = 0;
     };
 } // namespace moka

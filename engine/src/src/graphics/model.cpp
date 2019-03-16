@@ -57,13 +57,13 @@ namespace moka
     }
 
     primitive::primitive(
-        const vertex_buffer vertex_buffer,
+        const vertex_buffer_handle vertex_buffer,
         const uint32_t vertex_count,
-        const index_buffer index_buffer,
+        const index_buffer_handle index_buffer,
         const index_type index_type,
         const uint32_t index_count,
         const uint32_t index_buffer_offset,
-        material_handle material)
+        const material_handle material)
         : vertex_buffer_(vertex_buffer),
           vertex_count_(vertex_count),
           index_buffer_(index_buffer),
@@ -74,11 +74,8 @@ namespace moka
     {
     }
 
-    primitive::primitive(const vertex_buffer vertex_buffer, const uint32_t vertex_count, material_handle material)
-        : vertex_buffer_(vertex_buffer),
-          vertex_count_(vertex_count),
-          index_type_(),
-          material_(material)
+    primitive::primitive(const vertex_buffer_handle vertex_buffer, const uint32_t vertex_count, material_handle material)
+        : vertex_buffer_(vertex_buffer), vertex_count_(vertex_count), index_type_(), material_(material)
     {
     }
 
@@ -102,8 +99,7 @@ namespace moka
         return meshes_.end();
     }
 
-    model::model(const mesh& meshes, transform&& transform)
-        : meshes_{meshes}, transform_(transform)
+    model::model(const mesh& meshes, transform&& transform) : meshes_{meshes}, transform_(transform)
     {
     }
 

@@ -496,9 +496,9 @@ namespace moka
 
         if (material)
         {
-            for (size_t i = 0; i < cmd.parameters.size(); ++i)
+            for (const auto& parameter : cmd.parameters)
             {
-                (*material)[cmd.parameters[i].name] = cmd.parameters[i];
+                (*material)[parameter.name] = parameter;
             }
         }
     }
@@ -538,8 +538,8 @@ namespace moka
 
         glEnableVertexAttribArray(0);
 
-        auto& material_handle = cmd.mat;
-        auto& previous_handle = previous_command_.mat;
+        auto& material_handle = cmd.material;
+        auto& previous_handle = previous_command_.material;
 
         auto& material_cache = device_.get_material_cache();
         auto* material = material_cache.get_material(material_handle);
@@ -593,7 +593,7 @@ namespace moka
                 {
                 case parameter_type::texture:
                 {
-                    const auto data = std::get<texture>(parameter.data);
+                    const auto data = std::get<texture_handle>(parameter.data);
                     glUniform1i(location, GLint(current_texture_unit));
                     glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
 
@@ -641,8 +641,6 @@ namespace moka
 
         if (indexed)
         {
-            auto& index_buffer = index_buffer_data_[cmd.index_buffer.id];
-
             glDrawElements(
                 moka_to_gl(cmd.prim_type),
                 GLsizei(cmd.index_count),
@@ -743,10 +741,10 @@ namespace moka
         return result;
     }
 
-    vertex_buffer gl_graphics_api::make_vertex_buffer(
-        const void* cube_vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
+    vertex_buffer_handle gl_graphics_api::make_vertex_buffer(
+        const void* vertices, const size_t size, vertex_layout&& layout, const buffer_usage use)
     {
-        vertex_buffer result;
+        vertex_buffer_handle result;
 
         GLuint handle;
 
@@ -762,7 +760,7 @@ namespace moka
         vertex_buffer_data_[result.id] = std::move(data);
 
         glBindBuffer(GL_ARRAY_BUFFER, handle);
-        glBufferData(GL_ARRAY_BUFFER, size, cube_vertices, moka_to_gl(use));
+        glBufferData(GL_ARRAY_BUFFER, size, vertices, moka_to_gl(use));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         if constexpr (application_traits::is_debug_build)
@@ -773,10 +771,10 @@ namespace moka
         return result;
     }
 
-    index_buffer gl_graphics_api::make_index_buffer(
+    index_buffer_handle gl_graphics_api::make_index_buffer(
         const void* indices, const size_t size, const index_type type, const buffer_usage use)
     {
-        index_buffer result;
+        index_buffer_handle result;
 
         GLuint handle;
 
@@ -875,7 +873,7 @@ namespace moka
         }
     }
 
-    texture gl_graphics_api::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data)
+    texture_handle gl_graphics_api::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data)
     {
         const auto gl_target = moka_to_gl(metadata.target);
 
@@ -920,10 +918,10 @@ namespace moka
 
         texture_data_[id] = std::move(metadata);
 
-        return moka::texture{id};
+        return moka::texture_handle{id};
     }
 
-    frame_buffer gl_graphics_api::make_frame_buffer(render_texture_data* render_textures, const size_t render_texture_count)
+    frame_buffer_handle gl_graphics_api::make_frame_buffer(render_texture_data* render_textures, const size_t render_texture_count)
     {
         unsigned int capture_fbo;
         glGenFramebuffers(1, &capture_fbo);
@@ -952,7 +950,7 @@ namespace moka
             check_errors("make_frame_buffer");
         }
 
-        return frame_buffer{static_cast<uint16_t>(capture_fbo)};
+        return frame_buffer_handle{static_cast<uint16_t>(capture_fbo)};
     }
 
     void GLAPIENTRY gl_graphics_api::message_callback(

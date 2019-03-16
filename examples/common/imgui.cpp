@@ -134,9 +134,9 @@ namespace moka
 
         io.Fonts->TexID = reinterpret_cast<ImTextureID>(static_cast<intptr_t>(font_atlas.id));
 
-        auto pos_size = IM_OFFSETOF(ImDrawVert, pos);
-        auto uv_size = IM_OFFSETOF(ImDrawVert, uv);
-        auto col_size = IM_OFFSETOF(ImDrawVert, col);
+        const auto pos_size = IM_OFFSETOF(ImDrawVert, pos);
+        const auto uv_size = IM_OFFSETOF(ImDrawVert, uv);
+        const auto col_size = IM_OFFSETOF(ImDrawVert, col);
 
         vertex_layout layout{
             vertex_attribute{0, attribute_type::float32, 2, false, sizeof(ImDrawVert), pos_size},
@@ -164,7 +164,6 @@ namespace moka
 
         const auto& mouse_state = mouse_.get_state();
         const auto& position = mouse_state.get_position();
-        const auto& motion = mouse_state.get_motion();
         const auto& scroll = mouse_state.get_scroll();
 
         io.MousePos.x = static_cast<float>(position.x);
@@ -189,7 +188,7 @@ namespace moka
         ImGui::NewFrame();
     }
 
-    command_list imgui::draw()
+    command_list imgui::draw() const
     {
         command_list list;
 
@@ -286,7 +285,8 @@ namespace moka
 
                     if (cmd->TextureId)
                     {
-                        const texture handle{static_cast<uint16_t>(reinterpret_cast<intptr_t>(cmd->TextureId))};
+                        const texture_handle handle{
+                            static_cast<uint16_t>(reinterpret_cast<intptr_t>(cmd->TextureId))};
 
                         buff.set_material_parameters().set_material(material_).set_parameter(
                             "u_tex0", handle);

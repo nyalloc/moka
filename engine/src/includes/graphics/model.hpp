@@ -8,10 +8,10 @@ namespace moka
 {
     class primitive
     {
-        vertex_buffer vertex_buffer_;
+        vertex_buffer_handle vertex_buffer_;
         uint32_t vertex_count_ = 0;
 
-        index_buffer index_buffer_;
+        index_buffer_handle index_buffer_;
         index_type index_type_;
         uint32_t index_count_ = 0;
         uint32_t index_buffer_offset_ = 0;
@@ -24,15 +24,15 @@ namespace moka
         material_handle get_material() const;
 
         primitive(
-            vertex_buffer vertex_buffer,
+            vertex_buffer_handle vertex_buffer,
             uint32_t vertex_count,
-            index_buffer index_buffer,
+            index_buffer_handle index_buffer,
             index_type index_type,
             uint32_t index_count,
             uint32_t index_buffer_offset,
             material_handle material);
 
-        primitive(vertex_buffer vertex_buffer, uint32_t vertex_count, material_handle material);
+        primitive(vertex_buffer_handle vertex_buffer, uint32_t vertex_count, material_handle material);
 
         void draw(command_buffer& list) const;
     };

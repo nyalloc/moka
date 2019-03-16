@@ -13,7 +13,7 @@ namespace moka
     }
 
     fill_vertex_buffer_command& fill_vertex_buffer_command::set_buffer(
-        const vertex_buffer handle, const void* data, const size_t size)
+        const vertex_buffer_handle handle, const void* data, const size_t size)
     {
         this->handle = handle;
         this->data = data;

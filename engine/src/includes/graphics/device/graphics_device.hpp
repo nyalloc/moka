@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/buffer/frame_buffer.hpp"
+#include "graphics/buffer/frame_buffer_handle.hpp"
 #include "graphics/material/material_builder.hpp"
 #include <application/window.hpp>
 #include <graphics/api/graphics_api.hpp>
@@ -31,31 +31,31 @@ namespace moka
     {
         graphics_device& device_;
 
-        std::vector<texture> textures_;
-        std::unordered_map<texture_id, int> texture_lookup;
+        std::vector<texture_handle> textures_;
+        std::unordered_map<texture_id, int> texture_lookup_;
 
     public:
-        texture_cache(graphics_device& device, size_t initial_capacity = 0)
+        explicit texture_cache(graphics_device& device, const size_t initial_capacity = 0)
             : device_(device)
         {
             textures_.reserve(initial_capacity);
         }
 
-        void add_texture(texture handle, const texture_id& id)
+        void add_texture(texture_handle handle, const texture_id& id)
         {
             const auto index = textures_.size();
-            textures_.emplace_back(std::move(handle));
-            texture_lookup[id] = index;
+            textures_.emplace_back(handle);
+            texture_lookup_[id] = index;
         }
 
         bool exists(const texture_id& id) const
         {
-            return texture_lookup.find(id) != texture_lookup.end();
+            return texture_lookup_.find(id) != texture_lookup_.end();
         }
 
-        texture get_texture(const texture_id& id) const
+        texture_handle get_texture(const texture_id& id) const
         {
-            return textures_[texture_lookup.at(id)];
+            return textures_[texture_lookup_.at(id)];
         }
     };
 
@@ -69,10 +69,10 @@ namespace moka
         graphics_device& device_;
 
         std::vector<program_handle> shaders_;
-        std::unordered_map<program_id, int> shader_lookup;
+        std::unordered_map<program_id, int> shader_lookup_;
 
     public:
-        program_cache(graphics_device& device, size_t initial_capacity = 0)
+        explicit program_cache(graphics_device& device, const size_t initial_capacity = 0)
             : device_(device)
         {
             shaders_.reserve(initial_capacity);
@@ -80,18 +80,17 @@ namespace moka
 
         void add_program(program_handle handle, const program_id& id)
         {
-            const auto index = shaders_.size();
-            shaders_.emplace_back(std::move(handle));
+            shaders_.emplace_back(handle);
         }
 
         bool exists(const program_id& id) const
         {
-            return shader_lookup.find(id) != shader_lookup.end();
+            return shader_lookup_.find(id) != shader_lookup_.end();
         }
 
         program_handle get_program(const program_id& id) const
         {
-            return shaders_[shader_lookup.at(id)];
+            return shaders_[shader_lookup_.at(id)];
         }
     };
 
@@ -102,7 +101,7 @@ namespace moka
         std::vector<material> materials_;
 
     public:
-        material_cache(graphics_device& device, size_t initial_capacity = 0)
+        explicit material_cache(graphics_device& device, const size_t initial_capacity = 0)
             : device_(device)
         {
             materials_.reserve(initial_capacity);
@@ -115,7 +114,7 @@ namespace moka
             return material_handle(index);
         }
 
-        material* get_material(material_handle handle)
+        material* get_material(const material_handle handle)
         {
             if (handle == std::numeric_limits<material_handle>::max())
             {
@@ -124,7 +123,7 @@ namespace moka
             return &materials_[handle];
         }
 
-        const material* get_material(material_handle handle) const
+        const material* get_material(const material_handle handle) const
         {
             if (handle == std::numeric_limits<material_handle>::max())
             {
@@ -159,20 +158,20 @@ namespace moka
 
         explicit graphics_device(window& window, graphics_backend graphics_backend = graphics_backend::opengl);
 
-        vertex_buffer make_vertex_buffer(
+        vertex_buffer_handle make_vertex_buffer(
             const void* cube_vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
 
-        index_buffer make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) const;
+        index_buffer_handle make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) const;
 
         shader_handle make_shader(shader_type type, const std::string& source) const;
 
         program_handle make_program(shader_handle vertex_handle, shader_handle fragment_handle) const;
 
-        texture make_texture(void** data, texture_metadata&& metadata, bool free_host_data) const;
+        texture_handle make_texture(void** data, texture_metadata&& metadata, bool free_host_data) const;
 
         texture_builder build_texture();
 
-        frame_buffer make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count);
+        frame_buffer_handle make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count) const;
 
         frame_buffer_builder build_frame_buffer();
 
@@ -182,9 +181,9 @@ namespace moka
 
         void destroy(shader_handle handle);
 
-        void destroy(vertex_buffer handle);
+        void destroy(vertex_buffer_handle handle);
 
-        void destroy(index_buffer handle);
+        void destroy(index_buffer_handle handle);
 
         void submit(command_list&& command_list, bool sort = true) const;
 

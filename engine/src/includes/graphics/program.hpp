@@ -8,32 +8,32 @@ namespace moka
     {
         uint16_t id = std::numeric_limits<uint16_t>::max();
 
-        bool operator==(const program_handle& rhs)
+        bool operator==(const program_handle& rhs) const
         {
             return id == rhs.id;
         }
 
-        bool operator!=(const program_handle& rhs)
+        bool operator!=(const program_handle& rhs) const
         {
             return id != rhs.id;
         }
 
-        bool operator>(const program_handle& rhs)
+        bool operator>(const program_handle& rhs) const
         {
             return id > rhs.id;
         }
 
-        bool operator<(const program_handle& rhs)
+        bool operator<(const program_handle& rhs) const
         {
             return id < rhs.id;
         }
 
-        bool operator>=(const program_handle& rhs)
+        bool operator>=(const program_handle& rhs) const
         {
             return id >= rhs.id;
         }
 
-        bool operator<=(const program_handle& rhs)
+        bool operator<=(const program_handle& rhs) const
         {
             return id <= rhs.id;
         }

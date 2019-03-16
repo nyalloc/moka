@@ -10,7 +10,7 @@ namespace moka
         visitor.visit(*this);
     }
 
-    frame_buffer_texture_command& frame_buffer_texture_command::set_texture(const texture texture)
+    frame_buffer_texture_command& frame_buffer_texture_command::set_texture(const texture_handle texture)
     {
         tex = texture;
         return *this;

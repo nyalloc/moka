@@ -20,6 +20,10 @@ namespace moka
         T& emplace_back();
 
     public:
+        /**
+         * \brief Create a new command_buffer object.
+         * \param id The sort key that we should use for this command_buffer.
+         */
         explicit command_buffer(sort_key id);
 
         command_buffer() = default;
@@ -34,28 +38,76 @@ namespace moka
 
         command_buffer& operator=(const command_buffer& command_buffer) = delete;
 
+        /**
+         * \brief Get the sort key of this command_buffer.
+         * \return The sort key of this command_buffer.
+         */
         const sort_key& get_key() const;
 
+        /**
+         * \brief Accept a graphics_visitor object and pass every command to it.
+         * \param device The graphics_visitor object.
+         */
         void accept(graphics_visitor& device);
 
+        /**
+         * \brief Create and return a frame_buffer_command object.
+         * \return A reference to the new frame_buffer_command object.
+         */
         frame_buffer_command& frame_buffer();
 
+        /**
+         * \brief Create and return a frame_buffer_texture_command object.
+         * \return A reference to the new frame_buffer_texture_command object.
+         */
         frame_buffer_texture_command& frame_buffer_texture();
 
+        /**
+         * \brief Create and return a clear_command object.
+         * \return A reference to the new clear_command object.
+         */
         clear_command& clear();
 
+        /**
+         * \brief Create and return a draw_command object.
+         * \return A reference to the new draw_command object.
+         */
         draw_command& draw();
 
+        /**
+         * \brief Create and return a scissor_command object.
+         * \return A reference to the new scissor_command object.
+         */
         scissor_command& scissor();
 
+        /**
+         * \brief Create and return a viewport_command object.
+         * \return A reference to the new viewport_command object.
+         */
         viewport_command& viewport();
 
+        /**
+         * \brief Create and return a fill_index_buffer_command object.
+         * \return A reference to the new fill_index_buffer_command object.
+         */
         fill_index_buffer_command& fill_index_buffer();
 
+        /**
+         * \brief Create and return a fill_vertex_buffer_command object.
+         * \return A reference to the new fill_vertex_buffer_command object.
+         */
         fill_vertex_buffer_command& fill_vertex_buffer();
 
+        /**
+         * \brief Create and return a generate_mipmaps_command object.
+         * \return A reference to the new generate_mipmaps_command object.
+         */
         generate_mipmaps_command& generate_mipmaps();
 
+        /**
+         * \brief Create and return a set_material_parameters_command object.
+         * \return A reference to the new set_material_parameters_command object.
+         */
         set_material_parameters_command& set_material_parameters();
     };
 
