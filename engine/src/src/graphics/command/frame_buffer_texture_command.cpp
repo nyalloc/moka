@@ -12,7 +12,7 @@ namespace moka
 
     frame_buffer_texture_command& frame_buffer_texture_command::set_texture(const texture_handle texture)
     {
-        tex = texture;
+        this->texture = texture;
         return *this;
     }
 

@@ -10,6 +10,9 @@ namespace moka
 {
     using sort_key = uint64_t;
 
+    /**
+     * \brief A command_buffer is a collection of render commands married by a sort_key. Command buffers are owned by a command_list.
+     */
     class command_buffer
     {
         std::vector<graphics_command_ptr> commands_;

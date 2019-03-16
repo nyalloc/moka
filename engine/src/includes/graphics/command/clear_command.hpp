@@ -17,6 +17,10 @@ namespace moka
 
         virtual ~clear_command();
 
+        /**
+         * \brief Accept a graphics_visitor object. Invoke this command using the graphics_visitor.
+         * \param visitor A graphics_visitor object.
+         */
         void accept(graphics_visitor& visitor) override;
 
         /**

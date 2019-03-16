@@ -474,7 +474,7 @@ namespace moka
     void gl_graphics_api::visit(frame_buffer_texture_command& cmd)
     {
         glFramebufferTexture2D(
-            GL_FRAMEBUFFER, moka_to_gl(cmd.attachment), moka_to_gl(cmd.target), GLuint{cmd.tex.id}, cmd.level);
+            GL_FRAMEBUFFER, moka_to_gl(cmd.attachment), moka_to_gl(cmd.target), GLuint{cmd.texture.id}, cmd.level);
 
         if constexpr (application_traits::is_debug_build)
         {
@@ -484,7 +484,7 @@ namespace moka
 
     void gl_graphics_api::visit(generate_mipmaps_command& cmd)
     {
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cmd.tex.id);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cmd.texture.id);
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     }
 

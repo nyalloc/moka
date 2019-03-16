@@ -16,6 +16,9 @@
 
 namespace moka
 {
+    /**
+     * \brief A command_list is a list of command_buffer objects that can be sorted before being submitted to a graphics_device.
+     */
     class command_list final
     {
         bool is_sorted_ = false;

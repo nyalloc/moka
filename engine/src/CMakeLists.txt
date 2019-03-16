@@ -96,7 +96,6 @@ set(GRAPHICS_COMMAND_SRC
     "includes/graphics/command/generate_mipmaps_command.hpp"
     "includes/graphics/command/scissor_command.hpp"
 	"includes/graphics/command/set_material_properties_command.hpp"
-    "includes/graphics/command/sort_key.hpp"
     "includes/graphics/command/viewport_command.hpp"
     "src/graphics/command/clear_command.cpp"
     "src/graphics/command/command_buffer.cpp"
@@ -110,7 +109,6 @@ set(GRAPHICS_COMMAND_SRC
     "src/graphics/command/graphics_command.cpp"
     "src/graphics/command/viewport_command.cpp"
 	"src/graphics/command/set_material_properties_command.cpp"
-    "src/graphics/command/sort_key.cpp"
     "src/graphics/command/scissor_command.cpp"
 )
 
