@@ -34,7 +34,7 @@ namespace moka
         visitor.visit(*this);
     }
 
-    frame_buffer_command& frame_buffer_command::set_frame_buffer(const frame_buffer buffer)
+    frame_buffer_command& frame_buffer_command::set_frame_buffer(const frame_buffer_handle buffer)
     {
         this->buffer = buffer;
         return *this;

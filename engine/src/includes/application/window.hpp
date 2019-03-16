@@ -8,29 +8,17 @@
 
 namespace moka
 {
-    enum class window_args
-    {
-        fullscreen = 0x00000001,    /**< fullscreen window */
-        shown = 0x00000002,         /**< window is visible */
-        hidden = 0x00000004,        /**< window is not visible */
-        borderless = 0x00000008,    /**< no window decoration */
-        resizable = 0x00000010,     /**< window can be resized */
-        minimized = 0x00000020,     /**< window is minimized */
-        maximized = 0x00000040,     /**< window is maximized */
-        input_grabbed = 0x00000080, /**< window has grabbed input focus */
-        input_focus = 0x00000100,   /**< window has input focus */
-        mouse_focus = 0x00000200,   /**< window has mouse focus */
-        mouse_capture = 0x00000400, /**< window has mouse captured (unrelated to INPUT_GRABBED) */
-        always_on_top = 0x00000800, /**< window should always be above others */
-    };
-
-    using window_flags = size_t;
-
+    /**
+     * \brief Rendering context handle
+     */
     struct context_handle final
     {
         uint16_t id;
     };
 
+    /**
+     * \brief Window construction settings. Pass to the window object on constructions to set the initial state of the window.
+     */
     struct window_settings final
     {
         std::string name = "moka";
@@ -39,26 +27,77 @@ namespace moka
         bool fullscreen = false;
     };
 
+    /**
+     * \brief Windowing class. Abstracts the native windowing API. Exposes a high-level interface to interact with the window.
+     */
     class window final
     {
     public:
+        /**
+         * \brief Exit signal. This signal notifies all slots when the user closes this window.
+         */
         signal<> exit;
 
         window(const window& window) = delete;
         window(window&& window) = delete;
         window& operator=(const window& window) = delete;
         window& operator=(window&& window) = delete;
-        rectangle get_viewport();
 
+        /**
+         * \brief Create a new window object.
+         * \param settings The initial settings of the window under construction.
+         */
         explicit window(const window_settings& settings);
+
         ~window();
+
+        /**
+         * \brief Swap this window's render buffer.
+         */
         void swap_buffer() const;
+
+        /**
+         * \brief Update this window's dimensions.
+         * \param width The new width of the window.
+         * \param height The new height of the window.
+         */
         void set_size(int width, int height);
+
+        /**
+         * \brief Create a new rendering context for this
+         * \return
+         */
         context_handle make_context() const;
+
+        /**
+         * \brief Set the current context to use with rendering to this window.
+         * \param handle The context you wish to use with rendering to this window.
+         */
         void set_current_context(context_handle handle);
+
+        /**
+         * \brief Get the aspect ratio of this window's size.
+         * \return The width of the window divided by the height of the window.
+         */
         float aspect() const;
+
+        /**
+         * \brief Get the size of the window.
+         * \return A glm::ivec2 where x = width and y = height.
+         */
         glm::ivec2 get_size() const;
+
+        /**
+         * \brief Get the drawable size of the window.
+         * \return A glm::ivec2 where x == width and y == height.
+         */
         glm::ivec2 get_drawable_size() const;
+
+        /**
+         * \brief Get the viewport of this window.
+         * \return A rectangle defining the viewport of the drawable size. x == y == 0
+         */
+        rectangle get_viewport() const;
 
     private:
         class impl;

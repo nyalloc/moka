@@ -38,9 +38,9 @@ namespace moka
 
         parameter_collection();
 
-        const material_parameter& operator[](const size_t index) const;
+        const material_parameter& operator[](size_t index) const;
 
-        material_parameter& operator[](const size_t index);
+        material_parameter& operator[](size_t index);
 
         material_parameter& operator[](const std::string& name);
 

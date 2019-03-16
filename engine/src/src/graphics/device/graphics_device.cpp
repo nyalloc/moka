@@ -36,7 +36,7 @@ namespace moka
     }
 
     graphics_device::graphics_device(window& window, const graphics_backend graphics_backend)
-        : materials_(*this), shaders_(*this), textures_(*this)
+        : textures_(*this), shaders_(*this), materials_(*this)
     {
         auto context = window.make_context();
 
@@ -95,14 +95,13 @@ namespace moka
         graphics_api_->submit_and_swap(std::move(command_list));
     }
 
-    vertex_buffer graphics_device::make_vertex_buffer(
+    vertex_buffer_handle graphics_device::make_vertex_buffer(
         const void* cube_vertices, const size_t size, vertex_layout&& layout, const buffer_usage use) const
     {
-        return graphics_api_->make_vertex_buffer(
-            cube_vertices, size, std::move(layout), use);
+        return graphics_api_->make_vertex_buffer(cube_vertices, size, std::move(layout), use);
     }
 
-    index_buffer graphics_device::make_index_buffer(
+    index_buffer_handle graphics_device::make_index_buffer(
         const void* indices, const size_t size, const index_type type, const buffer_usage use) const
     {
         return graphics_api_->make_index_buffer(indices, size, type, use);
@@ -113,23 +112,21 @@ namespace moka
         return graphics_api_->make_shader(type, source);
     }
 
-    program_handle graphics_device::make_program(
-        const shader_handle vertex_handle, const shader_handle fragment_handle) const
+    program_handle graphics_device::make_program(const shader_handle vertex_handle, const shader_handle fragment_handle) const
     {
         return graphics_api_->make_program(vertex_handle, fragment_handle);
     }
 
-    texture graphics_device::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data) const
+    texture_handle graphics_device::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data) const
     {
-        auto size = metadata.data.size();
+        const auto size = metadata.data.size();
 
-        const auto handle =
-            graphics_api_->make_texture(data, std::move(metadata), free_host_data);
+        const auto handle = graphics_api_->make_texture(data, std::move(metadata), free_host_data);
 
         // this does not seem very safe at all! what if make_texture throws! Leak city!
         if (free_host_data)
         {
-            for (size_t i = 0; i < metadata.data.size(); i++)
+            for (size_t i = 0; i < size; i++)
             {
                 free_texture(data[i]);
             }
@@ -143,7 +140,7 @@ namespace moka
         return texture_builder{*this};
     }
 
-    frame_buffer graphics_device::make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count)
+    frame_buffer_handle graphics_device::make_frame_buffer(render_texture_data* render_textures, const size_t render_texture_count) const
     {
         return graphics_api_->make_frame_buffer(render_textures, render_texture_count);
     }
@@ -162,11 +159,11 @@ namespace moka
     {
     }
 
-    void graphics_device::destroy(vertex_buffer handle)
+    void graphics_device::destroy(vertex_buffer_handle handle)
     {
     }
 
-    void graphics_device::destroy(index_buffer handle)
+    void graphics_device::destroy(index_buffer_handle handle)
     {
     }
 

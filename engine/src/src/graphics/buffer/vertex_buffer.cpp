@@ -1,33 +1,33 @@
-#include <graphics/buffer/vertex_buffer.hpp>
+#include <graphics/buffer/vertex_buffer_handle.hpp>
 
 namespace moka
 {
-	bool vertex_buffer::operator==(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator==(const vertex_buffer_handle& rhs) const
 	{
 		return id == rhs.id;
 	}
 
-	bool vertex_buffer::operator!=(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator!=(const vertex_buffer_handle& rhs) const
 	{
 		return id != rhs.id;
 	}
 
-	bool vertex_buffer::operator>(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator>(const vertex_buffer_handle& rhs) const
 	{
 		return id > rhs.id;
 	}
 
-	bool vertex_buffer::operator<(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator<(const vertex_buffer_handle& rhs) const
 	{
 		return id < rhs.id;
 	}
 
-	bool vertex_buffer::operator>=(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator>=(const vertex_buffer_handle& rhs) const
 	{
 		return id >= rhs.id;
 	}
 
-	bool vertex_buffer::operator<=(const vertex_buffer& rhs) const
+	bool vertex_buffer_handle::operator<=(const vertex_buffer_handle& rhs) const
 	{
 		return id <= rhs.id;
 	}

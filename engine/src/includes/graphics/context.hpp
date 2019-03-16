@@ -2,7 +2,7 @@
 
 #include "graphics/device/graphics_device.hpp"
 #include "graphics/shader.hpp"
-#include "graphics/texture.hpp"
+#include "graphics/texture_handle.hpp"
 #include <unordered_map>
 #include <vector>
 

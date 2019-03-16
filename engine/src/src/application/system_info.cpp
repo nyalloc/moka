@@ -1,13 +1,12 @@
-#include <string>
-#include <windows.h>
-#include <sysinfoapi.h>
 #include <application/system_info.hpp>
-#include <future>
 #include <atlstr.h>
+#include <future>
+#include <string>
+#include <sysinfoapi.h>
+#include <windows.h>
 
 namespace moka
 {
-
     CString get_string_from_reg(HKEY key_parent, const CString& key_name, const CString& key_val_name)
     {
         CRegKey key;
@@ -23,9 +22,9 @@ namespace moka
     }
 
     /**
-    * \brief Access system and hardware information.
-    *        Use this class to figure out capabilities of the underlying platform and hardware.
-    */
+     * \brief Access system and hardware information.
+     *        Use this class to figure out capabilities of the underlying platform and hardware.
+     */
     class system_info::impl
     {
     public:
@@ -36,9 +35,9 @@ namespace moka
             return static_cast<size_t>(info.dwNumberOfProcessors);
         }
 
-        static std::string cpuid()
+        static std::string cpu_id()
         {
-            int cpu_info[4] = { -1 };
+            int cpu_info[4] = {-1};
             char cpu_brand_string[0x40];
             // Get the information associated with each extended ID.
             __cpuid(cpu_info, 0x80000000);
@@ -54,7 +53,7 @@ namespace moka
                 else if (i == 0x80000004)
                     memcpy(cpu_brand_string + 32, cpu_info, sizeof(cpu_info));
             }
-            //string includes manufacturer, model and clockspeed
+            // string includes manufacturer, model and clockspeed
             return cpu_brand_string;
         }
 
@@ -87,29 +86,38 @@ namespace moka
 
         static std::string operating_system_name()
         {
-            return get_string_from_reg(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", L"ProductName").GetString();
+            return get_string_from_reg(
+                       HKEY_LOCAL_MACHINE,
+                       L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
+                       L"ProductName")
+                .GetString();
         }
 
         static std::string operating_system_version()
         {
-            return get_string_from_reg(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", L"CurrentVersion").GetString();
+            return get_string_from_reg(
+                       HKEY_LOCAL_MACHINE,
+                       L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
+                       L"CurrentVersion")
+                .GetString();
         }
     };
 
-    std::ostream &operator << (std::ostream& stream, const system_info& obj)
+    std::ostream& operator<<(std::ostream& stream, const system_info& obj)
     {
         stream << "System Information:" << std::endl;
-        stream << "- OS:                     " << obj.operating_system_name() << " " << obj.operating_system_version() << std::endl;
-        stream << "- CPU:                    " << obj.cpuid() << std::endl;
+        stream << "- OS:                     " << obj.operating_system_name() << " "
+               << obj.operating_system_version() << std::endl;
+        stream << "- CPU:                    " << obj.cpu_id() << std::endl;
         stream << "- Architecture:           " << obj.architecture_string() << std::endl;
         stream << "- Cores:                  " << obj.number_of_processors() << std::endl;
         stream << "- Installed memory (RAM): " << obj.installed_memory() / 1000000 << " GB" << std::endl;
         return stream;
     }
 
-	system_info::system_info()
-        : impl_{ std::make_unique<impl>() }
-    {}
+    system_info::system_info() : impl_{std::make_unique<impl>()}
+    {
+    }
 
     system_info::~system_info() = default;
 
@@ -148,13 +156,13 @@ namespace moka
         return impl_->processor_frequency();
     }
 
-    std::string system_info::cpuid() const
+    std::string system_info::cpu_id() const
     {
-        return impl_->cpuid();
+        return impl_->cpu_id();
     }
 
     std::string system_info::operating_system_version() const
     {
         return impl_->operating_system_version();
     }
-}
+} // namespace moka

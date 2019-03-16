@@ -76,7 +76,7 @@ namespace moka
         return *this;
     }
 
-    material_parameter& material_parameter::operator=(const texture& data)
+    material_parameter& material_parameter::operator=(const texture_handle& data)
     {
         this->data = data;
         this->count = 1;
@@ -116,7 +116,7 @@ namespace moka
         return *this;
     }
 
-    material_parameter& material_parameter::operator=(texture&& data)
+    material_parameter& material_parameter::operator=(texture_handle&& data)
     {
         this->data = data;
         this->count = 1;
@@ -128,7 +128,7 @@ namespace moka
 
     material_parameter& material_parameter::operator=(material_parameter&& rhs) noexcept = default;
 
-    material_parameter::material_parameter(const std::string& name, const texture& data, const size_t count)
+    material_parameter::material_parameter(const std::string& name, const texture_handle& data, const size_t count)
         : material_parameter(name, parameter_type::texture, data, count)
     {
     }

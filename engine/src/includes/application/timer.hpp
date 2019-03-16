@@ -2,49 +2,72 @@
 
 #include <chrono>
 
-namespace moka 
+namespace moka
 {
-	class timer final
-	{
-		bool started_;
-		bool paused_;
-		std::chrono::steady_clock::time_point reference_;
-		std::chrono::duration<long double> accumulated_;
-	public:
-		timer(const timer& other) = default;
+    /**
+     * \brief A stopwatch style timer. Defines high-level time functions so that you don't have to go to a lot of effort just to find out how long something takes.
+     */
+    class timer final
+    {
+        bool started_;
+        bool paused_;
+        std::chrono::steady_clock::time_point reference_;
+        std::chrono::duration<long double> accumulated_;
 
-		timer(timer&& other) = default;
+    public:
+        timer(const timer& other) = default;
 
-		timer& operator=(const timer& other) = default;
+        timer(timer&& other) = default;
 
-		timer& operator=(timer&& other) = default;
+        timer& operator=(const timer& other) = default;
 
-		~timer();
+        timer& operator=(timer&& other) = default;
 
-		explicit timer(bool start);
+        ~timer();
 
-		void start();
+        /**
+         * \brief Create a new timer object.
+         * \param start Should the timer start straight away after being constructed?
+         */
+        explicit timer(bool start);
 
-		void stop();
+        /**
+         * \brief Start the timer.
+         */
+        void start();
 
-		void reset();
+        /**
+         * \brief Stop the timer.
+         */
+        void stop();
 
-		template <class duration_t = std::chrono::milliseconds>
-		auto elapsed() const;
-	};
+        /**
+         * \brief Reset the timer's state.
+         */
+        void reset();
 
-	template <class duration_t>
-	auto timer::elapsed() const
-	{
-		if (started_)
-		{
-			if (paused_)
-			{
-				return std::chrono::duration_cast<duration_t>(accumulated_).count();
-			}
-			return std::chrono::duration_cast<duration_t>(
-				accumulated_ + (std::chrono::steady_clock::now() - reference_)).count();
-		}
-		return duration_t(0).count();
-	}
-}
+        /**
+         * \brief Get the currently elapsed time.
+         * \tparam duration_t Your preferred format of the elapsed time (defaults to milliseconds)
+         * \return The elapsed time.
+         */
+        template <class duration_t = std::chrono::milliseconds>
+        auto elapsed() const;
+    };
+
+    template <class duration_t>
+    auto timer::elapsed() const
+    {
+        if (started_)
+        {
+            if (paused_)
+            {
+                return std::chrono::duration_cast<duration_t>(accumulated_).count();
+            }
+            return std::chrono::duration_cast<duration_t>(
+                       accumulated_ + (std::chrono::steady_clock::now() - reference_))
+                .count();
+        }
+        return duration_t(0).count();
+    }
+} // namespace moka

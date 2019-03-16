@@ -1,12 +1,12 @@
 #pragma once
 
-#include <filesystem>
-#include <map>
-
 namespace moka
 {
-	template<typename T>
-	class asset_importer
-	{
-	};
-}
+    /**
+     * \brief This is a basic asset importer with no functionality. Specializations of this class define importing logic for the type.
+     */
+    template <typename T>
+    class asset_importer
+    {
+    };
+} // namespace moka

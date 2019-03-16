@@ -3,7 +3,7 @@
 
 using namespace moka;
 
-class texture_application : public application
+class texture_application final : public application
 {
     float vertices_[18] = {
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
@@ -28,8 +28,8 @@ class texture_application : public application
         "        FragColor = vec4(out_color0, 1.0f);         \n"
         "    }                                               \0";
 
-    vertex_buffer vertex_buffer_;
-    index_buffer index_buffer_;
+    vertex_buffer_handle vertex_buffer_;
+    index_buffer_handle index_buffer_;
     material_handle material_;
 
 public:

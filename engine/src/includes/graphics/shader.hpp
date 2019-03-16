@@ -15,32 +15,32 @@ namespace moka
     {
         uint16_t id;
 
-        bool operator==(const shader_handle& rhs)
+        bool operator==(const shader_handle& rhs) const
         {
             return id == rhs.id;
         }
 
-        bool operator!=(const shader_handle& rhs)
+        bool operator!=(const shader_handle& rhs) const
         {
             return id != rhs.id;
         }
 
-        bool operator>(const shader_handle& rhs)
+        bool operator>(const shader_handle& rhs) const
         {
             return id > rhs.id;
         }
 
-        bool operator<(const shader_handle& rhs)
+        bool operator<(const shader_handle& rhs) const
         {
             return id < rhs.id;
         }
 
-        bool operator>=(const shader_handle& rhs)
+        bool operator>=(const shader_handle& rhs) const
         {
             return id >= rhs.id;
         }
 
-        bool operator<=(const shader_handle& rhs)
+        bool operator<=(const shader_handle& rhs) const
         {
             return id <= rhs.id;
         }

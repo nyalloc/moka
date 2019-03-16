@@ -1,13 +1,7 @@
 #include <application/application.hpp>
-#include <application/open_file.hpp>
-#include <asset_importer/model_importer.hpp>
 #include <filesystem>
 #include <graphics/camera/camera_mouse_controller.hpp>
-#include <graphics/color.hpp>
 #include <graphics/device/graphics_device.hpp>
-#include <graphics/material/material_builder.hpp>
-#include <graphics/model.hpp>
-#include <graphics/pbr.hpp>
 #include <graphics/scene.hpp>
 #include <imgui.h>
 #include <imgui.hpp>
@@ -29,9 +23,9 @@ class app final : public application
 public:
     explicit app(const app_settings& settings)
         : application(settings),
-          scene_(graphics_, data_path()),
           camera_(mouse_, glm::perspective(glm::radians(70.0f), window_.aspect(), 0.1f, 100.0f)),
-          imgui_(window_, keyboard_, mouse_, graphics_)
+          imgui_(window_, keyboard_, mouse_, graphics_),
+          scene_(graphics_, data_path())
     {
     }
 
@@ -39,15 +33,12 @@ public:
     {
         imgui_.new_frame(delta_time);
 
-        auto& io = ImGui::GetIO();
-
         ImGui::SetNextWindowBgAlpha(0.3f); // Transparent background
         if (ImGui::Begin(
                 "Overlay",
                 nullptr,
-                (0 != -1 ? ImGuiWindowFlags_NoMove : 0) | ImGuiWindowFlags_NoTitleBar |
-                    ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize |
-                    ImGuiWindowFlags_NoSavedSettings |
+                (0 != -1 ? ImGuiWindowFlags_NoMove : 0) | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+                    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
                     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
         {
             ImGui::Text(
@@ -60,16 +51,13 @@ public:
 
         ImGui::Begin("Render Settings");
         {
-            ImGui::SliderFloat("Gamma", &scene_.gamma_, 0.0f, 10.0f, "%.3f");
-            ImGui::SliderFloat(
-                "Exposure", &scene_.exposure_, 0.0f, 10.0f, "%.3f");
+            ImGui::SliderFloat("Gamma", &scene_.gamma, 0.0f, 10.0f, "%.3f");
+            ImGui::SliderFloat("Exposure", &scene_.exposure, 0.0f, 10.0f, "%.3f");
 
-            ImGui::SliderFloat(
-                "Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
+            ImGui::SliderFloat("Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
             ImGui::Checkbox("Camera Auto Rotate", &rotate_);
-            ImGui::Checkbox("Draw Environment", &scene_.environment_);
-            ImGui::ColorEdit4(
-                "Clear Color", reinterpret_cast<float*>(&scene_.color_), ImGuiColorEditFlags_PickerHueWheel);
+            ImGui::Checkbox("Draw Environment", &scene_.environment);
+            ImGui::ColorEdit4("Clear Color", reinterpret_cast<float*>(&scene_.color), ImGuiColorEditFlags_PickerHueWheel);
         }
         ImGui::End();
 

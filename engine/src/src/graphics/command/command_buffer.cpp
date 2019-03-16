@@ -5,6 +5,7 @@
 #include <graphics/command/fill_vertex_buffer_command.hpp>
 #include <graphics/command/frame_buffer_command.hpp>
 #include <graphics/command/frame_buffer_texture_command.hpp>
+#include <graphics/command/generate_mipmaps_command.hpp>
 #include <graphics/command/scissor_command.hpp>
 #include <graphics/command/set_material_properties_command.hpp>
 #include <graphics/command/viewport_command.hpp>

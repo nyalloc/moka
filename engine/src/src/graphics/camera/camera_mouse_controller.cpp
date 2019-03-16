@@ -4,11 +4,11 @@
 namespace moka
 {
     camera_mouse_controller::camera_mouse_controller(mouse& mouse, const glm::mat4& perspective)
-        : mouse_(mouse), basic_camera(moka::transform(), perspective)
+        : basic_camera(transform(), perspective), mouse_(mouse)
     {
     }
 
-    void camera_mouse_controller::set_auto_rotate(bool rotate)
+    void camera_mouse_controller::set_auto_rotate(const bool rotate)
     {
         auto_rotate_ = rotate;
     }

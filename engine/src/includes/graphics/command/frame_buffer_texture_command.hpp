@@ -1,15 +1,15 @@
 #pragma once
 
-#include <graphics/buffer/frame_buffer.hpp>
+#include <graphics/buffer/frame_buffer_handle.hpp>
 #include <graphics/command/graphics_command.hpp>
-#include <graphics/texture.hpp>
+#include <graphics/texture_handle.hpp>
 
 namespace moka
 {
     class frame_buffer_texture_command final : public graphics_command
     {
     public:
-        texture tex;
+        texture_handle tex;
         frame_attachment attachment;
         image_target target;
         int level;
@@ -18,7 +18,7 @@ namespace moka
 
         void accept(graphics_visitor& visitor) override;
 
-        frame_buffer_texture_command& set_texture(texture texture);
+        frame_buffer_texture_command& set_texture(texture_handle texture);
 
         frame_buffer_texture_command& set_attachment(frame_attachment attachment);
 

@@ -1,23 +1,15 @@
 #pragma once
 
-#include <application/application.hpp>
-#include <application/open_file.hpp>
-#include <asset_importer/model_importer.hpp>
-#include <filesystem>
 #include <graphics/camera/basic_camera.hpp>
-#include <graphics/color.hpp>
-#include <graphics/device/graphics_device.hpp>
-#include <graphics/material/material_builder.hpp>
-#include <graphics/model.hpp>
 
 namespace moka
 {
     namespace constants
     {
-        glm::mat4 projection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
+        inline glm::mat4 projection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
 
         // clang-format off
-        glm::mat4 capture_views[6] = { // glm doesn't currently allow this as constexpr expression! boo
+        inline glm::mat4 capture_views[6] = { // glm doesn't currently allow this as constexpr expression! boo
             lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)),
             lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)),
             lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)),
@@ -25,7 +17,7 @@ namespace moka
             lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)),
             lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f))};
 
-        image_target image_targets[6] = {
+        constexpr static image_target image_targets[6] = {
             image_target::cubemap_positive_x,
             image_target::cubemap_negative_x,
             image_target::cubemap_positive_y,

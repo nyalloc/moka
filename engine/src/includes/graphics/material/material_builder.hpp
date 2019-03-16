@@ -3,8 +3,7 @@
 #include <filesystem>
 #include <graphics/material/material.hpp>
 #include <graphics/material/material_properties.hpp>
-#include <graphics/texture.hpp>
-#include <map>
+#include <graphics/texture_handle.hpp>
 #include <string>
 #include <vector>
 
@@ -68,7 +67,7 @@ namespace moka
 
         material_builder& add_uniform(const std::string& name, float data);
 
-        material_builder& add_uniform(const std::string& name, const texture& data);
+        material_builder& add_uniform(const std::string& name, const texture_handle& data);
 
         material_builder& add_uniform(const std::string& name, const glm::vec3& data);
 
@@ -78,7 +77,7 @@ namespace moka
 
         material_builder& add_uniform(const std::string& name, const glm::mat4& data);
 
-        material_builder& add_texture(material_property property, texture texture);
+        material_builder& add_texture(material_property property, texture_handle texture);
 
         static bool replace(std::string& source, const std::string& target, const std::string& replacement);
 

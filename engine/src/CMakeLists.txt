@@ -30,7 +30,6 @@ set(APPLICATION_SRC
     "includes/application/app_settings.hpp"  
     "includes/application/window.hpp"  
     "includes/application/application.hpp"
-    "includes/application/open_file.hpp"
     "includes/application/signal.hpp"
     "includes/application/logger.hpp"
     "includes/application/system_info.hpp"
@@ -39,7 +38,6 @@ set(APPLICATION_SRC
     "src/application/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp" 
-    "src/application/open_file.cpp"
     "src/application/system_info.cpp"
     "src/application/timer.cpp"	
 )
@@ -64,16 +62,16 @@ set(GRAPHICS_API_SRC
 )
 
 set(GRAPHICS_BUFFER_SRC
-    "includes/graphics/buffer/frame_buffer.hpp"
-    "includes/graphics/buffer/index_buffer.hpp"
+    "includes/graphics/buffer/frame_buffer_handle.hpp"
+    "includes/graphics/buffer/index_buffer_handle.hpp"
     "includes/graphics/buffer/vertex_attribute.hpp"
-    "includes/graphics/buffer/vertex_buffer.hpp"
+    "includes/graphics/buffer/vertex_buffer_handle.hpp"
     "includes/graphics/buffer/vertex_layout.hpp"
     "includes/graphics/buffer/vertex_layout_builder.hpp"
-    "src/graphics/buffer/frame_buffer.cpp"
-    "src/graphics/buffer/index_buffer.cpp"
+    "src/graphics/buffer/frame_buffer_handle.cpp"
+    "src/graphics/buffer/index_buffer_handle.cpp"
     "src/graphics/buffer/vertex_attribute.cpp"
-    "src/graphics/buffer/vertex_buffer.cpp"
+    "src/graphics/buffer/vertex_buffer_handle.cpp"
     "src/graphics/buffer/vertex_layout.cpp"
     "src/graphics/buffer/vertex_layout_builder.cpp"
 )
@@ -150,7 +148,7 @@ set(GRAPHICS_SRC
     "includes/graphics/program.hpp"
     "includes/graphics/shader.hpp"
     "includes/graphics/default_shaders.hpp"
-    "includes/graphics/texture.hpp"
+    "includes/graphics/texture_handle.hpp"
     "includes/graphics/transform.hpp"
     "includes/graphics/utilities.hpp"
 
@@ -159,7 +157,7 @@ set(GRAPHICS_SRC
     "src/graphics/program.cpp"
     "src/graphics/shader.cpp"
     "src/graphics/default_shaders.cpp"
-    "src/graphics/texture.cpp"
+    "src/graphics/texture_handle.cpp"
     "src/graphics/transform.cpp"
     "src/graphics/utilities.cpp"
 )
@@ -171,11 +169,9 @@ set(TRAITS_SRC
 )
 
 set(ASSET_SRC
-    "includes/asset_importer/shader_importer.hpp" 
     "includes/asset_importer/asset_importer.hpp" 
     "includes/asset_importer/texture_importer.hpp" 
     "includes/asset_importer/model_importer.hpp"
-	"src/asset_importer/shader_importer.cpp"
     "src/asset_importer/texture_importer.cpp"
     "src/asset_importer/asset_importer.cpp" 
     "src/asset_importer/model_importer.cpp"
@@ -221,14 +217,3 @@ target_link_libraries(moka
     spdlog::spdlog
     ${PLATFORM_SPECIFIC_LIBS}
 )
-
-set(MOKA_TESTS
-    "src/tests/unit_tests_main.cpp"
-    "src/tests/buffer_tests.cpp"
-)
-
-add_executable(moka_tests ${MOKA_TESTS})
-
-target_link_libraries(moka_tests moka)
-
-add_test(buffer_tests moka_tests [buffer])

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
 #include <memory>
+#include <string>
 
 namespace moka
 {
     /**
-     * \brief The processor architecture of the installed operating system. 
+     * \brief The processor architecture of the installed operating system.
      */
     enum class cpu_architecture
     {
@@ -20,7 +20,7 @@ namespace moka
 
     /**
      * \brief Access system and hardware information.
-     *        Use this class to figure out capabilities of the underlying platform and hardware. 
+     *        Use this class to figure out capabilities of the underlying platform and hardware.
      */
     class system_info
     {
@@ -28,10 +28,10 @@ namespace moka
         system_info();
         ~system_info();
 
-		system_info(const system_info& rhs) = delete;
-		system_info(system_info&& rhs) = default;
-		system_info& operator=(const system_info& rhs) = delete;
-		system_info& operator=(system_info&& rhs) = default;
+        system_info(const system_info& rhs) = delete;
+        system_info(system_info&& rhs) = default;
+        system_info& operator=(const system_info& rhs) = delete;
+        system_info& operator=(system_info&& rhs) = default;
 
         size_t number_of_processors() const;
 
@@ -47,14 +47,14 @@ namespace moka
 
         float processor_frequency() const;
 
-        std::string cpuid() const;
+        std::string cpu_id() const;
 
         std::string operating_system_version() const;
 
-        friend std::ostream &operator << (std::ostream& stream, const system_info& obj);
+        friend std::ostream& operator<<(std::ostream& stream, const system_info& obj);
 
     private:
         class impl;
         std::unique_ptr<impl> impl_;
     };
-}
+} // namespace moka

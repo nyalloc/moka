@@ -1,4 +1,5 @@
 #include <graphics/command/fill_index_buffer_command.hpp>
+#include <graphics/device/graphics_visitor.hpp>
 
 namespace moka
 {
@@ -10,7 +11,7 @@ namespace moka
     }
 
     fill_index_buffer_command& fill_index_buffer_command::set_buffer(
-        const index_buffer handle, const void* data, const size_t size)
+        const index_buffer_handle handle, const void* data, const size_t size)
     {
         this->handle = handle;
         this->data = data;

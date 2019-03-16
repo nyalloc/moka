@@ -1,4 +1,4 @@
-// dear imgui, v1.69 WIP
+// dear imgui, v1.70 WIP
 // (drawing and font code)
 
 /*
@@ -55,7 +55,7 @@ Index of this file:
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wold-style-cast"         // warning : use of old-style cast                              // yes, they are more terse.
 #pragma clang diagnostic ignored "-Wfloat-equal"            // warning : comparing floating point with == or != is unsafe   // storing and comparing against same constants ok.
-#pragma clang diagnostic ignored "-Wglobal-constructors"    // warning : declaration requires a global destructor           // similar to above, not sure what the exact difference it.
+#pragma clang diagnostic ignored "-Wglobal-constructors"    // warning : declaration requires a global destructor           // similar to above, not sure what the exact difference is.
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning : implicit conversion changes signedness             //
 #if __has_warning("-Wzero-as-null-pointer-constant")
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"  // warning : zero as null pointer constant              // some standard header variations use #define NULL 0
@@ -2341,6 +2341,23 @@ const ImWchar*  ImFontAtlas::GetGlyphRangesThai()
         0x0020, 0x00FF, // Basic Latin
         0x2010, 0x205E, // Punctuations
         0x0E00, 0x0E7F, // Thai
+        0,
+    };
+    return &ranges[0];
+}
+
+const ImWchar*  ImFontAtlas::GetGlyphRangesVietnamese()
+{
+    static const ImWchar ranges[] =
+    {
+        0x0020, 0x00FF, // Basic Latin
+        0x0102, 0x0103,
+        0x0110, 0x0111,
+        0x0128, 0x0129,
+        0x0168, 0x0169,
+        0x01A0, 0x01A1,
+        0x01AF, 0x01B0,
+        0x1EA0, 0x1EF9,
         0,
     };
     return &ranges[0];
