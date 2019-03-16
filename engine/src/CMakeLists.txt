@@ -50,7 +50,7 @@ set(INPUT_SRC
 )
 
 set(GRAPHICS_API_SRC
-    "includes/graphics/scene.hpp"
+    "includes/graphics/pbr_scene.hpp"
     "includes/graphics/pbr.hpp"
 	"includes/graphics/pbr_constants.hpp"
 	"src/graphics/pbr.cpp"

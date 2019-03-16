@@ -185,6 +185,9 @@ namespace moka
         float32  // float
     };
 
+    /**
+     * \brief A handle to a texture object on the device.
+     */
     struct texture_handle final
     {
         uint16_t id;
@@ -240,29 +243,93 @@ namespace moka
         bool generate_mipmaps = false;
     };
 
+    /**
+     * \brief A builder class to help you build a texture.
+     */
     class texture_builder final
     {
     public:
+        /**
+         * \brief Build a texture builder
+         * \param device The graphics_device object that this texture will be uploaded to
+         */
         explicit texture_builder(graphics_device& device);
 
+        /**
+         * \brief Set the texture's target.
+         * \param target The texture's target.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_target(texture_target target);
 
+        /**
+         * \brief Set the texture's S wrap mode
+         * \param mode The wrap mode
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_wrap_s(wrap_mode mode);
 
+        /**
+         * \brief Set the texture's T wrap mode
+         * \param mode The wrap mode
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_wrap_t(wrap_mode mode);
 
+        /**
+         * \brief Set the texture's R wrap mode
+         * \param mode The wrap mode
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_wrap_r(wrap_mode mode);
 
+        /**
+         * \brief Set the texture's mag filter.
+         * \param mag The mag filter.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_mag_filter(mag_filter mag);
 
+        /**
+         * \brief Set the texture's min filter.
+         * \param min The min filter.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_min_filter(min_filter min);
 
+        /**
+         * \brief Free the host texture buffer after the texture is built.
+         * \param free_data True if the host buffer should be freed. Otherwise, false.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& free_host_data(bool free_data);
 
+        /**
+         * \brief Generate mipmaps with this texture.
+         * \param generate_mipmaps True if this texture should be built with mipmaps.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& set_mipmaps(bool generate_mipmaps);
 
+        /**
+         * \brief Build the final texture, upload it to the device, and return the handle.
+         * \return The handle to the new texture.
+         */
         texture_handle build();
 
+        /**
+         * \brief Specify a two-dimensional image. Describe the parameters of the texture image, such as height, width, width of the border, level-of-detail.
+         * \param target Specify the target texture.
+         * \param mip_level Specify the level of detail.
+         * \param internal_format Specify the number of components in the texture.
+         * \param width Specify the width of the texture image.
+         * \param height Specify the height of the texture image.
+         * \param border This value must be 0 (Why do we need it then?)
+         * \param base_format Specifies the format of the pixel data.
+         * \param type Specify the data type of the pixel data.
+         * \param data A pointer to the image data in host memory.
+         * \return A reference to this texture_builder object to enable method chaining.
+         */
         texture_builder& add_image_data(
             image_target target,
             int mip_level,

@@ -94,6 +94,9 @@ namespace moka
         z,
     };
 
+    /**
+     * \brief This contains a snapshot of the keyboard state.
+     */
     class keyboard_state
     {
         friend class application;
@@ -105,11 +108,24 @@ namespace moka
         void set_key_up(key key);
 
     public:
+        /**
+         * \brief Check if a key is down.
+         * \param key The key you want to check.
+         * \return True if the key is down, otherwise false.
+         */
         bool is_key_down(key key) const;
 
+        /**
+         * \brief Check if a key is up.
+         * \param key The key you want to check.
+         * \return True if the key is up, otherwise false.
+         */
         bool is_key_up(key key) const;
     };
 
+    /**
+     * \brief The keyboard object. Updated in the main event loop so that it contains an up-to-date snapshot of the keyboard state.
+     */
     class keyboard
     {
         friend class application;
@@ -117,6 +133,10 @@ namespace moka
         keyboard_state state_{};
 
     public:
+        /**
+         * \brief Get the latest keyboard state.
+         * \return The latest keyboard state.
+         */
         const keyboard_state& get_state() const;
     };
 } // namespace moka

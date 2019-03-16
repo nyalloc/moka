@@ -404,11 +404,11 @@ namespace moka
 
             material_builder mat_builder(device);
 
-            mat_builder.add_uniform("view_pos", glm::vec3(0.0f));
-            mat_builder.add_uniform("material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            mat_builder.add_uniform("material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-            mat_builder.add_uniform("material.roughness_factor", 1.0f);
-            mat_builder.add_uniform("material.metalness_factor", 1.0f);
+            mat_builder.add_material_parameter("view_pos", glm::vec3(0.0f));
+            mat_builder.add_material_parameter("material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            mat_builder.add_material_parameter("material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+            mat_builder.add_material_parameter("material.roughness_factor", 1.0f);
+            mat_builder.add_material_parameter("material.metalness_factor", 1.0f);
 
             std::ifstream i(material_path);
             json j;
@@ -431,7 +431,7 @@ namespace moka
                     {
                         auto& data = base_color_factor_itr->second.number_array;
                         glm::vec4 diffuse_factor(data[0], data[1], data[2], data[3]);
-                        mat_builder.add_uniform("material.diffuse_factor", diffuse_factor);
+                        mat_builder.add_material_parameter("material.diffuse_factor", diffuse_factor);
                     }
 
                     if (auto base_color_texture_itr = material.values.find("baseColorTexture");
@@ -500,7 +500,7 @@ namespace moka
                     {
                         auto& data = metallic_factor_itr->second.number_value;
                         auto metallic_factor(static_cast<float>(data));
-                        mat_builder.add_uniform("material.metalness_factor", metallic_factor);
+                        mat_builder.add_material_parameter("material.metalness_factor", metallic_factor);
                     }
 
                     if (auto roughness_factor_itr = material.values.find("roughnessFactor");
@@ -508,7 +508,7 @@ namespace moka
                     {
                         auto& data = roughness_factor_itr->second.number_value;
                         auto roughness_factor(static_cast<float>(data));
-                        mat_builder.add_uniform("material.roughness_factor", roughness_factor);
+                        mat_builder.add_material_parameter("material.roughness_factor", roughness_factor);
                     }
 
                     if (auto metallic_roughness_texture_itr =
@@ -711,7 +711,7 @@ namespace moka
                     {
                         auto data = emissive_factor_itr->second.number_array;
                         glm::vec4 emissive_factor(data[0], data[1], data[2], 1.0f);
-                        mat_builder.add_uniform("material.emissive_factor", emissive_factor);
+                        mat_builder.add_material_parameter("material.emissive_factor", emissive_factor);
                     }
 
                     if (auto emissive_texture_itr =
@@ -805,7 +805,7 @@ namespace moka
                         else if (alpha_str == "MASK")
                         {
                             alpha = alpha_mode::mask;
-                            mat_builder.add_uniform("material.alpha_cutoff", alpha_cutoff);
+                            mat_builder.add_material_parameter("material.alpha_cutoff", alpha_cutoff);
                             mat_builder.set_blend_enabled(true);
                         }
                         else if (alpha_str == "BLEND")

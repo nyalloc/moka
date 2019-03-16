@@ -13,6 +13,9 @@ namespace moka
     class generate_mipmaps_command;
     class set_material_parameters_command;
 
+    /**
+     * \brief Used to define visitor-pattern functionality for graphics_commands
+     */
     class graphics_visitor
     {
     public:

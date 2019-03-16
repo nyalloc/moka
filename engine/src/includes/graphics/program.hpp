@@ -4,6 +4,9 @@
 
 namespace moka
 {
+    /**
+     * \brief A handle to a program object on the device.
+     */
     struct program_handle
     {
         uint16_t id = std::numeric_limits<uint16_t>::max();

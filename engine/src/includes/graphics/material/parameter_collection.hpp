@@ -5,6 +5,9 @@
 
 namespace moka
 {
+    /**
+     * \brief A collection of material parameters.
+     */
     class parameter_collection
     {
         std::vector<material_parameter> parameters_;

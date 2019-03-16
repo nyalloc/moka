@@ -7,6 +7,9 @@
 
 namespace moka
 {
+    /**
+     * \brief A unique identifier for a material.
+     */
     using material_handle = uint16_t;
 
     enum class polygon_draw_mode
@@ -16,18 +19,27 @@ namespace moka
         points
     };
 
+    /**
+     * \brief The polygon mode to use with a material.
+     */
     struct polygon_mode final
     {
         polygon_draw_mode mode = polygon_draw_mode::fill;
         face faces = face::front_and_back;
     };
 
+    /**
+     * \brief Culling settings to use with a material.
+     */
     struct culling final
     {
         bool enabled = true;
         face faces = face::back;
     };
 
+    /**
+     * \brief Blend settings to use with a material.
+     */
     struct blend final
     {
         bool enabled = false;
@@ -38,9 +50,11 @@ namespace moka
 
     class material_builder;
 
+    /**
+     * \brief A material that can be used when rendering a primitive.
+     */
     class material final
     {
-    protected:
         alpha_mode alpha_mode_ = alpha_mode::opaque;
         program_handle program_ = {std::numeric_limits<uint16_t>::max()};
         parameter_collection parameters_;
@@ -68,6 +82,17 @@ namespace moka
 
         material& operator=(material&& rhs) noexcept;
 
+        /**
+         * \brief Create a new material object.
+         * \param program_handle The program to use with this material.
+         * \param parameters The parameters to use with the material.
+         * \param alpha_mode The alpha mode to use with the material.
+         * \param blend The blend mode to use with the material.
+         * \param culling The culling mode to use with the material.
+         * \param polygon_mode The polygon mode to use with the material.
+         * \param depth_test Does this material require the depth test?
+         * \param scissor_test Does this material require the scissor test?
+         */
         material(
             program_handle program_handle,
             parameter_collection&& parameters,
@@ -78,16 +103,40 @@ namespace moka
             bool depth_test,
             bool scissor_test);
 
+        /**
+         * \brief Create a new material object.
+         * \param program_handle The program to use with this material.
+         */
         explicit material(program_handle program_handle);
 
+        /**
+         * \brief Get the alpha mode of this material.
+         * \return This material's alpha mode.
+         */
         alpha_mode get_alpha_mode() const;
 
+        /**
+         * \brief Get this material's program.
+         * \return This material's program.
+         */
         program_handle get_program() const;
 
+        /**
+         * \brief Get the number of parameters in this material.
+         * \return The number of parameters in this material.
+         */
         size_t size() const;
 
+        /**
+         * \brief Does this material require the scissor test?
+         * \return True if scissor test is required, otherwise false.
+         */
         bool get_scissor_test() const;
 
+        /**
+         * \brief Does this material require the depth test?
+         * \return True if depth test is required, otherwise false.
+         */
         bool get_depth_test() const;
 
         const_iterator begin() const;
@@ -98,16 +147,43 @@ namespace moka
 
         iterator end();
 
+        /**
+         * \brief Return the material parameter at the index using the subscript operator.
+         * \param index The index of the material parameter.
+         * \return The material parameter.
+         */
         const material_parameter& operator[](size_t index) const;
 
+        /**
+         * \brief Return the material parameter at the index using the subscript operator.
+         * \param index The index of the material parameter.
+         * \return The material parameter.
+         */
         material_parameter& operator[](size_t index);
 
+        /**
+         * \brief Return the material parameter with the name using the subscript operator.
+         * \param name The name of the material parameter.
+         * \return The material parameter.
+         */
         material_parameter& operator[](const std::string& name);
 
+        /**
+         * \brief Get the blend mode of this material.
+         * \return The blend mode of this material.
+         */
         const blend& get_blend() const;
 
+        /**
+         * \brief Get the culling mode of this material.
+         * \return The culling mode of this material.
+         */
         const culling& get_culling() const;
 
+        /**
+         * \brief Get the polygon mode of this material.
+         * \return The polygon mode of this material.
+         */
         const polygon_mode& get_polygon_mode() const;
     };
 } // namespace moka

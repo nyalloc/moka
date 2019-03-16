@@ -127,43 +127,43 @@ namespace moka
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const parameter_type type)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const parameter_type type)
     {
         parameters_[name] = material_parameter{name, type};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const float data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const float data)
     {
         parameters_[name] = material_parameter{name, parameter_type::float32, data};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const texture_handle& data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const texture_handle& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::texture, data};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const glm::vec3& data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::vec3& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::vec3, data};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const glm::vec4& data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::vec4& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::vec4, data};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const glm::mat3& data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::mat3& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::mat3, data};
         return *this;
     }
 
-    material_builder& material_builder::add_uniform(const std::string& name, const glm::mat4& data)
+    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::mat4& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::mat4, data};
         return *this;
@@ -173,7 +173,7 @@ namespace moka
     {
         texture_maps_.emplace_back(property);
         const auto name = get_property_name(property);
-        add_uniform(name, texture);
+        add_material_parameter(name, texture);
         return *this;
     }
 
@@ -232,7 +232,7 @@ namespace moka
 
         const auto key = vertex_shader_src_ + fragment_shader_src_;
 
-        auto& cache = graphics_device_.get_shader_cache();
+        auto& cache = graphics_device_.get_program_cache();
 
         const auto it = cache.exists(key);
         if (it)

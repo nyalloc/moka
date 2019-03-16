@@ -5,6 +5,81 @@
 
 namespace moka
 {
+    texture_cache::texture_cache(graphics_device& device, const size_t initial_capacity)
+        : device_(device)
+    {
+        textures_.reserve(initial_capacity);
+    }
+
+    void texture_cache::add_texture(texture_handle handle, const texture_id& id)
+    {
+        const auto index = textures_.size();
+        textures_.emplace_back(handle);
+        texture_lookup_[id] = index;
+    }
+
+    bool texture_cache::exists(const texture_id& id) const
+    {
+        return texture_lookup_.find(id) != texture_lookup_.end();
+    }
+
+    texture_handle texture_cache::get_texture(const texture_id& id) const
+    {
+        return textures_[texture_lookup_.at(id)];
+    }
+
+    program_cache::program_cache(graphics_device& device, const size_t initial_capacity)
+        : device_(device)
+    {
+        shaders_.reserve(initial_capacity);
+    }
+
+    void program_cache::add_program(program_handle handle, const program_id& id)
+    {
+        shaders_.emplace_back(handle);
+    }
+
+    bool program_cache::exists(const program_id& id) const
+    {
+        return shader_lookup_.find(id) != shader_lookup_.end();
+    }
+
+    program_handle program_cache::get_program(const program_id& id) const
+    {
+        return shaders_[shader_lookup_.at(id)];
+    }
+
+    material_cache::material_cache(graphics_device& device, const size_t initial_capacity)
+        : device_(device)
+    {
+        materials_.reserve(initial_capacity);
+    }
+
+    material_handle material_cache::add_material(material&& material)
+    {
+        const auto index = materials_.size();
+        materials_.emplace_back(std::move(material));
+        return material_handle(index);
+    }
+
+    material* material_cache::get_material(const material_handle handle)
+    {
+        if (handle == std::numeric_limits<material_handle>::max())
+        {
+            return nullptr;
+        }
+        return &materials_[handle];
+    }
+
+    const material* material_cache::get_material(const material_handle handle) const
+    {
+        if (handle == std::numeric_limits<material_handle>::max())
+        {
+            return nullptr;
+        }
+        return &materials_[handle];
+    }
+
     texture_cache& graphics_device::get_texture_cache()
     {
         return textures_;
@@ -15,12 +90,12 @@ namespace moka
         return textures_;
     }
 
-    program_cache& graphics_device::get_shader_cache()
+    program_cache& graphics_device::get_program_cache()
     {
         return shaders_;
     }
 
-    const program_cache& graphics_device::get_shader_cache() const
+    const program_cache& graphics_device::get_program_cache() const
     {
         return shaders_;
     }

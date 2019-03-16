@@ -1,3 +1,5 @@
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <graphics/camera/basic_camera.hpp>
 
 namespace moka
@@ -14,9 +16,7 @@ namespace moka
     glm::mat4 basic_camera::get_view() const
     {
         return glm::lookAt(
-            transform_.get_position(),
-            transform_.get_position() + transform_.front(),
-            transform_.up());
+            transform_.get_position(), transform_.get_position() + transform_.front(), transform_.up());
     }
 
     const glm::quat& basic_camera::get_rotation() const

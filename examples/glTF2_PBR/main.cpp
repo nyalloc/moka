@@ -1,8 +1,9 @@
 #include <application/application.hpp>
 #include <filesystem>
+#include <glm/gtc/matrix_transform.hpp>
 #include <graphics/camera/camera_mouse_controller.hpp>
 #include <graphics/device/graphics_device.hpp>
-#include <graphics/scene.hpp>
+#include <graphics/pbr_scene.hpp>
 #include <imgui.h>
 #include <imgui.hpp>
 
@@ -18,7 +19,7 @@ class app final : public application
 
     imgui imgui_;
 
-    scene scene_;
+    pbr_scene scene_;
 
 public:
     explicit app(const app_settings& settings)

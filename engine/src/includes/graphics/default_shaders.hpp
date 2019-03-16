@@ -12,21 +12,22 @@ namespace moka
 
                 #version 330 core
 
-                layout (location = 0) in vec3 aPos;
+                layout (location = 0) in vec3 a_pos;
 
                 uniform mat4 projection;
                 uniform mat4 view;
 
-                out vec3 localPos;
+                out vec3 local_position;
 
                 void main()
                 {
-                    localPos = aPos;
+                    local_position = a_pos;
 
-                    mat4 rotView = mat4(mat3(view)); // remove translation from the view matrix
-                    vec4 clipPos = projection * rotView * vec4(localPos, 1.0);
+                    mat4 rot_view = mat4(mat3(view)); 
 
-                    gl_Position = clipPos.xyww;
+                    vec4 clip_pos = projection * rot_view * vec4(local_position, 1.0);
+
+                    gl_Position = clip_pos.xyww;
                 }
             )";
 
@@ -34,11 +35,11 @@ namespace moka
 
                 #version 330 core
 
-                out vec4 FragColor;
+                out vec4 fragment_color;
 
-                in vec3 localPos;
+                in vec3 local_position;
               
-                uniform samplerCube environmentMap;
+                uniform samplerCube environment_map;
 
                 uniform float gamma;
 
@@ -46,13 +47,13 @@ namespace moka
 
                 void main()
                 {
-                    vec3 envColor = texture(environmentMap, localPos).rgb;
+                    vec3 environment_color = texture(environment_map, local_position).rgb;
                 
-                    vec3 mapped = vec3(1.0f) - exp(-envColor * exposure);
+                    vec3 mapped = vec3(1.0f) - exp(-environment_color * exposure);
             
                     mapped = pow(mapped, vec3(1.0f / gamma));
 
-                    FragColor = vec4(mapped, 1.0f);
+                    fragment_color = vec4(mapped, 1.0f);
                 }
             )";
         } // namespace shade_cubemap
@@ -110,64 +111,61 @@ namespace moka
             constexpr static shader_source vert = R"(
 
                 #version 330 core
-                layout (location = 0) in vec3 aPos;
 
-                out vec3 WorldPos;
+                layout (location = 0) in vec3 a_pos;
+
+                out vec3 world_position;
 
                 uniform mat4 projection;
                 uniform mat4 view;
 
                 void main()
                 {
-                    WorldPos = aPos;  
-                    gl_Position =  projection * view * vec4(WorldPos, 1.0);
+                    world_position = a_pos;  
+                    gl_Position =  projection * view * vec4(world_position, 1.0);
                 }
             )";
 
             constexpr static shader_source frag = R"(
 
                 #version 330 core
-                out vec4 FragColor;
-                in vec3 WorldPos;
 
-                uniform samplerCube environmentMap;
+                out vec4 fragment_color;
+                in vec3 world_position;
+
+                uniform samplerCube environment_map;
 
                 const float PI = 3.14159265359;
 
                 void main()
                 {		
-	                // The world vector acts as the normal of a tangent surface
-                    // from the origin, aligned to WorldPos. Given this normal, calculate all
-                    // incoming radiance of the environment. The result of this radiance
-                    // is the radiance of light coming from -Normal direction, which is what
-                    // we use in the PBR shader to sample irradiance.
-                    vec3 N = normalize(WorldPos);
+                    vec3 n = normalize(world_position);
 
                     vec3 irradiance = vec3(0.0);   
             
-                    // tangent space calculation from origin point
                     vec3 up    = vec3(0.0, 1.0, 0.0);
-                    vec3 right = cross(up, N);
-                    up         = cross(N, right);
+                    vec3 right = cross(up, n);
+                    up         = cross(n, right);
                
-                    float sampleDelta = 0.025;
-                    float nrSamples = 0.0;
-                    for(float phi = 0.0; phi < 2.0 * PI; phi += sampleDelta)
-                    {
-                        for(float theta = 0.0; theta < 0.5 * PI; theta += sampleDelta)
-                        {
-                            // spherical to cartesian (in tangent space)
-                            vec3 tangentSample = vec3(sin(theta) * cos(phi),  sin(theta) * sin(phi), cos(theta));
-                            // tangent space to world
-                            vec3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * N; 
+                    float sample_delta = 0.025;
+                    float number_of_samples = 0.0;
 
-                            irradiance += texture(environmentMap, sampleVec).rgb * cos(theta) * sin(theta);
-                            nrSamples++;
+                    for(float phi = 0.0; phi < 2.0 * PI; phi += sample_delta)
+                    {
+                        for(float theta = 0.0; theta < 0.5 * PI; theta += sample_delta)
+                        {
+                            vec3 tangent_sample = vec3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
+
+                            vec3 sample_vec = tangent_sample.x * right + tangent_sample.y * up + tangent_sample.z * n; 
+
+                            irradiance += texture(environment_map, sample_vec).rgb * cos(theta) * sin(theta);
+
+                            number_of_samples++;
                         }
                     }
-                    irradiance = PI * irradiance * (1.0 / float(nrSamples));
+                    irradiance = PI * irradiance * (1.0 / float(number_of_samples));
             
-                    FragColor = vec4(irradiance, 1.0);
+                    fragment_color = vec4(irradiance, 1.0);
                 }
             )";
         } // namespace make_irradiance_map
@@ -177,41 +175,43 @@ namespace moka
             constexpr static shader_source vert = R"(
 
                 #version 330 core
-                layout (location = 0) in vec3 aPos;
-                out vec3 WorldPos;
+
+                layout (location = 0) in vec3 a_pos;
+
+                out vec3 world_position;
                 uniform mat4 projection;
                 uniform mat4 view;
+
                 void main()
                 {
-                    WorldPos = aPos;
-                    gl_Position =  projection * view * vec4(WorldPos, 1.0);
+                    world_position = a_pos;
+                    gl_Position =  projection * view * vec4(world_position, 1.0);
                 }
             )";
 
             constexpr static shader_source frag = R"(
 
                 #version 330 core
-                out vec4 FragColor;
-                in vec3 WorldPos;
-                uniform samplerCube environmentMap;
+
+                out vec4 fragment_color;
+                in vec3 world_position;
+                uniform samplerCube environment_map;
                 uniform float roughness;
                 const float PI = 3.14159265359;
-                // ----------------------------------------------------------------------------
-                float DistributionGGX(vec3 N, vec3 H, float roughness)
+
+                float distribution_ggx(vec3 n, vec3 h, float roughness)
                 {
-                    float a = roughness*roughness;
-                    float a2 = a*a;
-                    float NdotH = max(dot(N, H), 0.0);
-                    float NdotH2 = NdotH*NdotH;
-                    float nom   = a2;
-                    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-                    denom = PI * denom * denom;
-                    return nom / denom;
+                    float a = roughness * roughness;
+                    float a_squared = a * a;
+                    float n_dot_h = max(dot(n, h), 0.0);
+                    float n_dot_h_squared = n_dot_h*n_dot_h;
+                    float numerator   = a_squared;
+                    float denominator = (n_dot_h_squared * (a_squared - 1.0) + 1.0);
+                    denominator = PI * denominator * denominator;
+                    return numerator / denominator;
                 }
-                // ----------------------------------------------------------------------------
-                // http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
-                // efficient VanDerCorpus calculation.
-                float RadicalInverse_VdC(uint bits)
+
+                float radical_inverse_vdc(uint bits)
                 {
                      bits = (bits << 16u) | (bits >> 16u);
                      bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
@@ -220,76 +220,72 @@ namespace moka
                      bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
                      return float(bits) * 2.3283064365386963e-10; // / 0x100000000
                 }
-                // ----------------------------------------------------------------------------
-                vec2 Hammersley(uint i, uint N)
+
+                vec2 hammersley(uint i, uint n)
                 {
-                    return vec2(float(i)/float(N), RadicalInverse_VdC(i));
+                    return vec2(float(i)/float(n), radical_inverse_vdc(i));
                 }
-                // ----------------------------------------------------------------------------
-                vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
+
+                vec3 importance_sample_ggx(vec2 xi, vec3 n, float roughness)
                 {
-                    float a = roughness*roughness;
+                    float a = roughness * roughness;
     
-                    float phi = 2.0 * PI * Xi.x;
-                    float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
-                    float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
+                    float phi = 2.0 * PI * xi.x;
+                    float cos_theta = sqrt((1.0 - xi.y) / (1.0 + (a*a - 1.0) * xi.y));
+                    float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
     
-                    // from spherical coordinates to cartesian coordinates - halfway vector
-                    vec3 H;
-                    H.x = cos(phi) * sinTheta;
-                    H.y = sin(phi) * sinTheta;
-                    H.z = cosTheta;
-                    H = normalize(H);
+                    vec3 h;
+                    h.x = cos(phi) * sin_theta;
+                    h.y = sin(phi) * sin_theta;
+                    h.z = cos_theta;
+                    h = normalize(h);
     
-                    // from tangent-space H vector to world-space sample vector
-                    vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
-                    vec3 tangent   = normalize(cross(up, N));
-                    vec3 bitangent = cross(N, tangent);
+                    vec3 up        = abs(n.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+                    vec3 tangent   = normalize(cross(up, n));
+                    vec3 bitangent = cross(n, tangent);
     
-                    vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
-                    return normalize(sampleVec);
+                    vec3 sample_vec = tangent * h.x + bitangent * h.y + n * h.z;
+                    return normalize(sample_vec);
                 }
-                // ----------------------------------------------------------------------------
+
                 void main()
                 {
-                    vec3 N = normalize(WorldPos);
+                    vec3 n = normalize(world_position);
     
-                    // make the simplyfying assumption that V equals R equals the normal
-                    vec3 R = N;
-                    vec3 V = R;
-                    const uint SAMPLE_COUNT = 2048u;
-                    vec3 prefilteredColor = vec3(0.0);
-                    float totalWeight = 0.0;
+                    vec3 r = n;
+                    vec3 v = r;
+                    const uint sample_count = 2048u;
+                    vec3 prefiltered_color = vec3(0.0);
+                    float total_weight = 0.0;
     
-                    for(uint i = 0u; i < SAMPLE_COUNT; ++i)
+                    for(uint i = 0u; i < sample_count; ++i)
                     {
-                        // generates a sample vector that's biased towards the preferred alignment direction (importance sampling). 
-                        vec2 Xi = Hammersley(i, SAMPLE_COUNT); 
-                        vec3 H = ImportanceSampleGGX(Xi, N, roughness); 
-                        vec3 L  = normalize(2.0 * dot(V, H) * H - V);
-                        float NdotL = max(dot(N, L), 0.0);
-                        if(NdotL > 0.0)
+                        vec2 xi = hammersley(i, sample_count); 
+                        vec3 h = importance_sample_ggx(xi, n, roughness); 
+                        vec3 l  = normalize(2.0 * dot(v, h) * h - v);
+                        float n_dot_l = max(dot(n, l), 0.0);
+
+                        if(n_dot_l > 0.0)
                         {
-                            // sample from the environment's mip level based on roughness/pdf
-                            float D   = DistributionGGX(N, H, roughness) / PI;
-                            float NdotH = max(dot(N, H), 0.0);
-                            float HdotV = max(dot(H, V), 0.0);
-                            float pdf = D * NdotH / (4.0 * HdotV) + 0.0001;
+                            float d   = distribution_ggx(n, h, roughness) / PI;
+                            float n_dot_h = max(dot(n, h), 0.0);
+                            float h_dot_v = max(dot(h, v), 0.0);
+                            float pdf = d * n_dot_h / (4.0 * h_dot_v) + 0.0001;
                             float resolution = 1024.0; // resolution of source cubemap (per face)
-                            float saTexel  = 4.0 * PI / (6.0 * resolution * resolution);
-                            float saSample = 1.0 / (float(SAMPLE_COUNT) * pdf + 0.0001);
-                            float mipLevel = roughness == 0.0 ? 0.0 : 0.5 * log2(saSample / saTexel);
+                            float sa_texel  = 4.0 * PI / (6.0 * resolution * resolution);
+                            float sa_sample = 1.0 / (float(sample_count) * pdf + 0.0001);
+                            float mip_level = roughness == 0.0 ? 0.0 : 0.5 * log2(sa_sample / sa_texel);
     
-                            prefilteredColor += textureLod(environmentMap, L, mipLevel).rgb * NdotL;
-                            totalWeight      += NdotL;
+                            prefiltered_color += textureLod(environment_map, l, mip_level).rgb * n_dot_l;
+                            total_weight      += n_dot_l;
                         }
                     }
-                    if(totalWeight > 0.0f)
+                    if(total_weight > 0.0f)
                     {
-                        prefilteredColor = prefilteredColor / totalWeight;
+                        prefiltered_color = prefiltered_color / total_weight;
                     }  
     
-                    FragColor = vec4(prefilteredColor, 1.0);
+                    fragment_color = vec4(prefiltered_color, 1.0);
                 }
             )";
         } // namespace make_specular_map
@@ -299,29 +295,27 @@ namespace moka
             constexpr static shader_source vert = R"(
 
                 #version 330 core
-                layout (location = 0) in vec3 aPos;
+                layout (location = 0) in vec3 a_pos;
                 layout (location = 1) in vec2 aTexCoords;
 
-                out vec2 TexCoords;
+                out vec2 texture_coords;
 
                 void main()
                 {
-                    TexCoords = aTexCoords;
-                    gl_Position = vec4(aPos, 1.0);
+                    texture_coords = aTexCoords;
+                    gl_Position = vec4(a_pos, 1.0);
                 }
             )";
 
             constexpr static shader_source frag = R"(
 
                 #version 330 core
-                out vec2 FragColor;
-                in vec2 TexCoords;
+                out vec2 fragment_color;
+                in vec2 texture_coords;
 
                 const float PI = 3.14159265359;
-                // ----------------------------------------------------------------------------
-                // http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
-                // efficient VanDerCorpus calculation.
-                float RadicalInverse_VdC(uint bits) 
+
+                float radical_inverse_vdc(uint bits) 
                 {
                      bits = (bits << 16u) | (bits >> 16u);
                      bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
@@ -330,106 +324,102 @@ namespace moka
                      bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
                      return float(bits) * 2.3283064365386963e-10; // / 0x100000000
                 }
-                // ----------------------------------------------------------------------------
-                vec2 Hammersley(uint i, uint N)
-                {
-                    return vec2(float(i)/float(N), RadicalInverse_VdC(i));
-                }
-                // ----------------------------------------------------------------------------
-                vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
-                {
-                    float a = roughness*roughness;
-    
-                    float phi = 2.0 * PI * Xi.x;
-                    float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
-                    float sinTheta = sqrt(1.0 - cosTheta*cosTheta);
-    
-                    // from spherical coordinates to cartesian coordinates - halfway vector
-                    vec3 H;
-                    H.x = cos(phi) * sinTheta;
-                    H.y = sin(phi) * sinTheta;
-                    H.z = cosTheta;
 
-                    H = normalize(H);
-    
-                    // from tangent-space H vector to world-space sample vector
-                    vec3 up          = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
-                    vec3 tangent   = normalize(cross(up, N));
-                    vec3 bitangent = cross(N, tangent);
-    
-                    vec3 sampleVec = tangent * H.x + bitangent * H.y + N * H.z;
-                    return normalize(sampleVec);
-                }
-                // ----------------------------------------------------------------------------
-                float GeometrySchlickGGX(float NdotV, float roughness)
+                vec2 hammersley(uint i, uint n)
                 {
-                    // note that we use a different k for IBL
+                    return vec2(float(i) / float(n), radical_inverse_vdc(i));
+                }
+
+                vec3 importance_sample_ggx(vec2 xi, vec3 n, float roughness)
+                {
+                    float a = roughness * roughness;
+    
+                    float phi = 2.0 * PI * xi.x;
+                    float cos_theta = sqrt((1.0 - xi.y) / (1.0 + (a*a - 1.0) * xi.y));
+                    float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+    
+                    vec3 h;
+                    h.x = cos(phi) * sin_theta;
+                    h.y = sin(phi) * sin_theta;
+                    h.z = cos_theta;
+
+                    h = normalize(h);
+    
+                    vec3 up        = abs(n.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+                    vec3 tangent   = normalize(cross(up, n));
+                    vec3 bitangent = cross(n, tangent);
+    
+                    vec3 sample_vec = tangent * h.x + bitangent * h.y + n * h.z;
+                    return normalize(sample_vec);
+                }
+
+                float geometry_schlick_ggx(float n_dot_v, float roughness)
+                {
                     float a = roughness;
                     float k = (a * a) / 2.0;
 
-                    float nom   = NdotV;
-                    float denom = NdotV * (1.0 - k) + k;
+                    float numerator   = n_dot_v;
+                    float denominator = n_dot_v * (1.0 - k) + k;
 
-                    return nom / denom;
+                    return numerator / denominator;
                 }
-                // ----------------------------------------------------------------------------
-                float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+
+                float geometry_smith(vec3 n, vec3 v, vec3 l, float roughness)
                 {
-                    float NdotV = max(dot(N, V), 0.0);
-                    float NdotL = max(dot(N, L), 0.0);
-                    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-                    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+                    float n_dot_v = max(dot(n, v), 0.0);
+                    float n_dot_l = max(dot(n, l), 0.0);
+                    float ggx2 = geometry_schlick_ggx(n_dot_v, roughness);
+                    float ggx1 = geometry_schlick_ggx(n_dot_l, roughness);
 
                     return ggx1 * ggx2;
                 }
-                // ----------------------------------------------------------------------------
-                vec2 IntegrateBRDF(float NdotV, float roughness)
+
+                vec2 integrate_brdf(float n_dot_v, float roughness)
                 {
-                    vec3 V;
-                    V.x = sqrt(1.0 - NdotV*NdotV);
-                    V.y = 0.0;
-                    V.z = NdotV;
+                    vec3 v;
 
-                    float A = 0.0;
-                    float B = 0.0; 
+                    v.x = sqrt(1.0 - n_dot_v * n_dot_v);
+                    v.y = 0.0;
+                    v.z = n_dot_v;
 
-                    vec3 N = vec3(0.0, 0.0, 1.0);
+                    float a = 0.0;
+                    float b = 0.0; 
+
+                    vec3 n = vec3(0.0, 0.0, 1.0);
             
-                    const uint SAMPLE_COUNT = 2048u;
-                    for(uint i = 0u; i < SAMPLE_COUNT; ++i)
+                    const uint sample_count = 2048u;
+
+                    for(uint i = 0u; i < sample_count; ++i)
                     {
-                        // generates a sample vector that's biased towards the
-                        // preferred alignment direction (importance sampling).
-                        vec2 Xi = Hammersley(i, SAMPLE_COUNT);
-                        vec3 H = ImportanceSampleGGX(Xi, N, roughness);
-                        vec3 L = normalize(2.0 * dot(V, H) * H - V);
+                        vec2 xi = hammersley(i, sample_count);
+                        vec3 h = importance_sample_ggx(xi, n, roughness);
+                        vec3 l = normalize(2.0 * dot(v, h) * h - v);
 
-                        float NdotL = max(L.z, 0.0);
-                        float NdotH = max(H.z, 0.0);
-                        float VdotH = max(dot(V, H), 0.0);
+                        float n_dot_l = max(l.z, 0.0);
+                        float n_dot_h = max(h.z, 0.0);
+                        float v_dot_h = max(dot(v, h), 0.0);
 
-                        if(NdotL > 0.0)
+                        if(n_dot_l > 0.0)
                         {
-                            float G = GeometrySmith(N, V, L, roughness);
-                            float G_Vis = (G * VdotH) / (NdotH * NdotV);
-                            float Fc = pow(1.0 - VdotH, 5.0);
+                            float g = geometry_smith(n, v, l, roughness);
+                            float g_vis = (g * v_dot_h) / (n_dot_h * n_dot_v);
+                            float fc = pow(1.0 - v_dot_h, 5.0);
 
-                            A += (1.0 - Fc) * G_Vis;
-                            B += Fc * G_Vis;
+                            a += (1.0 - fc) * g_vis;
+                            b += fc * g_vis;
                         }
                     }
-                    A /= float(SAMPLE_COUNT);
-                    B /= float(SAMPLE_COUNT);
-                    return vec2(A, B);
+                    a /= float(sample_count);
+                    b /= float(sample_count);
+                    return vec2(a, b);
                 }
-                // ----------------------------------------------------------------------------
+
                 void main() 
                 {
-                    vec2 integratedBRDF = IntegrateBRDF(TexCoords.x, TexCoords.y);
-                    FragColor = integratedBRDF;
+                    vec2 integrated_brdf = integrate_brdf(texture_coords.x, texture_coords.y);
+                    fragment_color = integrated_brdf;
                 }
             )";
         } // namespace make_brdf_map
-
-    } // namespace shaders
+    }     // namespace shaders
 } // namespace moka

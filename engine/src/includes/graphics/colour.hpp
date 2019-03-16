@@ -10,15 +10,14 @@ namespace moka
         template <typename T, typename = std::enable_if_t<std::is_floating_point_v<T>>>
         constexpr std::byte float_to_byte(const T val) noexcept
         {
-            return static_cast<std::byte>(static_cast<int>(
-                glm::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * 255));
+            return static_cast<std::byte>(
+                static_cast<int>(glm::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * 255));
         }
 
         template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
         constexpr std::byte int_to_byte(const T val) noexcept
         {
-            return static_cast<std::byte>(
-                glm::clamp(val, static_cast<T>(0), static_cast<T>(255)));
+            return static_cast<std::byte>(glm::clamp(val, static_cast<T>(0), static_cast<T>(255)));
         }
 
         constexpr float byte_to_float(const std::byte val) noexcept
@@ -27,6 +26,9 @@ namespace moka
         }
     } // namespace detail
 
+    /**
+     * \brief A colour class, a wrapper around four bytes.
+     */
     class colour final
     {
         std::array<std::byte, 4> rgba_bytes_{};
@@ -42,36 +44,23 @@ namespace moka
             return glm::vec3{r(), g(), b()};
         }
 
-        constexpr colour(
-            const std::byte r,
-            const std::byte g,
-            const std::byte b,
-            const std::byte a = static_cast<std::byte>(255)) noexcept
+        constexpr colour(const std::byte r, const std::byte g, const std::byte b, const std::byte a = static_cast<std::byte>(255)) noexcept
             : rgba_bytes_{r, g, b, a}
         {
         }
 
         constexpr colour(const int r, const int g, const int b, const int a = 255) noexcept
-            : colour{detail::int_to_byte(r),
-                     detail::int_to_byte(g),
-                     detail::int_to_byte(b),
-                     detail::int_to_byte(a)}
+            : colour{detail::int_to_byte(r), detail::int_to_byte(g), detail::int_to_byte(b), detail::int_to_byte(a)}
         {
         }
 
         constexpr colour(const float r, const float g, const float b, const float a = 1.0f) noexcept
-            : colour{detail::float_to_byte(r),
-                     detail::float_to_byte(g),
-                     detail::float_to_byte(b),
-                     detail::float_to_byte(a)}
+            : colour{detail::float_to_byte(r), detail::float_to_byte(g), detail::float_to_byte(b), detail::float_to_byte(a)}
         {
         }
 
         constexpr colour() noexcept
-            : colour{detail::int_to_byte(255),
-                     detail::int_to_byte(255),
-                     detail::int_to_byte(255),
-                     detail::int_to_byte(255)}
+            : colour{detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255)}
         {
         }
 

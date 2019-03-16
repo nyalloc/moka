@@ -26,7 +26,7 @@ namespace moka
 
         model cube_;
 
-        graphics_device& device;
+        graphics_device& device_;
 
         static uint32_t depth_to_bits(const float depth)
         {
@@ -61,7 +61,7 @@ namespace moka
          * \param device Graphics device object to use with the scene.
          * \param root The root resource folder where PBR assets are located.
          */
-        pbr_scene(graphics_device& device, const std::filesystem::path& root) : device(device)
+        pbr_scene(graphics_device& device, const std::filesystem::path& root) : device_(device)
         {
             pbr_util util(device, root);
 
@@ -108,7 +108,7 @@ namespace moka
                 {
                     const auto material = primitive.get_material();
 
-                    auto* mat = device.get_material_cache().get_material(material);
+                    auto* mat = device_.get_material_cache().get_material(material);
 
                     if (mat)
                     {
@@ -160,7 +160,7 @@ namespace moka
                 }
             }
 
-            device.submit(std::move(scene_draw));
+            device_.submit(std::move(scene_draw));
         }
     };
 } // namespace moka

@@ -8,7 +8,7 @@ namespace moka
     class vertex_layout;
 
     /**
-     * \brief A builder class to help you build a vertex builder.
+     * \brief A builder class to help you build a vertex.
      */
     struct vertex_layout_builder final
     {

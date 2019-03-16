@@ -3,6 +3,7 @@
 namespace moka
 {
     material_parameter::material_parameter() = default;
+
     material_parameter::~material_parameter() = default;
 
     material_parameter::material_parameter(

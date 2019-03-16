@@ -1,6 +1,8 @@
 #pragma once
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <graphics/camera/basic_camera.hpp>
+#include <graphics/texture_handle.hpp>
 
 namespace moka
 {

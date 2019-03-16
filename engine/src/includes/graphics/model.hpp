@@ -6,6 +6,9 @@
 
 namespace moka
 {
+    /**
+     * \brief A basic primitive. A wrapper around a vertex buffer, an index buffer and a material.
+     */
     class primitive
     {
         vertex_buffer_handle vertex_buffer_;
@@ -37,6 +40,9 @@ namespace moka
         void draw(command_buffer& list) const;
     };
 
+    /**
+     * \brief A mesh class, a wrapper around multiple primitives and a transform.
+     */
     class mesh
     {
         std::vector<primitive> primitives_;
@@ -62,6 +68,9 @@ namespace moka
         explicit mesh(const primitive& prim, transform&& transform = {});
     };
 
+    /**
+     * \brief A model class, a wrapper around multiple meshes and a transform.
+     */
     class model
     {
         std::vector<mesh> meshes_;

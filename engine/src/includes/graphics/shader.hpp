@@ -4,6 +4,9 @@
 
 namespace moka
 {
+    /**
+     * \brief The shader type.
+     */
     enum class shader_type
     {
         vertex,
@@ -11,6 +14,9 @@ namespace moka
         compute
     };
 
+    /**
+     * \brief A handle to a shader object on the device.
+     */
     struct shader_handle
     {
         uint16_t id;
