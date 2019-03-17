@@ -8,9 +8,13 @@ HunterGate(
     SHA1 "f48b033e80f16890c5c450d46177f60b475469e4"
 )
 
-project(moka)
+project(moka CXX)
 
+if (WIN32)
 add_compile_options("/std:c++latest")
+else()
+add_compile_options("-std=c++17")
+endif()
 
 enable_testing()
 

@@ -15,7 +15,11 @@ include_directories(${Example_Includes})
 
 add_executable(texturing main.cpp)
 
+if (WIN32)
 add_compile_options("/std:c++latest")
+else()
+add_compile_options("-std=c++17")
+endif()
 
 foreach(_source IN ITEMS ${MOKA_SRC})
     get_filename_component(_source_path "${_source}" PATH)

@@ -139,6 +139,6 @@ public:
 int main(const int argc, char* argv[])
 {
     app_settings settings;
-    settings.window_settings.resolution = {800, 800};
+    settings.window.resolution = {800, 800};
     return texture_application{settings}.run();
 }

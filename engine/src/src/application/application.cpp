@@ -7,7 +7,7 @@ namespace moka
     application::application(const app_settings& app_settings)
         : log_("app", moka::log_level::info),
           timer_(true),
-          window_(app_settings.window_settings),
+          window_(app_settings.window),
           graphics_(window_)
     {
         log_.info("Application started");

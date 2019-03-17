@@ -50,32 +50,27 @@ namespace moka
         }
 
         constexpr colour(const int r, const int g, const int b, const int a = 255) noexcept
-            : colour{detail::int_to_byte(r), detail::int_to_byte(g), detail::int_to_byte(b), detail::int_to_byte(a)}
+            : colour(detail::int_to_byte(r), detail::int_to_byte(g), detail::int_to_byte(b), detail::int_to_byte(a))
         {
         }
 
         constexpr colour(const float r, const float g, const float b, const float a = 1.0f) noexcept
-            : colour{detail::float_to_byte(r), detail::float_to_byte(g), detail::float_to_byte(b), detail::float_to_byte(a)}
+            : colour(detail::float_to_byte(r), detail::float_to_byte(g), detail::float_to_byte(b), detail::float_to_byte(a))
         {
         }
 
         constexpr colour() noexcept
-            : colour{detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255)}
+            : colour(detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255))
         {
         }
 
         constexpr colour(const glm::vec3& colour) noexcept
-            : colour{detail::float_to_byte(colour.x),
-                     detail::float_to_byte(colour.y),
-                     detail::float_to_byte(colour.z)}
+            : rgba_bytes_{detail::float_to_byte(colour.x), detail::float_to_byte(colour.y), detail::float_to_byte(colour.z), detail::int_to_byte(255)}
         {
         }
 
         constexpr colour(const glm::vec4& colour) noexcept
-            : colour{detail::float_to_byte(colour.x),
-                     detail::float_to_byte(colour.y),
-                     detail::float_to_byte(colour.z),
-                     detail::float_to_byte(colour.w)}
+            : rgba_bytes_{detail::float_to_byte(colour.x), detail::float_to_byte(colour.y), detail::float_to_byte(colour.z), detail::float_to_byte(colour.w)}
         {
         }
 

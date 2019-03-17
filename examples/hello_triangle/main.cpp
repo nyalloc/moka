@@ -1,9 +1,10 @@
 
 #include <application/application.hpp>
+#include <filesystem>
 
 using namespace moka;
 
-class texture_application final : public application
+class triangle_application final : public application
 {
     float vertices_[18] = {
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
@@ -33,7 +34,7 @@ class texture_application final : public application
     material_handle material_;
 
 public:
-    texture_application(const app_settings& app_settings) : application(app_settings)
+    triangle_application(const app_settings& app_settings) : application(app_settings)
     {
         vertex_layout layout = {{0, attribute_type::float32, 2, false, 6 * sizeof(float), 0},
                                 {1, attribute_type::float32, 3, false, 6 * sizeof(float), 3 * sizeof(float)}};
@@ -47,7 +48,7 @@ public:
                         .build();
     }
 
-    ~texture_application()
+    ~triangle_application()
     {
         // todo: destroy graphics resources
         timer_.stop();
@@ -80,8 +81,8 @@ public:
 int main(const int argc, char* argv[])
 {
     app_settings settings{};
-    settings.window_settings.resolution = {1600, 900};
-    settings.window_settings.fullscreen = false;
+    settings.window.resolution = {1600, 900};
+    settings.window.fullscreen = false;
 
-    return texture_application{settings}.run();
+    return triangle_application{settings}.run();
 }

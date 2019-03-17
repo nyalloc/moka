@@ -193,11 +193,17 @@ foreach(_source IN ITEMS ${MOKA_SRC})
     source_group("${_source_path_msvc}" FILES "${_source}")
 endforeach()
 
+if(WIN32)
 set(PLATFORM_SPECIFIC_LIBS
     comctl32.lib
     Propsys.lib
     Shlwapi.lib
 )
+else()
+set(PLATFORM_SPECIFIC_LIBS
+    stdc++fs
+)
+endif()
 
 target_link_libraries(moka
     glew::glew

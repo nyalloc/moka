@@ -90,8 +90,8 @@ public:
 int main()
 {
     app_settings settings{};
-    settings.window_settings.resolution = {1600, 900};
-    settings.window_settings.fullscreen = false;
+    settings.window.resolution = {1600, 900};
+    settings.window.fullscreen = false;
 
     return app{settings}.run();
 }

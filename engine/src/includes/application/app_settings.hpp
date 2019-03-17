@@ -12,7 +12,7 @@ namespace moka
         /**
          * \brief The window settings of the application.
          */
-        window_settings window_settings;
+        window_settings window;
 
         app_settings();
     };

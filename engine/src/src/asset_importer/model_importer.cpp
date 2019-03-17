@@ -25,7 +25,7 @@ namespace moka
         index_buffer = 34963
     };
 
-    constexpr wrap_mode gltf_wrap_to_moka(const int format)
+    wrap_mode gltf_wrap_to_moka(const int format)
     {
         switch (format)
         {
@@ -40,7 +40,7 @@ namespace moka
         throw std::runtime_error("Invalid pixel_format value");
     }
 
-    constexpr min_filter gltf_min_filter_to_moka(const int format)
+    min_filter gltf_min_filter_to_moka(const int format)
     {
         switch (format)
         {
@@ -61,7 +61,7 @@ namespace moka
         throw std::runtime_error("Invalid min filter value");
     }
 
-    constexpr mag_filter gltf_mag_filter_to_moka(const int format)
+    mag_filter gltf_mag_filter_to_moka(const int format)
     {
         switch (format)
         {
@@ -74,7 +74,7 @@ namespace moka
         throw std::runtime_error("Invalid mag filter value");
     }
 
-    constexpr host_format stb_to_moka(const int format)
+    host_format stb_to_moka(const int format)
     {
         switch (format)
         {
@@ -93,7 +93,7 @@ namespace moka
         throw std::runtime_error("Invalid pixel_format value");
     }
 
-    constexpr int moka_to_stb(const host_format format)
+    int moka_to_stb(const host_format format)
     {
         switch (format)
         {
