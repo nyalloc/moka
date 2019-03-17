@@ -90,18 +90,15 @@ namespace moka
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-        // Settings
-
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
-
-        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-
         uint32_t flags = SDL_WINDOW_OPENGL;
 
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
         {
         }
+
+        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
+        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
         if (settings.fullscreen)
         {
