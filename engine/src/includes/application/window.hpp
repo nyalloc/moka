@@ -1,11 +1,10 @@
 #pragma once
 
 #include "graphics/api/graphics_api.hpp"
-#include <application/game_loop.hpp>
+#include <application/signal.hpp>
 #include <glm/glm.hpp>
 #include <memory>
 #include <string>
-
 namespace moka
 {
     /**

@@ -1,4 +1,3 @@
-#include "application/profile.hpp"
 #include <SDL.h>
 #include <application/application.hpp>
 #include <iostream>
