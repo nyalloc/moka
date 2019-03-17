@@ -32,13 +32,11 @@ set(APPLICATION_SRC
     "includes/application/application.hpp"
     "includes/application/signal.hpp"
     "includes/application/logger.hpp"
-    "includes/application/system_info.hpp"
     "includes/application/timer.hpp"
     "src/application/app_settings.cpp"  
     "src/application/window.cpp"
     "src/application/application.cpp"
     "src/application/application_sdl.cpp" 
-    "src/application/system_info.cpp"
     "src/application/timer.cpp"	
 )
 
@@ -160,12 +158,6 @@ set(GRAPHICS_SRC
     "src/graphics/utilities.cpp"
 )
 
-set(TRAITS_SRC
-    "includes/type_traits/is_any_of.hpp"
-    "includes/type_traits/is_either.hpp"
-    "includes/type_traits/size.hpp"
-)
-
 set(ASSET_SRC
     "includes/asset_importer/asset_importer.hpp" 
     "includes/asset_importer/texture_importer.hpp" 
@@ -181,7 +173,6 @@ set(MOKA_SRC
     ${APPLICATION_SRC}
     ${INPUT_SRC} 
     ${GRAPHICS_SRC}
-    ${TRAITS_SRC}
     ${MATHS_SRC}
     ${ASSET_SRC}
 )
