@@ -236,7 +236,7 @@ namespace moka
 
         std::vector<image_metadata> data;
 
-        wrap wrap = {wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge};
+        wrap wrap_mode = {wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge, wrap_mode::clamp_to_edge};
 
         filter filter_mode = {mag_filter::linear, min_filter::linear};
 

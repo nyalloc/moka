@@ -898,9 +898,9 @@ namespace moka
                 pixels);
         }
 
-        glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(metadata.wrap.s));
-        glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(metadata.wrap.t));
-        glTexParameteri(gl_target, GL_TEXTURE_WRAP_R, moka_to_gl(metadata.wrap.r));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_S, moka_to_gl(metadata.wrap_mode.s));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_T, moka_to_gl(metadata.wrap_mode.t));
+        glTexParameteri(gl_target, GL_TEXTURE_WRAP_R, moka_to_gl(metadata.wrap_mode.r));
         glTexParameteri(gl_target, GL_TEXTURE_MIN_FILTER, moka_to_gl(metadata.filter_mode.min));
         glTexParameteri(gl_target, GL_TEXTURE_MAG_FILTER, moka_to_gl(metadata.filter_mode.mag));
 

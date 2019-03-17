@@ -45,19 +45,19 @@ namespace moka
 
     texture_builder& texture_builder::set_wrap_s(const wrap_mode mode)
     {
-        metadata_.wrap.s = mode;
+        metadata_.wrap_mode.s = mode;
         return *this;
     }
 
     texture_builder& texture_builder::set_wrap_t(const wrap_mode mode)
     {
-        metadata_.wrap.t = mode;
+        metadata_.wrap_mode.t = mode;
         return *this;
     }
 
     texture_builder& texture_builder::set_wrap_r(const wrap_mode mode)
     {
-        metadata_.wrap.r = mode;
+        metadata_.wrap_mode.r = mode;
         return *this;
     }
 
