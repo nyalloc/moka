@@ -84,10 +84,6 @@ namespace moka
 
     window::impl::impl(const window_settings& settings) : settings_(settings)
     {
-        if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        {
-        }
-
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -102,6 +98,10 @@ namespace moka
         SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
         uint32_t flags = SDL_WINDOW_OPENGL;
+
+        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        {
+        }
 
         if (settings.fullscreen)
         {
