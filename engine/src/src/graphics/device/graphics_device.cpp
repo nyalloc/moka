@@ -113,7 +113,7 @@ namespace moka
     graphics_device::graphics_device(window& window, const graphics_backend graphics_backend)
         : textures_(*this), shaders_(*this), materials_(*this)
     {
-        auto context = window.make_context();
+        //auto context = window.make_context();
 
         // right now we only have an OpenGL backend!
         switch (graphics_backend)

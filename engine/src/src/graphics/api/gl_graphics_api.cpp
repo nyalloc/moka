@@ -1030,13 +1030,6 @@ namespace moka
     gl_graphics_api::gl_graphics_api(window& window, graphics_device& device)
         : window_(window), device_(device)
     {
-        glewExperimental = GL_TRUE;
-        if (glewInit() != GLEW_OK)
-        {
-            log_.error("Failed to initialise glew: {}", glewGetErrorString(glewInit()));
-            std::abort();
-        }
-
         // enable GL_DEBUG_OUTPUT by default if it's a debug build
         if constexpr (application_traits::is_debug_build)
         {

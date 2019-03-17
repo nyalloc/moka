@@ -4,6 +4,8 @@
 #include <application/window.hpp>
 #include <atomic>
 #include <iostream>
+#include <cstdio>
+#include <GL/glew.h>
 
 namespace moka
 {
@@ -84,34 +86,69 @@ namespace moka
 
     window::impl::impl(const window_settings& settings) : settings_(settings)
     {
+        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-        SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-        uint32_t flags = SDL_WINDOW_OPENGL;
-
-        if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        {
+        /* First, initialize SDL's video subsystem. */
+        if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+            /* Failed, exit. */
+            fprintf( stderr, "Video initialization failed: %s\n", SDL_GetError( ) );
+            
         }
-
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
-        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-
-        if (settings.fullscreen)
+        else
         {
-            flags = flags | SDL_WINDOW_FULLSCREEN;
-        }
+            SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+            SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+            SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+            SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
 
-        window_ = SDL_CreateWindow(
-            settings.name.c_str(),
-            settings.position.x,
-            settings.position.y,
-            settings.resolution.x,
-            settings.resolution.y,
-            flags);
+
+            uint32_t flags = SDL_WINDOW_OPENGL;
+
+            if (settings.fullscreen)
+            {
+                flags = flags | SDL_WINDOW_FULLSCREEN;
+            }
+
+            window_ = SDL_CreateWindow(
+                settings.name.c_str(),
+                settings.position.x,
+                settings.position.y,
+                settings.resolution.x,
+                settings.resolution.y,
+                flags);
+
+            if (!window_)
+            {
+                /* Failed, exit. */
+                fprintf( stderr, "Window initialization failed: %s\n", SDL_GetError( ) );
+            }
+            else
+            {
+                auto ctx = SDL_GL_CreateContext(window_);
+
+                    if(!ctx)
+                    {
+                        fprintf( stderr, "Error creating GL Context: %s\n", SDL_GetError());
+                    }
+                    else
+                    {
+                    glewExperimental = GL_TRUE; 
+                    GLenum glewError = glewInit();
+                    if (glewError != GLEW_OK)
+                    {
+                        fprintf( stderr, "Error initializing GLEW: %s\n", glewGetErrorString(glewError));
+                    }  
+
+                    if (SDL_GL_SetSwapInterval(1) < 0)
+                    {
+                        fprintf( stderr, "Warning: Unable to set VSync: %s\n", SDL_GetError());
+                    }  
+                }
+            }
+        }
     }
 
     window::impl::~impl()
