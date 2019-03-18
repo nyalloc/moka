@@ -3,9 +3,8 @@
 #include <application/logger.hpp>
 #include <application/window.hpp>
 #include <atomic>
-#include <iostream>
 #include <cstdio>
-#include <GL/glew.h>
+#include <iostream>
 
 namespace moka
 {
@@ -92,10 +91,10 @@ namespace moka
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
         /* First, initialize SDL's video subsystem. */
-        if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        {
             /* Failed, exit. */
-            fprintf( stderr, "Video initialization failed: %s\n", SDL_GetError( ) );
-            
+            fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
         }
         else
         {
@@ -103,7 +102,6 @@ namespace moka
             SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
             SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
             SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
-
 
             uint32_t flags = SDL_WINDOW_OPENGL;
 
@@ -123,29 +121,29 @@ namespace moka
             if (!window_)
             {
                 /* Failed, exit. */
-                fprintf( stderr, "Window initialization failed: %s\n", SDL_GetError( ) );
+                fprintf(stderr, "Window initialization failed: %s\n", SDL_GetError());
             }
             else
             {
-                auto ctx = SDL_GL_CreateContext(window_);
+                const auto ctx = SDL_GL_CreateContext(window_);
 
-                    if(!ctx)
+                if (!ctx)
+                {
+                    fprintf(stderr, "Error creating GL Context: %s\n", SDL_GetError());
+                }
+                else
+                {
+                    glewExperimental = GL_TRUE;
+                    const auto glew_error = glewInit();
+                    if (glew_error != GLEW_OK)
                     {
-                        fprintf( stderr, "Error creating GL Context: %s\n", SDL_GetError());
+                        fprintf(stderr, "Error initializing GLEW: %p\n", glewGetErrorString(glew_error));
                     }
-                    else
-                    {
-                    glewExperimental = GL_TRUE; 
-                    GLenum glewError = glewInit();
-                    if (glewError != GLEW_OK)
-                    {
-                        fprintf( stderr, "Error initializing GLEW: %s\n", glewGetErrorString(glewError));
-                    }  
 
                     if (SDL_GL_SetSwapInterval(1) < 0)
                     {
-                        fprintf( stderr, "Warning: Unable to set VSync: %s\n", SDL_GetError());
-                    }  
+                        fprintf(stderr, "Warning: Unable to set VSync: %s\n", SDL_GetError());
+                    }
                 }
             }
         }
