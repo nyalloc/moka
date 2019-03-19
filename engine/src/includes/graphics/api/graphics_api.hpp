@@ -191,7 +191,8 @@ namespace moka
          * \param render_texture_count Size of the render_textures array.
          * \return A new frame_buffer_handle representing a frame buffer on the device.
          */
-        virtual frame_buffer_handle make_frame_buffer(render_texture_data* render_textures, size_t render_texture_count) = 0;
+        virtual frame_buffer_handle make_frame_buffer(
+            render_texture_data* render_textures, size_t render_texture_count) = 0;
 
         /**
          * \brief Create a shader program from vertex & fragment shaders.
@@ -199,7 +200,8 @@ namespace moka
          * \param fragment_handle The fragment shader that you want to link to this program.
          * \return A new program_handle representing a program on the device.
          */
-        virtual program_handle make_program(const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
+        virtual program_handle make_program(
+            const shader_handle& vertex_handle, const shader_handle& fragment_handle) = 0;
 
         /**
          * \brief Create a shader from source code.
@@ -228,7 +230,8 @@ namespace moka
          * \param use A buffer usage hint.
          * \return A new index_buffer_handle representing an index buffer on the device.
          */
-        virtual index_buffer_handle make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) = 0;
+        virtual index_buffer_handle make_index_buffer(
+            const void* indices, size_t size, index_type type, buffer_usage use) = 0;
 
         /**
          * \brief Create a new texture.
@@ -237,6 +240,13 @@ namespace moka
          * \param free_host_data If true, free the host memory after uploading to the device. Otherwise allow the calling code to free it.
          * \return A new texture_handle representing a texture on the device.
          */
-        virtual texture_handle make_texture(void** data, texture_metadata&& metadata, bool free_host_data) = 0;
+        virtual texture_handle make_texture(
+            void** data, texture_metadata&& metadata, bool free_host_data) = 0;
+
+        /**
+         * \brief Destroy a frame buffer.
+         * \param handle The host frame buffer that will be destroyed.
+         */
+        virtual void destroy(frame_buffer_handle handle) = 0;
     };
 } // namespace moka

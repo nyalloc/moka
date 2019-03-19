@@ -37,6 +37,14 @@ namespace moka
     };
 
     /**
+     * \brief Contains data that describes the contents of a framebuffer
+     */
+    struct frame_buffer_metadata final
+    {
+        std::vector<GLuint> attachments;
+    };
+
+    /**
      * \brief Graphics device forward declaration
      */
     class graphics_device;
@@ -55,11 +63,18 @@ namespace moka
         GLuint vao_ = 0;
 
         static void GLAPIENTRY message_callback(
-            GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user_param);
+            GLenum source,
+            GLenum type,
+            GLuint id,
+            GLenum severity,
+            GLsizei length,
+            const GLchar* message,
+            const void* user_param);
 
         std::unordered_map<uint16_t, vertex_metadata> vertex_buffer_data_;
         std::unordered_map<uint16_t, texture_metadata> texture_data_;
         std::unordered_map<uint16_t, index_metadata> index_buffer_data_;
+        std::unordered_map<uint16_t, frame_buffer_metadata> frame_buffer_data_;
 
         draw_command previous_command_;
 
@@ -90,8 +105,8 @@ namespace moka
     public:
         /**
          * \brief Create a new gl_graphics_api object
-         * \param window The window object that this gl_graphics_api will render to
-         * \param device The graphics_device object that owns this api object
+         * \param window The window object that this gl_graphics_api will render
+         * to \param device The graphics_device object that owns this api object
          */
         gl_graphics_api(window& window, graphics_device& device);
 
@@ -126,7 +141,8 @@ namespace moka
          * \param use A buffer usage hint.
          * \return A new vertex_buffer_handle representing an vertex buffer on the device.
          */
-        vertex_buffer_handle make_vertex_buffer(const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) override;
+        vertex_buffer_handle make_vertex_buffer(
+            const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) override;
 
         /**
          * \brief Create a new index buffer.
@@ -136,7 +152,8 @@ namespace moka
          * \param use A buffer usage hint.
          * \return A new index_buffer_handle representing an index buffer on the device.
          */
-        index_buffer_handle make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) override;
+        index_buffer_handle make_index_buffer(
+            const void* indices, size_t size, index_type type, buffer_usage use) override;
 
         /**
          * \brief Create a new texture.
@@ -166,5 +183,11 @@ namespace moka
          * \param commands The command_list you wish to run.
          */
         void submit_and_swap(command_list&& commands) override;
+
+        /**
+         * \brief Destroy a frame buffer.
+         * \param handle The host frame buffer that will be destroyed.
+         */
+        void destroy(frame_buffer_handle handle) override;
     };
 } // namespace moka

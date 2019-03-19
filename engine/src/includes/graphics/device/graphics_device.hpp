@@ -215,7 +215,8 @@ namespace moka
          * \param use A buffer usage hint.
          * \return A new vertex_buffer_handle representing an vertex buffer on the device.
          */
-        vertex_buffer_handle make_vertex_buffer(const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
+        vertex_buffer_handle make_vertex_buffer(
+            const void* vertices, size_t size, vertex_layout&& layout, buffer_usage use) const;
 
         /**
          * \brief Create a new index buffer.
@@ -225,7 +226,8 @@ namespace moka
          * \param use A buffer usage hint.
          * \return A new index_buffer_handle representing an index buffer on the device.
          */
-        index_buffer_handle make_index_buffer(const void* indices, size_t size, index_type type, buffer_usage use) const;
+        index_buffer_handle make_index_buffer(
+            const void* indices, size_t size, index_type type, buffer_usage use) const;
 
         /**
          * \brief Create a shader from source code.
@@ -289,6 +291,12 @@ namespace moka
          * \param handle The shader you want to destroy.
          */
         void destroy(shader_handle handle);
+
+        /**
+         * \brief Destroy a framebuffer.
+         * \param handle The framebuffer you want to destroy.
+         */
+        void destroy(frame_buffer_handle handle);
 
         /**
          * \brief Destroy a vertex buffer.
