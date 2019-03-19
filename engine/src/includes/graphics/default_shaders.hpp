@@ -58,7 +58,7 @@ namespace moka
             )";
         } // namespace shade_cubemap
 
-        namespace make_cubemap
+        namespace equirectangular_to_cube
         {
             constexpr static shader_source vert = R"(
 
@@ -104,7 +104,7 @@ namespace moka
                     frag_color = vec4(color, 1.0f);
                 }
             )";
-        } // namespace make_cubemap
+        } // namespace equirectangular_to_cube
 
         namespace make_irradiance_map
         {

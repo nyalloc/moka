@@ -200,7 +200,7 @@ void main()
     vec4 irradiance = texture(irradiance_map, n);
     vec4 diffuse = irradiance * albedo;
 	
-	const float MAX_REFLECTION_LOD = 8.0f;
+	const float MAX_REFLECTION_LOD = 4.0f;
 	
 	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * MAX_REFLECTION_LOD).rgb;   
 	vec2 brdf  = texture(brdf_lut, vec2(max(dot(n, v), 0.0f), roughness)).rg;
