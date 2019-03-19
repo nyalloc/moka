@@ -80,14 +80,14 @@ namespace moka
     {
         command_list list;
 
-        const auto hdr_frame_buffer =
+        const auto cubemap_frame_buffer =
             device_.build_frame_buffer()
                 .add_depth_attachment(frame_format::depth_component24, size, size)
                 .build();
 
         list.viewport().set_rectangle(0, 0, size, size);
 
-        list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
+        list.frame_buffer().set_frame_buffer(cubemap_frame_buffer);
 
         if (pre)
         {
@@ -125,7 +125,7 @@ namespace moka
 
         device_.submit(std::move(list), false);
 
-        device_.destroy(hdr_frame_buffer);
+        device_.destroy(cubemap_frame_buffer);
     }
 
     texture_handle pbr_util::import_equirectangular_map(const std::filesystem::path& texture_path) const
