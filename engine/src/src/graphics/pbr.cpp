@@ -80,14 +80,14 @@ namespace moka
     {
         command_list list;
 
-        const auto cubemap_frame_buffer =
+        const auto hdr_frame_buffer =
             device_.build_frame_buffer()
                 .add_depth_attachment(frame_format::depth_component24, size, size)
                 .build();
 
         list.viewport().set_rectangle(0, 0, size, size);
 
-        list.frame_buffer().set_frame_buffer(cubemap_frame_buffer);
+        list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
 
         if (pre)
         {
@@ -124,8 +124,6 @@ namespace moka
         list.frame_buffer().set_frame_buffer({0});
 
         device_.submit(std::move(list), false);
-
-        device_.destroy(cubemap_frame_buffer);
     }
 
     texture_handle pbr_util::import_equirectangular_map(const std::filesystem::path& texture_path) const
@@ -169,7 +167,7 @@ namespace moka
                 .build();
 
         const auto hdr_cubemap = make_empty_hdr_cubemap(
-            environment_size, min_filter::nearest_mipmap_linear, false);
+            environment_size, min_filter::linear_mipmap_linear, false);
 
         draw_to_cubemap(
             environment_size,
@@ -192,7 +190,7 @@ namespace moka
                 .set_vertex_shader(shaders::make_irradiance_map::vert)
                 .set_fragment_shader(shaders::make_irradiance_map::frag)
                 .add_material_parameter("projection", constants::projection)
-                .add_material_parameter("view", parameter_type::mat4)
+                .add_material_parameter("view", glm::mat4{})
                 .add_material_parameter("environment_map", hdr_environment_map)
                 .set_culling_enabled(false)
                 .build();
@@ -220,10 +218,10 @@ namespace moka
             device_.build_material()
                 .set_vertex_shader(shaders::make_specular_map::vert)
                 .set_fragment_shader(shaders::make_specular_map::frag)
-                .add_material_parameter("roughness", parameter_type::float32)
+                .add_material_parameter("roughness", 0.0f)
                 .add_material_parameter("environment_map", hdr_environment_map)
                 .add_material_parameter("projection", constants::projection)
-                .add_material_parameter("view", parameter_type::mat4)
+                .add_material_parameter("view", glm::mat4{})
                 .set_culling_enabled(false)
                 .build();
 
@@ -322,8 +320,6 @@ namespace moka
         brdf_list.frame_buffer().set_frame_buffer({0});
 
         device_.submit(std::move(brdf_list), false);
-
-        device_.destroy(brdf_frame_buffer);
 
         return brdf_image;
     }

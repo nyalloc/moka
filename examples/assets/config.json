@@ -1,6 +1,6 @@
 {
   "config": {
-    "model": "Models/FlightHelmet/FlightHelmet.gltf",
-    "environment": "Textures/sky.hdr"
+    "model": "Models/MetalRoughSpheres/MetalRoughSpheres.gltf",
+    "environment": "Textures/cayley.hdr"
   }
 }
