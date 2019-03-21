@@ -10,7 +10,6 @@ class triangle_application final : public application
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
 
     const char* vertex_source_ =
-        "    #version 330 core                               \n"
         "    layout (location = 0) in vec3 position;         \n"
         "    layout (location = 1) in vec4 color0;           \n"
         "    out vec3 out_color0;                            \n"
@@ -21,7 +20,6 @@ class triangle_application final : public application
         "    }                                               \0";
 
     const char* fragment_source_ =
-        "    #version 330 core                               \n"
         "    out vec4 FragColor;                             \n"
         "    in vec3 out_color0;                             \n"
         "    void main()                                     \n"
@@ -34,10 +32,12 @@ class triangle_application final : public application
     material_handle material_;
 
 public:
-    triangle_application(const app_settings& app_settings) : application(app_settings)
+    triangle_application(const app_settings& app_settings)
+        : application(app_settings)
     {
-        vertex_layout layout = {{0, attribute_type::float32, 2, false, 6 * sizeof(float), 0},
-                                {1, attribute_type::float32, 3, false, 6 * sizeof(float), 3 * sizeof(float)}};
+        vertex_layout layout = {
+            {0, attribute_type::float32, 2, false, 6 * sizeof(float), 0},
+            {1, attribute_type::float32, 3, false, 6 * sizeof(float), 3 * sizeof(float)}};
 
         vertex_buffer_ = graphics_.make_vertex_buffer(
             vertices_, sizeof vertices_, std::move(layout), buffer_usage::static_draw);

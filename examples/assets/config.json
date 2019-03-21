@@ -1,6 +1,6 @@
 {
   "config": {
     "model": "Models/MetalRoughSpheres/MetalRoughSpheres.gltf",
-    "environment": "Textures/sterkspruit_falls.hdr"
+    "environment": "Textures/sky.hdr"
   }
 }

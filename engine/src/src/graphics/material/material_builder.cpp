@@ -25,7 +25,8 @@ namespace moka
         }
     }
 
-    material_builder::material_builder(graphics_device& device) : graphics_device_(device)
+    material_builder::material_builder(graphics_device& device)
+        : graphics_device_(device)
     {
     }
 
@@ -71,7 +72,8 @@ namespace moka
         return *this;
     }
 
-    material_builder& material_builder::set_blend_function(const blend_function_factor source, const blend_function_factor destination)
+    material_builder& material_builder::set_blend_function(
+        const blend_function_factor source, const blend_function_factor destination)
     {
         blend_.source = source;
         blend_.destination = destination;
@@ -145,25 +147,29 @@ namespace moka
         return *this;
     }
 
-    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::vec3& data)
+    material_builder& material_builder::add_material_parameter(
+        const std::string& name, const glm::vec3& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::vec3, data};
         return *this;
     }
 
-    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::vec4& data)
+    material_builder& material_builder::add_material_parameter(
+        const std::string& name, const glm::vec4& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::vec4, data};
         return *this;
     }
 
-    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::mat3& data)
+    material_builder& material_builder::add_material_parameter(
+        const std::string& name, const glm::mat3& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::mat3, data};
         return *this;
     }
 
-    material_builder& material_builder::add_material_parameter(const std::string& name, const glm::mat4& data)
+    material_builder& material_builder::add_material_parameter(
+        const std::string& name, const glm::mat4& data)
     {
         parameters_[name] = material_parameter{name, parameter_type::mat4, data};
         return *this;
@@ -227,8 +233,10 @@ namespace moka
 
         program_handle program_handle;
 
-        replace(vertex_shader_src_, "#moka_compilation_flags\n", compiler_flags);
-        replace(fragment_shader_src_, "#moka_compilation_flags\n", compiler_flags);
+        vertex_shader_src_.insert(0, compiler_flags);
+        fragment_shader_src_.insert(0, compiler_flags);
+        vertex_shader_src_.insert(0, "#version 330 core\n");
+        fragment_shader_src_.insert(0, "#version 330 core\n");
 
         const auto key = vertex_shader_src_ + fragment_shader_src_;
 
@@ -241,10 +249,11 @@ namespace moka
         }
         else
         {
-            const auto vertex_shader = graphics_device_.make_shader(shader_type::vertex, vertex_shader_src_);
+            const auto vertex_shader =
+                graphics_device_.make_shader(shader_type::vertex, vertex_shader_src_);
 
-            const auto fragment_shader =
-                graphics_device_.make_shader(shader_type::fragment, fragment_shader_src_);
+            const auto fragment_shader = graphics_device_.make_shader(
+                shader_type::fragment, fragment_shader_src_);
 
             program_handle = graphics_device_.make_program(vertex_shader, fragment_shader);
 

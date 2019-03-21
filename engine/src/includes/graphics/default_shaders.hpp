@@ -10,8 +10,6 @@ namespace moka
         {
             constexpr static shader_source vert = R"(
 
-                #version 330 core
-
                 layout (location = 0) in vec3 a_pos;
 
                 uniform mat4 projection;
@@ -32,8 +30,6 @@ namespace moka
             )";
 
             constexpr static shader_source frag = R"(
-
-                #version 330 core
 
                 out vec4 fragment_color;
 
@@ -62,8 +58,6 @@ namespace moka
         {
             constexpr static shader_source vert = R"(
 
-                #version 330 core
-
                 layout (location = 0) in vec3 a_pos;
 
                 out vec3 local_pos;
@@ -79,8 +73,6 @@ namespace moka
             )";
 
             constexpr static shader_source frag = R"(
-
-                #version 330 core
 
                 out vec4 frag_color;
                 in vec3 local_pos;
@@ -110,8 +102,6 @@ namespace moka
         {
             constexpr static shader_source vert = R"(
 
-                #version 330 core
-
                 layout (location = 0) in vec3 a_pos;
 
                 out vec3 world_position;
@@ -127,8 +117,6 @@ namespace moka
             )";
 
             constexpr static shader_source frag = R"(
-
-                #version 330 core
 
                 out vec4 fragment_color;
                 in vec3 world_position;
@@ -174,8 +162,6 @@ namespace moka
         {
             constexpr static shader_source vert = R"(
 
-                #version 330 core
-
                 layout (location = 0) in vec3 a_pos;
 
                 out vec3 world_position;
@@ -190,8 +176,6 @@ namespace moka
             )";
 
             constexpr static shader_source frag = R"(
-
-                #version 330 core
 
                 out vec4 fragment_color;
                 in vec3 world_position;
@@ -294,7 +278,6 @@ namespace moka
         {
             constexpr static shader_source vert = R"(
 
-                #version 330 core
                 layout (location = 0) in vec3 a_pos;
                 layout (location = 1) in vec2 aTexCoords;
 
@@ -309,7 +292,6 @@ namespace moka
 
             constexpr static shader_source frag = R"(
 
-                #version 330 core
                 out vec2 fragment_color;
                 in vec2 texture_coords;
 

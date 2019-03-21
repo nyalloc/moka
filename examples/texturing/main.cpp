@@ -7,9 +7,10 @@ using namespace moka;
 
 class texture_application : public application
 {
-    float vertices_[32] = {0.5f, 0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f,  1.0f, 0.5f, -0.5f, 0.0f,
-                           0.0f, 1.0f, 0.0f,  1.0f, 0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,  1.0f,
-                           0.0f, 0.0f, -0.5f, 0.5f, 0.0f, 1.0f,  1.0f,  0.0f, 0.0f, 1.0f};
+    float vertices_[32] = {0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                           0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                           -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                           -0.5f, 0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f};
 
     uint32_t indices_[6] = {0, 1, 3, 1, 2, 3};
 
@@ -19,7 +20,6 @@ class texture_application : public application
         {2, attribute_type::float32, 2, false, 8 * sizeof(float), 6 * sizeof(float)}};
 
     const char* vertex_source_ =
-        "    #version 330 core                                  \n"
         "    layout (location = 0)  in vec3 position;           \n"
         "    layout (location = 1)  in vec4 color0;             \n"
         "    layout (location = 2)  in vec2 tex_coord0;         \n"
@@ -32,7 +32,6 @@ class texture_application : public application
         "    }                                                  \0";
 
     const char* fragment_source_ =
-        "    #version 330 core                                      \n"
         "    out vec4 FragColor;                                    \n"
         "    in vec2 tex_coord;                                     \n"
         "    uniform sampler2D tile_texture;                        \n"
@@ -77,7 +76,8 @@ public:
                     image_target::texture_2d, 0, device_format::rgba, width, height, 0, format, pixel_type::uint8, data)
                 .build();
 
-        data = texture_load(texture_application::data_path() / "Textures" / "corgi.png", width, height, format);
+        data = texture_load(
+            texture_application::data_path() / "Textures" / "corgi.png", width, height, format);
 
         test_texture_ =
             graphics_.build_texture()

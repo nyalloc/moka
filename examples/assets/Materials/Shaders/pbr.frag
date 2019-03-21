@@ -1,6 +1,3 @@
-#version 330
-
-#moka_compilation_flags
 #define PI 3.1415926535897932384626433832795
 
 struct pbr_material 
