@@ -16,7 +16,11 @@ namespace moka
 
         vertex_buffer_handle cube_buffer_;
 
+        vertex_buffer_handle quad_buffer_;
+
         vertex_buffer_handle make_cube_buffer(buffer_usage use = buffer_usage::static_draw) const;
+
+        vertex_buffer_handle make_quad_buffer(buffer_usage use = buffer_usage::static_draw) const;
 
         std::filesystem::path root_;
 

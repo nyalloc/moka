@@ -1,6 +1,6 @@
 {
   "config": {
     "model": "Models/MetalRoughSpheres/MetalRoughSpheres.gltf",
-    "environment": "Textures/cayley.hdr"
+    "environment": "Textures/sterkspruit_falls.hdr"
   }
 }

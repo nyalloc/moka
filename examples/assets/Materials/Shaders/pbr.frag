@@ -35,7 +35,6 @@ struct pbr_material
     #endif
 };
 
-// IBL
 uniform samplerCube irradiance_map;
 uniform samplerCube prefilter_map;
 uniform sampler2D brdf_lut;
@@ -55,6 +54,8 @@ out vec4 frag_color;
 uniform vec3 view_pos;
 uniform pbr_material material;
 
+const float mip_count = 4.0f;
+
 vec4 get_albedo()
 {
     #ifdef DIFFUSE_MAP
@@ -70,10 +71,6 @@ vec3 get_normal()
         vec3 material_normal = texture(material.normal_map, in_texture_coord).rgb;
         material_normal = normalize(material_normal * 2.0 - 1.0); 
         material_normal = normalize(tbn_matrix * material_normal);
-
-        // green channel scalar is a dot product between the cross of the bitangent and tangents and the surface normal.
-        // it will inform us if the texture has been flipped horizontally. If it has, we need to flip the green component.
-        // otherwise the lighting calculations will be all wrong! They end up the opposite y direction.
     #else 
         vec3 material_normal = in_normal;
     #endif
@@ -177,44 +174,39 @@ void main()
     {
         discard;
     }  
-        
+    
+	// fetch the material properties
 	vec4 albedo = get_albedo();
 	vec4 emissive = get_emissive();
 	float metallic = get_metallic();
 	float roughness = get_roughness();
 	float ao = get_ao();
 	
+	// fetch input lighting data
 	vec3 n = get_normal();
 	vec3 v = normalize(view_pos - in_frag_pos);
 	vec3 r = reflect(-v, n);
 	
+	// get the diffuse light contribution
+    vec4 irradiance = texture(irradiance_map, n);
+    vec4 diffuse = irradiance * albedo;
+
+	// calculate the reflectance at normal incidence
 	vec3 f0 = vec3(0.04f);
-	f0 = mix(f0, albedo.rgb, metallic);
-	
-    vec4 lo = vec4(0.0f);
-	
+	f0 = mix(f0, albedo.rgb, metallic);			
     vec3 kS = fresnel_schlick_roughness(max(dot(n, v), 0.0f), f0, roughness);
     vec3 kD = 1.0f - kS;
     kD *= 1.0f - metallic;	  
-	
-    vec4 irradiance = texture(irradiance_map, n);
-    vec4 diffuse = irradiance * albedo;
-	
-	const float MAX_REFLECTION_LOD = 4.0f;
-	
-	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * MAX_REFLECTION_LOD).rgb;   
+		
+	// calculate final lighting 
+	vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * mip_count).rgb;   	
 	vec2 brdf  = texture(brdf_lut, vec2(max(dot(n, v), 0.0f), roughness)).rg;
     vec4 specular = vec4(prefiltered_color * (kS * brdf.x + brdf.y), 1.0f);
-
     vec4 ambient = (vec4(kD, 1.0f) * diffuse + specular) * ao;
-    
-    vec4 color = ambient + lo + emissive;
-	
+    vec4 color = ambient + emissive;
+
+	// gamma correction + HDR tonemapping
     vec4 mapped = vec4(1.0f) - exp(-color * exposure);
-	
 	vec3 corrected_color = vec3(1.0f / gamma);
-	
-    mapped = pow(mapped, vec4(corrected_color, 1.0f));
-  
-    frag_color = mapped;
+	frag_color = vec4(pow(mapped.xyz, corrected_color), albedo.a);
 }

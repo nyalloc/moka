@@ -6,13 +6,33 @@
 namespace moka
 {
     pbr_util::pbr_util(graphics_device& device, const std::filesystem::path& root)
-        : device_(device), cube_buffer_(make_cube_buffer()), root_(root)
+        : device_(device),
+          cube_buffer_(make_cube_buffer()),
+          quad_buffer_(make_quad_buffer()),
+          root_(root)
     {
     }
 
     model pbr_util::load_model(const std::filesystem::path& gltf, const std::filesystem::path& material) const
     {
         return asset_importer<model>{root_, device_}.load(gltf, material);
+    }
+
+    vertex_buffer_handle pbr_util::make_quad_buffer(buffer_usage use) const
+    {
+        const auto size = sizeof(float);
+
+        auto quad_layout =
+            vertex_layout::builder{}
+                .add_attribute(0, 3, attribute_type::float32, false, 5 * size, 0)
+                .add_attribute(1, 2, attribute_type::float32, false, 5 * size, 3 * size)
+                .build();
+
+        return device_.make_vertex_buffer(
+            constants::quad_vertices,
+            sizeof constants::quad_vertices,
+            std::move(quad_layout),
+            buffer_usage::static_draw);
     }
 
     vertex_buffer_handle pbr_util::make_cube_buffer(buffer_usage use) const
@@ -124,6 +144,8 @@ namespace moka
         list.frame_buffer().set_frame_buffer({0});
 
         device_.submit(std::move(list), false);
+
+        device_.destroy(hdr_frame_buffer);
     }
 
     texture_handle pbr_util::import_equirectangular_map(const std::filesystem::path& texture_path) const
@@ -207,8 +229,6 @@ namespace moka
 
     texture_handle pbr_util::make_specular_environment_map(texture_handle hdr_environment_map) const
     {
-        command_list prefilter_list;
-
         const auto prefilter_size = 256;
 
         const auto prefilter_cubemap = make_empty_hdr_cubemap(
@@ -247,8 +267,6 @@ namespace moka
 
     texture_handle pbr_util::make_brdf_integration_map() const
     {
-        // brdf look up texture --------------------------------
-
         const auto brdf_material =
             device_.build_material()
                 .set_vertex_shader(shaders::make_brdf_map::vert)
@@ -256,21 +274,6 @@ namespace moka
                 .build();
 
         command_list brdf_list;
-
-        // clang-format on
-
-        auto quad_layout =
-            vertex_layout::builder{}
-                .add_attribute(0, 3, attribute_type::float32, false, 5 * sizeof(float), 0)
-                .add_attribute(
-                    1, 2, attribute_type::float32, false, 5 * sizeof(float), 3 * sizeof(float))
-                .build();
-
-        const auto quad_buffer = device_.make_vertex_buffer(
-            constants::quad_vertices,
-            sizeof constants::quad_vertices,
-            std::move(quad_layout),
-            buffer_usage::static_draw);
 
         const auto brdf_size = 512;
 
@@ -312,7 +315,7 @@ namespace moka
         brdf_list.clear().set_clear_color(true).set_clear_depth(true);
 
         brdf_list.draw()
-            .set_vertex_buffer(quad_buffer)
+            .set_vertex_buffer(quad_buffer_)
             .set_vertex_count(4)
             .set_primitive_type(primitive_type::triangle_strip)
             .set_material(brdf_material);
@@ -320,6 +323,8 @@ namespace moka
         brdf_list.frame_buffer().set_frame_buffer({0});
 
         device_.submit(std::move(brdf_list), false);
+
+        device_.destroy(brdf_frame_buffer);
 
         return brdf_image;
     }
