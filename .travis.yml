@@ -55,14 +55,14 @@ matrix:
     ##########################################################################
 
     # GCC 7
-    - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+    - env: COMPILER=g++-7 BUILD_TYPE=Debug
       addons: &gcc7
         apt:
           packages: g++-7
           sources:
             - ubuntu-toolchain-r-test
 
-    - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+    - env: COMPILER=g++-7 BUILD_TYPE=Release
       addons: *gcc7
 
 install:
