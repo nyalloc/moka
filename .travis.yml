@@ -92,9 +92,10 @@ script:
   - cd build
   - ctest --output-on-failure -j$JOBS
 
- cache:
-	directories:
-	- /root/.hunter
+cache:
+  directories:
+    - /root/.hunter
+
 notifications:
   email: true
 
