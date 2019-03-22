@@ -89,7 +89,7 @@ namespace moka
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
         {
             /* Failed, exit. */
-            fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
+            log_.error("Video initialization failed: {}", SDL_GetError());
         }
         else
         {
@@ -120,7 +120,7 @@ namespace moka
             if (!window_)
             {
                 /* Failed, exit. */
-                fprintf(stderr, "Window initialization failed: %s\n", SDL_GetError());
+                log_.error("Window initialization failed: {}", SDL_GetError());
             }
             else
             {
@@ -128,7 +128,7 @@ namespace moka
 
                 if (!ctx)
                 {
-                    fprintf(stderr, "Error creating GL Context: %s\n", SDL_GetError());
+                    log_.error("Error creating GL Context: {}", SDL_GetError());
                 }
                 else
                 {
@@ -136,12 +136,12 @@ namespace moka
                     const auto glew_error = glewInit();
                     if (glew_error != GLEW_OK)
                     {
-                        fprintf(stderr, "Error initializing GLEW: %p\n", glewGetErrorString(glew_error));
+                        log_.error("Error initializing GLEW: {}", glewGetErrorString(glew_error));
                     }
 
                     if (SDL_GL_SetSwapInterval(1) < 0)
                     {
-                        fprintf(stderr, "Warning: Unable to set VSync: %s\n", SDL_GetError());
+                        log_.error("Warning: Unable to set VSync: {}", SDL_GetError());
                     }
                 }
             }

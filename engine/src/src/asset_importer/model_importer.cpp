@@ -112,7 +112,8 @@ namespace moka
         throw std::runtime_error("Invalid pixel_format value");
     }
 
-    std::byte* texture_load(const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
+    std::byte* texture_load(
+        const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -127,7 +128,8 @@ namespace moka
         return reinterpret_cast<std::byte*>(result);
     }
 
-    float* texture_load_hdr(const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
+    float* texture_load_hdr(
+        const std::filesystem::path& path, int& width, int& height, host_format& format, const host_format requested_format)
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -148,7 +150,7 @@ namespace moka
     }
 
     asset_importer<model>::asset_importer(const std::filesystem::path& path, graphics_device& device)
-        : device_(device), root_directory_(path)
+        : device_(device), root_directory_(path), log_("model importer")
     {
     }
 
@@ -177,11 +179,14 @@ namespace moka
 
             const auto& indices_accessor = model.accessors[primitive.indices];
             const auto& indices_buffer_view = model.bufferViews[indices_accessor.bufferView];
-            const auto& indices_buffer = model.buffers[indices_buffer_view.buffer].data;
+            const auto& indices_buffer =
+                model.buffers[indices_buffer_view.buffer].data;
 
             std::move(
-                indices_buffer.begin() + indices_buffer_view.byteOffset + indices_accessor.byteOffset,
-                indices_buffer.begin() + indices_buffer_view.byteOffset + indices_buffer_view.byteLength,
+                indices_buffer.begin() + indices_buffer_view.byteOffset +
+                    indices_accessor.byteOffset,
+                indices_buffer.begin() + indices_buffer_view.byteOffset +
+                    indices_buffer_view.byteLength,
                 std::back_inserter(index_buffer));
 
             auto indices_count = indices_accessor.count;
@@ -235,9 +240,11 @@ namespace moka
             if (tex_coordinate_0 != primitive.attributes.end())
             {
                 const auto& vertices_accessor = model.accessors[tex_coordinate_0->second];
-                const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+                const auto& vertices_buffer_view =
+                    model.bufferViews[vertices_accessor.bufferView];
                 vertices_count = vertices_accessor.count;
-                const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
+                const auto& vertices_buffer =
+                    model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     3,
                     get_size(vertices_accessor.type),
@@ -247,8 +254,10 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_accessor.byteOffset,
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
             }
 
@@ -258,9 +267,11 @@ namespace moka
             if (tangent != primitive.attributes.end())
             {
                 const auto& vertices_accessor = model.accessors[tangent->second];
-                const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+                const auto& vertices_buffer_view =
+                    model.bufferViews[vertices_accessor.bufferView];
                 vertices_count = vertices_accessor.count;
-                const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
+                const auto& vertices_buffer =
+                    model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     2,
                     get_size(vertices_accessor.type),
@@ -270,8 +281,10 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_accessor.byteOffset,
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
             }
             else
@@ -342,9 +355,11 @@ namespace moka
             if (normal != primitive.attributes.end())
             {
                 const auto& vertices_accessor = model.accessors[normal->second];
-                const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+                const auto& vertices_buffer_view =
+                    model.bufferViews[vertices_accessor.bufferView];
                 vertices_count = vertices_accessor.count;
-                const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
+                const auto& vertices_buffer =
+                    model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     1,
                     get_size(vertices_accessor.type),
@@ -354,8 +369,10 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_accessor.byteOffset,
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
             }
 
@@ -363,9 +380,11 @@ namespace moka
             if (position != primitive.attributes.end())
             {
                 const auto& vertices_accessor = model.accessors[position->second];
-                const auto& vertices_buffer_view = model.bufferViews[vertices_accessor.bufferView];
+                const auto& vertices_buffer_view =
+                    model.bufferViews[vertices_accessor.bufferView];
                 vertices_count = vertices_accessor.count;
-                const auto& vertices_buffer = model.buffers[vertices_buffer_view.buffer].data;
+                const auto& vertices_buffer =
+                    model.buffers[vertices_buffer_view.buffer].data;
                 layout_builder.add_attribute(
                     0,
                     get_size(vertices_accessor.type),
@@ -375,8 +394,10 @@ namespace moka
                     vertex_buffer.size());
 
                 std::move(
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_accessor.byteOffset,
-                    vertices_buffer.begin() + vertices_buffer_view.byteOffset + vertices_buffer_view.byteLength,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_accessor.byteOffset,
+                    vertices_buffer.begin() + vertices_buffer_view.byteOffset +
+                        vertices_buffer_view.byteLength,
                     std::back_inserter(vertex_buffer));
             }
 
@@ -405,8 +426,10 @@ namespace moka
             material_builder mat_builder(device);
 
             mat_builder.add_material_parameter("view_pos", glm::vec3(0.0f));
-            mat_builder.add_material_parameter("material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            mat_builder.add_material_parameter("material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+            mat_builder.add_material_parameter(
+                "material.diffuse_factor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            mat_builder.add_material_parameter(
+                "material.emissive_factor", glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
             mat_builder.add_material_parameter("material.roughness_factor", 1.0f);
             mat_builder.add_material_parameter("material.metalness_factor", 1.0f);
 
@@ -426,22 +449,26 @@ namespace moka
 
                 if (!material.values.empty())
                 {
-                    if (auto base_color_factor_itr = material.values.find("baseColorFactor");
+                    if (auto base_color_factor_itr =
+                            material.values.find("baseColorFactor");
                         base_color_factor_itr != material.values.end())
                     {
                         auto& data = base_color_factor_itr->second.number_array;
                         glm::vec4 diffuse_factor(data[0], data[1], data[2], data[3]);
-                        mat_builder.add_material_parameter("material.diffuse_factor", diffuse_factor);
+                        mat_builder.add_material_parameter(
+                            "material.diffuse_factor", diffuse_factor);
                     }
 
-                    if (auto base_color_texture_itr = material.values.find("baseColorTexture");
+                    if (auto base_color_texture_itr =
+                            material.values.find("baseColorTexture");
                         base_color_texture_itr != material.values.end())
                     {
                         auto& texture_value = base_color_texture_itr->second;
 
                         auto properties = texture_value.json_double_value;
 
-                        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+                        if (auto index_itr = properties.find("index");
+                            index_itr != properties.end())
                         {
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
@@ -464,51 +491,59 @@ namespace moka
                                     mag = gltf_mag_filter_to_moka(sampler.magFilter);
                                 }
 
-                                auto diffuse_map = device.build_texture()
-                                                       .add_image_data(
-                                                           image_target::texture_2d,
-                                                           0,
-                                                           device_format::srgb8_alpha8,
-                                                           image_data.width,
-                                                           image_data.height,
-                                                           0,
-                                                           stb_to_moka(image_data.component),
-                                                           pixel_type::uint8,
-                                                           (void*)image_data.image.data())
-                                                       .set_mipmaps(true)
-                                                       .set_wrap_s(wrap_s)
-                                                       .set_wrap_t(wrap_t)
-                                                       .set_min_filter(min)
-                                                       .set_mag_filter(mag)
-                                                       .build();
+                                auto diffuse_map =
+                                    device.build_texture()
+                                        .add_image_data(
+                                            image_target::texture_2d,
+                                            0,
+                                            device_format::srgb8_alpha8,
+                                            image_data.width,
+                                            image_data.height,
+                                            0,
+                                            stb_to_moka(image_data.component),
+                                            pixel_type::uint8,
+                                            (void*)image_data.image.data())
+                                        .set_mipmaps(true)
+                                        .set_wrap_s(wrap_s)
+                                        .set_wrap_t(wrap_t)
+                                        .set_min_filter(min)
+                                        .set_mag_filter(mag)
+                                        .build();
 
-                                mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
+                                mat_builder.add_texture(
+                                    material_property::diffuse_map, diffuse_map);
 
                                 texture_cache.add_texture(diffuse_map, uri.string());
                             }
                             else
                             {
-                                auto diffuse_map = texture_cache.get_texture(uri.string());
+                                auto diffuse_map =
+                                    texture_cache.get_texture(uri.string());
 
-                                mat_builder.add_texture(material_property::diffuse_map, diffuse_map);
+                                mat_builder.add_texture(
+                                    material_property::diffuse_map, diffuse_map);
                             }
                         }
                     }
 
-                    if (auto metallic_factor_itr = material.values.find("metallicFactor");
+                    if (auto metallic_factor_itr =
+                            material.values.find("metallicFactor");
                         metallic_factor_itr != material.values.end())
                     {
                         auto& data = metallic_factor_itr->second.number_value;
                         auto metallic_factor(static_cast<float>(data));
-                        mat_builder.add_material_parameter("material.metalness_factor", metallic_factor);
+                        mat_builder.add_material_parameter(
+                            "material.metalness_factor", metallic_factor);
                     }
 
-                    if (auto roughness_factor_itr = material.values.find("roughnessFactor");
+                    if (auto roughness_factor_itr =
+                            material.values.find("roughnessFactor");
                         roughness_factor_itr != material.values.end())
                     {
                         auto& data = roughness_factor_itr->second.number_value;
                         auto roughness_factor(static_cast<float>(data));
-                        mat_builder.add_material_parameter("material.roughness_factor", roughness_factor);
+                        mat_builder.add_material_parameter(
+                            "material.roughness_factor", roughness_factor);
                     }
 
                     if (auto metallic_roughness_texture_itr =
@@ -519,7 +554,8 @@ namespace moka
 
                         auto& properties = texture_value.json_double_value;
 
-                        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+                        if (auto index_itr = properties.find("index");
+                            index_itr != properties.end())
                         {
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
@@ -542,35 +578,40 @@ namespace moka
                                     mag = gltf_mag_filter_to_moka(sampler.magFilter);
                                 }
 
-                                auto metallic_roughness_map = device.build_texture()
-                                                                  .add_image_data(
-                                                                      image_target::texture_2d,
-                                                                      0,
-                                                                      device_format::rgba,
-                                                                      image_data.width,
-                                                                      image_data.height,
-                                                                      0,
-                                                                      stb_to_moka(image_data.component),
-                                                                      pixel_type::uint8,
-                                                                      (void*)image_data.image.data())
-                                                                  .set_mipmaps(true)
-                                                                  .set_wrap_s(wrap_s)
-                                                                  .set_wrap_t(wrap_t)
-                                                                  .set_min_filter(min)
-                                                                  .set_mag_filter(mag)
-                                                                  .build();
+                                auto metallic_roughness_map =
+                                    device.build_texture()
+                                        .add_image_data(
+                                            image_target::texture_2d,
+                                            0,
+                                            device_format::rgba,
+                                            image_data.width,
+                                            image_data.height,
+                                            0,
+                                            stb_to_moka(image_data.component),
+                                            pixel_type::uint8,
+                                            (void*)image_data.image.data())
+                                        .set_mipmaps(true)
+                                        .set_wrap_s(wrap_s)
+                                        .set_wrap_t(wrap_t)
+                                        .set_min_filter(min)
+                                        .set_mag_filter(mag)
+                                        .build();
 
                                 mat_builder.add_texture(
-                                    material_property::metallic_roughness_map, metallic_roughness_map);
+                                    material_property::metallic_roughness_map,
+                                    metallic_roughness_map);
 
-                                texture_cache.add_texture(metallic_roughness_map, uri.string());
+                                texture_cache.add_texture(
+                                    metallic_roughness_map, uri.string());
                             }
                             else
                             {
-                                auto metallic_roughness_map = texture_cache.get_texture(uri.string());
+                                auto metallic_roughness_map =
+                                    texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(
-                                    material_property::metallic_roughness_map, metallic_roughness_map);
+                                    material_property::metallic_roughness_map,
+                                    metallic_roughness_map);
                             }
                         }
                     }
@@ -590,7 +631,8 @@ namespace moka
 
                         auto& properties = texture_value.json_double_value;
 
-                        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+                        if (auto index_itr = properties.find("index");
+                            index_itr != properties.end())
                         {
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
@@ -613,33 +655,37 @@ namespace moka
                                     mag = gltf_mag_filter_to_moka(sampler.magFilter);
                                 }
 
-                                auto normal_map = device.build_texture()
-                                                      .add_image_data(
-                                                          image_target::texture_2d,
-                                                          0,
-                                                          device_format::rgba,
-                                                          image_data.width,
-                                                          image_data.height,
-                                                          0,
-                                                          stb_to_moka(image_data.component),
-                                                          pixel_type::uint8,
-                                                          (void*)image_data.image.data())
-                                                      .set_mipmaps(true)
-                                                      .set_wrap_s(wrap_s)
-                                                      .set_wrap_t(wrap_t)
-                                                      .set_min_filter(min)
-                                                      .set_mag_filter(mag)
-                                                      .build();
+                                auto normal_map =
+                                    device.build_texture()
+                                        .add_image_data(
+                                            image_target::texture_2d,
+                                            0,
+                                            device_format::rgba,
+                                            image_data.width,
+                                            image_data.height,
+                                            0,
+                                            stb_to_moka(image_data.component),
+                                            pixel_type::uint8,
+                                            (void*)image_data.image.data())
+                                        .set_mipmaps(true)
+                                        .set_wrap_s(wrap_s)
+                                        .set_wrap_t(wrap_t)
+                                        .set_min_filter(min)
+                                        .set_mag_filter(mag)
+                                        .build();
 
-                                mat_builder.add_texture(material_property::normal_map, normal_map);
+                                mat_builder.add_texture(
+                                    material_property::normal_map, normal_map);
 
                                 texture_cache.add_texture(normal_map, uri.string());
                             }
                             else
                             {
-                                auto normal_map = texture_cache.get_texture(uri.string());
+                                auto normal_map =
+                                    texture_cache.get_texture(uri.string());
 
-                                mat_builder.add_texture(material_property::normal_map, normal_map);
+                                mat_builder.add_texture(
+                                    material_property::normal_map, normal_map);
                             }
                         }
                     }
@@ -652,7 +698,8 @@ namespace moka
 
                         auto& properties = texture_value.json_double_value;
 
-                        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+                        if (auto index_itr = properties.find("index");
+                            index_itr != properties.end())
                         {
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
@@ -675,23 +722,24 @@ namespace moka
                                     mag = gltf_mag_filter_to_moka(sampler.magFilter);
                                 }
 
-                                auto occlusion_map = device.build_texture()
-                                                         .add_image_data(
-                                                             image_target::texture_2d,
-                                                             0,
-                                                             device_format::rgba,
-                                                             image_data.width,
-                                                             image_data.height,
-                                                             0,
-                                                             stb_to_moka(image_data.component),
-                                                             pixel_type::uint8,
-                                                             (void*)image_data.image.data())
-                                                         .set_mipmaps(true)
-                                                         .set_wrap_s(wrap_s)
-                                                         .set_wrap_t(wrap_t)
-                                                         .set_min_filter(min)
-                                                         .set_mag_filter(mag)
-                                                         .build();
+                                auto occlusion_map =
+                                    device.build_texture()
+                                        .add_image_data(
+                                            image_target::texture_2d,
+                                            0,
+                                            device_format::rgba,
+                                            image_data.width,
+                                            image_data.height,
+                                            0,
+                                            stb_to_moka(image_data.component),
+                                            pixel_type::uint8,
+                                            (void*)image_data.image.data())
+                                        .set_mipmaps(true)
+                                        .set_wrap_s(wrap_s)
+                                        .set_wrap_t(wrap_t)
+                                        .set_min_filter(min)
+                                        .set_mag_filter(mag)
+                                        .build();
 
                                 mat_builder.add_texture(material_property::ao_map, occlusion_map);
 
@@ -699,19 +747,22 @@ namespace moka
                             }
                             else
                             {
-                                auto occlusion_map = texture_cache.get_texture(uri.string());
+                                auto occlusion_map =
+                                    texture_cache.get_texture(uri.string());
 
                                 mat_builder.add_texture(material_property::ao_map, occlusion_map);
                             }
                         }
                     }
 
-                    if (auto emissive_factor_itr = material.additionalValues.find("emissiveFactor");
+                    if (auto emissive_factor_itr =
+                            material.additionalValues.find("emissiveFactor");
                         emissive_factor_itr != material.additionalValues.end())
                     {
                         auto data = emissive_factor_itr->second.number_array;
                         glm::vec4 emissive_factor(data[0], data[1], data[2], 1.0f);
-                        mat_builder.add_material_parameter("material.emissive_factor", emissive_factor);
+                        mat_builder.add_material_parameter(
+                            "material.emissive_factor", emissive_factor);
                     }
 
                     if (auto emissive_texture_itr =
@@ -722,7 +773,8 @@ namespace moka
 
                         auto& properties = texture_value.json_double_value;
 
-                        if (auto index_itr = properties.find("index"); index_itr != properties.end())
+                        if (auto index_itr = properties.find("index");
+                            index_itr != properties.end())
                         {
                             auto& index = index_itr->second;
                             auto& texture = model.textures[size_t(index)];
@@ -745,33 +797,37 @@ namespace moka
                                     mag = gltf_mag_filter_to_moka(sampler.magFilter);
                                 }
 
-                                auto emissive_map = device.build_texture()
-                                                        .add_image_data(
-                                                            image_target::texture_2d,
-                                                            0,
-                                                            device_format::srgb8_alpha8,
-                                                            image_data.width,
-                                                            image_data.height,
-                                                            0,
-                                                            stb_to_moka(image_data.component),
-                                                            pixel_type::uint8,
-                                                            (void*)image_data.image.data())
-                                                        .set_mipmaps(true)
-                                                        .set_wrap_s(wrap_s)
-                                                        .set_wrap_t(wrap_t)
-                                                        .set_min_filter(min)
-                                                        .set_mag_filter(mag)
-                                                        .build();
+                                auto emissive_map =
+                                    device.build_texture()
+                                        .add_image_data(
+                                            image_target::texture_2d,
+                                            0,
+                                            device_format::srgb8_alpha8,
+                                            image_data.width,
+                                            image_data.height,
+                                            0,
+                                            stb_to_moka(image_data.component),
+                                            pixel_type::uint8,
+                                            (void*)image_data.image.data())
+                                        .set_mipmaps(true)
+                                        .set_wrap_s(wrap_s)
+                                        .set_wrap_t(wrap_t)
+                                        .set_min_filter(min)
+                                        .set_mag_filter(mag)
+                                        .build();
 
-                                mat_builder.add_texture(material_property::emissive_map, emissive_map);
+                                mat_builder.add_texture(
+                                    material_property::emissive_map, emissive_map);
 
                                 texture_cache.add_texture(emissive_map, uri.string());
                             }
                             else
                             {
-                                auto emissive_map = texture_cache.get_texture(uri.string());
+                                auto emissive_map =
+                                    texture_cache.get_texture(uri.string());
 
-                                mat_builder.add_texture(material_property::emissive_map, emissive_map);
+                                mat_builder.add_texture(
+                                    material_property::emissive_map, emissive_map);
                             }
                         }
                     }
@@ -790,7 +846,8 @@ namespace moka
 
                     auto alpha = alpha_mode::opaque;
 
-                    if (auto alpha_mode_itr = material.additionalValues.find("alphaMode");
+                    if (auto alpha_mode_itr =
+                            material.additionalValues.find("alphaMode");
                         alpha_mode_itr != material.additionalValues.end())
                     {
                         auto alpha_mode_name = alpha_mode_itr->first;
@@ -805,7 +862,8 @@ namespace moka
                         else if (alpha_str == "MASK")
                         {
                             alpha = alpha_mode::mask;
-                            mat_builder.add_material_parameter("material.alpha_cutoff", alpha_cutoff);
+                            mat_builder.add_material_parameter(
+                                "material.alpha_cutoff", alpha_cutoff);
                             mat_builder.set_blend_enabled(true);
                         }
                         else if (alpha_str == "BLEND")
@@ -823,7 +881,13 @@ namespace moka
             vertex_buffer.clear();
 
             primitives.emplace_back(
-                vertex_handle, vertices_count, index_handle, type, indices_count, 0, mat_builder.build());
+                vertex_handle,
+                vertices_count,
+                index_handle,
+                type,
+                indices_count,
+                0,
+                mat_builder.build());
         }
 
         return moka::mesh{std::move(primitives), transform::from_matrix(transform)};
@@ -861,7 +925,8 @@ namespace moka
         transform trans;
         if (!model_translation.empty())
         {
-            std::vector<float> translation(model_translation.begin(), model_translation.end());
+            std::vector<float> translation(
+                model_translation.begin(), model_translation.end());
             trans.set_position({translation[0], translation[1], translation[2]});
         }
         if (!model_scale.empty())
@@ -947,7 +1012,8 @@ namespace moka
         return moka::model{std::move(meshes)};
     }
 
-    model asset_importer<model>::load(const std::filesystem::path& model_path, const std::filesystem::path& material_path) const
+    model asset_importer<model>::load(
+        const std::filesystem::path& model_path, const std::filesystem::path& material_path) const
     {
         tinygltf::Model model;
         tinygltf::TinyGLTF gltf_ctx;
@@ -964,37 +1030,44 @@ namespace moka
 
         if (ext == ".glb")
         {
-            std::cout << "Reading binary glTF" << std::endl;
+            log_.info("Loading binary .glb file: {}", model_path.string());
             // assume binary glTF.
-            ret = gltf_ctx.LoadBinaryFromFile(&model, &err, &warn, absolute_model_path.string());
+            ret = gltf_ctx.LoadBinaryFromFile(
+                &model, &err, &warn, absolute_model_path.string());
         }
         else if (ext == ".gltf")
         {
-            std::cout << "Reading ASCII glTF" << std::endl;
+            log_.info("Loading ascii .gltf file: {}", model_path.string());
             // assume ascii glTF.
-            ret = gltf_ctx.LoadASCIIFromFile(&model, &err, &warn, absolute_model_path.string());
+            ret = gltf_ctx.LoadASCIIFromFile(
+                &model, &err, &warn, absolute_model_path.string());
         }
         else
         {
-            std::cout << "Attempting to load non-glTF asset." << std::endl;
+            log_.error("Attempting to load non-glTF asset.");
+            return {};
         }
 
         if (!warn.empty())
         {
-            std::cout << "Warn: " << warn.c_str() << std::endl;
+            log_.warn(warn.c_str());
         }
 
         if (!err.empty())
         {
-            std::cout << "Err: " << err.c_str() << std::endl;
+            log_.error(err.c_str());
         }
 
         if (!ret)
         {
-            std::cout << "Failed to parse glTF: " << std::endl;
+            log_.warn("Failed to load glTF file: {}", model_path.string());
         }
 
         return load_model(
-            model, device_, root_directory_, absolute_material_path, absolute_model_path.parent_path());
+            model,
+            device_,
+            root_directory_,
+            absolute_material_path,
+            absolute_model_path.parent_path());
     }
 } // namespace moka

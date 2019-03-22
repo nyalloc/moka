@@ -239,26 +239,26 @@ namespace moka
                     vec3 r = n;
                     vec3 v = r;
                     const uint sample_count = 2048u;
-                    vec3 prefiltered_color = vec3(0.0);
-                    float total_weight = 0.0;
+                    vec3 prefiltered_color  = vec3(0.0);
+                    float total_weight      = 0.0;
     
                     for(uint i = 0u; i < sample_count; ++i)
                     {
-                        vec2 xi = hammersley(i, sample_count); 
-                        vec3 h = importance_sample_ggx(xi, n, roughness); 
-                        vec3 l  = normalize(2.0 * dot(v, h) * h - v);
+                        vec2 xi       = hammersley(i, sample_count); 
+                        vec3 h        = importance_sample_ggx(xi, n, roughness); 
+                        vec3 l        = normalize(2.0 * dot(v, h) * h - v);
                         float n_dot_l = max(dot(n, l), 0.0);
 
                         if(n_dot_l > 0.0)
                         {
-                            float d   = distribution_ggx(n, h, roughness) / PI;
-                            float n_dot_h = max(dot(n, h), 0.0);
-                            float h_dot_v = max(dot(h, v), 0.0);
-                            float pdf = d * n_dot_h / (4.0 * h_dot_v) + 0.0001;
-                            float resolution = 1024.0; // resolution of source cubemap (per face)
-                            float sa_texel  = 4.0 * PI / (6.0 * resolution * resolution);
-                            float sa_sample = 1.0 / (float(sample_count) * pdf + 0.0001);
-                            float mip_level = roughness == 0.0 ? 0.0 : 0.5 * log2(sa_sample / sa_texel);
+                            float d          = distribution_ggx(n, h, roughness) / PI;
+                            float n_dot_h    = max(dot(n, h), 0.0);
+                            float h_dot_v    = max(dot(h, v), 0.0);
+                            float pdf        = d * n_dot_h / (4.0 * h_dot_v) + 0.0001;
+                            float resolution = 1024.0; 
+                            float sa_texel   = 4.0 * PI / (6.0 * resolution * resolution);
+                            float sa_sample  = 1.0 / (float(sample_count) * pdf + 0.0001);
+                            float mip_level  = roughness == 0.0 ? 0.0 : 0.5 * log2(sa_sample / sa_texel);
     
                             prefiltered_color += textureLod(environment_map, l, mip_level).rgb * n_dot_l;
                             total_weight      += n_dot_l;

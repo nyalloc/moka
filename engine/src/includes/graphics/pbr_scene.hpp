@@ -30,7 +30,8 @@ namespace moka
 
         static uint32_t depth_to_bits(const float depth)
         {
-            // stolen from http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
+            // http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
+            // use type punning to reinterpret the data of a float as an unsigned
             union {
                 float f = 0.0f;
                 uint32_t i;
@@ -38,7 +39,8 @@ namespace moka
 
             data.f = depth;
 
-            return data.i >> 22; // take highest 10 bits
+            // take highest 10 bits
+            return data.i >> 22;
         }
 
         static sort_key generate_sort_key(const float depth, const uint16_t material_id, const alpha_mode alpha)

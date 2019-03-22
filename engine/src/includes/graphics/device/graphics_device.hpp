@@ -72,7 +72,7 @@ namespace moka
     /* string containing unique identifier of shader source code + all preprocessor definitions
      * the preprocessor definitions are necessary to differentiate different configurations of the same shader source
      */
-    using program_id = std::string;
+    using program_id = std::size_t;
 
     /**
      * \brief A cache of loaded programs. Used to avoid loading the same program multiple times.

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <application/logger.hpp>
 #include <asset_importer/asset_importer.hpp>
 #include <filesystem>
 #include <graphics/model.hpp>
@@ -12,6 +13,7 @@ namespace moka
     template <>
     class asset_importer<model>
     {
+        logger log_;
         graphics_device& device_;
         std::filesystem::path root_directory_;
 

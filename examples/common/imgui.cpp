@@ -58,7 +58,11 @@ namespace moka
     }
 
     imgui::imgui(window& window, keyboard& keyboard, mouse& mouse, graphics_device& graphics_device)
-        : window_(window), keyboard_(keyboard), mouse_(mouse), graphics_device_(graphics_device)
+        : window_(window),
+          keyboard_(keyboard),
+          mouse_(mouse),
+          graphics_device_(graphics_device),
+          log_("imgui")
     {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -67,7 +71,7 @@ namespace moka
 
         if (!io.Fonts->AddFontDefault())
         {
-            std::cout << "Null ptr to default font" << std::endl;
+            log_.warn("Null ptr to default font");
         }
 
         theme();
@@ -146,9 +150,9 @@ namespace moka
         const auto col_size = IM_OFFSETOF(ImDrawVert, col);
 
         vertex_layout layout{
-            vertex_attribute{0, attribute_type::float32, 2, false, sizeof(ImDrawVert), pos_size},
-            vertex_attribute{1, attribute_type::float32, 2, false, sizeof(ImDrawVert), uv_size},
-            vertex_attribute{2, attribute_type::uint8, 4, true, sizeof(ImDrawVert), col_size}};
+            {0, attribute_type::float32, 2, false, sizeof(ImDrawVert), pos_size},
+            {1, attribute_type::float32, 2, false, sizeof(ImDrawVert), uv_size},
+            {2, attribute_type::uint8, 4, true, sizeof(ImDrawVert), col_size}};
 
         index_buffer_ = graphics_device_.make_index_buffer(
             nullptr, 0, index_type::uint16, buffer_usage::stream_draw);

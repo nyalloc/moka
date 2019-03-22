@@ -10,9 +10,11 @@ namespace moka
     struct application_traits final
     {
 #ifdef NDEBUG
-        constexpr static bool is_debug_build = false; /**< Is this build of moka a release build or a debug build? */
+        constexpr static bool is_debug_build =
+            false; /**< Is this build of moka a release build or a debug build? */
 #else
-        constexpr static bool is_debug_build = true; /**< Is this build of moka a release build or a debug build? */
+        constexpr static bool is_debug_build =
+            true; /**< Is this build of moka a release build or a debug build? */
 #endif
     };
 
@@ -60,7 +62,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void log(log_level level, const char* fmt, Args&&... args);
+        void log(log_level level, const char* fmt, Args&&... args) const;
 
         /**
          * \brief Write some debug-level information to the log.
@@ -69,7 +71,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void debug(const char* fmt, Args&&... args);
+        void debug(const char* fmt, Args&&... args) const;
 
         /**
          * \brief Write some trace-level information to the log.
@@ -78,7 +80,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void trace(const char* fmt, Args&&... args);
+        void trace(const char* fmt, Args&&... args) const;
 
         /**
          * \brief Write some info-level information to the log.
@@ -87,7 +89,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void info(const char* fmt, Args&&... args);
+        void info(const char* fmt, Args&&... args) const;
 
         /**
          * \brief Write some warn-level information to the log.
@@ -96,7 +98,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void warn(const char* fmt, Args&&... args);
+        void warn(const char* fmt, Args&&... args) const;
 
         /**
          * \brief Write some error-level information to the log.
@@ -105,7 +107,7 @@ namespace moka
          * \param args The arguments that are being written to the log.
          */
         template <typename... Args>
-        void error(const char* fmt, Args&&... args);
+        void error(const char* fmt, Args&&... args) const;
     };
 
     inline logger::logger(const char* name, const log_level level)
@@ -132,7 +134,7 @@ namespace moka
     }
 
     template <typename... Args>
-    void logger::log(const log_level level, const char* fmt, Args&&... args)
+    void logger::log(const log_level level, const char* fmt, Args&&... args) const
     {
         switch (level)
         {
@@ -157,31 +159,31 @@ namespace moka
     }
 
     template <typename... Args>
-    void logger::debug(const char* fmt, Args&&... args)
+    void logger::debug(const char* fmt, Args&&... args) const
     {
         logger_->debug(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
-    void logger::trace(const char* fmt, Args&&... args)
+    void logger::trace(const char* fmt, Args&&... args) const
     {
         logger_->trace(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
-    void logger::info(const char* fmt, Args&&... args)
+    void logger::info(const char* fmt, Args&&... args) const
     {
         logger_->info(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
-    void logger::warn(const char* fmt, Args&&... args)
+    void logger::warn(const char* fmt, Args&&... args) const
     {
         logger_->warn(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
-    void logger::error(const char* fmt, Args&&... args)
+    void logger::error(const char* fmt, Args&&... args) const
     {
         logger_->error(fmt, std::forward<Args>(args)...);
     }

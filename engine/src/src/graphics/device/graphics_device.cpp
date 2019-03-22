@@ -36,7 +36,9 @@ namespace moka
 
     void program_cache::add_program(program_handle handle, const program_id& id)
     {
+        const auto index = shaders_.size();
         shaders_.emplace_back(handle);
+        shader_lookup_[id] = index;
     }
 
     bool program_cache::exists(const program_id& id) const

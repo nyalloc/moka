@@ -490,6 +490,11 @@ namespace moka
     {
         glBindTexture(GL_TEXTURE_CUBE_MAP, cmd.texture.id);
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("visit generate_mipmaps_command");
+        }
     }
 
     void gl_graphics_api::visit(set_material_parameters_command& cmd)
@@ -970,6 +975,46 @@ namespace moka
         return frame_buffer_handle{static_cast<uint16_t>(capture_fbo)};
     }
 
+    std::string source_to_string(GLenum source)
+    {
+        switch (source)
+        {
+        case GL_DEBUG_SOURCE_API:
+            return "API";
+        case GL_DEBUG_SOURCE_SHADER_COMPILER:
+            return "SHADER_COMPILER";
+        case GL_DEBUG_SOURCE_THIRD_PARTY:
+            return "THIRD_PARTY";
+        case GL_DEBUG_SOURCE_APPLICATION:
+            return "APPLICATION";
+        case GL_DEBUG_SOURCE_OTHER:
+            return "OTHER";
+        default:
+            return "UNKNOWN SOURCE";
+        }
+    }
+
+    std::string type_to_string(GLenum type)
+    {
+        switch (type)
+        {
+        case GL_DEBUG_TYPE_ERROR:
+            return "ERROR";
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+            return "DEPRECATED_BEHAVIOR";
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+            return "UNDEFINED_BEHAVIOR";
+        case GL_DEBUG_TYPE_PORTABILITY:
+            return "PORTABILITY";
+        case GL_DEBUG_TYPE_PERFORMANCE:
+            return "PERFORMANCE";
+        case GL_DEBUG_TYPE_OTHER:
+            return "OTHER";
+        default:
+            return "UNKNOWN TYPE";
+        }
+    }
+
     void GLAPIENTRY gl_graphics_api::message_callback(
         const GLenum source,
         const GLenum type,
@@ -979,80 +1024,39 @@ namespace moka
         const GLchar* message,
         const void* user_param)
     {
-        std::string msg_source;
-        switch (source)
-        {
-        case GL_DEBUG_SOURCE_API:
-            msg_source = "API";
-            break;
-        case GL_DEBUG_SOURCE_SHADER_COMPILER:
-            msg_source = "SHADER_COMPILER";
-            break;
-        case GL_DEBUG_SOURCE_THIRD_PARTY:
-            msg_source = "THIRD_PARTY";
-            break;
-        case GL_DEBUG_SOURCE_APPLICATION:
-            msg_source = "APPLICATION";
-            break;
-        case GL_DEBUG_SOURCE_OTHER:
-            msg_source = "OTHER";
-            break;
-        default:;
-        }
-
-        std::string msg_type;
-        switch (type)
-        {
-        case GL_DEBUG_TYPE_ERROR:
-            msg_type = "ERROR";
-            break;
-        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-            msg_type = "DEPRECATED_BEHAVIOR";
-            break;
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-            msg_type = "UNDEFINED_BEHAVIOR";
-            break;
-        case GL_DEBUG_TYPE_PORTABILITY:
-            msg_type = "PORTABILITY";
-            break;
-        case GL_DEBUG_TYPE_PERFORMANCE:
-            msg_type = "PERFORMANCE";
-            break;
-        case GL_DEBUG_TYPE_OTHER:
-            msg_type = "OTHER";
-            break;
-        default:;
-        }
-
         switch (severity)
         {
         case GL_DEBUG_SEVERITY_HIGH:
             log_.error(
-                "message: {}, type: {}, source: {}",
+                "message: {}, type: {}, source: {}, id: {}",
                 message,
-                msg_type.c_str(),
-                msg_source.c_str());
+                type_to_string(type),
+                source_to_string(source),
+                id);
             break;
         case GL_DEBUG_SEVERITY_MEDIUM:
             log_.warn(
-                "message: {}, type: {}, source: {}",
+                "message: {}, type: {}, source: {}, id: {}",
                 message,
-                msg_type.c_str(),
-                msg_source.c_str());
+                type_to_string(type),
+                source_to_string(source),
+                id);
             break;
         case GL_DEBUG_SEVERITY_LOW:
             log_.debug(
-                "message: {}, type: {}, source: {}",
+                "message: {}, type: {}, source: {}, id: {}",
                 message,
-                msg_type.c_str(),
-                msg_source.c_str());
+                type_to_string(type),
+                source_to_string(source),
+                id);
             break;
         default:
             log_.trace(
-                "glDebugMessage: {}, type: {}, source: {}",
+                "message: {}, type: {}, source: {}, id: {}",
                 message,
-                msg_type.c_str(),
-                msg_source.c_str());
+                type_to_string(type),
+                source_to_string(source),
+                id);
             break;
         }
     }
@@ -1093,6 +1097,11 @@ namespace moka
         }
 
         glDeleteFramebuffers(1, (GLuint*)&handle.id);
+
+        if constexpr (application_traits::is_debug_build)
+        {
+            check_errors("destroy frame_buffer_handle");
+        }
     }
 
     gl_graphics_api::~gl_graphics_api()

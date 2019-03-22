@@ -1,5 +1,6 @@
 #pragma once
 
+#include <application/logger.hpp>
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/material/material.hpp>
 #include <imgui.h>
@@ -14,6 +15,8 @@ namespace moka
         window& window_;
         keyboard& keyboard_;
         mouse& mouse_;
+
+        logger log_;
 
         material_handle material_;
 

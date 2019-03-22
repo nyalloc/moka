@@ -198,15 +198,9 @@ namespace moka
     {
         std::string compiler_flags;
 
-        switch (alpha_mode_)
+        if (alpha_mode_ == alpha_mode::mask)
         {
-        case alpha_mode::blend:
-            break;
-        case alpha_mode::mask:
             compiler_flags.append("#define MASK_ALPHA\n");
-            break;
-        case alpha_mode::opaque:
-            break;
         }
 
         for (const auto& property : texture_maps_)
@@ -238,12 +232,13 @@ namespace moka
         vertex_shader_src_.insert(0, "#version 330 core\n");
         fragment_shader_src_.insert(0, "#version 330 core\n");
 
-        const auto key = vertex_shader_src_ + fragment_shader_src_;
+        std::hash<std::string> hash;
+
+        const auto key = hash(vertex_shader_src_ + fragment_shader_src_);
 
         auto& cache = graphics_device_.get_program_cache();
 
-        const auto it = cache.exists(key);
-        if (it)
+        if (cache.exists(key))
         {
             program_handle = cache.get_program(key);
         }
