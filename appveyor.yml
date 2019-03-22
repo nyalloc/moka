@@ -23,7 +23,7 @@ before_build:
       
       echo generator="$env:generator"
       cmake --version
-      cmake ../src -G "$env:generator"
+      cmake ../ -G "$env:generator"
 build_script:
   - cmake --build . --config %CONFIGURATION%
 
