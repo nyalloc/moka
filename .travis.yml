@@ -1,31 +1,69 @@
-# TinyBox travis test
-# Based on https://github.com/Microsoft/GSL/edit/master/.travis.yml
-
 language: cpp
 sudo: false
+notifications:
+  email: false
+
+# Use Linux unless specified otherwise
+os: linux
+dist: trusty
 
 cache:
   directories:
-    - ${TRAVIS_BUILD_DIR}/deps/cmake
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.5.2/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.7.1/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.8.1/install
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.9.1/install
+    - ${TRAVIS_BUILD_DIR}/deps
     - /root/.hunter
 
 matrix:
   include:
-    - env: GCC_VERSION=8 BUILD_TYPE=Debug
-      os: linux
-      addons: &gcc8
+
+    ##########################################################################
+    # Clang on OSX
+    # Travis seems to take longer to start OSX instances,
+    # so leave this first for the overall build to be faster
+    ##########################################################################
+
+    # XCode 9.1
+    - env: COMPILER=clang++ BUILD_TYPE=Debug
+      os: osx
+      osx_image: xcode9.1
+      compiler: clang
+
+    - env: COMPILER=clang++ BUILD_TYPE=Release
+      os: osx
+      osx_image: xcode9.1
+      compiler: clang
+
+    ##########################################################################
+    # Clang on Linux
+    ##########################################################################
+
+    # Clang 7.0
+    - env: COMPILER=clang++-7 BUILD_TYPE=Debug
+      addons: &clang70
         apt:
-          packages: g++-8
-          sources: &sources
+          packages:
+            - clang-7
+            - g++-7
+          sources:
             - ubuntu-toolchain-r-test
-    - env: GCC_VERSION=8 BUILD_TYPE=Release
-      os: linux
-      addons: *gcc8
+            - llvm-toolchain-trusty-7
+
+    - env: COMPILER=clang++-7 BUILD_TYPE=Release
+      addons: *clang70
+
+    ##########################################################################
+    # GCC on Linux
+    ##########################################################################
+
+    # GCC 7
+    - env: COMPILER=g++-7 BUILD_TYPE=Debug GSL_CXX_STANDARD=14
+      addons: &gcc7
+        apt:
+          packages: g++-7
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - env: COMPILER=g++-7 BUILD_TYPE=Release GSL_CXX_STANDARD=14
+      addons: *gcc7
 
 install:
   # Set the ${CXX} variable properly
@@ -84,13 +122,9 @@ before_script:
   # have CMake to generate build files
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build && cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGSL_CXX_STANDARD=$GSL_CXX_STANDARD
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   
 script:
   # build and run tests
   - cmake --build . -- -j${JOBS}
   - ctest --output-on-failure -j${JOBS}
-
-notifications:
-  email: true
-
