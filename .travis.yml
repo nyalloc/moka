@@ -42,7 +42,6 @@ matrix:
         apt:
           packages:
             - clang-7
-            - g++-7
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-7
