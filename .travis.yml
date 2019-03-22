@@ -54,16 +54,16 @@ matrix:
     # GCC on Linux
     ##########################################################################
 
-    # GCC 7
-    - env: COMPILER=g++-7 BUILD_TYPE=Debug
-      addons: &gcc7
+    # GCC 8
+    - env: COMPILER=g++-8 BUILD_TYPE=Debug
+      addons: &gcc8
         apt:
-          packages: g++-7
+          packages: g++-8
           sources:
             - ubuntu-toolchain-r-test
 
-    - env: COMPILER=g++-7 BUILD_TYPE=Release
-      addons: *gcc7
+    - env: COMPILER=g++-8 BUILD_TYPE=Release
+      addons: *gcc8
 
 install:
   # Set the ${CXX} variable properly
