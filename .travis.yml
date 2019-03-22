@@ -23,16 +23,16 @@ matrix:
       os: osx
       osx_image: xcode8
       compiler: clang
-    - env: GCC_VERSION=6 BUILD_TYPE=Debug
+    - env: GCC_VERSION=8 BUILD_TYPE=Debug
       os: linux
-      addons: &gcc6
+      addons: &gcc8
         apt:
-          packages: g++-6
+          packages: g++-8
           sources: &sources
             - ubuntu-toolchain-r-test
-    - env: GCC_VERSION=6 BUILD_TYPE=Release
+    - env: GCC_VERSION=8 BUILD_TYPE=Release
       os: linux
-      addons: *gcc6
+      addons: *gcc8
 
 install:
   - if [[ -n "$CLANG_VERSION" ]]; then export CXX=clang++-$CLANG_VERSION CC=clang-$CLANG_VERSION; fi
