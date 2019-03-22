@@ -10,6 +10,8 @@ HunterGate(
 
 project(moka CXX)
 
+cmake_policy(SET CMP0074 OLD)
+
 if (WIN32)
 add_compile_options("/std:c++latest")
 else()
