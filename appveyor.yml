@@ -1,0 +1,31 @@
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+image:
+  - Visual Studio 2015
+
+before_build:
+  - ps: |
+      mkdir build
+      cd build
+      
+      $env:generator="Visual Studio 14 2015"
+   
+      if ($env:PLATFORM -eq "x64") 
+      {
+          $env:generator="$env:generator Win64"
+      }
+      
+      echo generator="$env:generator"
+      cmake --version
+      cmake ../ -G "$env:generator"
+build_script:
+  - cmake --build . --config %CONFIGURATION%
+
+test_script:
+  - ctest -j2
