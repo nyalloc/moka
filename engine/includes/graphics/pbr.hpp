@@ -32,6 +32,8 @@ namespace moka
          */
         texture_handle make_empty_hdr_cubemap(int size, min_filter filter, bool set_mipmaps = false) const;
 
+        void draw_cubemap_faces(command_list& list, int mip_level, texture_handle cubemap, material_handle material) const;
+
         /**
          * \brief Create an empty HDR cubemap texture.
          * \param size The size of the cubemap faces, where size = width = height.

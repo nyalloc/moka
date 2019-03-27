@@ -90,30 +90,9 @@ namespace moka
             .build();
     }
 
-    void pbr_util::draw_to_cubemap(
-        int size,
-        int mip_level,
-        texture_handle cubemap,
-        material_handle material,
-        draw_callback&& pre,
-        draw_callback&& post) const
+    void pbr_util::draw_cubemap_faces(
+        command_list& list, int mip_level, texture_handle cubemap, material_handle material) const
     {
-        command_list list;
-
-        const auto hdr_frame_buffer =
-            device_.build_frame_buffer()
-                .add_depth_attachment(frame_format::depth_component24, size, size)
-                .build();
-
-        list.viewport().set_rectangle(0, 0, size, size);
-
-        list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
-
-        if (pre)
-        {
-            pre(list);
-        }
-
         for (auto i = 0; i < 6; i++)
         {
             list.set_material_parameters().set_material(material).set_parameter(
@@ -135,6 +114,32 @@ namespace moka
                 .set_primitive_type(primitive_type::triangles)
                 .set_material(material);
         }
+    }
+
+    void pbr_util::draw_to_cubemap(
+        int size,
+        int mip_level,
+        texture_handle cubemap,
+        material_handle material,
+        draw_callback&& pre,
+        draw_callback&& post) const
+    {
+        command_list list;
+
+        const auto hdr_frame_buffer =
+            device_.build_frame_buffer()
+                .add_depth_attachment(frame_format::depth_component24, size, size)
+                .build();
+
+        list.viewport().set_rectangle(0, 0, size, size);
+        list.frame_buffer().set_frame_buffer(hdr_frame_buffer);
+
+        if (pre)
+        {
+            pre(list);
+        }
+
+        draw_cubemap_faces(list, mip_level, cubemap, material);
 
         if (post)
         {
@@ -142,9 +147,7 @@ namespace moka
         }
 
         list.frame_buffer().set_frame_buffer({0});
-
         device_.submit(std::move(list), false);
-
         device_.destroy(hdr_frame_buffer);
     }
 

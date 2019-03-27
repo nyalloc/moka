@@ -157,7 +157,7 @@ void main() {
 	
     // get the diffuse light contribution
     vec4 irradiance = texture(irradiance_map, n);
-    vec4 diffuse = irradiance * albedo;
+    vec4 diffuse = (irradiance * albedo);
     // calculate the reflectance at normal incidence
     vec3 f0 = vec3(0.04);
     f0 = mix(f0, albedo.rgb, metallic);			

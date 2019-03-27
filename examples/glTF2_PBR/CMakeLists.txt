@@ -8,8 +8,8 @@ project(glTF2_PBR)
 
 set(EXAMPLE_INCLUDES   
     "./" 
-    "../../engine/src/includes"
-    "../../engine/src/deps/imgui"
+    "../../engine/includes"
+    "../../engine/deps/imgui"
     "../common"
 )
 

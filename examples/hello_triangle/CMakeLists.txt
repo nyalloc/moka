@@ -8,7 +8,7 @@ project(hello_triangle CXX)
 
 set(Example_Includes 
 	"./"
-	"../../engine/src/includes"
+	"../../engine/includes"
 )
 
 include_directories(${Example_Includes})

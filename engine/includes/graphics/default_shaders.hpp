@@ -151,7 +151,7 @@ namespace moka
                             number_of_samples++;
                         }
                     }
-                    irradiance = PI * irradiance * (1.0 / float(number_of_samples));
+                    irradiance = PI * irradiance * (1.0 / number_of_samples);
             
                     fragment_color = vec4(irradiance, 1.0);
                 }
