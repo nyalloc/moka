@@ -1,3 +1,32 @@
+/*
+===========================================================================
+Moka Source Code
+Copyright 2019 Stuart Adams. All rights reserved.
+https://github.com/stuartdadams/moka
+stuartdadams | linkedin.com/in/stuartdadams
+
+This file is part of the Moka Real-Time Physically-Based Rendering Project.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===========================================================================
+*/
 #include <graphics/device/graphics_device.hpp>
 #include <graphics/model.hpp>
 
@@ -75,7 +104,10 @@ namespace moka
     }
 
     primitive::primitive(const vertex_buffer_handle vertex_buffer, const uint32_t vertex_count, material_handle material)
-        : vertex_buffer_(vertex_buffer), vertex_count_(vertex_count), index_type_(), material_(material)
+        : vertex_buffer_(vertex_buffer),
+          vertex_count_(vertex_count),
+          index_type_(),
+          material_(material)
     {
     }
 
@@ -99,7 +131,8 @@ namespace moka
         return meshes_.end();
     }
 
-    model::model(const mesh& meshes, transform&& transform) : meshes_{meshes}, transform_(transform)
+    model::model(const mesh& meshes, transform&& transform)
+        : meshes_{meshes}, transform_(transform)
     {
     }
 

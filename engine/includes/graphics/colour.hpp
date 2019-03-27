@@ -1,3 +1,32 @@
+/*
+===========================================================================
+Moka Source Code
+Copyright 2019 Stuart Adams. All rights reserved.
+https://github.com/stuartdadams/moka
+stuartdadams | linkedin.com/in/stuartdadams
+
+This file is part of the Moka Real-Time Physically-Based Rendering Project.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===========================================================================
+*/
 #pragma once
 
 #include <array>
@@ -10,14 +39,15 @@ namespace moka
         template <typename T, typename = std::enable_if_t<std::is_floating_point_v<T>>>
         constexpr std::byte float_to_byte(const T val) noexcept
         {
-            return static_cast<std::byte>(
-                static_cast<int>(glm::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * 255));
+            return static_cast<std::byte>(static_cast<int>(
+                glm::clamp(val, static_cast<T>(0.0f), static_cast<T>(1.0f)) * 255));
         }
 
         template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
         constexpr std::byte int_to_byte(const T val) noexcept
         {
-            return static_cast<std::byte>(glm::clamp(val, static_cast<T>(0), static_cast<T>(255)));
+            return static_cast<std::byte>(
+                glm::clamp(val, static_cast<T>(0), static_cast<T>(255)));
         }
 
         constexpr float byte_to_float(const std::byte val) noexcept
@@ -44,33 +74,55 @@ namespace moka
             return glm::vec3{r(), g(), b()};
         }
 
-        constexpr colour(const std::byte r, const std::byte g, const std::byte b, const std::byte a = static_cast<std::byte>(255)) noexcept
+        constexpr colour(
+            const std::byte r,
+            const std::byte g,
+            const std::byte b,
+            const std::byte a = static_cast<std::byte>(255)) noexcept
             : rgba_bytes_{r, g, b, a}
         {
         }
 
         constexpr colour(const int r, const int g, const int b, const int a = 255) noexcept
-            : colour(detail::int_to_byte(r), detail::int_to_byte(g), detail::int_to_byte(b), detail::int_to_byte(a))
+            : colour(
+                  detail::int_to_byte(r),
+                  detail::int_to_byte(g),
+                  detail::int_to_byte(b),
+                  detail::int_to_byte(a))
         {
         }
 
         constexpr colour(const float r, const float g, const float b, const float a = 1.0f) noexcept
-            : colour(detail::float_to_byte(r), detail::float_to_byte(g), detail::float_to_byte(b), detail::float_to_byte(a))
+            : colour(
+                  detail::float_to_byte(r),
+                  detail::float_to_byte(g),
+                  detail::float_to_byte(b),
+                  detail::float_to_byte(a))
         {
         }
 
         constexpr colour() noexcept
-            : colour(detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255), detail::int_to_byte(255))
+            : colour(
+                  detail::int_to_byte(255),
+                  detail::int_to_byte(255),
+                  detail::int_to_byte(255),
+                  detail::int_to_byte(255))
         {
         }
 
         constexpr colour(const glm::vec3& colour) noexcept
-            : rgba_bytes_{detail::float_to_byte(colour.x), detail::float_to_byte(colour.y), detail::float_to_byte(colour.z), detail::int_to_byte(255)}
+            : rgba_bytes_{detail::float_to_byte(colour.x),
+                          detail::float_to_byte(colour.y),
+                          detail::float_to_byte(colour.z),
+                          detail::int_to_byte(255)}
         {
         }
 
         constexpr colour(const glm::vec4& colour) noexcept
-            : rgba_bytes_{detail::float_to_byte(colour.x), detail::float_to_byte(colour.y), detail::float_to_byte(colour.z), detail::float_to_byte(colour.w)}
+            : rgba_bytes_{detail::float_to_byte(colour.x),
+                          detail::float_to_byte(colour.y),
+                          detail::float_to_byte(colour.z),
+                          detail::float_to_byte(colour.w)}
         {
         }
 

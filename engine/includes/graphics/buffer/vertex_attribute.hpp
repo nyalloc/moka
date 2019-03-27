@@ -1,7 +1,36 @@
+/*
+===========================================================================
+Moka Source Code
+Copyright 2019 Stuart Adams. All rights reserved.
+https://github.com/stuartdadams/moka
+stuartdadams | linkedin.com/in/stuartdadams
+
+This file is part of the Moka Real-Time Physically-Based Rendering Project.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===========================================================================
+*/
 #pragma once
 
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 namespace moka
 {
@@ -26,8 +55,8 @@ namespace moka
 
     /**
      * \brief Get the size of a vertex attribute in bytes.
-     * \param attr_type The type of vertex attribute you want to get the size of.
-     * \return The size of a vertex attribute in bytes.
+     * \param attr_type The type of vertex attribute you want to get the size
+     * of. \return The size of a vertex attribute in bytes.
      */
     constexpr size_t size(const attribute_type attr_type)
     {
@@ -79,11 +108,17 @@ namespace moka
          * \param stride The stride of the new vertex_attribute object.
          * \param offset The offset of the new vertex_attribute object.
          */
-        constexpr vertex_attribute(size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset) noexcept;
+        constexpr vertex_attribute(
+            size_t index, attribute_type type, size_t size, bool normalized, size_t stride, size_t offset) noexcept;
     };
 
     constexpr vertex_attribute::vertex_attribute(
-        const size_t index, const attribute_type type, const size_t size, const bool normalized, const size_t stride, const size_t offset) noexcept
+        const size_t index,
+        const attribute_type type,
+        const size_t size,
+        const bool normalized,
+        const size_t stride,
+        const size_t offset) noexcept
         : index(index), type(type), size(size), normalized(normalized), stride(stride), offset(offset)
     {
     }
