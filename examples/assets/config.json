@@ -1,6 +1,6 @@
 {
   "config": {
-    "model": "Models/Sponza/Sponza.gltf",
+    "model": "Models/FlightHelmet/FlightHelmet.gltf",
     "environment": "Textures/sky.hdr"
   }
 }

@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.2)
 
 project(moka)
 
-cmake_policy(SET CMP0074 OLD)
-
 # Include Catch
 hunter_add_package(Catch)
 find_package(Catch CONFIG REQUIRED)
