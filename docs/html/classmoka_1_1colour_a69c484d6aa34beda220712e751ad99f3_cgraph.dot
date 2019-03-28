@@ -1,0 +1,21 @@
+digraph "moka::colour::colour"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="moka::colour::colour",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="moka::colour::r",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a2ec71fd89ba133142c84c3a7a0ce35eb",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="moka::detail::byte\l_to_float",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacemoka_1_1detail.html#a1bd78521b2ac8afefe45a70068c60004",tooltip=" "];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="moka::colour::g",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a884fe789032a1e3a1d40c55f5cf852bd",tooltip=" "];
+  Node3 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="moka::colour::b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a091a6fe2b9364663da19e7b561739411",tooltip=" "];
+  Node4 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="moka::colour::a",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ac2a9d008b8201e9e2b3518f3e1d2de7e",tooltip=" "];
+  Node5 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

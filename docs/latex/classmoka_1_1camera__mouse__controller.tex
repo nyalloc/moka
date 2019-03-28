@@ -1,0 +1,134 @@
+\hypertarget{classmoka_1_1camera__mouse__controller}{}\section{moka\+::camera\+\_\+mouse\+\_\+controller Class Reference}
+\label{classmoka_1_1camera__mouse__controller}\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+
+
+A mouse-\/controlled camera.  
+
+
+
+
+{\ttfamily \#include $<$camera\+\_\+mouse\+\_\+controller.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::camera\+\_\+mouse\+\_\+controller\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::camera\+\_\+mouse\+\_\+controller\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_ae40951c1866e72474b6ed7324e6db72f}{$\sim$camera\+\_\+mouse\+\_\+controller}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1camera__mouse__controller_aca731723969ae09a48d21f0c5814ba27}{camera\+\_\+mouse\+\_\+controller}} (const \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&camera)=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1camera__mouse__controller_ab07b5dda70f97878a888e406e3be3bb4}{camera\+\_\+mouse\+\_\+controller}} (\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&\&camera) noexcept=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \& \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_a510baecd761914c83b7330549dbb7197}{operator=}} (const \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&camera)=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \& \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_a5e016278de0bea6870520235fee70dba}{operator=}} (\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&\&camera) noexcept=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1camera__mouse__controller_a82038995539fcb2b51f88d2669bb6fcb}{camera\+\_\+mouse\+\_\+controller}} (\mbox{\hyperlink{classmoka_1_1mouse}{mouse}} \&\mbox{\hyperlink{classmoka_1_1mouse}{mouse}}, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&perspective)
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_ab46814bbaba3bbbfad0337566fab052a}{set\+\_\+auto\+\_\+rotate}} (bool rotate)
+\begin{DoxyCompactList}\small\item\em Should this camera auto rotate around the target? \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_a088d8d1f491895f394e67253d4ee4a76}{update}} (float delta\+\_\+time) override
+\begin{DoxyCompactList}\small\item\em Update the camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A mouse-\/controlled camera. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_ae40951c1866e72474b6ed7324e6db72f}\label{classmoka_1_1camera__mouse__controller_ae40951c1866e72474b6ed7324e6db72f}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!````~camera\_mouse\_controller@{$\sim$camera\_mouse\_controller}}
+\index{````~camera\_mouse\_controller@{$\sim$camera\_mouse\_controller}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{$\sim$camera\_mouse\_controller()}{~camera\_mouse\_controller()}}
+{\footnotesize\ttfamily virtual moka\+::camera\+\_\+mouse\+\_\+controller\+::$\sim$camera\+\_\+mouse\+\_\+controller (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_aca731723969ae09a48d21f0c5814ba27}\label{classmoka_1_1camera__mouse__controller_aca731723969ae09a48d21f0c5814ba27}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!camera\_mouse\_controller@{camera\_mouse\_controller}}
+\index{camera\_mouse\_controller@{camera\_mouse\_controller}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{camera\_mouse\_controller()}{camera\_mouse\_controller()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::camera\+\_\+mouse\+\_\+controller\+::camera\+\_\+mouse\+\_\+controller (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_ab07b5dda70f97878a888e406e3be3bb4}\label{classmoka_1_1camera__mouse__controller_ab07b5dda70f97878a888e406e3be3bb4}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!camera\_mouse\_controller@{camera\_mouse\_controller}}
+\index{camera\_mouse\_controller@{camera\_mouse\_controller}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{camera\_mouse\_controller()}{camera\_mouse\_controller()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::camera\+\_\+mouse\+\_\+controller\+::camera\+\_\+mouse\+\_\+controller (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&\&}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_a82038995539fcb2b51f88d2669bb6fcb}\label{classmoka_1_1camera__mouse__controller_a82038995539fcb2b51f88d2669bb6fcb}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!camera\_mouse\_controller@{camera\_mouse\_controller}}
+\index{camera\_mouse\_controller@{camera\_mouse\_controller}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{camera\_mouse\_controller()}{camera\_mouse\_controller()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::camera\+\_\+mouse\+\_\+controller\+::camera\+\_\+mouse\+\_\+controller (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1mouse}{mouse}} \&}]{mouse,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{perspective }\end{DoxyParamCaption})}
+
+
+
+Create a new \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mouse} & The mouse to attach to the camera. \\
+\hline
+{\em perspective} & The perspective of the camera. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_a510baecd761914c83b7330549dbb7197}\label{classmoka_1_1camera__mouse__controller_a510baecd761914c83b7330549dbb7197}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}}\& moka\+::camera\+\_\+mouse\+\_\+controller\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_a5e016278de0bea6870520235fee70dba}\label{classmoka_1_1camera__mouse__controller_a5e016278de0bea6870520235fee70dba}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}}\& moka\+::camera\+\_\+mouse\+\_\+controller\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1camera__mouse__controller}{camera\+\_\+mouse\+\_\+controller}} \&\&}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_ab46814bbaba3bbbfad0337566fab052a}\label{classmoka_1_1camera__mouse__controller_ab46814bbaba3bbbfad0337566fab052a}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!set\_auto\_rotate@{set\_auto\_rotate}}
+\index{set\_auto\_rotate@{set\_auto\_rotate}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{set\_auto\_rotate()}{set\_auto\_rotate()}}
+{\footnotesize\ttfamily void moka\+::camera\+\_\+mouse\+\_\+controller\+::set\+\_\+auto\+\_\+rotate (\begin{DoxyParamCaption}\item[{bool}]{rotate }\end{DoxyParamCaption})}
+
+
+
+Should this camera auto rotate around the target? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotate} & True if the camera should auto-\/rotate, false if it should not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1camera__mouse__controller_a088d8d1f491895f394e67253d4ee4a76}\label{classmoka_1_1camera__mouse__controller_a088d8d1f491895f394e67253d4ee4a76}} 
+\index{moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}!update@{update}}
+\index{update@{update}!moka::camera\_mouse\_controller@{moka::camera\_mouse\_controller}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void moka\+::camera\+\_\+mouse\+\_\+controller\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The current delta-\/time. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classmoka_1_1basic__camera_a43891fadfe629d3306c3863255660556}{moka\+::basic\+\_\+camera}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/camera/\mbox{\hyperlink{camera__mouse__controller_8hpp}{camera\+\_\+mouse\+\_\+controller.\+hpp}}\end{DoxyCompactItemize}

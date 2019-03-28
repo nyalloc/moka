@@ -1,0 +1,345 @@
+\hypertarget{classmoka_1_1texture__builder}{}\section{moka\+::texture\+\_\+builder Class Reference}
+\label{classmoka_1_1texture__builder}\index{moka::texture\_builder@{moka::texture\_builder}}
+
+
+A builder class to help you build a texture.  
+
+
+
+
+{\ttfamily \#include $<$texture.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}{texture\+\_\+builder}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}{set\+\_\+target}} (\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623}{texture\+\_\+target}} target)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}{set\+\_\+wrap\+\_\+s}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}{set\+\_\+wrap\+\_\+t}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}{set\+\_\+wrap\+\_\+r}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}{set\+\_\+mag\+\_\+filter}} (\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33c}{mag\+\_\+filter}} mag)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}{set\+\_\+min\+\_\+filter}} (\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77}{min\+\_\+filter}} \mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16ad8bd79cc131920d5de426f914d17405a}{min}})
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}{free\+\_\+host\+\_\+data}} (bool free\+\_\+data)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}{set\+\_\+mipmaps}} (bool generate\+\_\+mipmaps)
+\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}{build}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}{add\+\_\+image\+\_\+data}} (\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}} target, int mip\+\_\+level, \mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2d}{device\+\_\+format}} internal\+\_\+format, int width, int height, int border, \mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130}{host\+\_\+format}} base\+\_\+format, \mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770}{pixel\+\_\+type}} type, void $\ast$data)
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}{texture\+\_\+builder}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\begin{DoxyCompactList}\small\item\em Build a texture builder. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}{set\+\_\+target}} (\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623}{texture\+\_\+target}} target)
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s target. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}{set\+\_\+wrap\+\_\+s}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s S wrap mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}{set\+\_\+wrap\+\_\+t}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s T wrap mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}{set\+\_\+wrap\+\_\+r}} (\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s R wrap mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}{set\+\_\+mag\+\_\+filter}} (\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33c}{mag\+\_\+filter}} mag)
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s mag filter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}{set\+\_\+min\+\_\+filter}} (\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77}{min\+\_\+filter}} \mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16ad8bd79cc131920d5de426f914d17405a}{min}})
+\begin{DoxyCompactList}\small\item\em Set the texture\textquotesingle{}s min filter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}{free\+\_\+host\+\_\+data}} (bool free\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Free the host texture buffer after the texture is built. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}{set\+\_\+mipmaps}} (bool generate\+\_\+mipmaps)
+\begin{DoxyCompactList}\small\item\em Generate mipmaps with this texture. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}{build}} ()
+\begin{DoxyCompactList}\small\item\em Build the final texture, upload it to the device, and return the handle. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}{add\+\_\+image\+\_\+data}} (\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}} target, int mip\+\_\+level, \mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2d}{device\+\_\+format}} internal\+\_\+format, int width, int height, int border, \mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130}{host\+\_\+format}} base\+\_\+format, \mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770}{pixel\+\_\+type}} type, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Specify a two-\/dimensional image. Describe the parameters of the texture image, such as height, width, width of the border, level-\/of-\/detail. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A builder class to help you build a texture. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}\label{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!texture\_builder@{texture\_builder}}
+\index{texture\_builder@{texture\_builder}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{texture\_builder()}{texture\_builder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily moka\+::texture\+\_\+builder\+::texture\+\_\+builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}\label{classmoka_1_1texture__builder_a37e13acb817ac3f5f5003278ae13bea0}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!texture\_builder@{texture\_builder}}
+\index{texture\_builder@{texture\_builder}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{texture\_builder()}{texture\_builder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily moka\+::texture\+\_\+builder\+::texture\+\_\+builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Build a texture builder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} object that this texture will be uploaded to \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}\label{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!add\_image\_data@{add\_image\_data}}
+\index{add\_image\_data@{add\_image\_data}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{add\_image\_data()}{add\_image\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::add\+\_\+image\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}}}]{target,  }\item[{int}]{mip\+\_\+level,  }\item[{\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2d}{device\+\_\+format}}}]{internal\+\_\+format,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{border,  }\item[{\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130}{host\+\_\+format}}}]{base\+\_\+format,  }\item[{\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770}{pixel\+\_\+type}}}]{type,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}\label{classmoka_1_1texture__builder_ae90b0d4367a36e031d136970805cd311}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!add\_image\_data@{add\_image\_data}}
+\index{add\_image\_data@{add\_image\_data}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{add\_image\_data()}{add\_image\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::add\+\_\+image\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}}}]{target,  }\item[{int}]{mip\+\_\+level,  }\item[{\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2d}{device\+\_\+format}}}]{internal\+\_\+format,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{border,  }\item[{\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130}{host\+\_\+format}}}]{base\+\_\+format,  }\item[{\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770}{pixel\+\_\+type}}}]{type,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Specify a two-\/dimensional image. Describe the parameters of the texture image, such as height, width, width of the border, level-\/of-\/detail. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & Specify the target texture. \\
+\hline
+{\em mip\+\_\+level} & Specify the level of detail. \\
+\hline
+{\em internal\+\_\+format} & Specify the number of components in the texture. \\
+\hline
+{\em width} & Specify the width of the texture image. \\
+\hline
+{\em height} & Specify the height of the texture image. \\
+\hline
+{\em border} & This value must be 0 (Why do we need it then?) \\
+\hline
+{\em base\+\_\+format} & Specifies the format of the pixel data. \\
+\hline
+{\em type} & Specify the data type of the pixel data. \\
+\hline
+{\em data} & A pointer to the image data in host memory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}\label{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!build@{build}}
+\index{build@{build}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::texture\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}\label{classmoka_1_1texture__builder_a7bdc422d994555b2b9d6766a0e8b9a0d}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!build@{build}}
+\index{build@{build}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::texture\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Build the final texture, upload it to the device, and return the handle. 
+
+\begin{DoxyReturn}{Returns}
+The handle to the new texture. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}\label{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!free\_host\_data@{free\_host\_data}}
+\index{free\_host\_data@{free\_host\_data}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{free\_host\_data()}{free\_host\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::free\+\_\+host\+\_\+data (\begin{DoxyParamCaption}\item[{bool}]{free\+\_\+data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}\label{classmoka_1_1texture__builder_a64f4ead902072e54312ea7d4a7d290bd}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!free\_host\_data@{free\_host\_data}}
+\index{free\_host\_data@{free\_host\_data}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{free\_host\_data()}{free\_host\_data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::free\+\_\+host\+\_\+data (\begin{DoxyParamCaption}\item[{bool}]{free\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Free the host texture buffer after the texture is built. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em free\+\_\+data} & True if the host buffer should be freed. Otherwise, false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}\label{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_mag\_filter@{set\_mag\_filter}}
+\index{set\_mag\_filter@{set\_mag\_filter}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_mag\_filter()}{set\_mag\_filter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+mag\+\_\+filter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33c}{mag\+\_\+filter}}}]{mag }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}\label{classmoka_1_1texture__builder_a08398bb398d3b35e1ecd7a669b3fd792}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_mag\_filter@{set\_mag\_filter}}
+\index{set\_mag\_filter@{set\_mag\_filter}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_mag\_filter()}{set\_mag\_filter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+mag\+\_\+filter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33c}{mag\+\_\+filter}}}]{mag }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s mag filter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mag} & The mag filter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}\label{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_min\_filter@{set\_min\_filter}}
+\index{set\_min\_filter@{set\_min\_filter}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_min\_filter()}{set\_min\_filter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+min\+\_\+filter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77}{min\+\_\+filter}}}]{min }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}\label{classmoka_1_1texture__builder_a308c57f97f3d9477f0b15e31ef37cf4c}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_min\_filter@{set\_min\_filter}}
+\index{set\_min\_filter@{set\_min\_filter}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_min\_filter()}{set\_min\_filter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+min\+\_\+filter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77}{min\+\_\+filter}}}]{min }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s min filter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & The min filter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}\label{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_mipmaps@{set\_mipmaps}}
+\index{set\_mipmaps@{set\_mipmaps}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_mipmaps()}{set\_mipmaps()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+mipmaps (\begin{DoxyParamCaption}\item[{bool}]{generate\+\_\+mipmaps }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}\label{classmoka_1_1texture__builder_a5dd6e175a28e9dd958c08103e48e30d6}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_mipmaps@{set\_mipmaps}}
+\index{set\_mipmaps@{set\_mipmaps}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_mipmaps()}{set\_mipmaps()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+mipmaps (\begin{DoxyParamCaption}\item[{bool}]{generate\+\_\+mipmaps }\end{DoxyParamCaption})}
+
+
+
+Generate mipmaps with this texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em generate\+\_\+mipmaps} & True if this texture should be built with mipmaps. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}\label{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_target@{set\_target}}
+\index{set\_target@{set\_target}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_target()}{set\_target()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623}{texture\+\_\+target}}}]{target }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}\label{classmoka_1_1texture__builder_ac4ce6bf2b9e2d92867a8134f235016df}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_target@{set\_target}}
+\index{set\_target@{set\_target}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_target()}{set\_target()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623}{texture\+\_\+target}}}]{target }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The texture\textquotesingle{}s target. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}\label{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_r@{set\_wrap\_r}}
+\index{set\_wrap\_r@{set\_wrap\_r}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_r()}{set\_wrap\_r()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+r (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}\label{classmoka_1_1texture__builder_ab1113f82648d8e5555f53e0fd65ba294}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_r@{set\_wrap\_r}}
+\index{set\_wrap\_r@{set\_wrap\_r}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_r()}{set\_wrap\_r()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+r (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s R wrap mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & The wrap mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}\label{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_s@{set\_wrap\_s}}
+\index{set\_wrap\_s@{set\_wrap\_s}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_s()}{set\_wrap\_s()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+s (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}\label{classmoka_1_1texture__builder_a555d3ea33ae09a175916eee13df9170c}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_s@{set\_wrap\_s}}
+\index{set\_wrap\_s@{set\_wrap\_s}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_s()}{set\_wrap\_s()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+s (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s S wrap mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & The wrap mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}\label{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_t@{set\_wrap\_t}}
+\index{set\_wrap\_t@{set\_wrap\_t}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_t()}{set\_wrap\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}\label{classmoka_1_1texture__builder_a450b409d8c9fac1a54c89130825a6c9f}} 
+\index{moka::texture\_builder@{moka::texture\_builder}!set\_wrap\_t@{set\_wrap\_t}}
+\index{set\_wrap\_t@{set\_wrap\_t}!moka::texture\_builder@{moka::texture\_builder}}
+\subsubsection{\texorpdfstring{set\_wrap\_t()}{set\_wrap\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}}\& moka\+::texture\+\_\+builder\+::set\+\_\+wrap\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{wrap\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set the texture\textquotesingle{}s T wrap mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & The wrap mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{texture_8hpp}{texture.\+hpp}}\item 
+engine/includes/graphics/\mbox{\hyperlink{texture__handle_8hpp}{texture\+\_\+handle.\+hpp}}\end{DoxyCompactItemize}

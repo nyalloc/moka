@@ -1,0 +1,72 @@
+\hypertarget{classmoka_1_1asset__importer_3_01model_01_4}{}\section{moka\+::asset\+\_\+importer$<$ model $>$ Class Template Reference}
+\label{classmoka_1_1asset__importer_3_01model_01_4}\index{moka::asset\_importer$<$ model $>$@{moka::asset\_importer$<$ model $>$}}
+
+
+Asset importer for models. Currently only supports .gltf models.  
+
+
+
+
+{\ttfamily \#include $<$model\+\_\+importer.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1asset__importer_3_01model_01_4_ac82a2e9a4daea64ba18411e7ed43c1a4}{asset\+\_\+importer}} (const std\+::filesystem\+::path \&path, \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\begin{DoxyCompactList}\small\item\em Construct a new model asset importer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1model}{model}} \mbox{\hyperlink{classmoka_1_1asset__importer_3_01model_01_4_a6995490f470bc1482db156bc1b8d75fb}{load}} (const std\+::filesystem\+::path \&model\+\_\+path, const std\+::filesystem\+::path \&material\+\_\+path) const
+\begin{DoxyCompactList}\small\item\em Import a new model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$$>$\newline
+class moka\+::asset\+\_\+importer$<$ model $>$}
+
+Asset importer for models. Currently only supports .gltf models. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1asset__importer_3_01model_01_4_ac82a2e9a4daea64ba18411e7ed43c1a4}\label{classmoka_1_1asset__importer_3_01model_01_4_ac82a2e9a4daea64ba18411e7ed43c1a4}} 
+\index{moka::asset\_importer$<$ model $>$@{moka::asset\_importer$<$ model $>$}!asset\_importer@{asset\_importer}}
+\index{asset\_importer@{asset\_importer}!moka::asset\_importer$<$ model $>$@{moka::asset\_importer$<$ model $>$}}
+\subsubsection{\texorpdfstring{asset\_importer()}{asset\_importer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1asset__importer}{moka\+::asset\+\_\+importer}}$<$ \mbox{\hyperlink{classmoka_1_1model}{model}} $>$\+::\mbox{\hyperlink{classmoka_1_1asset__importer}{asset\+\_\+importer}} (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{path,  }\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})}
+
+
+
+Construct a new model asset importer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The asset folder that all model paths are relative to. \\
+\hline
+{\em device} & Graphics device to upload asset information to. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1asset__importer_3_01model_01_4_a6995490f470bc1482db156bc1b8d75fb}\label{classmoka_1_1asset__importer_3_01model_01_4_a6995490f470bc1482db156bc1b8d75fb}} 
+\index{moka::asset\_importer$<$ model $>$@{moka::asset\_importer$<$ model $>$}!load@{load}}
+\index{load@{load}!moka::asset\_importer$<$ model $>$@{moka::asset\_importer$<$ model $>$}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1model}{model}} \mbox{\hyperlink{classmoka_1_1asset__importer}{moka\+::asset\+\_\+importer}}$<$ \mbox{\hyperlink{classmoka_1_1model}{model}} $>$\+::load (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{model\+\_\+path,  }\item[{const std\+::filesystem\+::path \&}]{material\+\_\+path }\end{DoxyParamCaption}) const}
+
+
+
+Import a new model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+path} & The model you would like to import. \\
+\hline
+{\em material\+\_\+path} & The material you want to use with this model. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new model. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/asset\+\_\+importer/\mbox{\hyperlink{model__importer_8hpp}{model\+\_\+importer.\+hpp}}\end{DoxyCompactItemize}

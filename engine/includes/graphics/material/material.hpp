@@ -39,7 +39,11 @@ namespace moka
     /**
      * \brief A unique identifier for a material.
      */
-    using material_handle = uint16_t;
+
+    struct material_handle
+    {
+        uint16_t id;
+    };
 
     enum class polygon_draw_mode
     {

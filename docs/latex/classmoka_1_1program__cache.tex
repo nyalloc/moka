@@ -1,0 +1,106 @@
+\hypertarget{classmoka_1_1program__cache}{}\section{moka\+::program\+\_\+cache Class Reference}
+\label{classmoka_1_1program__cache}\index{moka::program\_cache@{moka::program\_cache}}
+
+
+A cache of loaded programs. Used to avoid loading the same program multiple times.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+device.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1program__cache_a2923d728c124b123d4d61ed0ba2860e8}{program\+\_\+cache}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device, size\+\_\+t initial\+\_\+capacity=0)
+\begin{DoxyCompactList}\small\item\em Create a new program cache object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1program__cache_a9eeca1026c37479e73f2b9affdc160d2}{add\+\_\+program}} (\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} handle, const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&id)
+\begin{DoxyCompactList}\small\item\em Add a program to the program cache. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1program__cache_a17831cdfa073034802a676811c17968f}{exists}} (const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&id) const
+\begin{DoxyCompactList}\small\item\em Check if a program already exists in the cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1program__cache_a82e85196efa6321f2739ceddcd76a150}{get\+\_\+program}} (const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&id) const
+\begin{DoxyCompactList}\small\item\em Get a program through its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A cache of loaded programs. Used to avoid loading the same program multiple times. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1program__cache_a2923d728c124b123d4d61ed0ba2860e8}\label{classmoka_1_1program__cache_a2923d728c124b123d4d61ed0ba2860e8}} 
+\index{moka::program\_cache@{moka::program\_cache}!program\_cache@{program\_cache}}
+\index{program\_cache@{program\_cache}!moka::program\_cache@{moka::program\_cache}}
+\subsubsection{\texorpdfstring{program\_cache()}{program\_cache()}}
+{\footnotesize\ttfamily moka\+::program\+\_\+cache\+::program\+\_\+cache (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device,  }\item[{size\+\_\+t}]{initial\+\_\+capacity = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new program cache object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The graphics device object to use. \\
+\hline
+{\em initial\+\_\+capacity} & The initial capacity of the texture cache. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1program__cache_a9eeca1026c37479e73f2b9affdc160d2}\label{classmoka_1_1program__cache_a9eeca1026c37479e73f2b9affdc160d2}} 
+\index{moka::program\_cache@{moka::program\_cache}!add\_program@{add\_program}}
+\index{add\_program@{add\_program}!moka::program\_cache@{moka::program\_cache}}
+\subsubsection{\texorpdfstring{add\_program()}{add\_program()}}
+{\footnotesize\ttfamily void moka\+::program\+\_\+cache\+::add\+\_\+program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}}]{handle,  }\item[{const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&}]{id }\end{DoxyParamCaption})}
+
+
+
+Add a program to the program cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The program you want to add to the cache. \\
+\hline
+{\em id} & The program\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1program__cache_a17831cdfa073034802a676811c17968f}\label{classmoka_1_1program__cache_a17831cdfa073034802a676811c17968f}} 
+\index{moka::program\_cache@{moka::program\_cache}!exists@{exists}}
+\index{exists@{exists}!moka::program\_cache@{moka::program\_cache}}
+\subsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily bool moka\+::program\+\_\+cache\+::exists (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Check if a program already exists in the cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The program\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the program is cached already, false if it is not present. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1program__cache_a82e85196efa6321f2739ceddcd76a150}\label{classmoka_1_1program__cache_a82e85196efa6321f2739ceddcd76a150}} 
+\index{moka::program\_cache@{moka::program\_cache}!get\_program@{get\_program}}
+\index{get\_program@{get\_program}!moka::program\_cache@{moka::program\_cache}}
+\subsubsection{\texorpdfstring{get\_program()}{get\_program()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} moka\+::program\+\_\+cache\+::get\+\_\+program (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{program\+\_\+id}} \&}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Get a program through its unique identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The program\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The program identified by the id. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/device/\mbox{\hyperlink{graphics__device_8hpp}{graphics\+\_\+device.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,120 @@
+\hypertarget{classmoka_1_1graphics__visitor}{}\section{moka\+::graphics\+\_\+visitor Class Reference}
+\label{classmoka_1_1graphics__visitor}\index{moka::graphics\_visitor@{moka::graphics\_visitor}}
+
+
+Used to define visitor-\/pattern functionality for graphics\+\_\+commands.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+visitor.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::graphics\+\_\+visitor\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1graphics__visitor_abb4149b5b2b3427d717f502ac6f0d62a}{$\sim$graphics\+\_\+visitor}} ()=default
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a23fe107787a01cf0ceb2e20d339d4493}{visit}} (\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a706120c8d7ec9a21f347f06ff56ad8c9}{visit}} (\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a1808e0ed3533d53505bb15d559a7b3f7}{visit}} (\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_acba017a4df89e43b253cb99845be729b}{visit}} (\mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_acb45af562db73ae20f1566246f1dec00}{visit}} (\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_ab04b60a937648b132c43a6c8b0e7bd64}{visit}} (\mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a3e9f360d22b60c1b4ee3f9fd57df2447}{visit}} (\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a38cb82e793a045d26e0664fdd7fa66d4}{visit}} (\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_a008fb998e951132faef8af59e28d1ebf}{visit}} (\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \&cmd)=0
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__visitor_aa197ab3921b6fb35cbe2524e6dfef54a}{visit}} (\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \&cmd)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to define visitor-\/pattern functionality for graphics\+\_\+commands. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_abb4149b5b2b3427d717f502ac6f0d62a}\label{classmoka_1_1graphics__visitor_abb4149b5b2b3427d717f502ac6f0d62a}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!````~graphics\_visitor@{$\sim$graphics\_visitor}}
+\index{````~graphics\_visitor@{$\sim$graphics\_visitor}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{$\sim$graphics\_visitor()}{~graphics\_visitor()}}
+{\footnotesize\ttfamily virtual moka\+::graphics\+\_\+visitor\+::$\sim$graphics\+\_\+visitor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a23fe107787a01cf0ceb2e20d339d4493}\label{classmoka_1_1graphics__visitor_a23fe107787a01cf0ceb2e20d339d4493}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a706120c8d7ec9a21f347f06ff56ad8c9}\label{classmoka_1_1graphics__visitor_a706120c8d7ec9a21f347f06ff56ad8c9}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a1808e0ed3533d53505bb15d559a7b3f7}\label{classmoka_1_1graphics__visitor_a1808e0ed3533d53505bb15d559a7b3f7}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_acba017a4df89e43b253cb99845be729b}\label{classmoka_1_1graphics__visitor_acba017a4df89e43b253cb99845be729b}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_acb45af562db73ae20f1566246f1dec00}\label{classmoka_1_1graphics__visitor_acb45af562db73ae20f1566246f1dec00}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_ab04b60a937648b132c43a6c8b0e7bd64}\label{classmoka_1_1graphics__visitor_ab04b60a937648b132c43a6c8b0e7bd64}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a3e9f360d22b60c1b4ee3f9fd57df2447}\label{classmoka_1_1graphics__visitor_a3e9f360d22b60c1b4ee3f9fd57df2447}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a38cb82e793a045d26e0664fdd7fa66d4}\label{classmoka_1_1graphics__visitor_a38cb82e793a045d26e0664fdd7fa66d4}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_a008fb998e951132faef8af59e28d1ebf}\label{classmoka_1_1graphics__visitor_a008fb998e951132faef8af59e28d1ebf}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{classmoka_1_1graphics__visitor_aa197ab3921b6fb35cbe2524e6dfef54a}\label{classmoka_1_1graphics__visitor_aa197ab3921b6fb35cbe2524e6dfef54a}} 
+\index{moka::graphics\_visitor@{moka::graphics\_visitor}!visit@{visit}}
+\index{visit@{visit}!moka::graphics\_visitor@{moka::graphics\_visitor}}
+\subsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+visitor\+::visit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/device/\mbox{\hyperlink{graphics__visitor_8hpp}{graphics\+\_\+visitor.\+hpp}}\end{DoxyCompactItemize}

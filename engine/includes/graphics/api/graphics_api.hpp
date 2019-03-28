@@ -172,23 +172,6 @@ namespace moka
      */
     class graphics_api : public graphics_visitor
     {
-    protected:
-        void visit(frame_buffer_command& cmd) override = 0;
-
-        void visit(frame_buffer_texture_command& cmd) override = 0;
-
-        void visit(clear_command& cmd) override = 0;
-
-        void visit(draw_command& cmd) override = 0;
-
-        void visit(viewport_command& cmd) override = 0;
-
-        void visit(scissor_command& cmd) override = 0;
-
-        void visit(fill_vertex_buffer_command& cmd) override = 0;
-
-        void visit(fill_index_buffer_command& cmd) override = 0;
-
     public:
         virtual ~graphics_api() = default;
 

@@ -1,0 +1,18 @@
+digraph "moka::pbr_scene::pbr_scene"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node9 [label="moka::pbr_scene::pbr\l_scene",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Create a new scene object."];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid"];
+  Node10 [label="moka::pbr_util::load\l_model",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1pbr__util.html#a6284a2bd80b2007a9bd057cf809998c5",tooltip="Load a model."];
+  Node9 -> Node11 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 [label="moka::pbr_util::make\l_irradiance_environment_map",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1pbr__util.html#adec38254baf03a15c7c93ac871eac05e",tooltip="Create an irradiance environment map."];
+  Node9 -> Node12 [color="midnightblue",fontsize="10",style="solid"];
+  Node12 [label="moka::pbr_util::make\l_specular_environment_map",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1pbr__util.html#ac9c1b434ca30091fd08191485a8de41e",tooltip="Create a specular environment map."];
+  Node9 -> Node13 [color="midnightblue",fontsize="10",style="solid"];
+  Node13 [label="moka::pbr_util::make\l_brdf_integration_map",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1pbr__util.html#a89ff10257ac7d9cce23c2a3c44aaae4c",tooltip="Create a BRDF integration map."];
+  Node9 -> Node14 [color="midnightblue",fontsize="10",style="solid"];
+  Node14 [label="moka::pbr_util::make\l_skybox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1pbr__util.html#ae7e38f3efe0bc1b3f48e21b379d0750d",tooltip="Create a skybox model."];
+}

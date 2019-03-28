@@ -1,0 +1,106 @@
+\hypertarget{classmoka_1_1texture__cache}{}\section{moka\+::texture\+\_\+cache Class Reference}
+\label{classmoka_1_1texture__cache}\index{moka::texture\_cache@{moka::texture\_cache}}
+
+
+A cache of loaded textures. Used to avoid loading the same file multiple times when it is referenced multiple times in a 3D model.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+device.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__cache_a3f3e8968e3b9562371f11bc3a525a1c6}{texture\+\_\+cache}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device, size\+\_\+t initial\+\_\+capacity=0)
+\begin{DoxyCompactList}\small\item\em Create a new texture cache object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1texture__cache_a42a0d37e28d1b7141f9343a9703a5546}{add\+\_\+texture}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} handle, const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&id)
+\begin{DoxyCompactList}\small\item\em Add a texture to the texture cache. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1texture__cache_ad065ce49f3e79d64b595b5b70da1f19b}{exists}} (const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&id) const
+\begin{DoxyCompactList}\small\item\em Check if a texture already exists in the cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1texture__cache_a1508f10e1770cca6042fcecc0697d8b7}{get\+\_\+texture}} (const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&id) const
+\begin{DoxyCompactList}\small\item\em Get a texture through its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A cache of loaded textures. Used to avoid loading the same file multiple times when it is referenced multiple times in a 3D model. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1texture__cache_a3f3e8968e3b9562371f11bc3a525a1c6}\label{classmoka_1_1texture__cache_a3f3e8968e3b9562371f11bc3a525a1c6}} 
+\index{moka::texture\_cache@{moka::texture\_cache}!texture\_cache@{texture\_cache}}
+\index{texture\_cache@{texture\_cache}!moka::texture\_cache@{moka::texture\_cache}}
+\subsubsection{\texorpdfstring{texture\_cache()}{texture\_cache()}}
+{\footnotesize\ttfamily moka\+::texture\+\_\+cache\+::texture\+\_\+cache (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device,  }\item[{size\+\_\+t}]{initial\+\_\+capacity = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new texture cache object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The graphics device object to use. \\
+\hline
+{\em initial\+\_\+capacity} & The initial capacity of the texture cache. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1texture__cache_a42a0d37e28d1b7141f9343a9703a5546}\label{classmoka_1_1texture__cache_a42a0d37e28d1b7141f9343a9703a5546}} 
+\index{moka::texture\_cache@{moka::texture\_cache}!add\_texture@{add\_texture}}
+\index{add\_texture@{add\_texture}!moka::texture\_cache@{moka::texture\_cache}}
+\subsubsection{\texorpdfstring{add\_texture()}{add\_texture()}}
+{\footnotesize\ttfamily void moka\+::texture\+\_\+cache\+::add\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{handle,  }\item[{const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&}]{id }\end{DoxyParamCaption})}
+
+
+
+Add a texture to the texture cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The texture you want to add to the cache. \\
+\hline
+{\em id} & The path\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1texture__cache_ad065ce49f3e79d64b595b5b70da1f19b}\label{classmoka_1_1texture__cache_ad065ce49f3e79d64b595b5b70da1f19b}} 
+\index{moka::texture\_cache@{moka::texture\_cache}!exists@{exists}}
+\index{exists@{exists}!moka::texture\_cache@{moka::texture\_cache}}
+\subsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily bool moka\+::texture\+\_\+cache\+::exists (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Check if a texture already exists in the cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The texture\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the texture is cached already, false if it is not present. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1texture__cache_a1508f10e1770cca6042fcecc0697d8b7}\label{classmoka_1_1texture__cache_a1508f10e1770cca6042fcecc0697d8b7}} 
+\index{moka::texture\_cache@{moka::texture\_cache}!get\_texture@{get\_texture}}
+\index{get\_texture@{get\_texture}!moka::texture\_cache@{moka::texture\_cache}}
+\subsubsection{\texorpdfstring{get\_texture()}{get\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::texture\+\_\+cache\+::get\+\_\+texture (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{texture\+\_\+id}} \&}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Get a texture through its unique identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The texture\textquotesingle{}s unique identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The texture identified by the id. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/device/\mbox{\hyperlink{graphics__device_8hpp}{graphics\+\_\+device.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,124 @@
+\hypertarget{classmoka_1_1mouse__state}{}\section{moka\+::mouse\+\_\+state Class Reference}
+\label{classmoka_1_1mouse__state}\index{moka::mouse\_state@{moka::mouse\_state}}
+
+
+This contains a snapshot of the mouse state.  
+
+
+
+
+{\ttfamily \#include $<$mouse.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const glm\+::ivec2 \& \mbox{\hyperlink{classmoka_1_1mouse__state_a873347ca6732afcd9b6460552a0db814}{get\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Get the current mouse position. \end{DoxyCompactList}\item 
+const glm\+::ivec2 \& \mbox{\hyperlink{classmoka_1_1mouse__state_af0019c5bd6a56786c5595a183291aa06}{get\+\_\+motion}} () const
+\begin{DoxyCompactList}\small\item\em Get the mouse motion since the last update. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1mouse__state_ab8e986486e66977f9c1ff159c9a707cd}{is\+\_\+button\+\_\+down}} (\mbox{\hyperlink{namespacemoka_a6abad6bcde3e62228759441d067533a0}{mouse\+\_\+button}} button) const
+\begin{DoxyCompactList}\small\item\em Check if a button is down. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1mouse__state_a2ab33cf0358f5ff9912799d9fe625596}{is\+\_\+button\+\_\+up}} (\mbox{\hyperlink{namespacemoka_a6abad6bcde3e62228759441d067533a0}{mouse\+\_\+button}} button) const
+\begin{DoxyCompactList}\small\item\em Check if a button is up. \end{DoxyCompactList}\item 
+glm\+::ivec2 \mbox{\hyperlink{classmoka_1_1mouse__state_a0bd1e8df67a32d04ba914d8f756087d2}{get\+\_\+scroll}} () const
+\begin{DoxyCompactList}\small\item\em Get the scroll wheel state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmoka_1_1mouse__state_a5b97104505447c42689b96b15027d832}{application}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This contains a snapshot of the mouse state. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_af0019c5bd6a56786c5595a183291aa06}\label{classmoka_1_1mouse__state_af0019c5bd6a56786c5595a183291aa06}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!get\_motion@{get\_motion}}
+\index{get\_motion@{get\_motion}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{get\_motion()}{get\_motion()}}
+{\footnotesize\ttfamily const glm\+::ivec2\& moka\+::mouse\+\_\+state\+::get\+\_\+motion (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the mouse motion since the last update. 
+
+\begin{DoxyReturn}{Returns}
+The mouse motion since the last update. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_a873347ca6732afcd9b6460552a0db814}\label{classmoka_1_1mouse__state_a873347ca6732afcd9b6460552a0db814}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily const glm\+::ivec2\& moka\+::mouse\+\_\+state\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the current mouse position. 
+
+\begin{DoxyReturn}{Returns}
+The current mouse position. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_a0bd1e8df67a32d04ba914d8f756087d2}\label{classmoka_1_1mouse__state_a0bd1e8df67a32d04ba914d8f756087d2}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!get\_scroll@{get\_scroll}}
+\index{get\_scroll@{get\_scroll}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{get\_scroll()}{get\_scroll()}}
+{\footnotesize\ttfamily glm\+::ivec2 moka\+::mouse\+\_\+state\+::get\+\_\+scroll (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the scroll wheel state. 
+
+\begin{DoxyReturn}{Returns}
+The scroll wheel state. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_ab8e986486e66977f9c1ff159c9a707cd}\label{classmoka_1_1mouse__state_ab8e986486e66977f9c1ff159c9a707cd}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!is\_button\_down@{is\_button\_down}}
+\index{is\_button\_down@{is\_button\_down}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{is\_button\_down()}{is\_button\_down()}}
+{\footnotesize\ttfamily bool moka\+::mouse\+\_\+state\+::is\+\_\+button\+\_\+down (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a6abad6bcde3e62228759441d067533a0}{mouse\+\_\+button}}}]{button }\end{DoxyParamCaption}) const}
+
+
+
+Check if a button is down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & The button you want to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the button is down, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_a2ab33cf0358f5ff9912799d9fe625596}\label{classmoka_1_1mouse__state_a2ab33cf0358f5ff9912799d9fe625596}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!is\_button\_up@{is\_button\_up}}
+\index{is\_button\_up@{is\_button\_up}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{is\_button\_up()}{is\_button\_up()}}
+{\footnotesize\ttfamily bool moka\+::mouse\+\_\+state\+::is\+\_\+button\+\_\+up (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a6abad6bcde3e62228759441d067533a0}{mouse\+\_\+button}}}]{button }\end{DoxyParamCaption}) const}
+
+
+
+Check if a button is up. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & The button you want to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the button is up, otherwise false. 
+\end{DoxyReturn}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1mouse__state_a5b97104505447c42689b96b15027d832}\label{classmoka_1_1mouse__state_a5b97104505447c42689b96b15027d832}} 
+\index{moka::mouse\_state@{moka::mouse\_state}!application@{application}}
+\index{application@{application}!moka::mouse\_state@{moka::mouse\_state}}
+\subsubsection{\texorpdfstring{application}{application}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classmoka_1_1application}{application}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/input/\mbox{\hyperlink{mouse_8hpp}{mouse.\+hpp}}\end{DoxyCompactItemize}

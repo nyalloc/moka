@@ -1,0 +1,41 @@
+\hypertarget{namespacemoka_1_1constants}{}\section{moka\+::constants Namespace Reference}
+\label{namespacemoka_1_1constants}\index{moka::constants@{moka::constants}}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \mbox{\hyperlink{namespacemoka_1_1constants_a3199ab96065551747c3cb2eb75d1dfa4}{projection}}
+\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \mbox{\hyperlink{namespacemoka_1_1constants_a8a8bc9c67ac8a3537cfb1a1dd127c6cf}{capture\+\_\+views}} \mbox{[}6\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemoka_1_1constants_a8a8bc9c67ac8a3537cfb1a1dd127c6cf}\label{namespacemoka_1_1constants_a8a8bc9c67ac8a3537cfb1a1dd127c6cf}} 
+\index{moka::constants@{moka::constants}!capture\_views@{capture\_views}}
+\index{capture\_views@{capture\_views}!moka::constants@{moka::constants}}
+\subsubsection{\texorpdfstring{capture\_views}{capture\_views}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} moka\+::constants\+::capture\+\_\+views\mbox{[}6\mbox{]}\hspace{0.3cm}{\ttfamily [inline]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{ }
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)),}
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)),}
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)),}
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)),}
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)),}
+\DoxyCodeLine{            lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f))\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemoka_1_1constants_a3199ab96065551747c3cb2eb75d1dfa4}\label{namespacemoka_1_1constants_a3199ab96065551747c3cb2eb75d1dfa4}} 
+\index{moka::constants@{moka::constants}!projection@{projection}}
+\index{projection@{projection}!moka::constants@{moka::constants}}
+\subsubsection{\texorpdfstring{projection}{projection}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} moka\+::constants\+::projection\hspace{0.3cm}{\ttfamily [inline]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f)}
+
+\end{DoxyCode}

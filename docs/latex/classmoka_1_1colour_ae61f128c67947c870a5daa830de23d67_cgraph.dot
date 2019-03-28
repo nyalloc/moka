@@ -1,0 +1,21 @@
+digraph "moka::colour::vec4"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node263 [label="moka::colour::vec4",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node263 -> Node264 [color="midnightblue",fontsize="10",style="solid"];
+  Node264 [label="moka::colour::r",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a2ec71fd89ba133142c84c3a7a0ce35eb",tooltip=" "];
+  Node264 -> Node265 [color="midnightblue",fontsize="10",style="solid"];
+  Node265 [label="moka::detail::byte\l_to_float",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacemoka_1_1detail.html#a1bd78521b2ac8afefe45a70068c60004",tooltip=" "];
+  Node263 -> Node266 [color="midnightblue",fontsize="10",style="solid"];
+  Node266 [label="moka::colour::g",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a884fe789032a1e3a1d40c55f5cf852bd",tooltip=" "];
+  Node266 -> Node265 [color="midnightblue",fontsize="10",style="solid"];
+  Node263 -> Node267 [color="midnightblue",fontsize="10",style="solid"];
+  Node267 [label="moka::colour::b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a091a6fe2b9364663da19e7b561739411",tooltip=" "];
+  Node267 -> Node265 [color="midnightblue",fontsize="10",style="solid"];
+  Node263 -> Node268 [color="midnightblue",fontsize="10",style="solid"];
+  Node268 [label="moka::colour::a",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ac2a9d008b8201e9e2b3518f3e1d2de7e",tooltip=" "];
+  Node268 -> Node265 [color="midnightblue",fontsize="10",style="solid"];
+}

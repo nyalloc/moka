@@ -1,0 +1,99 @@
+\hypertarget{classmoka_1_1generate__mipmaps__command}{}\section{moka\+::generate\+\_\+mipmaps\+\_\+command Class Reference}
+\label{classmoka_1_1generate__mipmaps__command}\index{moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}}
+
+
+Generate mipmaps for a specified texture.  
+
+
+
+
+{\ttfamily \#include $<$generate\+\_\+mipmaps\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::generate\+\_\+mipmaps\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::generate\+\_\+mipmaps\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_ac8755ed629caa3c80dbe3e5069cf6279}{$\sim$generate\+\_\+mipmaps\+\_\+command}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_af04e36f3f51d7ba505c3f157ceefb42c}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_add1aa61412ba9424f727f5a536e5be06}{set\+\_\+texture}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_aef2a378b2152cf24609a979a0673358a}{texture}})
+\begin{DoxyCompactList}\small\item\em Set the texture object to generate mipmaps for. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_aef2a378b2152cf24609a979a0673358a}{texture}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Generate mipmaps for a specified texture. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1generate__mipmaps__command_ac8755ed629caa3c80dbe3e5069cf6279}\label{classmoka_1_1generate__mipmaps__command_ac8755ed629caa3c80dbe3e5069cf6279}} 
+\index{moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}!````~generate\_mipmaps\_command@{$\sim$generate\_mipmaps\_command}}
+\index{````~generate\_mipmaps\_command@{$\sim$generate\_mipmaps\_command}!moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}}
+\subsubsection{\texorpdfstring{$\sim$generate\_mipmaps\_command()}{~generate\_mipmaps\_command()}}
+{\footnotesize\ttfamily virtual moka\+::generate\+\_\+mipmaps\+\_\+command\+::$\sim$generate\+\_\+mipmaps\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1generate__mipmaps__command_af04e36f3f51d7ba505c3f157ceefb42c}\label{classmoka_1_1generate__mipmaps__command_af04e36f3f51d7ba505c3f157ceefb42c}} 
+\index{moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}!accept@{accept}}
+\index{accept@{accept}!moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::generate\+\_\+mipmaps\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1generate__mipmaps__command_add1aa61412ba9424f727f5a536e5be06}\label{classmoka_1_1generate__mipmaps__command_add1aa61412ba9424f727f5a536e5be06}} 
+\index{moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}!set\_texture@{set\_texture}}
+\index{set\_texture@{set\_texture}!moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}}
+\subsubsection{\texorpdfstring{set\_texture()}{set\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}}\& moka\+::generate\+\_\+mipmaps\+\_\+command\+::set\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Set the texture object to generate mipmaps for. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & The texture object to generate mipmaps for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1generate__mipmaps__command_aef2a378b2152cf24609a979a0673358a}\label{classmoka_1_1generate__mipmaps__command_aef2a378b2152cf24609a979a0673358a}} 
+\index{moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}!texture@{texture}}
+\index{texture@{texture}!moka::generate\_mipmaps\_command@{moka::generate\_mipmaps\_command}}
+\subsubsection{\texorpdfstring{texture}{texture}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::generate\+\_\+mipmaps\+\_\+command\+::texture}
+
+The texture object to generate mipmaps for. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{generate__mipmaps__command_8hpp}{generate\+\_\+mipmaps\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

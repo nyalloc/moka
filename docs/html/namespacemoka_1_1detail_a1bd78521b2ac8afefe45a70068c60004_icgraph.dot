@@ -1,0 +1,32 @@
+digraph "moka::detail::byte_to_float"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="moka::detail::byte\l_to_float",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="moka::colour::operator[]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ae28feff4fd8815b6612ef4cf16b026b8",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="moka::colour::r",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a2ec71fd89ba133142c84c3a7a0ce35eb",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="moka::colour::vec4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ae61f128c67947c870a5daa830de23d67",tooltip=" "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="moka::colour::vec3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a7c6fc079f1689c2e47d698b913d16a07",tooltip=" "];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="moka::colour::colour",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a69c484d6aa34beda220712e751ad99f3",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="moka::colour::g",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a884fe789032a1e3a1d40c55f5cf852bd",tooltip=" "];
+  Node7 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="moka::colour::b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a091a6fe2b9364663da19e7b561739411",tooltip=" "];
+  Node8 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="moka::colour::a",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ac2a9d008b8201e9e2b3518f3e1d2de7e",tooltip=" "];
+  Node9 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

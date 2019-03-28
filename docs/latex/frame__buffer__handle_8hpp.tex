@@ -1,0 +1,42 @@
+\hypertarget{frame__buffer__handle_8hpp}{}\section{engine/includes/graphics/buffer/frame\+\_\+buffer\+\_\+handle.hpp File Reference}
+\label{frame__buffer__handle_8hpp}\index{engine/includes/graphics/buffer/frame\_buffer\_handle.hpp@{engine/includes/graphics/buffer/frame\_buffer\_handle.hpp}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for frame\+\_\+buffer\+\_\+handle.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{moka\+::frame\+\_\+buffer\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em A handle to a frame buffer object on the device. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmoka_1_1render__texture__data}{moka\+::render\+\_\+texture\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em Data describing a framebuffer attachment. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{moka\+::frame\+\_\+buffer\+\_\+builder}}
+\begin{DoxyCompactList}\small\item\em A builder class to help you build a frame buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{moka\+::frame\+\_\+format}} \{ \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279deae7967c21c483439cf58d7a68124a80ea}{moka\+::frame\+\_\+format\+::depth\+\_\+component24}}, 
+\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279deae7967c21c483439cf58d7a68124a80ea}{moka\+::frame\+\_\+format\+::depth\+\_\+component24}}
+ \}
+\begin{DoxyCompactList}\small\item\em The format of the framebuffer attachment. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1}{moka\+::frame\+\_\+attachment}} \{ \newline
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a70dda5dfb8053dc6d1c492574bce9bfd}{moka\+::frame\+\_\+attachment\+::color}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a12a055bf01a31369fe81ac35d85c7bc1}{moka\+::frame\+\_\+attachment\+::depth}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a667f218c5ed2c9cf25734500472e7c4a}{moka\+::frame\+\_\+attachment\+::stencil}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a4cc2150334d039ce9f2a6b7e8e285e3e}{moka\+::frame\+\_\+attachment\+::depth\+\_\+stencil}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a70dda5dfb8053dc6d1c492574bce9bfd}{moka\+::frame\+\_\+attachment\+::color}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a12a055bf01a31369fe81ac35d85c7bc1}{moka\+::frame\+\_\+attachment\+::depth}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a667f218c5ed2c9cf25734500472e7c4a}{moka\+::frame\+\_\+attachment\+::stencil}}, 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1a4cc2150334d039ce9f2a6b7e8e285e3e}{moka\+::frame\+\_\+attachment\+::depth\+\_\+stencil}}
+ \}
+\begin{DoxyCompactList}\small\item\em The type of framebuffer attachment. \end{DoxyCompactList}\end{DoxyCompactItemize}

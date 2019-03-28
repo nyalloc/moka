@@ -1,0 +1,183 @@
+\hypertarget{classmoka_1_1frame__buffer__texture__command}{}\section{moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command Class Reference}
+\label{classmoka_1_1frame__buffer__texture__command}\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+
+
+Set the texture you want to attach to this frame buffer.  
+
+
+
+
+{\ttfamily \#include $<$frame\+\_\+buffer\+\_\+texture\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a72fc6d54513756fe7ce7af898a41268f}{$\sim$frame\+\_\+buffer\+\_\+texture\+\_\+command}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a13187e36d3002ccdaa39c42b40d0034f}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a93fffc45f26b679fd50f139c8dbc3a7d}{set\+\_\+texture}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_ac6986f87b2adb0c62e14f4b4989a19ff}{texture}})
+\begin{DoxyCompactList}\small\item\em Set the texture whose image is to be attached. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a6ae9bc7d6a29e0dac6bd13b69d5b6b5e}{set\+\_\+attachment}} (\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1}{frame\+\_\+attachment}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_af5113c5b0be55658fdd03b2823dd5038}{attachment}})
+\begin{DoxyCompactList}\small\item\em Set the attachment to which the texture should be attached. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a8a3e58975b0fcdbfc4ad1119cfbeb51d}{set\+\_\+target}} (\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_ac8ac280263dfea329a3a0d0d7650a802}{target}})
+\begin{DoxyCompactList}\small\item\em Set the texture target. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a37bd0d4d87f2d86813f34a7fc68e8768}{set\+\_\+mip\+\_\+level}} (int \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_abf25ce4275230e90c02eb7b0009f59de}{level}})
+\begin{DoxyCompactList}\small\item\em Set the mipmap level of the texture image to be attached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_ac6986f87b2adb0c62e14f4b4989a19ff}{texture}}
+\item 
+\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1}{frame\+\_\+attachment}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_af5113c5b0be55658fdd03b2823dd5038}{attachment}}
+\item 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}} \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_ac8ac280263dfea329a3a0d0d7650a802}{target}}
+\item 
+int \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_abf25ce4275230e90c02eb7b0009f59de}{level}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Set the texture you want to attach to this frame buffer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a72fc6d54513756fe7ce7af898a41268f}\label{classmoka_1_1frame__buffer__texture__command_a72fc6d54513756fe7ce7af898a41268f}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!````~frame\_buffer\_texture\_command@{$\sim$frame\_buffer\_texture\_command}}
+\index{````~frame\_buffer\_texture\_command@{$\sim$frame\_buffer\_texture\_command}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{$\sim$frame\_buffer\_texture\_command()}{~frame\_buffer\_texture\_command()}}
+{\footnotesize\ttfamily virtual moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::$\sim$frame\+\_\+buffer\+\_\+texture\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a13187e36d3002ccdaa39c42b40d0034f}\label{classmoka_1_1frame__buffer__texture__command_a13187e36d3002ccdaa39c42b40d0034f}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!accept@{accept}}
+\index{accept@{accept}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a6ae9bc7d6a29e0dac6bd13b69d5b6b5e}\label{classmoka_1_1frame__buffer__texture__command_a6ae9bc7d6a29e0dac6bd13b69d5b6b5e}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!set\_attachment@{set\_attachment}}
+\index{set\_attachment@{set\_attachment}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{set\_attachment()}{set\_attachment()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::set\+\_\+attachment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1}{frame\+\_\+attachment}}}]{attachment }\end{DoxyParamCaption})}
+
+
+
+Set the attachment to which the texture should be attached. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em attachment} & The attachment to which the texture should be attached. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a37bd0d4d87f2d86813f34a7fc68e8768}\label{classmoka_1_1frame__buffer__texture__command_a37bd0d4d87f2d86813f34a7fc68e8768}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!set\_mip\_level@{set\_mip\_level}}
+\index{set\_mip\_level@{set\_mip\_level}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{set\_mip\_level()}{set\_mip\_level()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::set\+\_\+mip\+\_\+level (\begin{DoxyParamCaption}\item[{int}]{level }\end{DoxyParamCaption})}
+
+
+
+Set the mipmap level of the texture image to be attached. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em level} & The mipmap level of the texture image to be attached. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a8a3e58975b0fcdbfc4ad1119cfbeb51d}\label{classmoka_1_1frame__buffer__texture__command_a8a3e58975b0fcdbfc4ad1119cfbeb51d}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!set\_target@{set\_target}}
+\index{set\_target@{set\_target}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{set\_target()}{set\_target()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::set\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}}}]{target }\end{DoxyParamCaption})}
+
+
+
+Set the texture target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The texture target. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_a93fffc45f26b679fd50f139c8dbc3a7d}\label{classmoka_1_1frame__buffer__texture__command_a93fffc45f26b679fd50f139c8dbc3a7d}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!set\_texture@{set\_texture}}
+\index{set\_texture@{set\_texture}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{set\_texture()}{set\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::set\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Set the texture whose image is to be attached. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & The texture whose image is to be attached. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_af5113c5b0be55658fdd03b2823dd5038}\label{classmoka_1_1frame__buffer__texture__command_af5113c5b0be55658fdd03b2823dd5038}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!attachment@{attachment}}
+\index{attachment@{attachment}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{attachment}{attachment}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_a0a44ecbb877dec1107d9915dc95c58d1}{frame\+\_\+attachment}} moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::attachment}
+
+Specifies the attachment to which the texture should be attached. \mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_abf25ce4275230e90c02eb7b0009f59de}\label{classmoka_1_1frame__buffer__texture__command_abf25ce4275230e90c02eb7b0009f59de}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!level@{level}}
+\index{level@{level}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily int moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::level}
+
+Specifies the mipmap level of the texture image to be attached, which must be 0. \mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_ac8ac280263dfea329a3a0d0d7650a802}\label{classmoka_1_1frame__buffer__texture__command_ac8ac280263dfea329a3a0d0d7650a802}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!target@{target}}
+\index{target@{target}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{image\+\_\+target}} moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::target}
+
+Specifies the texture target. \mbox{\Hypertarget{classmoka_1_1frame__buffer__texture__command_ac6986f87b2adb0c62e14f4b4989a19ff}\label{classmoka_1_1frame__buffer__texture__command_ac6986f87b2adb0c62e14f4b4989a19ff}} 
+\index{moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}!texture@{texture}}
+\index{texture@{texture}!moka::frame\_buffer\_texture\_command@{moka::frame\_buffer\_texture\_command}}
+\subsubsection{\texorpdfstring{texture}{texture}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command\+::texture}
+
+Specifies the texture object whose image is to be attached. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{frame__buffer__texture__command_8hpp}{frame\+\_\+buffer\+\_\+texture\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

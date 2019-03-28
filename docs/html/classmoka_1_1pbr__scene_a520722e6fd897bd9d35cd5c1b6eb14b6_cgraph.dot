@@ -1,0 +1,54 @@
+digraph "moka::pbr_scene::draw"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node38 [label="moka::pbr_scene::draw",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Draw the scene."];
+  Node38 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="moka::basic_camera\l::get_position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1basic__camera.html#afa49b769555a670396d178141376902e",tooltip="Get the position of the camera."];
+  Node38 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="moka::command_list\l::viewport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1command__list.html#a93d0d14be17e169aeb72ba2eeb3512ba",tooltip="Create and return a viewport_command object."];
+  Node38 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="moka::viewport_command\l::set_rectangle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1viewport__command.html#a48ee8475ca7476660ded9ddd54245581",tooltip="Set the rectangle of the viewport in window coordinates."];
+  Node38 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="moka::command_list\l::scissor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1command__list.html#a4e11fd1ef7dfb253e66e62ef88009059",tooltip="Create and return a scissor_command object."];
+  Node38 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="moka::scissor_command\l::set_rectangle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1scissor__command.html#a984da08fc55c8643f0e12514460ec386",tooltip="Set the rectangle of the scissor box in window coordinates."];
+  Node38 -> Node44 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="moka::command_list\l::clear",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1command__list.html#a4ca381ed2350bb80861e6c4925103a19",tooltip="Create and return a clear_command object."];
+  Node38 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="moka::clear_command\l::set_color",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1clear__command.html#a444e7779e89f6818d99be5a5ec901dc1",tooltip="Set the color of the clear_command."];
+  Node38 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="moka::clear_command\l::set_clear_color",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1clear__command.html#a0dab48e1983dbafdacb2d06d68fdfc92",tooltip="Should this clear_command clear the color buffer?"];
+  Node38 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="moka::clear_command\l::set_clear_depth",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1clear__command.html#a6d6b5e04ad90cd6117900a8cc78d6a33",tooltip="Should this clear_command clear the depth buffer?"];
+  Node38 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="moka::primitive::get\l_material",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1primitive.html#a0cd9192d639d8ff180016c7102361440",tooltip=" "];
+  Node38 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="moka::graphics_device\l::get_material_cache",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1graphics__device.html#a89fa05e0146e2f4ec171c48321c27fe2",tooltip="Get the material cache."];
+  Node38 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="moka::material_cache\l::get_material",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1material__cache.html#a061b66b048cb75daf59cf0238119c6e9",tooltip="Get the material identified by its id."];
+  Node38 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="moka::mesh::get_transform",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1mesh.html#a4068a7137917249d32c521d58c5754c4",tooltip=" "];
+  Node38 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="moka::transform::get\l_world_position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1transform.html#a1be839aea05acb7c03a393a3b9f9d776",tooltip="Get the transform's world position."];
+  Node38 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="moka::command_list\l::make_command_buffer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1command__list.html#a9aa451174a49a270c109b99360fa5924",tooltip="Create and return a command_buffer object."];
+  Node38 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="moka::command_buffer\l::set_material_parameters",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1command__buffer.html#a5f727a7e4ff787fa3f222f680228afd9",tooltip="Create and return a set_material_parameters_command object."];
+  Node38 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="moka::set_material\l_parameters_command\l::set_material",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1set__material__parameters__command.html#a94146b37e0add82e19ca6dd254d02fed",tooltip="Set the material that you want to update."];
+  Node38 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="moka::set_material\l_parameters_command\l::set_parameter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1set__material__parameters__command.html#ad91e42c050a7acdef5190f820aee5dc0",tooltip="Update a material parameter."];
+  Node38 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="moka::transform::to\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1transform.html#a01484fe05bd028cd37ceca8c1e95fbde",tooltip="Convert this transform to a mat4."];
+  Node38 -> Node58 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="moka::basic_camera\l::get_view",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1basic__camera.html#a50d26f0db9969b36b29103e8a743d4c6",tooltip="Get the view matrix."];
+  Node38 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node59 [label="moka::basic_camera\l::get_projection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1basic__camera.html#a444f348fa7557b80052fa2c2471cd1f8",tooltip="Get the projection of the camera."];
+  Node38 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="moka::primitive::draw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1primitive.html#aed9c45c5844f61180db3500ae4fd8cf6",tooltip=" "];
+  Node38 -> Node61 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node61 [label="moka::graphics_device\l::submit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1graphics__device.html#a94137d1281fbe4df827eb01ee37b4ecc",tooltip="Submit a command_list to execute on the device."];
+}

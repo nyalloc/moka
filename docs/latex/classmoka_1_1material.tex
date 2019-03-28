@@ -1,0 +1,366 @@
+\hypertarget{classmoka_1_1material}{}\section{moka\+::material Class Reference}
+\label{classmoka_1_1material}\index{moka::material@{moka::material}}
+
+
+A material that can be used when rendering a primitive.  
+
+
+
+
+{\ttfamily \#include $<$material.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{iterator}} = \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{parameter\+\_\+collection\+::iterator}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{const\+\_\+iterator}} = \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{parameter\+\_\+collection\+::const\+\_\+iterator}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1material_a7dd1fd24e083df29846cf501ea85a1cb}{builder}} = \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1material_a851d0531a3bd13fe9594bad9c460eb73}{material}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1material_a50747c3e67abffb9c85d1ea2490e42b5}{$\sim$material}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1material_a68636cba205cc90086863630778dd56c}{material}} (const \mbox{\hyperlink{classmoka_1_1material}{material}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1material}{material}} \& \mbox{\hyperlink{classmoka_1_1material_a90042ca024f8fe181e8b6313203f211c}{operator=}} (const \mbox{\hyperlink{classmoka_1_1material}{material}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1material_a2d226f9f3b7736207af1f7035674b8ef}{material}} (\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1material}{material}} \& \mbox{\hyperlink{classmoka_1_1material_a00ec8ed5fb0754ed02f53c8f98e9e366}{operator=}} (\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1material_a01b3dc796afae0e2446c99abeee6aba7}{material}} (\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}, \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&parameters, \mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}} \mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}}, const \mbox{\hyperlink{structmoka_1_1blend}{blend}} \&\mbox{\hyperlink{structmoka_1_1blend}{blend}}, const \mbox{\hyperlink{structmoka_1_1culling}{culling}} \&\mbox{\hyperlink{structmoka_1_1culling}{culling}}, const \mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}} \&\mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}}, bool depth\+\_\+test, bool scissor\+\_\+test)
+\begin{DoxyCompactList}\small\item\em Create a new material object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material_a933c952c194f2dee5928f88370c0c1d3}{material}} (\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}})
+\begin{DoxyCompactList}\small\item\em Create a new material object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}} \mbox{\hyperlink{classmoka_1_1material_a4e107e847f5ce6877c22a5786ecdd6ca}{get\+\_\+alpha\+\_\+mode}} () const
+\begin{DoxyCompactList}\small\item\em Get the alpha mode of this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material_ab46309b4e7b81e050085145074e12316}{get\+\_\+program}} () const
+\begin{DoxyCompactList}\small\item\em Get this material\textquotesingle{}s program. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classmoka_1_1material_a30589855362a602a64c624d6f57fed3c}{size}} () const
+\begin{DoxyCompactList}\small\item\em Get the number of parameters in this material. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1material_a1e08a9a97d6705e17b299c59eb590833}{get\+\_\+scissor\+\_\+test}} () const
+\begin{DoxyCompactList}\small\item\em Does this material require the scissor test? \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1material_a5eff610e900a4fcac9b9ff1b075e9f08}{get\+\_\+depth\+\_\+test}} () const
+\begin{DoxyCompactList}\small\item\em Does this material require the depth test? \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1material_a24c56dd5ee751869a0a89c4ee86df6ad}{begin}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1material_aa8f02d714d51e11b0336f5a2080090b3}{end}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{iterator}} \mbox{\hyperlink{classmoka_1_1material_a37b3e0f903ed7e55497d5797c52d7f36}{begin}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{iterator}} \mbox{\hyperlink{classmoka_1_1material_a3538c3832514f230975113c02ef9b019}{end}} ()
+\item 
+const \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1material_acf1a2885fe704ce6684080c52f106f70}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Return the material parameter at the index using the subscript operator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1material_a9232eb8fae1ebace716db92e7bd118af}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em Return the material parameter at the index using the subscript operator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1material_ae29638762c567b2a27b750c40226a0a5}{operator\mbox{[}$\,$\mbox{]}}} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em Return the material parameter with the name using the subscript operator. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{structmoka_1_1blend}{blend}} \& \mbox{\hyperlink{classmoka_1_1material_a1d3a936d00273cb2c6692c1c5df03351}{get\+\_\+blend}} () const
+\begin{DoxyCompactList}\small\item\em Get the blend mode of this material. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{structmoka_1_1culling}{culling}} \& \mbox{\hyperlink{classmoka_1_1material_a3eaec73eaa7aa63c4abaeb82dfb9d0c7}{get\+\_\+culling}} () const
+\begin{DoxyCompactList}\small\item\em Get the culling mode of this material. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}} \& \mbox{\hyperlink{classmoka_1_1material_aff4223e795cb85a9728be4ee9e994fe4}{get\+\_\+polygon\+\_\+mode}} () const
+\begin{DoxyCompactList}\small\item\em Get the polygon mode of this material. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A material that can be used when rendering a primitive. 
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classmoka_1_1material_a7dd1fd24e083df29846cf501ea85a1cb}\label{classmoka_1_1material_a7dd1fd24e083df29846cf501ea85a1cb}} 
+\index{moka::material@{moka::material}!builder@{builder}}
+\index{builder@{builder}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{builder}{builder}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1material_a7dd1fd24e083df29846cf501ea85a1cb}{moka\+::material\+::builder}} =  \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}}
+
+\mbox{\Hypertarget{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}\label{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}} 
+\index{moka::material@{moka::material}!const\_iterator@{const\_iterator}}
+\index{const\_iterator@{const\_iterator}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{const\_iterator}{const\_iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{moka\+::material\+::const\+\_\+iterator}} =  \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{parameter\+\_\+collection\+::const\+\_\+iterator}}}
+
+\mbox{\Hypertarget{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}\label{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}} 
+\index{moka::material@{moka::material}!iterator@{iterator}}
+\index{iterator@{iterator}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{iterator}{iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{moka\+::material\+::iterator}} =  \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{parameter\+\_\+collection\+::iterator}}}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1material_a851d0531a3bd13fe9594bad9c460eb73}\label{classmoka_1_1material_a851d0531a3bd13fe9594bad9c460eb73}} 
+\index{moka::material@{moka::material}!material@{material}}
+\index{material@{material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{material()}{material()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily moka\+::material\+::material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_a50747c3e67abffb9c85d1ea2490e42b5}\label{classmoka_1_1material_a50747c3e67abffb9c85d1ea2490e42b5}} 
+\index{moka::material@{moka::material}!````~material@{$\sim$material}}
+\index{````~material@{$\sim$material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{$\sim$material()}{~material()}}
+{\footnotesize\ttfamily moka\+::material\+::$\sim$material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_a68636cba205cc90086863630778dd56c}\label{classmoka_1_1material_a68636cba205cc90086863630778dd56c}} 
+\index{moka::material@{moka::material}!material@{material}}
+\index{material@{material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{material()}{material()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily moka\+::material\+::material (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1material}{material}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_a2d226f9f3b7736207af1f7035674b8ef}\label{classmoka_1_1material_a2d226f9f3b7736207af1f7035674b8ef}} 
+\index{moka::material@{moka::material}!material@{material}}
+\index{material@{material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{material()}{material()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily moka\+::material\+::material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1material_a01b3dc796afae0e2446c99abeee6aba7}\label{classmoka_1_1material_a01b3dc796afae0e2446c99abeee6aba7}} 
+\index{moka::material@{moka::material}!material@{material}}
+\index{material@{material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{material()}{material()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily moka\+::material\+::material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}}]{program\+\_\+handle,  }\item[{\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&}]{parameters,  }\item[{\mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}}}]{alpha\+\_\+mode,  }\item[{const \mbox{\hyperlink{structmoka_1_1blend}{blend}} \&}]{blend,  }\item[{const \mbox{\hyperlink{structmoka_1_1culling}{culling}} \&}]{culling,  }\item[{const \mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}} \&}]{polygon\+\_\+mode,  }\item[{bool}]{depth\+\_\+test,  }\item[{bool}]{scissor\+\_\+test }\end{DoxyParamCaption})}
+
+
+
+Create a new material object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}} & The program to use with this material. \\
+\hline
+{\em parameters} & The parameters to use with the material. \\
+\hline
+{\em alpha\+\_\+mode} & The alpha mode to use with the material. \\
+\hline
+{\em blend} & The blend mode to use with the material. \\
+\hline
+{\em culling} & The culling mode to use with the material. \\
+\hline
+{\em \mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}}} & The polygon mode to use with the material. \\
+\hline
+{\em depth\+\_\+test} & Does this material require the depth test? \\
+\hline
+{\em scissor\+\_\+test} & Does this material require the scissor test? \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1material_a933c952c194f2dee5928f88370c0c1d3}\label{classmoka_1_1material_a933c952c194f2dee5928f88370c0c1d3}} 
+\index{moka::material@{moka::material}!material@{material}}
+\index{material@{material}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{material()}{material()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily moka\+::material\+::material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}}]{program\+\_\+handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new material object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}} & The program to use with this material. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1material_a24c56dd5ee751869a0a89c4ee86df6ad}\label{classmoka_1_1material_a24c56dd5ee751869a0a89c4ee86df6ad}} 
+\index{moka::material@{moka::material}!begin@{begin}}
+\index{begin@{begin}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{const\+\_\+iterator}} moka\+::material\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1material_a37b3e0f903ed7e55497d5797c52d7f36}\label{classmoka_1_1material_a37b3e0f903ed7e55497d5797c52d7f36}} 
+\index{moka::material@{moka::material}!begin@{begin}}
+\index{begin@{begin}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{iterator}} moka\+::material\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_aa8f02d714d51e11b0336f5a2080090b3}\label{classmoka_1_1material_aa8f02d714d51e11b0336f5a2080090b3}} 
+\index{moka::material@{moka::material}!end@{end}}
+\index{end@{end}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material_ab87ba893c5a7741e95718b0bddbc1049}{const\+\_\+iterator}} moka\+::material\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1material_a3538c3832514f230975113c02ef9b019}\label{classmoka_1_1material_a3538c3832514f230975113c02ef9b019}} 
+\index{moka::material@{moka::material}!end@{end}}
+\index{end@{end}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material_ac6839c8e1a338dbaef539569388f89e5}{iterator}} moka\+::material\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_a4e107e847f5ce6877c22a5786ecdd6ca}\label{classmoka_1_1material_a4e107e847f5ce6877c22a5786ecdd6ca}} 
+\index{moka::material@{moka::material}!get\_alpha\_mode@{get\_alpha\_mode}}
+\index{get\_alpha\_mode@{get\_alpha\_mode}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_alpha\_mode()}{get\_alpha\_mode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}} moka\+::material\+::get\+\_\+alpha\+\_\+mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the alpha mode of this material. 
+
+\begin{DoxyReturn}{Returns}
+This material\textquotesingle{}s alpha mode. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a1d3a936d00273cb2c6692c1c5df03351}\label{classmoka_1_1material_a1d3a936d00273cb2c6692c1c5df03351}} 
+\index{moka::material@{moka::material}!get\_blend@{get\_blend}}
+\index{get\_blend@{get\_blend}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_blend()}{get\_blend()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structmoka_1_1blend}{blend}}\& moka\+::material\+::get\+\_\+blend (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the blend mode of this material. 
+
+\begin{DoxyReturn}{Returns}
+The blend mode of this material. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a3eaec73eaa7aa63c4abaeb82dfb9d0c7}\label{classmoka_1_1material_a3eaec73eaa7aa63c4abaeb82dfb9d0c7}} 
+\index{moka::material@{moka::material}!get\_culling@{get\_culling}}
+\index{get\_culling@{get\_culling}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_culling()}{get\_culling()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structmoka_1_1culling}{culling}}\& moka\+::material\+::get\+\_\+culling (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the culling mode of this material. 
+
+\begin{DoxyReturn}{Returns}
+The culling mode of this material. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a5eff610e900a4fcac9b9ff1b075e9f08}\label{classmoka_1_1material_a5eff610e900a4fcac9b9ff1b075e9f08}} 
+\index{moka::material@{moka::material}!get\_depth\_test@{get\_depth\_test}}
+\index{get\_depth\_test@{get\_depth\_test}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_depth\_test()}{get\_depth\_test()}}
+{\footnotesize\ttfamily bool moka\+::material\+::get\+\_\+depth\+\_\+test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Does this material require the depth test? 
+
+\begin{DoxyReturn}{Returns}
+True if depth test is required, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_aff4223e795cb85a9728be4ee9e994fe4}\label{classmoka_1_1material_aff4223e795cb85a9728be4ee9e994fe4}} 
+\index{moka::material@{moka::material}!get\_polygon\_mode@{get\_polygon\_mode}}
+\index{get\_polygon\_mode@{get\_polygon\_mode}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_polygon\_mode()}{get\_polygon\_mode()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structmoka_1_1polygon__mode}{polygon\+\_\+mode}}\& moka\+::material\+::get\+\_\+polygon\+\_\+mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the polygon mode of this material. 
+
+\begin{DoxyReturn}{Returns}
+The polygon mode of this material. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_ab46309b4e7b81e050085145074e12316}\label{classmoka_1_1material_ab46309b4e7b81e050085145074e12316}} 
+\index{moka::material@{moka::material}!get\_program@{get\_program}}
+\index{get\_program@{get\_program}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_program()}{get\_program()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} moka\+::material\+::get\+\_\+program (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get this material\textquotesingle{}s program. 
+
+\begin{DoxyReturn}{Returns}
+This material\textquotesingle{}s program. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a1e08a9a97d6705e17b299c59eb590833}\label{classmoka_1_1material_a1e08a9a97d6705e17b299c59eb590833}} 
+\index{moka::material@{moka::material}!get\_scissor\_test@{get\_scissor\_test}}
+\index{get\_scissor\_test@{get\_scissor\_test}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{get\_scissor\_test()}{get\_scissor\_test()}}
+{\footnotesize\ttfamily bool moka\+::material\+::get\+\_\+scissor\+\_\+test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Does this material require the scissor test? 
+
+\begin{DoxyReturn}{Returns}
+True if scissor test is required, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a90042ca024f8fe181e8b6313203f211c}\label{classmoka_1_1material_a90042ca024f8fe181e8b6313203f211c}} 
+\index{moka::material@{moka::material}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material}{material}}\& moka\+::material\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1material}{material}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1material_a00ec8ed5fb0754ed02f53c8f98e9e366}\label{classmoka_1_1material_a00ec8ed5fb0754ed02f53c8f98e9e366}} 
+\index{moka::material@{moka::material}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material}{material}}\& moka\+::material\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1material_acf1a2885fe704ce6684080c52f106f70}\label{classmoka_1_1material_acf1a2885fe704ce6684080c52f106f70}} 
+\index{moka::material@{moka::material}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::material\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const}
+
+
+
+Return the material parameter at the index using the subscript operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a9232eb8fae1ebace716db92e7bd118af}\label{classmoka_1_1material_a9232eb8fae1ebace716db92e7bd118af}} 
+\index{moka::material@{moka::material}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::material\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption})}
+
+
+
+Return the material parameter at the index using the subscript operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_ae29638762c567b2a27b750c40226a0a5}\label{classmoka_1_1material_ae29638762c567b2a27b750c40226a0a5}} 
+\index{moka::material@{moka::material}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::material\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Return the material parameter with the name using the subscript operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material_a30589855362a602a64c624d6f57fed3c}\label{classmoka_1_1material_a30589855362a602a64c624d6f57fed3c}} 
+\index{moka::material@{moka::material}!size@{size}}
+\index{size@{size}!moka::material@{moka::material}}
+\subsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily size\+\_\+t moka\+::material\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the number of parameters in this material. 
+
+\begin{DoxyReturn}{Returns}
+The number of parameters in this material. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/material/\mbox{\hyperlink{material_8hpp}{material.\+hpp}}\end{DoxyCompactItemize}

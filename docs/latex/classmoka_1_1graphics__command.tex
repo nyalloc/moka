@@ -1,0 +1,61 @@
+\hypertarget{classmoka_1_1graphics__command}{}\section{moka\+::graphics\+\_\+command Class Reference}
+\label{classmoka_1_1graphics__command}\index{moka::graphics\_command@{moka::graphics\_command}}
+
+
+Base type for graphics commands.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::graphics\+\_\+command\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor)=0
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classmoka_1_1graphics__command_af6e6100d7c1a139c30fed480dc210442}{$\sim$graphics\+\_\+command}} ()=default
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base type for graphics commands. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__command_af6e6100d7c1a139c30fed480dc210442}\label{classmoka_1_1graphics__command_af6e6100d7c1a139c30fed480dc210442}} 
+\index{moka::graphics\_command@{moka::graphics\_command}!````~graphics\_command@{$\sim$graphics\_command}}
+\index{````~graphics\_command@{$\sim$graphics\_command}!moka::graphics\_command@{moka::graphics\_command}}
+\subsubsection{\texorpdfstring{$\sim$graphics\_command()}{~graphics\_command()}}
+{\footnotesize\ttfamily virtual moka\+::graphics\+\_\+command\+::$\sim$graphics\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}\label{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}} 
+\index{moka::graphics\_command@{moka::graphics\_command}!accept@{accept}}
+\index{accept@{accept}!moka::graphics\_command@{moka::graphics\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily virtual void moka\+::graphics\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a00ba38678a50c8f1a80dfdc131a93ca7}{moka\+::set\+\_\+material\+\_\+parameters\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1draw__command_a5182c69d730f0a34185e190b4e1ecf54}{moka\+::draw\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a72a08b1f2f64f8f93458b4c70747f439}{moka\+::frame\+\_\+buffer\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1viewport__command_a8344d1f3a278d8fe04f1f6c86d0877c1}{moka\+::viewport\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command_a13187e36d3002ccdaa39c42b40d0034f}{moka\+::frame\+\_\+buffer\+\_\+texture\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1scissor__command_aae68551e35f929ea61bae3640af68ed8}{moka\+::scissor\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1clear__command_a321fa172131c9219f1a8a57e228215fb}{moka\+::clear\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command_aff2bfc0447ac04a037fb0626a93a81c6}{moka\+::fill\+\_\+index\+\_\+buffer\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_a9e916e2371a2a165e1450f635dd534a9}{moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command}}, \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command_af04e36f3f51d7ba505c3f157ceefb42c}{moka\+::generate\+\_\+mipmaps\+\_\+command}}, and \mbox{\hyperlink{classmoka_1_1set__color__attachments__command_a54f81dc588ded92764ce28c37fa576c6}{moka\+::set\+\_\+color\+\_\+attachments\+\_\+command}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{graphics__command_8hpp}{graphics\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

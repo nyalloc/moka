@@ -1,0 +1,211 @@
+\hypertarget{classmoka_1_1logger}{}\section{moka\+::logger Class Reference}
+\label{classmoka_1_1logger}\index{moka::logger@{moka::logger}}
+
+
+A logging class. A simple wrapper around a spdlog\+::logger object.  
+
+
+
+
+{\ttfamily \#include $<$logger.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1logger_ab6da934b4b7a08e2734ffc09f9a49a55}{logger}} (const char $\ast$name, \mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637d}{log\+\_\+level}} level=\mbox{\hyperlink{namespacemoka_ac3f7b72250cd352011df4f431c862df5}{default\+\_\+log\+\_\+level}}())
+\begin{DoxyCompactList}\small\item\em Create a new logger object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_a826aeeb2fcae75b99c72eb9c82b5fa13}{log}} (\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637d}{log\+\_\+level}} level, const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some information to the log. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_ac8902f1eb4c4d77aad419dd765ccbac6}{debug}} (const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some debug-\/level information to the log. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_abf4c4a0e30d47e947737273084c4d531}{trace}} (const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some trace-\/level information to the log. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_ab2b824435132d3e2231e6b54b5dc78fe}{info}} (const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some info-\/level information to the log. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_a6e1a76b91ec700ab2305e22ea96fe621}{warn}} (const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some warn-\/level information to the log. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{classmoka_1_1logger_a11b70dc17024e339eb34ee5cd9c87e53}{error}} (const char $\ast$fmt, Args \&\&... args) const
+\begin{DoxyCompactList}\small\item\em Write some error-\/level information to the log. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A logging class. A simple wrapper around a spdlog\+::logger object. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1logger_ab6da934b4b7a08e2734ffc09f9a49a55}\label{classmoka_1_1logger_ab6da934b4b7a08e2734ffc09f9a49a55}} 
+\index{moka::logger@{moka::logger}!logger@{logger}}
+\index{logger@{logger}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{logger()}{logger()}}
+{\footnotesize\ttfamily moka\+::logger\+::logger (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637d}{log\+\_\+level}}}]{level = {\ttfamily \mbox{\hyperlink{namespacemoka_ac3f7b72250cd352011df4f431c862df5}{default\+\_\+log\+\_\+level}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Create a new logger object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of this logger. \\
+\hline
+{\em level} & The log level of this object. Items logged must be higher than this level to be saved to the log. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1logger_ac8902f1eb4c4d77aad419dd765ccbac6}\label{classmoka_1_1logger_ac8902f1eb4c4d77aad419dd765ccbac6}} 
+\index{moka::logger@{moka::logger}!debug@{debug}}
+\index{debug@{debug}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{debug()}{debug()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::debug (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some debug-\/level information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1logger_a11b70dc17024e339eb34ee5cd9c87e53}\label{classmoka_1_1logger_a11b70dc17024e339eb34ee5cd9c87e53}} 
+\index{moka::logger@{moka::logger}!error@{error}}
+\index{error@{error}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{error()}{error()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::error (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some error-\/level information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1logger_ab2b824435132d3e2231e6b54b5dc78fe}\label{classmoka_1_1logger_ab2b824435132d3e2231e6b54b5dc78fe}} 
+\index{moka::logger@{moka::logger}!info@{info}}
+\index{info@{info}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{info()}{info()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::info (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some info-\/level information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1logger_a826aeeb2fcae75b99c72eb9c82b5fa13}\label{classmoka_1_1logger_a826aeeb2fcae75b99c72eb9c82b5fa13}} 
+\index{moka::logger@{moka::logger}!log@{log}}
+\index{log@{log}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::log (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637d}{log\+\_\+level}}}]{level,  }\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em level} & The log level that the arguments will be logged at. \\
+\hline
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1logger_abf4c4a0e30d47e947737273084c4d531}\label{classmoka_1_1logger_abf4c4a0e30d47e947737273084c4d531}} 
+\index{moka::logger@{moka::logger}!trace@{trace}}
+\index{trace@{trace}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{trace()}{trace()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::trace (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some trace-\/level information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classmoka_1_1logger_a6e1a76b91ec700ab2305e22ea96fe621}\label{classmoka_1_1logger_a6e1a76b91ec700ab2305e22ea96fe621}} 
+\index{moka::logger@{moka::logger}!warn@{warn}}
+\index{warn@{warn}!moka::logger@{moka::logger}}
+\subsubsection{\texorpdfstring{warn()}{warn()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void moka\+::logger\+::warn (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Write some warn-\/level information to the log. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & A parameter pack of arguments that are being written to the log. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & The format of the arguments. \\
+\hline
+{\em args} & The arguments that are being written to the log. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 5
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/application/\mbox{\hyperlink{logger_8hpp}{logger.\+hpp}}\end{DoxyCompactItemize}

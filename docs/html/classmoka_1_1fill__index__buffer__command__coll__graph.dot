@@ -1,0 +1,11 @@
+digraph "moka::fill_index_buffer_command"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node2 [label="moka::fill_index_buffer\l_command",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Fill an index buffer."];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="moka::graphics_command",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1graphics__command.html",tooltip="Base type for graphics commands."];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" handle" ,fontname="Helvetica"];
+  Node4 [label="moka::index_buffer\l_handle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmoka_1_1index__buffer__handle.html",tooltip="A handle to a index buffer object on the device."];
+}

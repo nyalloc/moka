@@ -1,0 +1,243 @@
+\hypertarget{classmoka_1_1set__material__parameters__command}{}\section{moka\+::set\+\_\+material\+\_\+parameters\+\_\+command Class Reference}
+\label{classmoka_1_1set__material__parameters__command}\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+
+
+Update material parameters before drawing.  
+
+
+
+
+{\ttfamily \#include $<$set\+\_\+material\+\_\+properties\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a0b064dd9f44c8a9dbabe5e23edcf632c}{$\sim$set\+\_\+material\+\_\+parameters\+\_\+command}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a94146b37e0add82e19ca6dd254d02fed}{set\+\_\+material}} (\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material}{material}})
+\begin{DoxyCompactList}\small\item\em Set the material that you want to update. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_ad91e42c050a7acdef5190f820aee5dc0}{set\+\_\+parameter}} (const std\+::string \&name, float data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a8cc11d17514f90ab4a350bc1a270afbd}{set\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a7e79231e37e5e7bfc749da230abc4f71}{set\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a03bcba4c59e969fa1a123db947eab6d6}{set\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa0dd87e9dfdea657e8be233b5836821d0}{glm\+::mat3}} \&data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a63d3d8ddf55aa58967dd93c9f3619361}{set\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_af665ea4f3250ac00cd3e6ec965f198bb}{set\+\_\+parameter}} (const std\+::string \&name, \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} data)
+\begin{DoxyCompactList}\small\item\em Update a material parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a00ba38678a50c8f1a80dfdc131a93ca7}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_a1a5d8a86c457fc4d2c0033270bd3fa64}{material}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} $>$ \mbox{\hyperlink{classmoka_1_1set__material__parameters__command_ae1ec908f405a367b43e799b62d749616}{parameters}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Update material parameters before drawing. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a0b064dd9f44c8a9dbabe5e23edcf632c}\label{classmoka_1_1set__material__parameters__command_a0b064dd9f44c8a9dbabe5e23edcf632c}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!````~set\_material\_parameters\_command@{$\sim$set\_material\_parameters\_command}}
+\index{````~set\_material\_parameters\_command@{$\sim$set\_material\_parameters\_command}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{$\sim$set\_material\_parameters\_command()}{~set\_material\_parameters\_command()}}
+{\footnotesize\ttfamily virtual moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::$\sim$set\+\_\+material\+\_\+parameters\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a00ba38678a50c8f1a80dfdc131a93ca7}\label{classmoka_1_1set__material__parameters__command_a00ba38678a50c8f1a80dfdc131a93ca7}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!accept@{accept}}
+\index{accept@{accept}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a94146b37e0add82e19ca6dd254d02fed}\label{classmoka_1_1set__material__parameters__command_a94146b37e0add82e19ca6dd254d02fed}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_material@{set\_material}}
+\index{set\_material@{set\_material}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_material()}{set\_material()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{material }\end{DoxyParamCaption})}
+
+
+
+Set the material that you want to update. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em material} & The material that you want to update. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_ad91e42c050a7acdef5190f820aee5dc0}\label{classmoka_1_1set__material__parameters__command_ad91e42c050a7acdef5190f820aee5dc0}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{float}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a8cc11d17514f90ab4a350bc1a270afbd}\label{classmoka_1_1set__material__parameters__command_a8cc11d17514f90ab4a350bc1a270afbd}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a7e79231e37e5e7bfc749da230abc4f71}\label{classmoka_1_1set__material__parameters__command_a7e79231e37e5e7bfc749da230abc4f71}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a03bcba4c59e969fa1a123db947eab6d6}\label{classmoka_1_1set__material__parameters__command_a03bcba4c59e969fa1a123db947eab6d6}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa0dd87e9dfdea657e8be233b5836821d0}{glm\+::mat3}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a63d3d8ddf55aa58967dd93c9f3619361}\label{classmoka_1_1set__material__parameters__command_a63d3d8ddf55aa58967dd93c9f3619361}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_af665ea4f3250ac00cd3e6ec965f198bb}\label{classmoka_1_1set__material__parameters__command_af665ea4f3250ac00cd3e6ec965f198bb}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!set\_parameter@{set\_parameter}}
+\index{set\_parameter@{set\_parameter}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{set\_parameter()}{set\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::set\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{data }\end{DoxyParamCaption})}
+
+
+
+Update a material parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material parameter you want to update. \\
+\hline
+{\em data} & The new data you wish to update the material parameter with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_a1a5d8a86c457fc4d2c0033270bd3fa64}\label{classmoka_1_1set__material__parameters__command_a1a5d8a86c457fc4d2c0033270bd3fa64}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!material@{material}}
+\index{material@{material}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{material}{material}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::material}
+
+The material to update. \mbox{\Hypertarget{classmoka_1_1set__material__parameters__command_ae1ec908f405a367b43e799b62d749616}\label{classmoka_1_1set__material__parameters__command_ae1ec908f405a367b43e799b62d749616}} 
+\index{moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}!parameters@{parameters}}
+\index{parameters@{parameters}!moka::set\_material\_parameters\_command@{moka::set\_material\_parameters\_command}}
+\subsubsection{\texorpdfstring{parameters}{parameters}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}$>$ moka\+::set\+\_\+material\+\_\+parameters\+\_\+command\+::parameters}
+
+The material parameters to update. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{set__material__properties__command_8hpp}{set\+\_\+material\+\_\+properties\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

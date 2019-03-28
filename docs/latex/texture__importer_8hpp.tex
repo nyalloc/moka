@@ -1,0 +1,22 @@
+\hypertarget{texture__importer_8hpp}{}\section{engine/includes/asset\+\_\+importer/texture\+\_\+importer.hpp File Reference}
+\label{texture__importer_8hpp}\index{engine/includes/asset\_importer/texture\_importer.hpp@{engine/includes/asset\_importer/texture\_importer.hpp}}
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$graphics/texture\+\_\+handle.\+hpp$>$}\newline
+Include dependency graph for texture\+\_\+importer.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::byte $\ast$ \mbox{\hyperlink{namespacemoka_ad4baf5eb8971d3d74d1c21401ef1b162}{moka\+::texture\+\_\+load}} (const std\+::filesystem\+::path \&path, int \&width, int \&height, host\+\_\+format \&format, host\+\_\+format requested\+\_\+format=host\+\_\+format\+::auto\+\_\+detect)
+\begin{DoxyCompactList}\small\item\em Load a texture from file into host memory. \end{DoxyCompactList}\item 
+float $\ast$ \mbox{\hyperlink{namespacemoka_a864278a703e7cae586ff56bf2dc4d57d}{moka\+::texture\+\_\+load\+\_\+hdr}} (const std\+::filesystem\+::path \&path, int \&width, int \&height, host\+\_\+format \&format, host\+\_\+format requested\+\_\+format=host\+\_\+format\+::auto\+\_\+detect)
+\begin{DoxyCompactList}\small\item\em Load an H\+DR texture from file into host memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespacemoka_a6c4641e3deed82e275bcd034dfd4c09a}{moka\+::free\+\_\+texture}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Free a heap-\/allocated buffer of host texture data. \end{DoxyCompactList}\end{DoxyCompactItemize}

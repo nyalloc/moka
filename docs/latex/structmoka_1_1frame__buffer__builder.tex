@@ -1,0 +1,219 @@
+\hypertarget{structmoka_1_1frame__buffer__builder}{}\section{moka\+::frame\+\_\+buffer\+\_\+builder Struct Reference}
+\label{structmoka_1_1frame__buffer__builder}\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+
+
+A builder class to help you build a frame buffer.  
+
+
+
+
+{\ttfamily \#include $<$frame\+\_\+buffer.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}{frame\+\_\+buffer\+\_\+builder}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a8388e76906c370d12ada49ddd74d01f2}{add\+\_\+depth\+\_\+attachment}} (const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, const int width, const int height)
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_aecaa9eb51546554c3464fc0efd6d5311}{add\+\_\+color\+\_\+attachment}} (const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, const int width, const int height)
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_ad6c11cc2201ea405b915e013fb325c59}{add\+\_\+stencil\+\_\+attachment}} (const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, const int width, const int height)
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_ad2e7a423381f7a781a8bb4349caddffb}{add\+\_\+depth\+\_\+stencil\+\_\+attachment}} (const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, const int width, const int height)
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}{build}} ()
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}{frame\+\_\+buffer\+\_\+builder}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\begin{DoxyCompactList}\small\item\em Build a frame buffer builder. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a067deb066a108ea267a66a5eb5686f47}{add\+\_\+depth\+\_\+attachment}} (\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, int width, int height)
+\begin{DoxyCompactList}\small\item\em Add a depth attachment to the framebuffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a179cef77efbe28a2a95b4fe450f1b0e6}{add\+\_\+color\+\_\+attachment}} (\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, int width, int height)
+\begin{DoxyCompactList}\small\item\em Add a color attachment to the framebuffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a36db9cf28c64751f50b65b09df374734}{add\+\_\+stencil\+\_\+attachment}} (\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, int width, int height)
+\begin{DoxyCompactList}\small\item\em Add a stencil attachment to the framebuffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a0a684c0c35ba9c52ca88b8744f4659d9}{add\+\_\+depth\+\_\+stencil\+\_\+attachment}} (\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}} format, int width, int height)
+\begin{DoxyCompactList}\small\item\em Add a depth stencil attachment to the framebuffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}{build}} ()
+\begin{DoxyCompactList}\small\item\em Build the final frame buffer, upload it to the device, and return the handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $>$ \mbox{\hyperlink{structmoka_1_1frame__buffer__builder_a5494dab8e049d0a05c5e434f919dbbd6}{render\+\_\+attachments}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A builder class to help you build a frame buffer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}\label{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!frame\_buffer\_builder@{frame\_buffer\_builder}}
+\index{frame\_buffer\_builder@{frame\_buffer\_builder}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{frame\_buffer\_builder()}{frame\_buffer\_builder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+builder\+::frame\+\_\+buffer\+\_\+builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}\label{structmoka_1_1frame__buffer__builder_ae89d036ae7b2e0b0961069ae320b9657}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!frame\_buffer\_builder@{frame\_buffer\_builder}}
+\index{frame\_buffer\_builder@{frame\_buffer\_builder}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{frame\_buffer\_builder()}{frame\_buffer\_builder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+builder\+::frame\+\_\+buffer\+\_\+builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Build a frame buffer builder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} object that this frame buffer will be uploaded to \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_aecaa9eb51546554c3464fc0efd6d5311}\label{structmoka_1_1frame__buffer__builder_aecaa9eb51546554c3464fc0efd6d5311}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_color\_attachment@{add\_color\_attachment}}
+\index{add\_color\_attachment@{add\_color\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_color\_attachment()}{add\_color\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+color\+\_\+attachment (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{const int}]{width,  }\item[{const int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a179cef77efbe28a2a95b4fe450f1b0e6}\label{structmoka_1_1frame__buffer__builder_a179cef77efbe28a2a95b4fe450f1b0e6}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_color\_attachment@{add\_color\_attachment}}
+\index{add\_color\_attachment@{add\_color\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_color\_attachment()}{add\_color\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+color\+\_\+attachment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Add a color attachment to the framebuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & The format of the color attachment. \\
+\hline
+{\em width} & The width of the color attachment. \\
+\hline
+{\em height} & The height of the color attachment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a8388e76906c370d12ada49ddd74d01f2}\label{structmoka_1_1frame__buffer__builder_a8388e76906c370d12ada49ddd74d01f2}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_depth\_attachment@{add\_depth\_attachment}}
+\index{add\_depth\_attachment@{add\_depth\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_depth\_attachment()}{add\_depth\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+depth\+\_\+attachment (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{const int}]{width,  }\item[{const int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a067deb066a108ea267a66a5eb5686f47}\label{structmoka_1_1frame__buffer__builder_a067deb066a108ea267a66a5eb5686f47}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_depth\_attachment@{add\_depth\_attachment}}
+\index{add\_depth\_attachment@{add\_depth\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_depth\_attachment()}{add\_depth\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+depth\+\_\+attachment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Add a depth attachment to the framebuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & The format of the depth attachment. \\
+\hline
+{\em width} & The width of the depth attachment. \\
+\hline
+{\em height} & The height of the depth attachment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_ad2e7a423381f7a781a8bb4349caddffb}\label{structmoka_1_1frame__buffer__builder_ad2e7a423381f7a781a8bb4349caddffb}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_depth\_stencil\_attachment@{add\_depth\_stencil\_attachment}}
+\index{add\_depth\_stencil\_attachment@{add\_depth\_stencil\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_depth\_stencil\_attachment()}{add\_depth\_stencil\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+depth\+\_\+stencil\+\_\+attachment (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{const int}]{width,  }\item[{const int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a0a684c0c35ba9c52ca88b8744f4659d9}\label{structmoka_1_1frame__buffer__builder_a0a684c0c35ba9c52ca88b8744f4659d9}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_depth\_stencil\_attachment@{add\_depth\_stencil\_attachment}}
+\index{add\_depth\_stencil\_attachment@{add\_depth\_stencil\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_depth\_stencil\_attachment()}{add\_depth\_stencil\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+depth\+\_\+stencil\+\_\+attachment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Add a depth stencil attachment to the framebuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & The format of the depth stencil attachment. \\
+\hline
+{\em width} & The width of the depth stencil attachment. \\
+\hline
+{\em height} & The height of the depth stencil attachment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_ad6c11cc2201ea405b915e013fb325c59}\label{structmoka_1_1frame__buffer__builder_ad6c11cc2201ea405b915e013fb325c59}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_stencil\_attachment@{add\_stencil\_attachment}}
+\index{add\_stencil\_attachment@{add\_stencil\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_stencil\_attachment()}{add\_stencil\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+stencil\+\_\+attachment (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{const int}]{width,  }\item[{const int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a36db9cf28c64751f50b65b09df374734}\label{structmoka_1_1frame__buffer__builder_a36db9cf28c64751f50b65b09df374734}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!add\_stencil\_attachment@{add\_stencil\_attachment}}
+\index{add\_stencil\_attachment@{add\_stencil\_attachment}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{add\_stencil\_attachment()}{add\_stencil\_attachment()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}}\& moka\+::frame\+\_\+buffer\+\_\+builder\+::add\+\_\+stencil\+\_\+attachment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a2ce6b5e22cd8e423713ef76033a279de}{frame\+\_\+format}}}]{format,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Add a stencil attachment to the framebuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & The format of the stencil attachment. \\
+\hline
+{\em width} & The width of the stencil attachment. \\
+\hline
+{\em height} & The height of the stencil attachment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}\label{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!build@{build}}
+\index{build@{build}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} moka\+::frame\+\_\+buffer\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}\label{structmoka_1_1frame__buffer__builder_a4923409d41757735101a7dd636286693}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!build@{build}}
+\index{build@{build}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} moka\+::frame\+\_\+buffer\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Build the final frame buffer, upload it to the device, and return the handle. 
+
+\begin{DoxyReturn}{Returns}
+The handle to the new frame buffer. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structmoka_1_1frame__buffer__builder_a5494dab8e049d0a05c5e434f919dbbd6}\label{structmoka_1_1frame__buffer__builder_a5494dab8e049d0a05c5e434f919dbbd6}} 
+\index{moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}!render\_attachments@{render\_attachments}}
+\index{render\_attachments@{render\_attachments}!moka::frame\_buffer\_builder@{moka::frame\_buffer\_builder}}
+\subsubsection{\texorpdfstring{render\_attachments}{render\_attachments}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $>$ moka\+::frame\+\_\+buffer\+\_\+builder\+::render\+\_\+attachments}
+
+A contiguous buffer of frame buffer attachments. 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/buffer/\mbox{\hyperlink{frame__buffer_8hpp}{frame\+\_\+buffer.\+hpp}}\item 
+engine/includes/graphics/buffer/\mbox{\hyperlink{frame__buffer__handle_8hpp}{frame\+\_\+buffer\+\_\+handle.\+hpp}}\end{DoxyCompactItemize}

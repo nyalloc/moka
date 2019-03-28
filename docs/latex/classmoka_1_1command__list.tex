@@ -1,0 +1,572 @@
+\hypertarget{classmoka_1_1command__list}{}\section{moka\+::command\+\_\+list Class Reference}
+\label{classmoka_1_1command__list}\index{moka::command\_list@{moka::command\_list}}
+
+
+A \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} is a list of \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} objects that can be sorted before being submitted to a \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}}.  
+
+
+
+
+{\ttfamily \#include $<$command\+\_\+list.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list_af4eee376414e5faef7e447035a382317}{command\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list_a46f6b65b0777d2268753d2b6573e6bcd}{$\sim$command\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list_af404b77f90b76b65d85c2993a8535dbf}{command\+\_\+list}} (const \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list_a1a4954327653483fdd95b507c6df67a2}{command\+\_\+list}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \& \mbox{\hyperlink{classmoka_1_1command__list_a0ac12e3c124d04ca19cdabef228e5d25}{operator=}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \& \mbox{\hyperlink{classmoka_1_1command__list_a9199b2f5a07d8fc13d30712c557771c5}{operator=}} (const \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}})=delete
+\item 
+void \mbox{\hyperlink{classmoka_1_1command__list_a297ff73bb17ff2a47e842176cf6e9be2}{destroy}} ()
+\begin{DoxyCompactList}\small\item\em Clear the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1command__list_a4f0eec40ea95594a8558b4335a7de4a9}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&device)
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object and pass every command to it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1command__list_a7c4e7f6a3e3dc4debb6e81cddd34ac69}{sort}} ()
+\begin{DoxyCompactList}\small\item\em Sort the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1command__list_a701506237d0c2d8287be286e8251bdfd}{is\+\_\+sorted}} () const
+\begin{DoxyCompactList}\small\item\em Is this \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} sorted? \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmoka_1_1command__list_ac024606b9c2c52bf6a882ea0d8b28022}{is\+\_\+empty}} () const
+\begin{DoxyCompactList}\small\item\em Is the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} empty? \end{DoxyCompactList}\item 
+iterator \mbox{\hyperlink{classmoka_1_1command__list_ae98e0e3732a2b8a0cd0cd26f72f8a5a7}{begin}} ()
+\item 
+const\+\_\+iterator \mbox{\hyperlink{classmoka_1_1command__list_a8d39d8468c75189155278881bd24c756}{begin}} () const
+\item 
+iterator \mbox{\hyperlink{classmoka_1_1command__list_af11bbf9fce1b2ae517fe63feeb9eca75}{end}} ()
+\item 
+const\+\_\+iterator \mbox{\hyperlink{classmoka_1_1command__list_a69a582663d1027e600d1ca28cbe15a4d}{end}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \& \mbox{\hyperlink{classmoka_1_1command__list_a9aa451174a49a270c109b99360fa5924}{make\+\_\+command\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \& \mbox{\hyperlink{classmoka_1_1command__list_a5c2c6daa98bc6586ae09bc8f9c3f5ce2}{make\+\_\+command\+\_\+buffer}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a5383b94dfc9fe4cce43797b09b9b00d3}{set\+\_\+material\+\_\+parameters}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_af9edd3720785c82b0ead65d477ec3a38}{set\+\_\+material\+\_\+parameters}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a2c25cc351ff4ed1b62ab37820d534352}{frame\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_ae9b5c5bdd4aa13fc55ae20b3afb6265b}{frame\+\_\+buffer}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_ad9cc948acc3326122e1dae789c2179cb}{frame\+\_\+buffer\+\_\+texture}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_aa917db260af62b8f9bdd49001627f174}{frame\+\_\+buffer\+\_\+texture}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a4ca381ed2350bb80861e6c4925103a19}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a58f8547711d66b610ba2c2086919a064}{clear}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_ad48418fa5d4388898b29fcfd2610ebaf}{draw}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a245f4b8db48ec2f5e511778e61e1b4bf}{draw}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a4e11fd1ef7dfb253e66e62ef88009059}{scissor}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a3c8dfb8a30395d9256fc1b84b471aba3}{scissor}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a93d0d14be17e169aeb72ba2eeb3512ba}{viewport}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_aa3f9a1b7e3cede9efc46ccb300fee586}{viewport}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_aa845295c19241a778a47ff27ac38c912}{fill\+\_\+index\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a596b79fc1a99395c25d3aec80309cf6d}{fill\+\_\+index\+\_\+buffer}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a97e4a16edf37b62eff5de88fae1d146e}{fill\+\_\+vertex\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a7f312a45afd5eca984eee0210f4e4e51}{fill\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_a5248fda12caf3d68ac2803ccfaa3a4f7}{generate\+\_\+mipmaps}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__list_ae7230caa096de9359efba24b439c6558}{generate\+\_\+mipmaps}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71d}{key}})
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} is a list of \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} objects that can be sorted before being submitted to a \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1command__list_af4eee376414e5faef7e447035a382317}\label{classmoka_1_1command__list_af4eee376414e5faef7e447035a382317}} 
+\index{moka::command\_list@{moka::command\_list}!command\_list@{command\_list}}
+\index{command\_list@{command\_list}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{command\_list()}{command\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+list\+::command\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a46f6b65b0777d2268753d2b6573e6bcd}\label{classmoka_1_1command__list_a46f6b65b0777d2268753d2b6573e6bcd}} 
+\index{moka::command\_list@{moka::command\_list}!````~command\_list@{$\sim$command\_list}}
+\index{````~command\_list@{$\sim$command\_list}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{$\sim$command\_list()}{~command\_list()}}
+{\footnotesize\ttfamily moka\+::command\+\_\+list\+::$\sim$command\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_af404b77f90b76b65d85c2993a8535dbf}\label{classmoka_1_1command__list_af404b77f90b76b65d85c2993a8535dbf}} 
+\index{moka::command\_list@{moka::command\_list}!command\_list@{command\_list}}
+\index{command\_list@{command\_list}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{command\_list()}{command\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+list\+::command\+\_\+list (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&}]{command\+\_\+list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a1a4954327653483fdd95b507c6df67a2}\label{classmoka_1_1command__list_a1a4954327653483fdd95b507c6df67a2}} 
+\index{moka::command\_list@{moka::command\_list}!command\_list@{command\_list}}
+\index{command\_list@{command\_list}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{command\_list()}{command\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+list\+::command\+\_\+list (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{command\+\_\+list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1command__list_a4f0eec40ea95594a8558b4335a7de4a9}\label{classmoka_1_1command__list_a4f0eec40ea95594a8558b4335a7de4a9}} 
+\index{moka::command\_list@{moka::command\_list}!accept@{accept}}
+\index{accept@{accept}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::command\+\_\+list\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{device }\end{DoxyParamCaption})}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object and pass every command to it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1command__list_ae98e0e3732a2b8a0cd0cd26f72f8a5a7}\label{classmoka_1_1command__list_ae98e0e3732a2b8a0cd0cd26f72f8a5a7}} 
+\index{moka::command\_list@{moka::command\_list}!begin@{begin}}
+\index{begin@{begin}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily iterator moka\+::command\+\_\+list\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a8d39d8468c75189155278881bd24c756}\label{classmoka_1_1command__list_a8d39d8468c75189155278881bd24c756}} 
+\index{moka::command\_list@{moka::command\_list}!begin@{begin}}
+\index{begin@{begin}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const\+\_\+iterator moka\+::command\+\_\+list\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a4ca381ed2350bb80861e6c4925103a19}\label{classmoka_1_1command__list_a4ca381ed2350bb80861e6c4925103a19}} 
+\index{moka::command\_list@{moka::command\_list}!clear@{clear}}
+\index{clear@{clear}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{clear()}{clear()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::command\+\_\+list\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1command__list_a58f8547711d66b610ba2c2086919a064}\label{classmoka_1_1command__list_a58f8547711d66b610ba2c2086919a064}} 
+\index{moka::command\_list@{moka::command\_list}!clear@{clear}}
+\index{clear@{clear}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{clear()}{clear()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::command\+\_\+list\+::clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a297ff73bb17ff2a47e842176cf6e9be2}\label{classmoka_1_1command__list_a297ff73bb17ff2a47e842176cf6e9be2}} 
+\index{moka::command\_list@{moka::command\_list}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily void moka\+::command\+\_\+list\+::destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}. 
+
+\mbox{\Hypertarget{classmoka_1_1command__list_ad48418fa5d4388898b29fcfd2610ebaf}\label{classmoka_1_1command__list_ad48418fa5d4388898b29fcfd2610ebaf}} 
+\index{moka::command\_list@{moka::command\_list}!draw@{draw}}
+\index{draw@{draw}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{draw()}{draw()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::command\+\_\+list\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a245f4b8db48ec2f5e511778e61e1b4bf}\label{classmoka_1_1command__list_a245f4b8db48ec2f5e511778e61e1b4bf}} 
+\index{moka::command\_list@{moka::command\_list}!draw@{draw}}
+\index{draw@{draw}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{draw()}{draw()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::command\+\_\+list\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_af11bbf9fce1b2ae517fe63feeb9eca75}\label{classmoka_1_1command__list_af11bbf9fce1b2ae517fe63feeb9eca75}} 
+\index{moka::command\_list@{moka::command\_list}!end@{end}}
+\index{end@{end}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily iterator moka\+::command\+\_\+list\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a69a582663d1027e600d1ca28cbe15a4d}\label{classmoka_1_1command__list_a69a582663d1027e600d1ca28cbe15a4d}} 
+\index{moka::command\_list@{moka::command\_list}!end@{end}}
+\index{end@{end}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const\+\_\+iterator moka\+::command\+\_\+list\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_aa845295c19241a778a47ff27ac38c912}\label{classmoka_1_1command__list_aa845295c19241a778a47ff27ac38c912}} 
+\index{moka::command\_list@{moka::command\_list}!fill\_index\_buffer@{fill\_index\_buffer}}
+\index{fill\_index\_buffer@{fill\_index\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{fill\_index\_buffer()}{fill\_index\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::fill\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a596b79fc1a99395c25d3aec80309cf6d}\label{classmoka_1_1command__list_a596b79fc1a99395c25d3aec80309cf6d}} 
+\index{moka::command\_list@{moka::command\_list}!fill\_index\_buffer@{fill\_index\_buffer}}
+\index{fill\_index\_buffer@{fill\_index\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{fill\_index\_buffer()}{fill\_index\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::fill\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a97e4a16edf37b62eff5de88fae1d146e}\label{classmoka_1_1command__list_a97e4a16edf37b62eff5de88fae1d146e}} 
+\index{moka::command\_list@{moka::command\_list}!fill\_vertex\_buffer@{fill\_vertex\_buffer}}
+\index{fill\_vertex\_buffer@{fill\_vertex\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{fill\_vertex\_buffer()}{fill\_vertex\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::fill\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a7f312a45afd5eca984eee0210f4e4e51}\label{classmoka_1_1command__list_a7f312a45afd5eca984eee0210f4e4e51}} 
+\index{moka::command\_list@{moka::command\_list}!fill\_vertex\_buffer@{fill\_vertex\_buffer}}
+\index{fill\_vertex\_buffer@{fill\_vertex\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{fill\_vertex\_buffer()}{fill\_vertex\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::fill\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a2c25cc351ff4ed1b62ab37820d534352}\label{classmoka_1_1command__list_a2c25cc351ff4ed1b62ab37820d534352}} 
+\index{moka::command\_list@{moka::command\_list}!frame\_buffer@{frame\_buffer}}
+\index{frame\_buffer@{frame\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{frame\_buffer()}{frame\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::frame\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_ae9b5c5bdd4aa13fc55ae20b3afb6265b}\label{classmoka_1_1command__list_ae9b5c5bdd4aa13fc55ae20b3afb6265b}} 
+\index{moka::command\_list@{moka::command\_list}!frame\_buffer@{frame\_buffer}}
+\index{frame\_buffer@{frame\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{frame\_buffer()}{frame\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+list\+::frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_ad9cc948acc3326122e1dae789c2179cb}\label{classmoka_1_1command__list_ad9cc948acc3326122e1dae789c2179cb}} 
+\index{moka::command\_list@{moka::command\_list}!frame\_buffer\_texture@{frame\_buffer\_texture}}
+\index{frame\_buffer\_texture@{frame\_buffer\_texture}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{frame\_buffer\_texture()}{frame\_buffer\_texture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::command\+\_\+list\+::frame\+\_\+buffer\+\_\+texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_aa917db260af62b8f9bdd49001627f174}\label{classmoka_1_1command__list_aa917db260af62b8f9bdd49001627f174}} 
+\index{moka::command\_list@{moka::command\_list}!frame\_buffer\_texture@{frame\_buffer\_texture}}
+\index{frame\_buffer\_texture@{frame\_buffer\_texture}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{frame\_buffer\_texture()}{frame\_buffer\_texture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::command\+\_\+list\+::frame\+\_\+buffer\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a5248fda12caf3d68ac2803ccfaa3a4f7}\label{classmoka_1_1command__list_a5248fda12caf3d68ac2803ccfaa3a4f7}} 
+\index{moka::command\_list@{moka::command\_list}!generate\_mipmaps@{generate\_mipmaps}}
+\index{generate\_mipmaps@{generate\_mipmaps}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{generate\_mipmaps()}{generate\_mipmaps()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}}\& moka\+::command\+\_\+list\+::generate\+\_\+mipmaps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_ae7230caa096de9359efba24b439c6558}\label{classmoka_1_1command__list_ae7230caa096de9359efba24b439c6558}} 
+\index{moka::command\_list@{moka::command\_list}!generate\_mipmaps@{generate\_mipmaps}}
+\index{generate\_mipmaps@{generate\_mipmaps}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{generate\_mipmaps()}{generate\_mipmaps()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}}\& moka\+::command\+\_\+list\+::generate\+\_\+mipmaps (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_ac024606b9c2c52bf6a882ea0d8b28022}\label{classmoka_1_1command__list_ac024606b9c2c52bf6a882ea0d8b28022}} 
+\index{moka::command\_list@{moka::command\_list}!is\_empty@{is\_empty}}
+\index{is\_empty@{is\_empty}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{is\_empty()}{is\_empty()}}
+{\footnotesize\ttfamily bool moka\+::command\+\_\+list\+::is\+\_\+empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Is the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} empty? 
+
+\begin{DoxyReturn}{Returns}
+True if the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} is empty. Otherwise, false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a701506237d0c2d8287be286e8251bdfd}\label{classmoka_1_1command__list_a701506237d0c2d8287be286e8251bdfd}} 
+\index{moka::command\_list@{moka::command\_list}!is\_sorted@{is\_sorted}}
+\index{is\_sorted@{is\_sorted}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{is\_sorted()}{is\_sorted()}}
+{\footnotesize\ttfamily bool moka\+::command\+\_\+list\+::is\+\_\+sorted (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Is this \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} sorted? 
+
+\begin{DoxyReturn}{Returns}
+True if the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} is sorted. Otherwise, false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a9aa451174a49a270c109b99360fa5924}\label{classmoka_1_1command__list_a9aa451174a49a270c109b99360fa5924}} 
+\index{moka::command\_list@{moka::command\_list}!make\_command\_buffer@{make\_command\_buffer}}
+\index{make\_command\_buffer@{make\_command\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{make\_command\_buffer()}{make\_command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}\& moka\+::command\+\_\+list\+::make\+\_\+command\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1command__list_a5c2c6daa98bc6586ae09bc8f9c3f5ce2}\label{classmoka_1_1command__list_a5c2c6daa98bc6586ae09bc8f9c3f5ce2}} 
+\index{moka::command\_list@{moka::command\_list}!make\_command\_buffer@{make\_command\_buffer}}
+\index{make\_command\_buffer@{make\_command\_buffer}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{make\_command\_buffer()}{make\_command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}\& moka\+::command\+\_\+list\+::make\+\_\+command\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a0ac12e3c124d04ca19cdabef228e5d25}\label{classmoka_1_1command__list_a0ac12e3c124d04ca19cdabef228e5d25}} 
+\index{moka::command\_list@{moka::command\_list}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}\& moka\+::command\+\_\+list\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{command\+\_\+list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a9199b2f5a07d8fc13d30712c557771c5}\label{classmoka_1_1command__list_a9199b2f5a07d8fc13d30712c557771c5}} 
+\index{moka::command\_list@{moka::command\_list}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}\& moka\+::command\+\_\+list\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&}]{command\+\_\+list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a4e11fd1ef7dfb253e66e62ef88009059}\label{classmoka_1_1command__list_a4e11fd1ef7dfb253e66e62ef88009059}} 
+\index{moka::command\_list@{moka::command\_list}!scissor@{scissor}}
+\index{scissor@{scissor}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{scissor()}{scissor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}}\& moka\+::command\+\_\+list\+::scissor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1command__list_a3c8dfb8a30395d9256fc1b84b471aba3}\label{classmoka_1_1command__list_a3c8dfb8a30395d9256fc1b84b471aba3}} 
+\index{moka::command\_list@{moka::command\_list}!scissor@{scissor}}
+\index{scissor@{scissor}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{scissor()}{scissor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}}\& moka\+::command\+\_\+list\+::scissor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a5383b94dfc9fe4cce43797b09b9b00d3}\label{classmoka_1_1command__list_a5383b94dfc9fe4cce43797b09b9b00d3}} 
+\index{moka::command\_list@{moka::command\_list}!set\_material\_parameters@{set\_material\_parameters}}
+\index{set\_material\_parameters@{set\_material\_parameters}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{set\_material\_parameters()}{set\_material\_parameters()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::command\+\_\+list\+::set\+\_\+material\+\_\+parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_af9edd3720785c82b0ead65d477ec3a38}\label{classmoka_1_1command__list_af9edd3720785c82b0ead65d477ec3a38}} 
+\index{moka::command\_list@{moka::command\_list}!set\_material\_parameters@{set\_material\_parameters}}
+\index{set\_material\_parameters@{set\_material\_parameters}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{set\_material\_parameters()}{set\_material\_parameters()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::command\+\_\+list\+::set\+\_\+material\+\_\+parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__list_a7c4e7f6a3e3dc4debb6e81cddd34ac69}\label{classmoka_1_1command__list_a7c4e7f6a3e3dc4debb6e81cddd34ac69}} 
+\index{moka::command\_list@{moka::command\_list}!sort@{sort}}
+\index{sort@{sort}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{sort()}{sort()}}
+{\footnotesize\ttfamily void moka\+::command\+\_\+list\+::sort (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sort the \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}. 
+
+\mbox{\Hypertarget{classmoka_1_1command__list_a93d0d14be17e169aeb72ba2eeb3512ba}\label{classmoka_1_1command__list_a93d0d14be17e169aeb72ba2eeb3512ba}} 
+\index{moka::command\_list@{moka::command\_list}!viewport@{viewport}}
+\index{viewport@{viewport}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{viewport()}{viewport()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}}\& moka\+::command\+\_\+list\+::viewport (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1command__list_aa3f9a1b7e3cede9efc46ccb300fee586}\label{classmoka_1_1command__list_aa3f9a1b7e3cede9efc46ccb300fee586}} 
+\index{moka::command\_list@{moka::command\_list}!viewport@{viewport}}
+\index{viewport@{viewport}!moka::command\_list@{moka::command\_list}}
+\subsubsection{\texorpdfstring{viewport()}{viewport()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}}\& moka\+::command\+\_\+list\+::viewport (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Use this sort\+\_\+key to sort the command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{command__list_8hpp}{command\+\_\+list.\+hpp}}\end{DoxyCompactItemize}

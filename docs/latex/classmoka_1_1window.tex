@@ -1,0 +1,230 @@
+\hypertarget{classmoka_1_1window}{}\section{moka\+::window Class Reference}
+\label{classmoka_1_1window}\index{moka::window@{moka::window}}
+
+
+Windowing class. Abstracts the native windowing A\+PI. Exposes a high-\/level interface to interact with the window.  
+
+
+
+
+{\ttfamily \#include $<$window.\+hpp$>$}
+
+
+
+Collaboration diagram for moka\+::window\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1window_aa92731ac0e7e3f4b204f3a770d0a3016}{window}} (const \mbox{\hyperlink{classmoka_1_1window}{window}} \&\mbox{\hyperlink{classmoka_1_1window}{window}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1window_adcf2b4d7098619cd9cbf2b83060a9fbf}{window}} (\mbox{\hyperlink{classmoka_1_1window}{window}} \&\&\mbox{\hyperlink{classmoka_1_1window}{window}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1window}{window}} \& \mbox{\hyperlink{classmoka_1_1window_ae6041c42675d2d9c6f82f512f7cd81a1}{operator=}} (const \mbox{\hyperlink{classmoka_1_1window}{window}} \&\mbox{\hyperlink{classmoka_1_1window}{window}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1window}{window}} \& \mbox{\hyperlink{classmoka_1_1window_a9628b3208bebe35dc9e2fd4b77c1cc22}{operator=}} (\mbox{\hyperlink{classmoka_1_1window}{window}} \&\&\mbox{\hyperlink{classmoka_1_1window}{window}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1window_a65c37d2ed8385c4b1ab529724bbfdcc2}{window}} (const \mbox{\hyperlink{structmoka_1_1window__settings}{window\+\_\+settings}} \&settings)
+\begin{DoxyCompactList}\small\item\em Create a new window object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1window_aaf7bdf23272f0ef95201a93d452246c7}{$\sim$window}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1window_a7d1752b776c77ac0885d44fdba2fa0d7}{swap\+\_\+buffer}} () const
+\begin{DoxyCompactList}\small\item\em Swap this window\textquotesingle{}s render buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1window_a27e22f3cc6c8cf11ee056921374fb234}{set\+\_\+size}} (int width, int height)
+\begin{DoxyCompactList}\small\item\em Update this window\textquotesingle{}s dimensions. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1context__handle}{context\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1window_ab9372d21cceb71d9934f842ca5c6eab6}{make\+\_\+context}} () const
+\begin{DoxyCompactList}\small\item\em Create a new rendering context for this. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1window_a3168db6a019dd13ffc242c8860916264}{set\+\_\+current\+\_\+context}} (\mbox{\hyperlink{structmoka_1_1context__handle}{context\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Set the current context to use with rendering to this window. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classmoka_1_1window_a7517a29909b0b315b36db0b49ca7ddc3}{aspect}} () const
+\begin{DoxyCompactList}\small\item\em Get the aspect ratio of this window\textquotesingle{}s size. \end{DoxyCompactList}\item 
+glm\+::ivec2 \mbox{\hyperlink{classmoka_1_1window_a496c3e765a752526d2bfea47891846ab}{get\+\_\+size}} () const
+\begin{DoxyCompactList}\small\item\em Get the size of the window. \end{DoxyCompactList}\item 
+glm\+::ivec2 \mbox{\hyperlink{classmoka_1_1window_af4c71117b5eddc347d5172bc26f3cb73}{get\+\_\+drawable\+\_\+size}} () const
+\begin{DoxyCompactList}\small\item\em Get the drawable size of the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_ab5e90635f0a0441cc99f2328bc34500d}{rectangle}} \mbox{\hyperlink{classmoka_1_1window_aa01c0e44f28b0253ecf376c999e5f74f}{get\+\_\+viewport}} () const
+\begin{DoxyCompactList}\small\item\em Get the viewport of this window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1signal}{signal}} \mbox{\hyperlink{classmoka_1_1window_aafcb86998fd7046a82e9abfcb0b2b21c}{exit}}
+\begin{DoxyCompactList}\small\item\em Exit signal. This signal notifies all slots when the user closes this window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Windowing class. Abstracts the native windowing A\+PI. Exposes a high-\/level interface to interact with the window. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1window_aa92731ac0e7e3f4b204f3a770d0a3016}\label{classmoka_1_1window_aa92731ac0e7e3f4b204f3a770d0a3016}} 
+\index{moka::window@{moka::window}!window@{window}}
+\index{window@{window}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{window()}{window()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::window\+::window (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1window}{window}} \&}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1window_adcf2b4d7098619cd9cbf2b83060a9fbf}\label{classmoka_1_1window_adcf2b4d7098619cd9cbf2b83060a9fbf}} 
+\index{moka::window@{moka::window}!window@{window}}
+\index{window@{window}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{window()}{window()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::window\+::window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1window}{window}} \&\&}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1window_a65c37d2ed8385c4b1ab529724bbfdcc2}\label{classmoka_1_1window_a65c37d2ed8385c4b1ab529724bbfdcc2}} 
+\index{moka::window@{moka::window}!window@{window}}
+\index{window@{window}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{window()}{window()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::window\+::window (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmoka_1_1window__settings}{window\+\_\+settings}} \&}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new window object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The initial settings of the window under construction. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1window_aaf7bdf23272f0ef95201a93d452246c7}\label{classmoka_1_1window_aaf7bdf23272f0ef95201a93d452246c7}} 
+\index{moka::window@{moka::window}!````~window@{$\sim$window}}
+\index{````~window@{$\sim$window}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{$\sim$window()}{~window()}}
+{\footnotesize\ttfamily moka\+::window\+::$\sim$window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1window_a7517a29909b0b315b36db0b49ca7ddc3}\label{classmoka_1_1window_a7517a29909b0b315b36db0b49ca7ddc3}} 
+\index{moka::window@{moka::window}!aspect@{aspect}}
+\index{aspect@{aspect}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{aspect()}{aspect()}}
+{\footnotesize\ttfamily float moka\+::window\+::aspect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the aspect ratio of this window\textquotesingle{}s size. 
+
+\begin{DoxyReturn}{Returns}
+The width of the window divided by the height of the window. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1window_af4c71117b5eddc347d5172bc26f3cb73}\label{classmoka_1_1window_af4c71117b5eddc347d5172bc26f3cb73}} 
+\index{moka::window@{moka::window}!get\_drawable\_size@{get\_drawable\_size}}
+\index{get\_drawable\_size@{get\_drawable\_size}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{get\_drawable\_size()}{get\_drawable\_size()}}
+{\footnotesize\ttfamily glm\+::ivec2 moka\+::window\+::get\+\_\+drawable\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the drawable size of the window. 
+
+\begin{DoxyReturn}{Returns}
+A glm\+::ivec2 where x == width and y == height. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1window_a496c3e765a752526d2bfea47891846ab}\label{classmoka_1_1window_a496c3e765a752526d2bfea47891846ab}} 
+\index{moka::window@{moka::window}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily glm\+::ivec2 moka\+::window\+::get\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the size of the window. 
+
+\begin{DoxyReturn}{Returns}
+A glm\+::ivec2 where x = width and y = height. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1window_aa01c0e44f28b0253ecf376c999e5f74f}\label{classmoka_1_1window_aa01c0e44f28b0253ecf376c999e5f74f}} 
+\index{moka::window@{moka::window}!get\_viewport@{get\_viewport}}
+\index{get\_viewport@{get\_viewport}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{get\_viewport()}{get\_viewport()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_ab5e90635f0a0441cc99f2328bc34500d}{rectangle}} moka\+::window\+::get\+\_\+viewport (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the viewport of this window. 
+
+\begin{DoxyReturn}{Returns}
+A rectangle defining the viewport of the drawable size. x == y == 0 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1window_ab9372d21cceb71d9934f842ca5c6eab6}\label{classmoka_1_1window_ab9372d21cceb71d9934f842ca5c6eab6}} 
+\index{moka::window@{moka::window}!make\_context@{make\_context}}
+\index{make\_context@{make\_context}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{make\_context()}{make\_context()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1context__handle}{context\+\_\+handle}} moka\+::window\+::make\+\_\+context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Create a new rendering context for this. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1window_ae6041c42675d2d9c6f82f512f7cd81a1}\label{classmoka_1_1window_ae6041c42675d2d9c6f82f512f7cd81a1}} 
+\index{moka::window@{moka::window}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1window}{window}}\& moka\+::window\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1window}{window}} \&}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1window_a9628b3208bebe35dc9e2fd4b77c1cc22}\label{classmoka_1_1window_a9628b3208bebe35dc9e2fd4b77c1cc22}} 
+\index{moka::window@{moka::window}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1window}{window}}\& moka\+::window\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1window}{window}} \&\&}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1window_a3168db6a019dd13ffc242c8860916264}\label{classmoka_1_1window_a3168db6a019dd13ffc242c8860916264}} 
+\index{moka::window@{moka::window}!set\_current\_context@{set\_current\_context}}
+\index{set\_current\_context@{set\_current\_context}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{set\_current\_context()}{set\_current\_context()}}
+{\footnotesize\ttfamily void moka\+::window\+::set\+\_\+current\+\_\+context (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1context__handle}{context\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Set the current context to use with rendering to this window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The context you wish to use with rendering to this window. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1window_a27e22f3cc6c8cf11ee056921374fb234}\label{classmoka_1_1window_a27e22f3cc6c8cf11ee056921374fb234}} 
+\index{moka::window@{moka::window}!set\_size@{set\_size}}
+\index{set\_size@{set\_size}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{set\_size()}{set\_size()}}
+{\footnotesize\ttfamily void moka\+::window\+::set\+\_\+size (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Update this window\textquotesingle{}s dimensions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The new width of the window. \\
+\hline
+{\em height} & The new height of the window. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1window_a7d1752b776c77ac0885d44fdba2fa0d7}\label{classmoka_1_1window_a7d1752b776c77ac0885d44fdba2fa0d7}} 
+\index{moka::window@{moka::window}!swap\_buffer@{swap\_buffer}}
+\index{swap\_buffer@{swap\_buffer}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{swap\_buffer()}{swap\_buffer()}}
+{\footnotesize\ttfamily void moka\+::window\+::swap\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Swap this window\textquotesingle{}s render buffer. 
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1window_aafcb86998fd7046a82e9abfcb0b2b21c}\label{classmoka_1_1window_aafcb86998fd7046a82e9abfcb0b2b21c}} 
+\index{moka::window@{moka::window}!exit@{exit}}
+\index{exit@{exit}!moka::window@{moka::window}}
+\subsubsection{\texorpdfstring{exit}{exit}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1signal}{signal}} moka\+::window\+::exit}
+
+
+
+Exit signal. This signal notifies all slots when the user closes this window. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/application/\mbox{\hyperlink{window_8hpp}{window.\+hpp}}\end{DoxyCompactItemize}

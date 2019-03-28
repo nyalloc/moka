@@ -1,0 +1,451 @@
+\hypertarget{classmoka_1_1graphics__device}{}\section{moka\+::graphics\+\_\+device Class Reference}
+\label{classmoka_1_1graphics__device}\index{moka::graphics\_device@{moka::graphics\_device}}
+
+
+Performs primitive-\/based rendering, creates resources, handles system-\/level variables, and creates shaders.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+device.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1texture__cache}{texture\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_a11cc5af3339a854119c1e6d4e314535b}{get\+\_\+texture\+\_\+cache}} ()
+\begin{DoxyCompactList}\small\item\em Get the texture cache. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classmoka_1_1texture__cache}{texture\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_adb460df9566b5f03d95cbe10ada931cf}{get\+\_\+texture\+\_\+cache}} () const
+\begin{DoxyCompactList}\small\item\em Get the texture cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1program__cache}{program\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_af4b5a98ad455812b96fe7cd3d638b81d}{get\+\_\+program\+\_\+cache}} ()
+\begin{DoxyCompactList}\small\item\em Get the program cache. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classmoka_1_1program__cache}{program\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_ac75770427381cfe146dcf1244a461b27}{get\+\_\+program\+\_\+cache}} () const
+\begin{DoxyCompactList}\small\item\em Get the program cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__cache}{material\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_a89fa05e0146e2f4ec171c48321c27fe2}{get\+\_\+material\+\_\+cache}} ()
+\begin{DoxyCompactList}\small\item\em Get the material cache. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classmoka_1_1material__cache}{material\+\_\+cache}} \& \mbox{\hyperlink{classmoka_1_1graphics__device_ab40f1a8e7fcb32ffb04d79dc0d9167c8}{get\+\_\+material\+\_\+cache}} () const
+\begin{DoxyCompactList}\small\item\em Get the material cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1graphics__device_aa2e8bc278a52e16d3c5b887f67496236}{graphics\+\_\+device}} (\mbox{\hyperlink{classmoka_1_1window}{window}} \&\mbox{\hyperlink{classmoka_1_1window}{window}}, \mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9}{graphics\+\_\+backend}} \mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9}{graphics\+\_\+backend}}=\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a6785e6b975db5d7cf223101ef1bc2f6f}{graphics\+\_\+backend\+::opengl}})
+\begin{DoxyCompactList}\small\item\em Create a graphics device object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_afa6c6199f0e97574ab15bfcb806fa9ec}{make\+\_\+vertex\+\_\+buffer}} (const void $\ast$vertices, size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{size}}, \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} \&\&layout, \mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}} use) const
+\begin{DoxyCompactList}\small\item\em Create a new vertex buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_a5756933e283104ae19a8c87f970bdc80}{make\+\_\+index\+\_\+buffer}} (const void $\ast$\mbox{\hyperlink{namespacemoka_a16a7bd7fc66f698dfcaf9bca1312a2bbaa51a528f35c02157e603a20c8796a684}{indices}}, size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{size}}, \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} type, \mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}} use) const
+\begin{DoxyCompactList}\small\item\em Create a new index buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_a57c1ea7dbffea043783a1e6dc17fc591}{make\+\_\+shader}} (\mbox{\hyperlink{namespacemoka_a472008f32e5db526d38eace7d3e45772}{shader\+\_\+type}} type, const std\+::string \&source) const
+\begin{DoxyCompactList}\small\item\em Create a shader from source code. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_ac6586c1848a3e60b60e3873f8e666eb6}{make\+\_\+program}} (\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} vertex\+\_\+handle, \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} fragment\+\_\+handle) const
+\begin{DoxyCompactList}\small\item\em Create a shader program from vertex \& fragment shaders. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_afc32983bf80e3af6bf2b20fa3d7721fd}{make\+\_\+texture}} (void $\ast$$\ast$data, \mbox{\hyperlink{structmoka_1_1texture__metadata}{texture\+\_\+metadata}} \&\&metadata, bool free\+\_\+host\+\_\+data) const
+\begin{DoxyCompactList}\small\item\em Create a new texture. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} \mbox{\hyperlink{classmoka_1_1graphics__device_a67ed8e94298f76d86e04226cf6bccda0}{build\+\_\+texture}} ()
+\begin{DoxyCompactList}\small\item\em Create a texture builder object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1graphics__device_ac00cc461a5283777edfe6e49f7948de0}{make\+\_\+frame\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $\ast$render\+\_\+textures, size\+\_\+t render\+\_\+texture\+\_\+count) const
+\begin{DoxyCompactList}\small\item\em Create a new frame buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} \mbox{\hyperlink{classmoka_1_1graphics__device_a520088ba232098b0b2e6053d1a092542}{build\+\_\+frame\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create a frame buffer builder object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \mbox{\hyperlink{classmoka_1_1graphics__device_a27af1d1f6659660f6d355e96f6d0f3e8}{build\+\_\+material}} ()
+\begin{DoxyCompactList}\small\item\em Create a material builder object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_a94450828710a9008a67bc6095fc1bbb6}{destroy}} (\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Destroy a program. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_a5a2edb22b62d5378b3f047b7394862f8}{destroy}} (\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Destroy a shader. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_a3ff2b807e523d39be79cc333c7327c63}{destroy}} (\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Destroy a framebuffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_a3a84773dbbbda657b945d76124af601a}{destroy}} (\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Destroy a vertex buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_ac79d12dc480e92575faded59818049cd}{destroy}} (\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Destroy an index buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_a94137d1281fbe4df827eb01ee37b4ecc}{submit}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}, bool sort=true) const
+\begin{DoxyCompactList}\small\item\em Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1graphics__device_abc73cf8ee1bca348119cd96c1713edd0}{submit\+\_\+and\+\_\+swap}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}, bool sort=true) const
+\begin{DoxyCompactList}\small\item\em Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. The main framebuffer will be swapped after executing, advancing a frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Performs primitive-\/based rendering, creates resources, handles system-\/level variables, and creates shaders. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_aa2e8bc278a52e16d3c5b887f67496236}\label{classmoka_1_1graphics__device_aa2e8bc278a52e16d3c5b887f67496236}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!graphics\_device@{graphics\_device}}
+\index{graphics\_device@{graphics\_device}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{graphics\_device()}{graphics\_device()}}
+{\footnotesize\ttfamily moka\+::graphics\+\_\+device\+::graphics\+\_\+device (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1window}{window}} \&}]{window,  }\item[{\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9}{graphics\+\_\+backend}}}]{graphics\+\_\+backend = {\ttfamily \mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a6785e6b975db5d7cf223101ef1bc2f6f}{graphics\+\_\+backend\+::opengl}}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a graphics device object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & The window to attach to this graphics device \\
+\hline
+{\em graphics\+\_\+backend} & The graphics A\+PI to use with this graphics device \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a520088ba232098b0b2e6053d1a092542}\label{classmoka_1_1graphics__device_a520088ba232098b0b2e6053d1a092542}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!build\_frame\_buffer@{build\_frame\_buffer}}
+\index{build\_frame\_buffer@{build\_frame\_buffer}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{build\_frame\_buffer()}{build\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__builder}{frame\+\_\+buffer\+\_\+builder}} moka\+::graphics\+\_\+device\+::build\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a frame buffer builder object. 
+
+\begin{DoxyReturn}{Returns}
+A new frame buffer builder. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a27af1d1f6659660f6d355e96f6d0f3e8}\label{classmoka_1_1graphics__device_a27af1d1f6659660f6d355e96f6d0f3e8}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!build\_material@{build\_material}}
+\index{build\_material@{build\_material}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{build\_material()}{build\_material()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} moka\+::graphics\+\_\+device\+::build\+\_\+material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a material builder object. 
+
+\begin{DoxyReturn}{Returns}
+A new material builder. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a67ed8e94298f76d86e04226cf6bccda0}\label{classmoka_1_1graphics__device_a67ed8e94298f76d86e04226cf6bccda0}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!build\_texture@{build\_texture}}
+\index{build\_texture@{build\_texture}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{build\_texture()}{build\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__builder}{texture\+\_\+builder}} moka\+::graphics\+\_\+device\+::build\+\_\+texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a texture builder object. 
+
+\begin{DoxyReturn}{Returns}
+A new texture builder. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a94450828710a9008a67bc6095fc1bbb6}\label{classmoka_1_1graphics__device_a94450828710a9008a67bc6095fc1bbb6}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Destroy a program. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The program you want to destroy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a5a2edb22b62d5378b3f047b7394862f8}\label{classmoka_1_1graphics__device_a5a2edb22b62d5378b3f047b7394862f8}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Destroy a shader. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The shader you want to destroy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a3ff2b807e523d39be79cc333c7327c63}\label{classmoka_1_1graphics__device_a3ff2b807e523d39be79cc333c7327c63}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Destroy a framebuffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The framebuffer you want to destroy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a3a84773dbbbda657b945d76124af601a}\label{classmoka_1_1graphics__device_a3a84773dbbbda657b945d76124af601a}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Destroy a vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The vertex buffer you want to destroy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_ac79d12dc480e92575faded59818049cd}\label{classmoka_1_1graphics__device_ac79d12dc480e92575faded59818049cd}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Destroy an index buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The index buffer you want to destroy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a89fa05e0146e2f4ec171c48321c27fe2}\label{classmoka_1_1graphics__device_a89fa05e0146e2f4ec171c48321c27fe2}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_material\_cache@{get\_material\_cache}}
+\index{get\_material\_cache@{get\_material\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_material\_cache()}{get\_material\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__cache}{material\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+material\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the material cache. 
+
+\begin{DoxyReturn}{Returns}
+The material cache. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1graphics__device_ab40f1a8e7fcb32ffb04d79dc0d9167c8}\label{classmoka_1_1graphics__device_ab40f1a8e7fcb32ffb04d79dc0d9167c8}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_material\_cache@{get\_material\_cache}}
+\index{get\_material\_cache@{get\_material\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_material\_cache()}{get\_material\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classmoka_1_1material__cache}{material\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+material\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the material cache. 
+
+\begin{DoxyReturn}{Returns}
+The material cache. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_af4b5a98ad455812b96fe7cd3d638b81d}\label{classmoka_1_1graphics__device_af4b5a98ad455812b96fe7cd3d638b81d}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_program\_cache@{get\_program\_cache}}
+\index{get\_program\_cache@{get\_program\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_program\_cache()}{get\_program\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1program__cache}{program\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+program\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the program cache. 
+
+\begin{DoxyReturn}{Returns}
+The program cache. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_ac75770427381cfe146dcf1244a461b27}\label{classmoka_1_1graphics__device_ac75770427381cfe146dcf1244a461b27}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_program\_cache@{get\_program\_cache}}
+\index{get\_program\_cache@{get\_program\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_program\_cache()}{get\_program\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classmoka_1_1program__cache}{program\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+program\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the program cache. 
+
+\begin{DoxyReturn}{Returns}
+The program cache. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a11cc5af3339a854119c1e6d4e314535b}\label{classmoka_1_1graphics__device_a11cc5af3339a854119c1e6d4e314535b}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_texture\_cache@{get\_texture\_cache}}
+\index{get\_texture\_cache@{get\_texture\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_texture\_cache()}{get\_texture\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1texture__cache}{texture\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+texture\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the texture cache. 
+
+\begin{DoxyReturn}{Returns}
+The texture cache. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_adb460df9566b5f03d95cbe10ada931cf}\label{classmoka_1_1graphics__device_adb460df9566b5f03d95cbe10ada931cf}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!get\_texture\_cache@{get\_texture\_cache}}
+\index{get\_texture\_cache@{get\_texture\_cache}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{get\_texture\_cache()}{get\_texture\_cache()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classmoka_1_1texture__cache}{texture\+\_\+cache}}\& moka\+::graphics\+\_\+device\+::get\+\_\+texture\+\_\+cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the texture cache. 
+
+\begin{DoxyReturn}{Returns}
+The texture cache. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_ac00cc461a5283777edfe6e49f7948de0}\label{classmoka_1_1graphics__device_ac00cc461a5283777edfe6e49f7948de0}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_frame\_buffer@{make\_frame\_buffer}}
+\index{make\_frame\_buffer@{make\_frame\_buffer}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_frame\_buffer()}{make\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $\ast$}]{render\+\_\+textures,  }\item[{size\+\_\+t}]{render\+\_\+texture\+\_\+count }\end{DoxyParamCaption}) const}
+
+
+
+Create a new frame buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em render\+\_\+textures} & An array of \mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}}. \\
+\hline
+{\em render\+\_\+texture\+\_\+count} & Size of the render\+\_\+textures array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} representing a frame buffer on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a5756933e283104ae19a8c87f970bdc80}\label{classmoka_1_1graphics__device_a5756933e283104ae19a8c87f970bdc80}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_index\_buffer@{make\_index\_buffer}}
+\index{make\_index\_buffer@{make\_index\_buffer}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_index\_buffer()}{make\_index\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}\item[{const void $\ast$}]{indices,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}}}]{type,  }\item[{\mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}}}]{use }\end{DoxyParamCaption}) const}
+
+
+
+Create a new index buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indices} & The host memory buffer that will be used as index data. \\
+\hline
+{\em size} & The size of the host index buffer. \\
+\hline
+{\em type} & The layout of the index data. \\
+\hline
+{\em use} & A buffer usage hint. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} representing an index buffer on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_ac6586c1848a3e60b60e3873f8e666eb6}\label{classmoka_1_1graphics__device_ac6586c1848a3e60b60e3873f8e666eb6}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_program@{make\_program}}
+\index{make\_program@{make\_program}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_program()}{make\_program()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}}}]{vertex\+\_\+handle,  }\item[{\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}}}]{fragment\+\_\+handle }\end{DoxyParamCaption}) const}
+
+
+
+Create a shader program from vertex \& fragment shaders. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+handle} & The vertex shader that you want to link to this program. \\
+\hline
+{\em fragment\+\_\+handle} & The fragment shader that you want to link to this program. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} representing a program on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a57c1ea7dbffea043783a1e6dc17fc591}\label{classmoka_1_1graphics__device_a57c1ea7dbffea043783a1e6dc17fc591}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_shader@{make\_shader}}
+\index{make\_shader@{make\_shader}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_shader()}{make\_shader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a472008f32e5db526d38eace7d3e45772}{shader\+\_\+type}}}]{type,  }\item[{const std\+::string \&}]{source }\end{DoxyParamCaption}) const}
+
+
+
+Create a shader from source code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type of shader you want to create. \\
+\hline
+{\em source} & The source code of the shader you want to create. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} representing a shader on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_afc32983bf80e3af6bf2b20fa3d7721fd}\label{classmoka_1_1graphics__device_afc32983bf80e3af6bf2b20fa3d7721fd}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_texture@{make\_texture}}
+\index{make\_texture@{make\_texture}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_texture()}{make\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+texture (\begin{DoxyParamCaption}\item[{void $\ast$$\ast$}]{data,  }\item[{\mbox{\hyperlink{structmoka_1_1texture__metadata}{texture\+\_\+metadata}} \&\&}]{metadata,  }\item[{bool}]{free\+\_\+host\+\_\+data }\end{DoxyParamCaption}) const}
+
+
+
+Create a new texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The host memory buffer that will be used as texture data. \\
+\hline
+{\em metadata} & Metadata describing the texture data. \\
+\hline
+{\em free\+\_\+host\+\_\+data} & If true, free the host memory after uploading to the device. Otherwise allow the calling code to free it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} representing a texture on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_afa6c6199f0e97574ab15bfcb806fa9ec}\label{classmoka_1_1graphics__device_afa6c6199f0e97574ab15bfcb806fa9ec}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!make\_vertex\_buffer@{make\_vertex\_buffer}}
+\index{make\_vertex\_buffer@{make\_vertex\_buffer}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{make\_vertex\_buffer()}{make\_vertex\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} moka\+::graphics\+\_\+device\+::make\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{const void $\ast$}]{vertices,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} \&\&}]{layout,  }\item[{\mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}}}]{use }\end{DoxyParamCaption}) const}
+
+
+
+Create a new vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The host memory buffer that will be used as vertex data. \\
+\hline
+{\em size} & The size of the host vertex buffer. \\
+\hline
+{\em layout} & The layout of the vertex data. \\
+\hline
+{\em use} & A buffer usage hint. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} representing an vertex buffer on the device. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1graphics__device_a94137d1281fbe4df827eb01ee37b4ecc}\label{classmoka_1_1graphics__device_a94137d1281fbe4df827eb01ee37b4ecc}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!submit@{submit}}
+\index{submit@{submit}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{submit()}{submit()}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::submit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{command\+\_\+list,  }\item[{bool}]{sort = {\ttfamily true} }\end{DoxyParamCaption}) const}
+
+
+
+Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}} & The \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} you wish to run. \\
+\hline
+{\em sort} & Sort the command list before submitting it to the graphics device. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1graphics__device_abc73cf8ee1bca348119cd96c1713edd0}\label{classmoka_1_1graphics__device_abc73cf8ee1bca348119cd96c1713edd0}} 
+\index{moka::graphics\_device@{moka::graphics\_device}!submit\_and\_swap@{submit\_and\_swap}}
+\index{submit\_and\_swap@{submit\_and\_swap}!moka::graphics\_device@{moka::graphics\_device}}
+\subsubsection{\texorpdfstring{submit\_and\_swap()}{submit\_and\_swap()}}
+{\footnotesize\ttfamily void moka\+::graphics\+\_\+device\+::submit\+\_\+and\+\_\+swap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{command\+\_\+list,  }\item[{bool}]{sort = {\ttfamily true} }\end{DoxyParamCaption}) const}
+
+
+
+Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. The main framebuffer will be swapped after executing, advancing a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}} & The \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} you wish to run. \\
+\hline
+{\em sort} & Sort the command list before submitting it to the graphics device. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/device/\mbox{\hyperlink{graphics__device_8hpp}{graphics\+\_\+device.\+hpp}}\end{DoxyCompactItemize}

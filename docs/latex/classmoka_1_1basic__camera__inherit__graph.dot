@@ -1,0 +1,9 @@
+digraph "moka::basic_camera"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="moka::basic_camera",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="a very basic camera - contains only the necessary data members to get things drawing on your screen."];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node1 [label="moka::camera_mouse\l_controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1camera__mouse__controller.html",tooltip="A mouse-controlled camera."];
+}

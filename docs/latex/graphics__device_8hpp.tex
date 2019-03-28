@@ -1,0 +1,52 @@
+\hypertarget{graphics__device_8hpp}{}\section{engine/includes/graphics/device/graphics\+\_\+device.hpp File Reference}
+\label{graphics__device_8hpp}\index{engine/includes/graphics/device/graphics\_device.hpp@{engine/includes/graphics/device/graphics\_device.hpp}}
+{\ttfamily \#include $<$application/window.\+hpp$>$}\newline
+{\ttfamily \#include $<$graphics/api/graphics\+\_\+api.\+hpp$>$}\newline
+{\ttfamily \#include $<$graphics/buffer/frame\+\_\+buffer\+\_\+handle.\+hpp$>$}\newline
+{\ttfamily \#include $<$graphics/command/command\+\_\+list.\+hpp$>$}\newline
+{\ttfamily \#include $<$graphics/material/material\+\_\+builder.\+hpp$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+Include dependency graph for graphics\+\_\+device.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmoka_1_1texture__cache}{moka\+::texture\+\_\+cache}}
+\begin{DoxyCompactList}\small\item\em A cache of loaded textures. Used to avoid loading the same file multiple times when it is referenced multiple times in a 3D model. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classmoka_1_1program__cache}{moka\+::program\+\_\+cache}}
+\begin{DoxyCompactList}\small\item\em A cache of loaded programs. Used to avoid loading the same program multiple times. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classmoka_1_1material__cache}{moka\+::material\+\_\+cache}}
+\begin{DoxyCompactList}\small\item\em A cache of materials. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classmoka_1_1graphics__device}{moka\+::graphics\+\_\+device}}
+\begin{DoxyCompactList}\small\item\em Performs primitive-\/based rendering, creates resources, handles system-\/level variables, and creates shaders. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespacemoka_a562063640e8ad24ef94c1be0fd9079cf}{moka\+::texture\+\_\+id}} = std\+::string
+\item 
+using \mbox{\hyperlink{namespacemoka_a2384dba7b6a57a9ae52567eefd6e177e}{moka\+::program\+\_\+id}} = std\+::size\+\_\+t
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9}{moka\+::graphics\+\_\+backend}} \{ \newline
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a91fadff5dedd8ecf6f8f81bbd2e5caa7}{moka\+::graphics\+\_\+backend\+::direct3d\+\_\+9}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a36e109a8ce6b48c4f733b8005173180d}{moka\+::graphics\+\_\+backend\+::direct3d\+\_\+11}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a4867596530d4d848723776f94cb15e30}{moka\+::graphics\+\_\+backend\+::direct3d\+\_\+12}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9ae61d5c61e0d448d27234f3527e05bd3a}{moka\+::graphics\+\_\+backend\+::gnm}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a86094b61cb9f63b77f982ceae03e95f0}{moka\+::graphics\+\_\+backend\+::metal}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9adb69e6ae96000fee5034cb003b1e5d6a}{moka\+::graphics\+\_\+backend\+::opengl\+\_\+es}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a6785e6b975db5d7cf223101ef1bc2f6f}{moka\+::graphics\+\_\+backend\+::opengl}}, 
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a8473f19e6529e22157459e75b4cbf485}{moka\+::graphics\+\_\+backend\+::vulkan}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6d27be7986842909ecfb039004d3f9e9a37a6259cc0c1dae299a7866489dff0bd}{moka\+::graphics\+\_\+backend\+::null}}
+ \}
+\begin{DoxyCompactList}\small\item\em The type of graphics api to initialize. \end{DoxyCompactList}\end{DoxyCompactItemize}

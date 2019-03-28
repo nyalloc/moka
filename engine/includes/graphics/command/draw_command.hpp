@@ -42,7 +42,7 @@ namespace moka
     class draw_command final : public graphics_command
     {
     public:
-        material_handle material = std::numeric_limits<material_handle>::max(); /**< The material that should be use for rendering. */
+        material_handle material = {std::numeric_limits<uint16_t>::max()}; /**< The material that should be use for rendering. */
 
         vertex_buffer_handle vertex_buffer; /**< The vertex buffer that should be used. */
 

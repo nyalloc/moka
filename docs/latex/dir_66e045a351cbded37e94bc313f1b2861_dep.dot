@@ -1,0 +1,15 @@
+digraph "engine/includes/asset_importer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7c91cb7efbd4b233c15c95afa0cbc85c {
+    graph [ bgcolor="#ddddee", pencolor="black", label="includes" fontname="Helvetica", fontsize="10", URL="dir_7c91cb7efbd4b233c15c95afa0cbc85c.html"]
+  dir_66e045a351cbded37e94bc313f1b2861 [shape=box, label="asset_importer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_66e045a351cbded37e94bc313f1b2861.html"];
+  }
+  dir_2b56745026db6f0383665739727baae4 [shape=box label="graphics" fillcolor="white" style="filled" color="red" URL="dir_2b56745026db6f0383665739727baae4.html"];
+  dir_b451216c30a5bf98fa1122c19e7ecd23 [shape=box label="application" URL="dir_b451216c30a5bf98fa1122c19e7ecd23.html"];
+  dir_2b56745026db6f0383665739727baae4->dir_b451216c30a5bf98fa1122c19e7ecd23 [headlabel="6", labeldistance=1.5 headhref="dir_000004_000002.html"];
+  dir_66e045a351cbded37e94bc313f1b2861->dir_2b56745026db6f0383665739727baae4 [headlabel="2", labeldistance=1.5 headhref="dir_000003_000004.html"];
+  dir_66e045a351cbded37e94bc313f1b2861->dir_b451216c30a5bf98fa1122c19e7ecd23 [headlabel="1", labeldistance=1.5 headhref="dir_000003_000002.html"];
+  dir_b451216c30a5bf98fa1122c19e7ecd23->dir_2b56745026db6f0383665739727baae4 [headlabel="2", labeldistance=1.5 headhref="dir_000002_000004.html"];
+}

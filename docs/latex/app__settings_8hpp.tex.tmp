@@ -1,0 +1,17 @@
+\hypertarget{app__settings_8hpp}{}\section{engine/includes/application/app\+\_\+settings.hpp File Reference}
+\label{app__settings_8hpp}\index{engine/includes/application/app\_settings.hpp@{engine/includes/application/app\_settings.hpp}}
+{\ttfamily \#include $<$application/window.\+hpp$>$}\newline
+Include dependency graph for app\+\_\+settings.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1app__settings}{moka\+::app\+\_\+settings}}
+\begin{DoxyCompactList}\small\item\em A simple struct that will contain the configuration for the application\textquotesingle{}s rendering + windowing settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}

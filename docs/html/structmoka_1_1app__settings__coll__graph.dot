@@ -1,0 +1,9 @@
+digraph "moka::app_settings"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="moka::app_settings",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="A simple struct that will contain the configuration for the application's rendering + windowing setti..."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" window" ,fontname="Helvetica"];
+  Node2 [label="moka::window_settings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmoka_1_1window__settings.html",tooltip="Window construction settings. Pass to the window object on constructions to set the initial state of ..."];
+}

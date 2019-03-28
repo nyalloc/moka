@@ -1,0 +1,387 @@
+\hypertarget{classmoka_1_1draw__command}{}\section{moka\+::draw\+\_\+command Class Reference}
+\label{classmoka_1_1draw__command}\index{moka::draw\_command@{moka::draw\_command}}
+
+
+Render primitives using the specified material. Contains vertex buffer, index buffer (optional) and material data.  
+
+
+
+
+{\ttfamily \#include $<$draw\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::draw\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::draw\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command_afb4e5a94e4559a1a0b75d39a36dbce07}{draw\+\_\+command}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command_a54a3f000bcdef7216b8c1297c79030d2}{$\sim$draw\+\_\+command}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command_ad1861f72a58e7459b1873b6b94169374}{draw\+\_\+command}} (const \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_af468f0d21fdd5b28d5ee583dfccdc737}{operator=}} (const \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command_ad52678c738121e05bfa122b4736f4f24}{draw\+\_\+command}} (\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_ac0bc4736f13b8a2d378151399d7fa9ea}{operator=}} (\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&\&rhs) noexcept
+\item 
+void \mbox{\hyperlink{classmoka_1_1draw__command_a5182c69d730f0a34185e190b4e1ecf54}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_aba3925099a593478027634f65177ecea}{set\+\_\+index\+\_\+buffer\+\_\+offset}} (uint32\+\_\+t offset)
+\begin{DoxyCompactList}\small\item\em Set the index buffer offset. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_a230602d634bec814c10af3c145bb2a5f}{set\+\_\+index\+\_\+type}} (\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} type)
+\begin{DoxyCompactList}\small\item\em Set the index type to use. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_ac2fe420afb39028cdff695fc61371aa3}{set\+\_\+primitive\+\_\+type}} (\mbox{\hyperlink{namespacemoka_a345d155429e260a6344f9c555f04ae9c}{primitive\+\_\+type}} \mbox{\hyperlink{classmoka_1_1draw__command_a360338ff71fd349287e88e96bf315e33}{prim\+\_\+type}})
+\begin{DoxyCompactList}\small\item\em Set the primitive type you want to use. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_a4de8e124e795f7c588803db28f95f518}{set\+\_\+index\+\_\+count}} (uint32\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em Set the index count you want to use. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_af187f2784c712a95171f8089ebc33500}{set\+\_\+first\+\_\+vertex}} (uint32\+\_\+t first)
+\begin{DoxyCompactList}\small\item\em Set the first vertex to use. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_a383256cec501b03d6e7aaa67631c7687}{set\+\_\+vertex\+\_\+count}} (uint32\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em Set the number of vertices in the vertex buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_a593b24a1594565446b31d0cdbf157548}{set\+\_\+material}} (\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material}{material}})
+\begin{DoxyCompactList}\small\item\em Set the material to use when rendering. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_af6b7448828b6ab837d25716e8a80acdc}{set\+\_\+vertex\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1draw__command_aa16638c2fa411a81474d75e1e385be54}{vertex\+\_\+buffer}})
+\begin{DoxyCompactList}\small\item\em Set the vertex buffer you want to use. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1draw__command_aee4541756627cf7a1cc7d495c815b3c9}{set\+\_\+index\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1draw__command_ab05fb02edc9e31e20ecb875ad2a496e4}{index\+\_\+buffer}})
+\begin{DoxyCompactList}\small\item\em Set the index buffer you want to use. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1draw__command_aa05522862c600afcd40a29dbe2df6d3d}{material}} = \{std\+::numeric\+\_\+limits$<$uint16\+\_\+t$>$\+::\mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16a2ffe4e77325d9a7152f7086ea7aa5114}{max}}()\}
+\item 
+\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1draw__command_aa16638c2fa411a81474d75e1e385be54}{vertex\+\_\+buffer}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classmoka_1_1draw__command_a6a2c0c076a81ca8b7f81b3f40a471728}{vertex\+\_\+count}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classmoka_1_1draw__command_a9e5374f3b03168ea8dd28a3d6a08d41a}{first\+\_\+vertex}}
+\item 
+\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1draw__command_ab05fb02edc9e31e20ecb875ad2a496e4}{index\+\_\+buffer}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classmoka_1_1draw__command_a7ba09ac32bed07dd45d4a49284a72063}{index\+\_\+count}}
+\item 
+\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} \mbox{\hyperlink{classmoka_1_1draw__command_a39fa2598343c32a5894fd8e3ed79c21f}{idx\+\_\+type}} = \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3faa00ef2ef85ff67b7b39339886f19044f}{index\+\_\+type\+::uint16}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classmoka_1_1draw__command_a2e56901ae7ccbbce13789e147606e399}{index\+\_\+buffer\+\_\+offset}}
+\item 
+\mbox{\hyperlink{namespacemoka_a345d155429e260a6344f9c555f04ae9c}{primitive\+\_\+type}} \mbox{\hyperlink{classmoka_1_1draw__command_a360338ff71fd349287e88e96bf315e33}{prim\+\_\+type}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Render primitives using the specified material. Contains vertex buffer, index buffer (optional) and material data. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1draw__command_afb4e5a94e4559a1a0b75d39a36dbce07}\label{classmoka_1_1draw__command_afb4e5a94e4559a1a0b75d39a36dbce07}} 
+\index{moka::draw\_command@{moka::draw\_command}!draw\_command@{draw\_command}}
+\index{draw\_command@{draw\_command}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{draw\_command()}{draw\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::draw\+\_\+command\+::draw\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_a54a3f000bcdef7216b8c1297c79030d2}\label{classmoka_1_1draw__command_a54a3f000bcdef7216b8c1297c79030d2}} 
+\index{moka::draw\_command@{moka::draw\_command}!````~draw\_command@{$\sim$draw\_command}}
+\index{````~draw\_command@{$\sim$draw\_command}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{$\sim$draw\_command()}{~draw\_command()}}
+{\footnotesize\ttfamily moka\+::draw\+\_\+command\+::$\sim$draw\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_ad1861f72a58e7459b1873b6b94169374}\label{classmoka_1_1draw__command_ad1861f72a58e7459b1873b6b94169374}} 
+\index{moka::draw\_command@{moka::draw\_command}!draw\_command@{draw\_command}}
+\index{draw\_command@{draw\_command}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{draw\_command()}{draw\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::draw\+\_\+command\+::draw\+\_\+command (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_ad52678c738121e05bfa122b4736f4f24}\label{classmoka_1_1draw__command_ad52678c738121e05bfa122b4736f4f24}} 
+\index{moka::draw\_command@{moka::draw\_command}!draw\_command@{draw\_command}}
+\index{draw\_command@{draw\_command}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{draw\_command()}{draw\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::draw\+\_\+command\+::draw\+\_\+command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a5182c69d730f0a34185e190b4e1ecf54}\label{classmoka_1_1draw__command_a5182c69d730f0a34185e190b4e1ecf54}} 
+\index{moka::draw\_command@{moka::draw\_command}!accept@{accept}}
+\index{accept@{accept}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::draw\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_af468f0d21fdd5b28d5ee583dfccdc737}\label{classmoka_1_1draw__command_af468f0d21fdd5b28d5ee583dfccdc737}} 
+\index{moka::draw\_command@{moka::draw\_command}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_ac0bc4736f13b8a2d378151399d7fa9ea}\label{classmoka_1_1draw__command_ac0bc4736f13b8a2d378151399d7fa9ea}} 
+\index{moka::draw\_command@{moka::draw\_command}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1draw__command_af187f2784c712a95171f8089ebc33500}\label{classmoka_1_1draw__command_af187f2784c712a95171f8089ebc33500}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_first\_vertex@{set\_first\_vertex}}
+\index{set\_first\_vertex@{set\_first\_vertex}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_first\_vertex()}{set\_first\_vertex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+first\+\_\+vertex (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{first }\end{DoxyParamCaption})}
+
+
+
+Set the first vertex to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first} & The first vertex to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_aee4541756627cf7a1cc7d495c815b3c9}\label{classmoka_1_1draw__command_aee4541756627cf7a1cc7d495c815b3c9}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_index\_buffer@{set\_index\_buffer}}
+\index{set\_index\_buffer@{set\_index\_buffer}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_index\_buffer()}{set\_index\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}}}]{index\+\_\+buffer }\end{DoxyParamCaption})}
+
+
+
+Set the index buffer you want to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index\+\_\+buffer} & The index buffer you want to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_aba3925099a593478027634f65177ecea}\label{classmoka_1_1draw__command_aba3925099a593478027634f65177ecea}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_index\_buffer\_offset@{set\_index\_buffer\_offset}}
+\index{set\_index\_buffer\_offset@{set\_index\_buffer\_offset}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_index\_buffer\_offset()}{set\_index\_buffer\_offset()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+index\+\_\+buffer\+\_\+offset (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{offset }\end{DoxyParamCaption})}
+
+
+
+Set the index buffer offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & The index buffer offset. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a4de8e124e795f7c588803db28f95f518}\label{classmoka_1_1draw__command_a4de8e124e795f7c588803db28f95f518}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_index\_count@{set\_index\_count}}
+\index{set\_index\_count@{set\_index\_count}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_index\_count()}{set\_index\_count()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+index\+\_\+count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{count }\end{DoxyParamCaption})}
+
+
+
+Set the index count you want to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & The index count you want to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a230602d634bec814c10af3c145bb2a5f}\label{classmoka_1_1draw__command_a230602d634bec814c10af3c145bb2a5f}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_index\_type@{set\_index\_type}}
+\index{set\_index\_type@{set\_index\_type}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_index\_type()}{set\_index\_type()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+index\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}}}]{type }\end{DoxyParamCaption})}
+
+
+
+Set the index type to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The index type you want to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a593b24a1594565446b31d0cdbf157548}\label{classmoka_1_1draw__command_a593b24a1594565446b31d0cdbf157548}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_material@{set\_material}}
+\index{set\_material@{set\_material}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_material()}{set\_material()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{material }\end{DoxyParamCaption})}
+
+
+
+Set the material to use when rendering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em material} & The material to use when rendering. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_ac2fe420afb39028cdff695fc61371aa3}\label{classmoka_1_1draw__command_ac2fe420afb39028cdff695fc61371aa3}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_primitive\_type@{set\_primitive\_type}}
+\index{set\_primitive\_type@{set\_primitive\_type}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_primitive\_type()}{set\_primitive\_type()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+primitive\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a345d155429e260a6344f9c555f04ae9c}{primitive\+\_\+type}}}]{prim\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Set the primitive type you want to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prim\+\_\+type} & Set the primitive type you want to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_af6b7448828b6ab837d25716e8a80acdc}\label{classmoka_1_1draw__command_af6b7448828b6ab837d25716e8a80acdc}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_vertex\_buffer@{set\_vertex\_buffer}}
+\index{set\_vertex\_buffer@{set\_vertex\_buffer}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_vertex\_buffer()}{set\_vertex\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}}}]{vertex\+\_\+buffer }\end{DoxyParamCaption})}
+
+
+
+Set the vertex buffer you want to use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+buffer} & The vertex buffer you want to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a383256cec501b03d6e7aaa67631c7687}\label{classmoka_1_1draw__command_a383256cec501b03d6e7aaa67631c7687}} 
+\index{moka::draw\_command@{moka::draw\_command}!set\_vertex\_count@{set\_vertex\_count}}
+\index{set\_vertex\_count@{set\_vertex\_count}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{set\_vertex\_count()}{set\_vertex\_count()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::draw\+\_\+command\+::set\+\_\+vertex\+\_\+count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{count }\end{DoxyParamCaption})}
+
+
+
+Set the number of vertices in the vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & The number of vertices in the vertex buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1draw__command_a9e5374f3b03168ea8dd28a3d6a08d41a}\label{classmoka_1_1draw__command_a9e5374f3b03168ea8dd28a3d6a08d41a}} 
+\index{moka::draw\_command@{moka::draw\_command}!first\_vertex@{first\_vertex}}
+\index{first\_vertex@{first\_vertex}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{first\_vertex}{first\_vertex}}
+{\footnotesize\ttfamily uint32\+\_\+t moka\+::draw\+\_\+command\+::first\+\_\+vertex}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            0}
+
+\end{DoxyCode}
+Specifies the starting index in the enabled arrays. \mbox{\Hypertarget{classmoka_1_1draw__command_a39fa2598343c32a5894fd8e3ed79c21f}\label{classmoka_1_1draw__command_a39fa2598343c32a5894fd8e3ed79c21f}} 
+\index{moka::draw\_command@{moka::draw\_command}!idx\_type@{idx\_type}}
+\index{idx\_type@{idx\_type}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{idx\_type}{idx\_type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} moka\+::draw\+\_\+command\+::idx\+\_\+type = \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3faa00ef2ef85ff67b7b39339886f19044f}{index\+\_\+type\+::uint16}}}
+
+Specifies the type of the values in the index buffer. \mbox{\Hypertarget{classmoka_1_1draw__command_ab05fb02edc9e31e20ecb875ad2a496e4}\label{classmoka_1_1draw__command_ab05fb02edc9e31e20ecb875ad2a496e4}} 
+\index{moka::draw\_command@{moka::draw\_command}!index\_buffer@{index\_buffer}}
+\index{index\_buffer@{index\_buffer}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{index\_buffer}{index\_buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} moka\+::draw\+\_\+command\+::index\+\_\+buffer}
+
+The index buffer that should be used. \mbox{\Hypertarget{classmoka_1_1draw__command_a2e56901ae7ccbbce13789e147606e399}\label{classmoka_1_1draw__command_a2e56901ae7ccbbce13789e147606e399}} 
+\index{moka::draw\_command@{moka::draw\_command}!index\_buffer\_offset@{index\_buffer\_offset}}
+\index{index\_buffer\_offset@{index\_buffer\_offset}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{index\_buffer\_offset}{index\_buffer\_offset}}
+{\footnotesize\ttfamily uint32\+\_\+t moka\+::draw\+\_\+command\+::index\+\_\+buffer\+\_\+offset}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            0}
+
+\end{DoxyCode}
+Specifies the offset to the location where the indices are stored. \mbox{\Hypertarget{classmoka_1_1draw__command_a7ba09ac32bed07dd45d4a49284a72063}\label{classmoka_1_1draw__command_a7ba09ac32bed07dd45d4a49284a72063}} 
+\index{moka::draw\_command@{moka::draw\_command}!index\_count@{index\_count}}
+\index{index\_count@{index\_count}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{index\_count}{index\_count}}
+{\footnotesize\ttfamily uint32\+\_\+t moka\+::draw\+\_\+command\+::index\+\_\+count}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            0}
+
+\end{DoxyCode}
+Specifies a pointer to the location where the indices are stored. \mbox{\Hypertarget{classmoka_1_1draw__command_aa05522862c600afcd40a29dbe2df6d3d}\label{classmoka_1_1draw__command_aa05522862c600afcd40a29dbe2df6d3d}} 
+\index{moka::draw\_command@{moka::draw\_command}!material@{material}}
+\index{material@{material}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{material}{material}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} moka\+::draw\+\_\+command\+::material = \{std\+::numeric\+\_\+limits$<$uint16\+\_\+t$>$\+::\mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16a2ffe4e77325d9a7152f7086ea7aa5114}{max}}()\}}
+
+The material that should be use for rendering. \mbox{\Hypertarget{classmoka_1_1draw__command_a360338ff71fd349287e88e96bf315e33}\label{classmoka_1_1draw__command_a360338ff71fd349287e88e96bf315e33}} 
+\index{moka::draw\_command@{moka::draw\_command}!prim\_type@{prim\_type}}
+\index{prim\_type@{prim\_type}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{prim\_type}{prim\_type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_a345d155429e260a6344f9c555f04ae9c}{primitive\+\_\+type}} moka\+::draw\+\_\+command\+::prim\+\_\+type}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            \mbox{\hyperlink{namespacemoka_a345d155429e260a6344f9c555f04ae9ca817d7d587258bac88b24567b17bdda87}{primitive\_type::triangles}}}
+
+\end{DoxyCode}
+Specifies what kind of primitives to render. \mbox{\Hypertarget{classmoka_1_1draw__command_aa16638c2fa411a81474d75e1e385be54}\label{classmoka_1_1draw__command_aa16638c2fa411a81474d75e1e385be54}} 
+\index{moka::draw\_command@{moka::draw\_command}!vertex\_buffer@{vertex\_buffer}}
+\index{vertex\_buffer@{vertex\_buffer}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{vertex\_buffer}{vertex\_buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} moka\+::draw\+\_\+command\+::vertex\+\_\+buffer}
+
+The vertex buffer that should be used. \mbox{\Hypertarget{classmoka_1_1draw__command_a6a2c0c076a81ca8b7f81b3f40a471728}\label{classmoka_1_1draw__command_a6a2c0c076a81ca8b7f81b3f40a471728}} 
+\index{moka::draw\_command@{moka::draw\_command}!vertex\_count@{vertex\_count}}
+\index{vertex\_count@{vertex\_count}!moka::draw\_command@{moka::draw\_command}}
+\subsubsection{\texorpdfstring{vertex\_count}{vertex\_count}}
+{\footnotesize\ttfamily uint32\+\_\+t moka\+::draw\+\_\+command\+::vertex\+\_\+count = 0}
+
+The number of vertices to be rendered. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{draw__command_8hpp}{draw\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

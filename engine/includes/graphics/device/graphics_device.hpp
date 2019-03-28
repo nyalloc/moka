@@ -182,6 +182,9 @@ namespace moka
         const material* get_material(material_handle handle) const;
     };
 
+    /**
+     * \brief Performs primitive-based rendering, creates resources, handles system-level variables, and creates shaders.
+     */
     class graphics_device
     {
         std::unique_ptr<graphics_api> graphics_api_;

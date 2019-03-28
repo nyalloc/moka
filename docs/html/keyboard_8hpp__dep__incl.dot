@@ -1,0 +1,17 @@
+digraph "engine/includes/input/keyboard.hpp"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node2 [label="engine/includes/input\l/keyboard.hpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="engine/includes/application\l/application.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$application_8hpp.html",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="engine/includes/graphics\l/pbr.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$pbr_8hpp.html",tooltip=" "];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="engine/includes/graphics\l/pbr_scene.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$pbr__scene_8hpp.html",tooltip=" "];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="engine/includes/graphics\l/scene.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$scene_8hpp.html",tooltip=" "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,10 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="moka::basic_camera",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1basic__camera.html",tooltip="a very basic camera - contains only the necessary data members to get things drawing on your screen."];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="moka::camera_mouse\l_controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1camera__mouse__controller.html",tooltip="A mouse-controlled camera."];
+}

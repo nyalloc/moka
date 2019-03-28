@@ -1,0 +1,18 @@
+digraph "moka::detail::int_to_byte"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node20 [label="moka::detail::int_to_byte",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node20 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="moka::colour::colour",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ad01b6d1af210de8289c0add5a3d1be04",tooltip=" "];
+  Node20 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="moka::colour::set_r",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#acf6a295464965ba7da438056c3b93986",tooltip=" "];
+  Node20 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="moka::colour::set_g",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ad5e756d118fe5d7fddca8fba8d826b0a",tooltip=" "];
+  Node20 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="moka::colour::set_b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a7cf8baff4073bf0ad69103cd663d6972",tooltip=" "];
+  Node20 -> Node25 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="moka::colour::set_a",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a700d904dd083ebbbc73b1aee6645d58c",tooltip=" "];
+}

@@ -1,0 +1,324 @@
+\hypertarget{classmoka_1_1gl__graphics__api}{}\section{moka\+::gl\+\_\+graphics\+\_\+api Class Reference}
+\label{classmoka_1_1gl__graphics__api}\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+
+
+Convert the interface of Open\+GL into the moka rendering A\+PI. Allows moka rendering functionality to work at a higher level without being coupled to an Open\+GL backend.  
+
+
+
+
+{\ttfamily \#include $<$gl\+\_\+graphics\+\_\+api.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::gl\+\_\+graphics\+\_\+api\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::gl\+\_\+graphics\+\_\+api\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1gl__graphics__api_a8e65801bf2edf0891bae8936f964ed0f}{gl\+\_\+graphics\+\_\+api}} (\mbox{\hyperlink{classmoka_1_1window}{window}} \&\mbox{\hyperlink{classmoka_1_1window}{window}}, \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1gl__graphics__api_a59aae29a0b801cccdba2c8017dd527b2}{gl\+\_\+graphics\+\_\+api}} (const \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1gl__graphics__api_ac8d4092253d54466c1a4b24d21687aa8}{gl\+\_\+graphics\+\_\+api}} (\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\&\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \& \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a4a495079c68daf3d38cd9113bcbcd008}{operator=}} (const \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \& \mbox{\hyperlink{classmoka_1_1gl__graphics__api_abe24b702c20cb1e3c2020bc9b878af2e}{operator=}} (\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\&\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}})=delete
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1gl__graphics__api_ab5d814cde989805e9518444decf268e5}{$\sim$gl\+\_\+graphics\+\_\+api}} ()
+\item 
+\mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a41f333c5adcb85036c2d0246a586ec78}{make\+\_\+program}} (const \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \&vertex\+\_\+handle, const \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \&fragment\+\_\+handle) override
+\begin{DoxyCompactList}\small\item\em Create a shader program from vertex \& fragment shaders. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a78138ccaae9fe06ea4672dc14a978ed7}{make\+\_\+shader}} (\mbox{\hyperlink{namespacemoka_a472008f32e5db526d38eace7d3e45772}{shader\+\_\+type}} type, const std\+::string \&source) override
+\begin{DoxyCompactList}\small\item\em Create a shader from source code. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a4c7a5a462fa6590dcf27b9f48e4e53ab}{make\+\_\+vertex\+\_\+buffer}} (const void $\ast$vertices, size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{size}}, \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} \&\&layout, \mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}} use) override
+\begin{DoxyCompactList}\small\item\em Create a new vertex buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a553669863538cbfab92a98f0f38c0040}{make\+\_\+index\+\_\+buffer}} (const void $\ast$\mbox{\hyperlink{namespacemoka_a16a7bd7fc66f698dfcaf9bca1312a2bbaa51a528f35c02157e603a20c8796a684}{indices}}, size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{size}}, \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} type, \mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}} use) override
+\begin{DoxyCompactList}\small\item\em Create a new index buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_aeb20d721d419ee141f0dc64669f2d973}{make\+\_\+texture}} (void $\ast$$\ast$data, \mbox{\hyperlink{structmoka_1_1texture__metadata}{texture\+\_\+metadata}} \&\&metadata, bool free\+\_\+host\+\_\+data) override
+\begin{DoxyCompactList}\small\item\em Create a new texture. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1gl__graphics__api_a9cea47f96f495dfba6b54d0aedea7d50}{make\+\_\+frame\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $\ast$render\+\_\+textures, size\+\_\+t render\+\_\+texture\+\_\+count) override
+\begin{DoxyCompactList}\small\item\em Create a new frame buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1gl__graphics__api_abdf61ff67554bb656181942efeac9454}{submit}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&commands) override
+\begin{DoxyCompactList}\small\item\em Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1gl__graphics__api_af9d00204058312ad8cf09e2d24a32151}{submit\+\_\+and\+\_\+swap}} (\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&commands) override
+\begin{DoxyCompactList}\small\item\em Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. The main framebuffer will be swapped after executing, advancing a frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1gl__graphics__api_afb8615d57b729debc7c204463c492f5f}{destroy}} (\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} handle) override
+\begin{DoxyCompactList}\small\item\em Destroy a frame buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Convert the interface of Open\+GL into the moka rendering A\+PI. Allows moka rendering functionality to work at a higher level without being coupled to an Open\+GL backend. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a8e65801bf2edf0891bae8936f964ed0f}\label{classmoka_1_1gl__graphics__api_a8e65801bf2edf0891bae8936f964ed0f}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!gl\_graphics\_api@{gl\_graphics\_api}}
+\index{gl\_graphics\_api@{gl\_graphics\_api}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{gl\_graphics\_api()}{gl\_graphics\_api()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::gl\+\_\+graphics\+\_\+api\+::gl\+\_\+graphics\+\_\+api (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1window}{window}} \&}]{window,  }\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})}
+
+
+
+Create a new \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & The window object that this \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} will render to\\
+\hline
+{\em device} & The \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} object that owns this api object \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a59aae29a0b801cccdba2c8017dd527b2}\label{classmoka_1_1gl__graphics__api_a59aae29a0b801cccdba2c8017dd527b2}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!gl\_graphics\_api@{gl\_graphics\_api}}
+\index{gl\_graphics\_api@{gl\_graphics\_api}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{gl\_graphics\_api()}{gl\_graphics\_api()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::gl\+\_\+graphics\+\_\+api\+::gl\+\_\+graphics\+\_\+api (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&}]{gl\+\_\+graphics\+\_\+api }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_ac8d4092253d54466c1a4b24d21687aa8}\label{classmoka_1_1gl__graphics__api_ac8d4092253d54466c1a4b24d21687aa8}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!gl\_graphics\_api@{gl\_graphics\_api}}
+\index{gl\_graphics\_api@{gl\_graphics\_api}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{gl\_graphics\_api()}{gl\_graphics\_api()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::gl\+\_\+graphics\+\_\+api\+::gl\+\_\+graphics\+\_\+api (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\&}]{gl\+\_\+graphics\+\_\+api }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_ab5d814cde989805e9518444decf268e5}\label{classmoka_1_1gl__graphics__api_ab5d814cde989805e9518444decf268e5}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!````~gl\_graphics\_api@{$\sim$gl\_graphics\_api}}
+\index{````~gl\_graphics\_api@{$\sim$gl\_graphics\_api}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{$\sim$gl\_graphics\_api()}{~gl\_graphics\_api()}}
+{\footnotesize\ttfamily virtual moka\+::gl\+\_\+graphics\+\_\+api\+::$\sim$gl\+\_\+graphics\+\_\+api (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_afb8615d57b729debc7c204463c492f5f}\label{classmoka_1_1gl__graphics__api_afb8615d57b729debc7c204463c492f5f}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!destroy@{destroy}}
+\index{destroy@{destroy}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily void moka\+::gl\+\_\+graphics\+\_\+api\+::destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}}}]{handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Destroy a frame buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The host frame buffer that will be destroyed. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_a493d46d804ed3dcbe6e9b8bd20d5bb6f}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a9cea47f96f495dfba6b54d0aedea7d50}\label{classmoka_1_1gl__graphics__api_a9cea47f96f495dfba6b54d0aedea7d50}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_frame\_buffer@{make\_frame\_buffer}}
+\index{make\_frame\_buffer@{make\_frame\_buffer}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_frame\_buffer()}{make\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}} $\ast$}]{render\+\_\+textures,  }\item[{size\+\_\+t}]{render\+\_\+texture\+\_\+count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a new frame buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em render\+\_\+textures} & An array of \mbox{\hyperlink{structmoka_1_1render__texture__data}{render\+\_\+texture\+\_\+data}}. \\
+\hline
+{\em render\+\_\+texture\+\_\+count} & Size of the render\+\_\+textures array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} representing a frame buffer on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_ac697780264c97703191fac805198be1e}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a553669863538cbfab92a98f0f38c0040}\label{classmoka_1_1gl__graphics__api_a553669863538cbfab92a98f0f38c0040}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_index\_buffer@{make\_index\_buffer}}
+\index{make\_index\_buffer@{make\_index\_buffer}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_index\_buffer()}{make\_index\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}\item[{const void $\ast$}]{indices,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}}}]{type,  }\item[{\mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}}}]{use }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a new index buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indices} & The host memory buffer that will be used as index data. \\
+\hline
+{\em size} & The size of the host index buffer. \\
+\hline
+{\em type} & The layout of the index data. \\
+\hline
+{\em use} & A buffer usage hint. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} representing an index buffer on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_a7c7d927d38be3e441c91a5545b06c779}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a41f333c5adcb85036c2d0246a586ec78}\label{classmoka_1_1gl__graphics__api_a41f333c5adcb85036c2d0246a586ec78}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_program@{make\_program}}
+\index{make\_program@{make\_program}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_program()}{make\_program()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+program (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \&}]{vertex\+\_\+handle,  }\item[{const \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} \&}]{fragment\+\_\+handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a shader program from vertex \& fragment shaders. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+handle} & The vertex shader that you want to link to this program. \\
+\hline
+{\em fragment\+\_\+handle} & The fragment shader that you want to link to this program. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1program__handle}{program\+\_\+handle}} representing a program on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_a8477dfbb8aad44e0828114c68fc21792}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a78138ccaae9fe06ea4672dc14a978ed7}\label{classmoka_1_1gl__graphics__api_a78138ccaae9fe06ea4672dc14a978ed7}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_shader@{make\_shader}}
+\index{make\_shader@{make\_shader}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_shader()}{make\_shader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a472008f32e5db526d38eace7d3e45772}{shader\+\_\+type}}}]{type,  }\item[{const std\+::string \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a shader from source code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type of shader you want to create. \\
+\hline
+{\em source} & The source code of the shader you want to create. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1shader__handle}{shader\+\_\+handle}} representing a shader on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_ad1dd3ca0c1bd1477d2f40d3fae8b1956}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_aeb20d721d419ee141f0dc64669f2d973}\label{classmoka_1_1gl__graphics__api_aeb20d721d419ee141f0dc64669f2d973}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_texture@{make\_texture}}
+\index{make\_texture@{make\_texture}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_texture()}{make\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+texture (\begin{DoxyParamCaption}\item[{void $\ast$$\ast$}]{data,  }\item[{\mbox{\hyperlink{structmoka_1_1texture__metadata}{texture\+\_\+metadata}} \&\&}]{metadata,  }\item[{bool}]{free\+\_\+host\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a new texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The host memory buffer that will be used as texture data. \\
+\hline
+{\em metadata} & Metadata describing the texture data. \\
+\hline
+{\em free\+\_\+host\+\_\+data} & If true, free the host memory after uploading to the device. Otherwise allow the calling code to free it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} representing a texture on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_a61417bde89d91f8ec436e54226339b88}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a4c7a5a462fa6590dcf27b9f48e4e53ab}\label{classmoka_1_1gl__graphics__api_a4c7a5a462fa6590dcf27b9f48e4e53ab}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!make\_vertex\_buffer@{make\_vertex\_buffer}}
+\index{make\_vertex\_buffer@{make\_vertex\_buffer}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{make\_vertex\_buffer()}{make\_vertex\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} moka\+::gl\+\_\+graphics\+\_\+api\+::make\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}\item[{const void $\ast$}]{vertices,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} \&\&}]{layout,  }\item[{\mbox{\hyperlink{namespacemoka_a4799e695da8b173f75809387af8abed7}{buffer\+\_\+usage}}}]{use }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create a new vertex buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The host memory buffer that will be used as vertex data. \\
+\hline
+{\em size} & The size of the host vertex buffer. \\
+\hline
+{\em layout} & The layout of the vertex data. \\
+\hline
+{\em use} & A buffer usage hint. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} representing an vertex buffer on the device. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_af4d84630bb43f1573dbf6220b0c02677}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_a4a495079c68daf3d38cd9113bcbcd008}\label{classmoka_1_1gl__graphics__api_a4a495079c68daf3d38cd9113bcbcd008}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}}\& moka\+::gl\+\_\+graphics\+\_\+api\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&}]{gl\+\_\+graphics\+\_\+api }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_abe24b702c20cb1e3c2020bc9b878af2e}\label{classmoka_1_1gl__graphics__api_abe24b702c20cb1e3c2020bc9b878af2e}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}}\& moka\+::gl\+\_\+graphics\+\_\+api\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1gl__graphics__api}{gl\+\_\+graphics\+\_\+api}} \&\&}]{gl\+\_\+graphics\+\_\+api }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_abdf61ff67554bb656181942efeac9454}\label{classmoka_1_1gl__graphics__api_abdf61ff67554bb656181942efeac9454}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!submit@{submit}}
+\index{submit@{submit}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{submit()}{submit()}}
+{\footnotesize\ttfamily void moka\+::gl\+\_\+graphics\+\_\+api\+::submit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{commands }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em commands} & The \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} you wish to run. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_abd438a03be4a08c1cd043a7cefa17cd9}{moka\+::graphics\+\_\+api}}.
+
+\mbox{\Hypertarget{classmoka_1_1gl__graphics__api_af9d00204058312ad8cf09e2d24a32151}\label{classmoka_1_1gl__graphics__api_af9d00204058312ad8cf09e2d24a32151}} 
+\index{moka::gl\_graphics\_api@{moka::gl\_graphics\_api}!submit\_and\_swap@{submit\_and\_swap}}
+\index{submit\_and\_swap@{submit\_and\_swap}!moka::gl\_graphics\_api@{moka::gl\_graphics\_api}}
+\subsubsection{\texorpdfstring{submit\_and\_swap()}{submit\_and\_swap()}}
+{\footnotesize\ttfamily void moka\+::gl\+\_\+graphics\+\_\+api\+::submit\+\_\+and\+\_\+swap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} \&\&}]{commands }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Submit a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} to execute on the device. The main framebuffer will be swapped after executing, advancing a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em commands} & The \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}} you wish to run. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__api_a2b839d3a34c4eb88b0587e40f0616af3}{moka\+::graphics\+\_\+api}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/api/\mbox{\hyperlink{gl__graphics__api_8hpp}{gl\+\_\+graphics\+\_\+api.\+hpp}}\end{DoxyCompactItemize}

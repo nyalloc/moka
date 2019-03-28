@@ -1,0 +1,119 @@
+\hypertarget{classmoka_1_1fill__vertex__buffer__command}{}\section{moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command Class Reference}
+\label{classmoka_1_1fill__vertex__buffer__command}\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+
+
+Fill a vertex buffer.  
+
+
+
+
+{\ttfamily \#include $<$fill\+\_\+vertex\+\_\+buffer\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_a6ebbeb058ca33317cb889a5dbbf08254}{$\sim$fill\+\_\+vertex\+\_\+buffer\+\_\+command}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_a9e916e2371a2a165e1450f635dd534a9}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_ace6582db2bd3043670696ea887fd31a6}{set\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_abcd9d3ffd197da205234e7d8a6029224}{handle}}, const void $\ast$\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_a7e10e74586aa6b3584162d10d0f3d58e}{data}}, size\+\_\+t \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_acae9b5478cb4c11d7206d82d94246aa3}{size}})
+\begin{DoxyCompactList}\small\item\em Set the vertex buffer that you want to fill. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_abcd9d3ffd197da205234e7d8a6029224}{handle}}
+\item 
+const void $\ast$ \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_a7e10e74586aa6b3584162d10d0f3d58e}{data}}
+\item 
+size\+\_\+t \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command_acae9b5478cb4c11d7206d82d94246aa3}{size}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Fill a vertex buffer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_a6ebbeb058ca33317cb889a5dbbf08254}\label{classmoka_1_1fill__vertex__buffer__command_a6ebbeb058ca33317cb889a5dbbf08254}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!````~fill\_vertex\_buffer\_command@{$\sim$fill\_vertex\_buffer\_command}}
+\index{````~fill\_vertex\_buffer\_command@{$\sim$fill\_vertex\_buffer\_command}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{$\sim$fill\_vertex\_buffer\_command()}{~fill\_vertex\_buffer\_command()}}
+{\footnotesize\ttfamily virtual moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::$\sim$fill\+\_\+vertex\+\_\+buffer\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_a9e916e2371a2a165e1450f635dd534a9}\label{classmoka_1_1fill__vertex__buffer__command_a9e916e2371a2a165e1450f635dd534a9}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!accept@{accept}}
+\index{accept@{accept}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_ace6582db2bd3043670696ea887fd31a6}\label{classmoka_1_1fill__vertex__buffer__command_ace6582db2bd3043670696ea887fd31a6}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!set\_buffer@{set\_buffer}}
+\index{set\_buffer@{set\_buffer}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{set\_buffer()}{set\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}}\& moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::set\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}}}]{handle,  }\item[{const void $\ast$}]{data,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Set the vertex buffer that you want to fill. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The vertex buffer you want to fill. \\
+\hline
+{\em data} & The host buffer data you want to fill the vertex buffer data. \\
+\hline
+{\em size} & The size of the host buffer data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_a7e10e74586aa6b3584162d10d0f3d58e}\label{classmoka_1_1fill__vertex__buffer__command_a7e10e74586aa6b3584162d10d0f3d58e}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!data@{data}}
+\index{data@{data}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily const void$\ast$ moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::data}
+
+The host buffer of vertex data. \mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_abcd9d3ffd197da205234e7d8a6029224}\label{classmoka_1_1fill__vertex__buffer__command_abcd9d3ffd197da205234e7d8a6029224}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!handle@{handle}}
+\index{handle@{handle}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{handle}{handle}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::handle}
+
+The vertex buffer you want to fill. \mbox{\Hypertarget{classmoka_1_1fill__vertex__buffer__command_acae9b5478cb4c11d7206d82d94246aa3}\label{classmoka_1_1fill__vertex__buffer__command_acae9b5478cb4c11d7206d82d94246aa3}} 
+\index{moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}!size@{size}}
+\index{size@{size}!moka::fill\_vertex\_buffer\_command@{moka::fill\_vertex\_buffer\_command}}
+\subsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily size\+\_\+t moka\+::fill\+\_\+vertex\+\_\+buffer\+\_\+command\+::size}
+
+The size of the host buffer. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{fill__vertex__buffer__command_8hpp}{fill\+\_\+vertex\+\_\+buffer\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

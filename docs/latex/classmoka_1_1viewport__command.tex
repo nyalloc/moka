@@ -1,0 +1,159 @@
+\hypertarget{classmoka_1_1viewport__command}{}\section{moka\+::viewport\+\_\+command Class Reference}
+\label{classmoka_1_1viewport__command}\index{moka::viewport\_command@{moka::viewport\_command}}
+
+
+Set the viewport to apply to the command list.  
+
+
+
+
+{\ttfamily \#include $<$viewport\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::viewport\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::viewport\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1viewport__command_aed04702ad92d74fbf111babf9d68076d}{$\sim$viewport\+\_\+command}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1viewport__command_a8344d1f3a278d8fe04f1f6c86d0877c1}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1viewport__command_a48ee8475ca7476660ded9ddd54245581}{set\+\_\+rectangle}} (int \mbox{\hyperlink{classmoka_1_1viewport__command_a969e11499ed8e5bf1a389ec4c6bd7a4f}{x}}, int \mbox{\hyperlink{classmoka_1_1viewport__command_a7141660e90f1abb2f3ce40c9d42d91f2}{y}}, int \mbox{\hyperlink{classmoka_1_1viewport__command_a784e567b923e2fccf12dddc4739bb931}{width}}, int \mbox{\hyperlink{classmoka_1_1viewport__command_ab64f17e585f3dbab2e45959cde1c429e}{height}})
+\begin{DoxyCompactList}\small\item\em Set the rectangle of the viewport in window coordinates. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1viewport__command_aa2f934c8721d015630be80728feed6f3}{set\+\_\+rectangle}} (const \mbox{\hyperlink{namespacemoka_ab5e90635f0a0441cc99f2328bc34500d}{rectangle}} \&\mbox{\hyperlink{namespacemoka_ab5e90635f0a0441cc99f2328bc34500d}{rectangle}})
+\begin{DoxyCompactList}\small\item\em Set the rectangle of the viewport in window coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classmoka_1_1viewport__command_a784e567b923e2fccf12dddc4739bb931}{width}} = 0
+\item 
+int \mbox{\hyperlink{classmoka_1_1viewport__command_ab64f17e585f3dbab2e45959cde1c429e}{height}} = 0
+\item 
+int \mbox{\hyperlink{classmoka_1_1viewport__command_a969e11499ed8e5bf1a389ec4c6bd7a4f}{x}} = 0
+\item 
+int \mbox{\hyperlink{classmoka_1_1viewport__command_a7141660e90f1abb2f3ce40c9d42d91f2}{y}} = 0
+\item 
+const char $\ast$ \mbox{\hyperlink{classmoka_1_1viewport__command_a36c3611773b0da39c29d1682e3a22944}{name}} = \char`\"{}viewport\+\_\+command\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Set the viewport to apply to the command list. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1viewport__command_aed04702ad92d74fbf111babf9d68076d}\label{classmoka_1_1viewport__command_aed04702ad92d74fbf111babf9d68076d}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!````~viewport\_command@{$\sim$viewport\_command}}
+\index{````~viewport\_command@{$\sim$viewport\_command}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{$\sim$viewport\_command()}{~viewport\_command()}}
+{\footnotesize\ttfamily virtual moka\+::viewport\+\_\+command\+::$\sim$viewport\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1viewport__command_a8344d1f3a278d8fe04f1f6c86d0877c1}\label{classmoka_1_1viewport__command_a8344d1f3a278d8fe04f1f6c86d0877c1}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!accept@{accept}}
+\index{accept@{accept}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::viewport\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1viewport__command_a48ee8475ca7476660ded9ddd54245581}\label{classmoka_1_1viewport__command_a48ee8475ca7476660ded9ddd54245581}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!set\_rectangle@{set\_rectangle}}
+\index{set\_rectangle@{set\_rectangle}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{set\_rectangle()}{set\_rectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}}\& moka\+::viewport\+\_\+command\+::set\+\_\+rectangle (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Set the rectangle of the viewport in window coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the lower left corner of the viewport. Initially 0. \\
+\hline
+{\em y} & The y position of the lower left corner of the viewport. Initially 0. \\
+\hline
+{\em width} & The width of the viewport box. \\
+\hline
+{\em height} & The height of the viewport box. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1viewport__command_aa2f934c8721d015630be80728feed6f3}\label{classmoka_1_1viewport__command_aa2f934c8721d015630be80728feed6f3}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!set\_rectangle@{set\_rectangle}}
+\index{set\_rectangle@{set\_rectangle}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{set\_rectangle()}{set\_rectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}}\& moka\+::viewport\+\_\+command\+::set\+\_\+rectangle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_ab5e90635f0a0441cc99f2328bc34500d}{rectangle}} \&}]{rectangle }\end{DoxyParamCaption})}
+
+
+
+Set the rectangle of the viewport in window coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rectangle} & A rectangle defining the viewport. The x and y components specify the lower left corner of the viewport. The width and height specify the width and height of the viewport. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1viewport__command_ab64f17e585f3dbab2e45959cde1c429e}\label{classmoka_1_1viewport__command_ab64f17e585f3dbab2e45959cde1c429e}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!height@{height}}
+\index{height@{height}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily int moka\+::viewport\+\_\+command\+::height = 0}
+
+The height of the viewport. \mbox{\Hypertarget{classmoka_1_1viewport__command_a36c3611773b0da39c29d1682e3a22944}\label{classmoka_1_1viewport__command_a36c3611773b0da39c29d1682e3a22944}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!name@{name}}
+\index{name@{name}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily const char$\ast$ moka\+::viewport\+\_\+command\+::name = \char`\"{}viewport\+\_\+command\char`\"{}}
+
+\mbox{\Hypertarget{classmoka_1_1viewport__command_a784e567b923e2fccf12dddc4739bb931}\label{classmoka_1_1viewport__command_a784e567b923e2fccf12dddc4739bb931}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!width@{width}}
+\index{width@{width}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily int moka\+::viewport\+\_\+command\+::width = 0}
+
+The width of the viewport. \mbox{\Hypertarget{classmoka_1_1viewport__command_a969e11499ed8e5bf1a389ec4c6bd7a4f}\label{classmoka_1_1viewport__command_a969e11499ed8e5bf1a389ec4c6bd7a4f}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!x@{x}}
+\index{x@{x}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily int moka\+::viewport\+\_\+command\+::x = 0}
+
+The x position of the lower left corner of the viewport. Initially 0. \mbox{\Hypertarget{classmoka_1_1viewport__command_a7141660e90f1abb2f3ce40c9d42d91f2}\label{classmoka_1_1viewport__command_a7141660e90f1abb2f3ce40c9d42d91f2}} 
+\index{moka::viewport\_command@{moka::viewport\_command}!y@{y}}
+\index{y@{y}!moka::viewport\_command@{moka::viewport\_command}}
+\subsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily int moka\+::viewport\+\_\+command\+::y = 0}
+
+The y position of the lower left corner of the viewport. Initially 0. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{viewport__command_8hpp}{viewport\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,540 @@
+\hypertarget{classmoka_1_1material__builder}{}\section{moka\+::material\+\_\+builder Class Reference}
+\label{classmoka_1_1material__builder}\index{moka::material\_builder@{moka::material\_builder}}
+
+
+A builder class to help you build a material.  
+
+
+
+
+{\ttfamily \#include $<$material\+\_\+builder.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1material__builder_a5ff32c4d8f82b4cc91abb9fb4e2b2f38}{material\+\_\+builder}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device)
+\begin{DoxyCompactList}\small\item\em Create a material builder. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a0feeb28a696c2a2920f6d082886f2b27}{set\+\_\+vertex\+\_\+shader}} (const std\+::filesystem\+::path \&vertex\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the vertex shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a837ee2848797bb997756598d478e3002}{set\+\_\+vertex\+\_\+shader}} (const char $\ast$vertex\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the vertex shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a491153eb2c594163916f5eaeb1fffb70}{set\+\_\+vertex\+\_\+shader}} (const std\+::string \&vertex\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the vertex shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a116f4590c6b6a0eda08be0b8a7223532}{set\+\_\+fragment\+\_\+shader}} (const std\+::filesystem\+::path \&fragment\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the fragment shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_ad6470a4af986c3c6bc83226cbaa73be3}{set\+\_\+fragment\+\_\+shader}} (const char $\ast$fragment\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the fragment shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a241303620910f8f1cd2b9e7cd9028676}{set\+\_\+fragment\+\_\+shader}} (const std\+::string \&fragment\+\_\+shader)
+\begin{DoxyCompactList}\small\item\em Set the fragment shader for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a3e5ed182781eace67b436c3f1b6c068d}{set\+\_\+blend\+\_\+equation}} (\mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16}{blend\+\_\+equation}} equation)
+\begin{DoxyCompactList}\small\item\em Set the blend equation for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_aa7a7856e574c217b4f602358ac70813b}{set\+\_\+blend\+\_\+function}} (\mbox{\hyperlink{namespacemoka_a631c77633ed9ed0c34a6632a8211a19d}{blend\+\_\+function\+\_\+factor}} source, \mbox{\hyperlink{namespacemoka_a631c77633ed9ed0c34a6632a8211a19d}{blend\+\_\+function\+\_\+factor}} destination)
+\begin{DoxyCompactList}\small\item\em Set the blend function for use in this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a7a4c778d83008009bdb77e3b7306b8c1}{set\+\_\+blend\+\_\+enabled}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Specify if this material should use blending. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_aa78682ff872e45859d862e6e31ba1caa}{set\+\_\+culling\+\_\+enabled}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Specify if this material should use culling. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_ade5b3800ab919d3c842aa76f70fdf499}{set\+\_\+depth\+\_\+test\+\_\+enabled}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Specify if this material should use depth test. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_ac69e714a4d4a2da70c057b5470ccf6cb}{set\+\_\+scissor\+\_\+test\+\_\+enabled}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Specify if this material should use scissor test. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_afd585663a729d53924ec312fbbd8dfed}{set\+\_\+culling\+\_\+faces}} (\mbox{\hyperlink{namespacemoka_a262acd665924ba4041f64f7207b17cbe}{face}} faces)
+\begin{DoxyCompactList}\small\item\em Specify which faces should be culled if culling is enabled. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a7cf5ec782ed06d8b1b74788400ad55d1}{set\+\_\+alpha\+\_\+mode}} (\mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}} \mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}})
+\begin{DoxyCompactList}\small\item\em Specify what alpha mode should be used. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a19080392d3e2aca73feb566ff088a956}{set\+\_\+polygon\+\_\+mode}} (\mbox{\hyperlink{namespacemoka_a262acd665924ba4041f64f7207b17cbe}{face}} faces, \mbox{\hyperlink{namespacemoka_ab11ab0363880d78783c5e5b4d5c28a8b}{polygon\+\_\+draw\+\_\+mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the polygon mode of this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_af094ca99e624797eacc7e514a791e80b}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aa}{parameter\+\_\+type}} type)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_af47cff3e8716c77c38f4db89afaa91b6}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, float data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a3f5539f47e509777bfd5f552120aa223}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \&data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a11554de3ac69b03e2ae6acb64041b820}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a072f41a2e6358c376d9effaae7df84e0}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a12f85b4426611e3b929ea19f8957d0f3}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa0dd87e9dfdea657e8be233b5836821d0}{glm\+::mat3}} \&data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_a0a7d0c5314739e8cfdc4bc12e237e568}{add\+\_\+material\+\_\+parameter}} (const std\+::string \&name, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&data)
+\begin{DoxyCompactList}\small\item\em Add a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} \& \mbox{\hyperlink{classmoka_1_1material__builder_abb53367df5be8f441a886462075713c5}{add\+\_\+texture}} (\mbox{\hyperlink{namespacemoka_aa5549e36b096ef61aaa3dbcdade25195}{material\+\_\+property}} property, \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa6d788fcb39cecfd54da7b065a8b75d1a}{texture}})
+\begin{DoxyCompactList}\small\item\em Add a texture as a material parameter to this material. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material__builder_a38aeb602a54aff9711e14ed59d686d86}{build}} ()
+\begin{DoxyCompactList}\small\item\em Build the final material. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A builder class to help you build a material. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a5ff32c4d8f82b4cc91abb9fb4e2b2f38}\label{classmoka_1_1material__builder_a5ff32c4d8f82b4cc91abb9fb4e2b2f38}} 
+\index{moka::material\_builder@{moka::material\_builder}!material\_builder@{material\_builder}}
+\index{material\_builder@{material\_builder}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{material\_builder()}{material\_builder()}}
+{\footnotesize\ttfamily moka\+::material\+\_\+builder\+::material\+\_\+builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a material builder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & Graphics device class to use when building this material. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1material__builder_af094ca99e624797eacc7e514a791e80b}\label{classmoka_1_1material__builder_af094ca99e624797eacc7e514a791e80b}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aa}{parameter\+\_\+type}}}]{type }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em type} & The type of the material (set with no initial value). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_af47cff3e8716c77c38f4db89afaa91b6}\label{classmoka_1_1material__builder_af47cff3e8716c77c38f4db89afaa91b6}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{float}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a3f5539f47e509777bfd5f552120aa223}\label{classmoka_1_1material__builder_a3f5539f47e509777bfd5f552120aa223}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a11554de3ac69b03e2ae6acb64041b820}\label{classmoka_1_1material__builder_a11554de3ac69b03e2ae6acb64041b820}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a072f41a2e6358c376d9effaae7df84e0}\label{classmoka_1_1material__builder_a072f41a2e6358c376d9effaae7df84e0}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a12f85b4426611e3b929ea19f8957d0f3}\label{classmoka_1_1material__builder_a12f85b4426611e3b929ea19f8957d0f3}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa0dd87e9dfdea657e8be233b5836821d0}{glm\+::mat3}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a0a7d0c5314739e8cfdc4bc12e237e568}\label{classmoka_1_1material__builder_a0a7d0c5314739e8cfdc4bc12e237e568}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_material\_parameter@{add\_material\_parameter}}
+\index{add\_material\_parameter@{add\_material\_parameter}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_material\_parameter()}{add\_material\_parameter()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+material\+\_\+parameter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Add a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the material. \\
+\hline
+{\em data} & The initial state of this material parameter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_abb53367df5be8f441a886462075713c5}\label{classmoka_1_1material__builder_abb53367df5be8f441a886462075713c5}} 
+\index{moka::material\_builder@{moka::material\_builder}!add\_texture@{add\_texture}}
+\index{add\_texture@{add\_texture}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{add\_texture()}{add\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::add\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_aa5549e36b096ef61aaa3dbcdade25195}{material\+\_\+property}}}]{property,  }\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{texture }\end{DoxyParamCaption})}
+
+
+
+Add a texture as a material parameter to this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property} & The material property that the texture will bound to. \\
+\hline
+{\em texture} & The texture that should be used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a38aeb602a54aff9711e14ed59d686d86}\label{classmoka_1_1material__builder_a38aeb602a54aff9711e14ed59d686d86}} 
+\index{moka::material\_builder@{moka::material\_builder}!build@{build}}
+\index{build@{build}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} moka\+::material\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Build the final material. 
+
+\begin{DoxyReturn}{Returns}
+The new material handle. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a7cf5ec782ed06d8b1b74788400ad55d1}\label{classmoka_1_1material__builder_a7cf5ec782ed06d8b1b74788400ad55d1}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_alpha\_mode@{set\_alpha\_mode}}
+\index{set\_alpha\_mode@{set\_alpha\_mode}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_alpha\_mode()}{set\_alpha\_mode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+alpha\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_ad3e7f1428e786c2e7780186b8c0b0d81}{alpha\+\_\+mode}}}]{alpha\+\_\+mode }\end{DoxyParamCaption})}
+
+
+
+Specify what alpha mode should be used. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em alpha\+\_\+mode} & The alpha mode to use with this material. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a7a4c778d83008009bdb77e3b7306b8c1}\label{classmoka_1_1material__builder_a7a4c778d83008009bdb77e3b7306b8c1}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_blend\_enabled@{set\_blend\_enabled}}
+\index{set\_blend\_enabled@{set\_blend\_enabled}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_blend\_enabled()}{set\_blend\_enabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+blend\+\_\+enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Specify if this material should use blending. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True if the material should use blending, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a3e5ed182781eace67b436c3f1b6c068d}\label{classmoka_1_1material__builder_a3e5ed182781eace67b436c3f1b6c068d}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_blend\_equation@{set\_blend\_equation}}
+\index{set\_blend\_equation@{set\_blend\_equation}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_blend\_equation()}{set\_blend\_equation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+blend\+\_\+equation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_acf03408f89c521244763fb5f8746ce16}{blend\+\_\+equation}}}]{equation }\end{DoxyParamCaption})}
+
+
+
+Set the blend equation for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equation} & The equation for use in this material. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_aa7a7856e574c217b4f602358ac70813b}\label{classmoka_1_1material__builder_aa7a7856e574c217b4f602358ac70813b}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_blend\_function@{set\_blend\_function}}
+\index{set\_blend\_function@{set\_blend\_function}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_blend\_function()}{set\_blend\_function()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+blend\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a631c77633ed9ed0c34a6632a8211a19d}{blend\+\_\+function\+\_\+factor}}}]{source,  }\item[{\mbox{\hyperlink{namespacemoka_a631c77633ed9ed0c34a6632a8211a19d}{blend\+\_\+function\+\_\+factor}}}]{destination }\end{DoxyParamCaption})}
+
+
+
+Set the blend function for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source blend function factor. \\
+\hline
+{\em destination} & The destination blend function factor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_aa78682ff872e45859d862e6e31ba1caa}\label{classmoka_1_1material__builder_aa78682ff872e45859d862e6e31ba1caa}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_culling\_enabled@{set\_culling\_enabled}}
+\index{set\_culling\_enabled@{set\_culling\_enabled}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_culling\_enabled()}{set\_culling\_enabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+culling\+\_\+enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Specify if this material should use culling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True if the material should use culling, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_afd585663a729d53924ec312fbbd8dfed}\label{classmoka_1_1material__builder_afd585663a729d53924ec312fbbd8dfed}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_culling\_faces@{set\_culling\_faces}}
+\index{set\_culling\_faces@{set\_culling\_faces}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_culling\_faces()}{set\_culling\_faces()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+culling\+\_\+faces (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a262acd665924ba4041f64f7207b17cbe}{face}}}]{faces }\end{DoxyParamCaption})}
+
+
+
+Specify which faces should be culled if culling is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em faces} & The faces that should be culled if culling is enabled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_ade5b3800ab919d3c842aa76f70fdf499}\label{classmoka_1_1material__builder_ade5b3800ab919d3c842aa76f70fdf499}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_depth\_test\_enabled@{set\_depth\_test\_enabled}}
+\index{set\_depth\_test\_enabled@{set\_depth\_test\_enabled}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_depth\_test\_enabled()}{set\_depth\_test\_enabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+depth\+\_\+test\+\_\+enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Specify if this material should use depth test. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True if the material should use depth test, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a116f4590c6b6a0eda08be0b8a7223532}\label{classmoka_1_1material__builder_a116f4590c6b6a0eda08be0b8a7223532}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_fragment\_shader@{set\_fragment\_shader}}
+\index{set\_fragment\_shader@{set\_fragment\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_fragment\_shader()}{set\_fragment\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+fragment\+\_\+shader (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{fragment\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the fragment shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fragment\+\_\+shader} & The path to the fragment shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_ad6470a4af986c3c6bc83226cbaa73be3}\label{classmoka_1_1material__builder_ad6470a4af986c3c6bc83226cbaa73be3}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_fragment\_shader@{set\_fragment\_shader}}
+\index{set\_fragment\_shader@{set\_fragment\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_fragment\_shader()}{set\_fragment\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+fragment\+\_\+shader (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fragment\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the fragment shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fragment\+\_\+shader} & The source code of the shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a241303620910f8f1cd2b9e7cd9028676}\label{classmoka_1_1material__builder_a241303620910f8f1cd2b9e7cd9028676}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_fragment\_shader@{set\_fragment\_shader}}
+\index{set\_fragment\_shader@{set\_fragment\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_fragment\_shader()}{set\_fragment\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+fragment\+\_\+shader (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{fragment\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the fragment shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fragment\+\_\+shader} & The source code of the shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a19080392d3e2aca73feb566ff088a956}\label{classmoka_1_1material__builder_a19080392d3e2aca73feb566ff088a956}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_polygon\_mode@{set\_polygon\_mode}}
+\index{set\_polygon\_mode@{set\_polygon\_mode}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_polygon\_mode()}{set\_polygon\_mode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+polygon\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a262acd665924ba4041f64f7207b17cbe}{face}}}]{faces,  }\item[{\mbox{\hyperlink{namespacemoka_ab11ab0363880d78783c5e5b4d5c28a8b}{polygon\+\_\+draw\+\_\+mode}}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set the polygon mode of this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em faces} & Specifies the polygons that the mode applies to. \\
+\hline
+{\em mode} & Specifies how the polygons will be rasterized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_ac69e714a4d4a2da70c057b5470ccf6cb}\label{classmoka_1_1material__builder_ac69e714a4d4a2da70c057b5470ccf6cb}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_scissor\_test\_enabled@{set\_scissor\_test\_enabled}}
+\index{set\_scissor\_test\_enabled@{set\_scissor\_test\_enabled}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_scissor\_test\_enabled()}{set\_scissor\_test\_enabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+scissor\+\_\+test\+\_\+enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Specify if this material should use scissor test. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True if the material should use the scissor test, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a0feeb28a696c2a2920f6d082886f2b27}\label{classmoka_1_1material__builder_a0feeb28a696c2a2920f6d082886f2b27}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_vertex\_shader@{set\_vertex\_shader}}
+\index{set\_vertex\_shader@{set\_vertex\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_vertex\_shader()}{set\_vertex\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+vertex\+\_\+shader (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{vertex\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the vertex shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+shader} & The path to the vertex shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a837ee2848797bb997756598d478e3002}\label{classmoka_1_1material__builder_a837ee2848797bb997756598d478e3002}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_vertex\_shader@{set\_vertex\_shader}}
+\index{set\_vertex\_shader@{set\_vertex\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_vertex\_shader()}{set\_vertex\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+vertex\+\_\+shader (\begin{DoxyParamCaption}\item[{const char $\ast$}]{vertex\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the vertex shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+shader} & The source code of the shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__builder_a491153eb2c594163916f5eaeb1fffb70}\label{classmoka_1_1material__builder_a491153eb2c594163916f5eaeb1fffb70}} 
+\index{moka::material\_builder@{moka::material\_builder}!set\_vertex\_shader@{set\_vertex\_shader}}
+\index{set\_vertex\_shader@{set\_vertex\_shader}!moka::material\_builder@{moka::material\_builder}}
+\subsubsection{\texorpdfstring{set\_vertex\_shader()}{set\_vertex\_shader()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}}\& moka\+::material\+\_\+builder\+::set\+\_\+vertex\+\_\+shader (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{vertex\+\_\+shader }\end{DoxyParamCaption})}
+
+
+
+Set the vertex shader for use in this material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+shader} & The source code of the shader. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1material__builder}{material\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/material/\mbox{\hyperlink{material__builder_8hpp}{material\+\_\+builder.\+hpp}}\end{DoxyCompactItemize}

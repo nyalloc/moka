@@ -1,0 +1,64 @@
+\hypertarget{classmoka_1_1primitive}{}\section{moka\+::primitive Class Reference}
+\label{classmoka_1_1primitive}\index{moka::primitive@{moka::primitive}}
+
+
+A basic primitive. A wrapper around a vertex buffer, an index buffer and a material.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1primitive_a0cd9192d639d8ff180016c7102361440}{get\+\_\+material}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1primitive_a1ca8472d19dae33ca651f90b66639812}{primitive}} (\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} vertex\+\_\+buffer, uint32\+\_\+t vertex\+\_\+count, \mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}} index\+\_\+buffer, \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}} \mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}}, uint32\+\_\+t index\+\_\+count, uint32\+\_\+t index\+\_\+buffer\+\_\+offset, \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material}{material}})
+\item 
+\mbox{\hyperlink{classmoka_1_1primitive_a72056e3a435f7d2044ec523348cf875d}{primitive}} (\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}} vertex\+\_\+buffer, uint32\+\_\+t vertex\+\_\+count, \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material}{material}})
+\item 
+void \mbox{\hyperlink{classmoka_1_1primitive_aed9c45c5844f61180db3500ae4fd8cf6}{draw}} (\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&list) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A basic primitive. A wrapper around a vertex buffer, an index buffer and a material. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1primitive_a1ca8472d19dae33ca651f90b66639812}\label{classmoka_1_1primitive_a1ca8472d19dae33ca651f90b66639812}} 
+\index{moka::primitive@{moka::primitive}!primitive@{primitive}}
+\index{primitive@{primitive}!moka::primitive@{moka::primitive}}
+\subsubsection{\texorpdfstring{primitive()}{primitive()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily moka\+::primitive\+::primitive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}}}]{vertex\+\_\+buffer,  }\item[{uint32\+\_\+t}]{vertex\+\_\+count,  }\item[{\mbox{\hyperlink{structmoka_1_1index__buffer__handle}{index\+\_\+buffer\+\_\+handle}}}]{index\+\_\+buffer,  }\item[{\mbox{\hyperlink{namespacemoka_a32244b0de63481283738e2db11639e3f}{index\+\_\+type}}}]{index\+\_\+type,  }\item[{uint32\+\_\+t}]{index\+\_\+count,  }\item[{uint32\+\_\+t}]{index\+\_\+buffer\+\_\+offset,  }\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{material }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1primitive_a72056e3a435f7d2044ec523348cf875d}\label{classmoka_1_1primitive_a72056e3a435f7d2044ec523348cf875d}} 
+\index{moka::primitive@{moka::primitive}!primitive@{primitive}}
+\index{primitive@{primitive}!moka::primitive@{moka::primitive}}
+\subsubsection{\texorpdfstring{primitive()}{primitive()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily moka\+::primitive\+::primitive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1vertex__buffer__handle}{vertex\+\_\+buffer\+\_\+handle}}}]{vertex\+\_\+buffer,  }\item[{uint32\+\_\+t}]{vertex\+\_\+count,  }\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{material }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1primitive_aed9c45c5844f61180db3500ae4fd8cf6}\label{classmoka_1_1primitive_aed9c45c5844f61180db3500ae4fd8cf6}} 
+\index{moka::primitive@{moka::primitive}!draw@{draw}}
+\index{draw@{draw}!moka::primitive@{moka::primitive}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void moka\+::primitive\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&}]{list }\end{DoxyParamCaption}) const}
+
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1primitive_a0cd9192d639d8ff180016c7102361440}\label{classmoka_1_1primitive_a0cd9192d639d8ff180016c7102361440}} 
+\index{moka::primitive@{moka::primitive}!get\_material@{get\_material}}
+\index{get\_material@{get\_material}!moka::primitive@{moka::primitive}}
+\subsubsection{\texorpdfstring{get\_material()}{get\_material()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} moka\+::primitive\+::get\+\_\+material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Here is the caller graph for this function\+:
+% FIG 1
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{model_8hpp}{model.\+hpp}}\end{DoxyCompactItemize}

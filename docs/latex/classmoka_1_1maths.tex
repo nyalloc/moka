@@ -1,0 +1,65 @@
+\hypertarget{classmoka_1_1maths}{}\section{moka\+::maths Class Reference}
+\label{classmoka_1_1maths}\index{moka::maths@{moka::maths}}
+
+
+{\ttfamily \#include $<$utilities.\+hpp$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+floating\+\_\+point\+\_\+v$<$\+T$>$$>$$>$ }\\static constexpr T \mbox{\hyperlink{classmoka_1_1maths_a2e79f58d37cbe28bb8160e26b4fd6be5}{to\+\_\+degrees}} (const T radians) noexcept
+\item 
+{\footnotesize template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+floating\+\_\+point\+\_\+v$<$\+T$>$$>$$>$ }\\static constexpr T \mbox{\hyperlink{classmoka_1_1maths_a1aa2a629f86e0989fef0d73e23deab3e}{to\+\_\+radians}} (const T degrees) noexcept
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{classmoka_1_1maths_a6ef4ef43afc0c5179f724bacbda196b4}{pi}} = 3.\+14159265358979323846264338327950288
+\item 
+static constexpr double \mbox{\hyperlink{classmoka_1_1maths_ac1bea7ec8a939b579e3ccefa4c2a2e38}{degrees\+\_\+to\+\_\+radians}} = \mbox{\hyperlink{classmoka_1_1maths_a6ef4ef43afc0c5179f724bacbda196b4}{pi}} $\ast$ 2.\+0f / 360.\+0f
+\item 
+static constexpr double \mbox{\hyperlink{classmoka_1_1maths_a601fb0ce26476398a25bf91e7d26ef1a}{radians\+\_\+to\+\_\+degrees}} = 1.\+0f / degrees\+\_\+to\+\_\+radians
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1maths_a2e79f58d37cbe28bb8160e26b4fd6be5}\label{classmoka_1_1maths_a2e79f58d37cbe28bb8160e26b4fd6be5}} 
+\index{moka::maths@{moka::maths}!to\_degrees@{to\_degrees}}
+\index{to\_degrees@{to\_degrees}!moka::maths@{moka::maths}}
+\subsubsection{\texorpdfstring{to\_degrees()}{to\_degrees()}}
+{\footnotesize\ttfamily template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+floating\+\_\+point\+\_\+v$<$\+T$>$$>$$>$ \\
+static constexpr T moka\+::maths\+::to\+\_\+degrees (\begin{DoxyParamCaption}\item[{const T}]{radians }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1maths_a1aa2a629f86e0989fef0d73e23deab3e}\label{classmoka_1_1maths_a1aa2a629f86e0989fef0d73e23deab3e}} 
+\index{moka::maths@{moka::maths}!to\_radians@{to\_radians}}
+\index{to\_radians@{to\_radians}!moka::maths@{moka::maths}}
+\subsubsection{\texorpdfstring{to\_radians()}{to\_radians()}}
+{\footnotesize\ttfamily template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+floating\+\_\+point\+\_\+v$<$\+T$>$$>$$>$ \\
+static constexpr T moka\+::maths\+::to\+\_\+radians (\begin{DoxyParamCaption}\item[{const T}]{degrees }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1maths_ac1bea7ec8a939b579e3ccefa4c2a2e38}\label{classmoka_1_1maths_ac1bea7ec8a939b579e3ccefa4c2a2e38}} 
+\index{moka::maths@{moka::maths}!degrees\_to\_radians@{degrees\_to\_radians}}
+\index{degrees\_to\_radians@{degrees\_to\_radians}!moka::maths@{moka::maths}}
+\subsubsection{\texorpdfstring{degrees\_to\_radians}{degrees\_to\_radians}}
+{\footnotesize\ttfamily constexpr double moka\+::maths\+::degrees\+\_\+to\+\_\+radians = \mbox{\hyperlink{classmoka_1_1maths_a6ef4ef43afc0c5179f724bacbda196b4}{pi}} $\ast$ 2.\+0f / 360.\+0f\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmoka_1_1maths_a6ef4ef43afc0c5179f724bacbda196b4}\label{classmoka_1_1maths_a6ef4ef43afc0c5179f724bacbda196b4}} 
+\index{moka::maths@{moka::maths}!pi@{pi}}
+\index{pi@{pi}!moka::maths@{moka::maths}}
+\subsubsection{\texorpdfstring{pi}{pi}}
+{\footnotesize\ttfamily constexpr double moka\+::maths\+::pi = 3.\+14159265358979323846264338327950288\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmoka_1_1maths_a601fb0ce26476398a25bf91e7d26ef1a}\label{classmoka_1_1maths_a601fb0ce26476398a25bf91e7d26ef1a}} 
+\index{moka::maths@{moka::maths}!radians\_to\_degrees@{radians\_to\_degrees}}
+\index{radians\_to\_degrees@{radians\_to\_degrees}!moka::maths@{moka::maths}}
+\subsubsection{\texorpdfstring{radians\_to\_degrees}{radians\_to\_degrees}}
+{\footnotesize\ttfamily constexpr double moka\+::maths\+::radians\+\_\+to\+\_\+degrees = 1.\+0f / degrees\+\_\+to\+\_\+radians\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{utilities_8hpp}{utilities.\+hpp}}\end{DoxyCompactItemize}

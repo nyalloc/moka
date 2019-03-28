@@ -1,0 +1,15 @@
+digraph "moka::colour::colour"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13 [label="moka::colour::colour",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid"];
+  Node14 [label="moka::detail::float\l_to_byte",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacemoka_1_1detail.html#ae7d7310f93779c41997daa340c988dd9",tooltip=" "];
+  Node14 -> Node15 [color="midnightblue",fontsize="10",style="solid"];
+  Node15 [label="moka::clamp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacemoka.html#a2486d1231c4edb9da9ec840669627aa5",tooltip=" "];
+  Node13 -> Node16 [color="midnightblue",fontsize="10",style="solid"];
+  Node16 [label="moka::detail::int_to_byte",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacemoka_1_1detail.html#a366b546068df519a1f4295fe4705d5a8",tooltip=" "];
+  Node16 -> Node15 [color="midnightblue",fontsize="10",style="solid"];
+}

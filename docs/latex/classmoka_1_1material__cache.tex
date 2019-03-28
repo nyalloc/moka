@@ -1,0 +1,109 @@
+\hypertarget{classmoka_1_1material__cache}{}\section{moka\+::material\+\_\+cache Class Reference}
+\label{classmoka_1_1material__cache}\index{moka::material\_cache@{moka::material\_cache}}
+
+
+A cache of materials.  
+
+
+
+
+{\ttfamily \#include $<$graphics\+\_\+device.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1material__cache_a0cf9e1de19ab63480f689da817466dae}{material\+\_\+cache}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device, size\+\_\+t initial\+\_\+capacity=0)
+\begin{DoxyCompactList}\small\item\em Create a new material cache object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1material__cache_a9ddd120e506cfaaa3386f5e2e9c031b3}{add\+\_\+material}} (\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&\mbox{\hyperlink{classmoka_1_1material}{material}})
+\begin{DoxyCompactList}\small\item\em Add a material to the material cache. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1material}{material}} $\ast$ \mbox{\hyperlink{classmoka_1_1material__cache_a061b66b048cb75daf59cf0238119c6e9}{get\+\_\+material}} (\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} handle)
+\begin{DoxyCompactList}\small\item\em Get the material identified by its id. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classmoka_1_1material}{material}} $\ast$ \mbox{\hyperlink{classmoka_1_1material__cache_a7d913ebcd23f10e53620790e383f60c2}{get\+\_\+material}} (\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} handle) const
+\begin{DoxyCompactList}\small\item\em Get the material identified by its id. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A cache of materials. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1material__cache_a0cf9e1de19ab63480f689da817466dae}\label{classmoka_1_1material__cache_a0cf9e1de19ab63480f689da817466dae}} 
+\index{moka::material\_cache@{moka::material\_cache}!material\_cache@{material\_cache}}
+\index{material\_cache@{material\_cache}!moka::material\_cache@{moka::material\_cache}}
+\subsubsection{\texorpdfstring{material\_cache()}{material\_cache()}}
+{\footnotesize\ttfamily moka\+::material\+\_\+cache\+::material\+\_\+cache (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device,  }\item[{size\+\_\+t}]{initial\+\_\+capacity = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new material cache object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The graphics device object to use. \\
+\hline
+{\em initial\+\_\+capacity} & The initial capacity of the texture cache. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1material__cache_a9ddd120e506cfaaa3386f5e2e9c031b3}\label{classmoka_1_1material__cache_a9ddd120e506cfaaa3386f5e2e9c031b3}} 
+\index{moka::material\_cache@{moka::material\_cache}!add\_material@{add\_material}}
+\index{add\_material@{add\_material}!moka::material\_cache@{moka::material\_cache}}
+\subsubsection{\texorpdfstring{add\_material()}{add\_material()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}} moka\+::material\+\_\+cache\+::add\+\_\+material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1material}{material}} \&\&}]{material }\end{DoxyParamCaption})}
+
+
+
+Add a material to the material cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em material} & The material you want to add to the cache. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material id. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1material__cache_a061b66b048cb75daf59cf0238119c6e9}\label{classmoka_1_1material__cache_a061b66b048cb75daf59cf0238119c6e9}} 
+\index{moka::material\_cache@{moka::material\_cache}!get\_material@{get\_material}}
+\index{get\_material@{get\_material}!moka::material\_cache@{moka::material\_cache}}
+\subsubsection{\texorpdfstring{get\_material()}{get\_material()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1material}{material}}$\ast$ moka\+::material\+\_\+cache\+::get\+\_\+material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{handle }\end{DoxyParamCaption})}
+
+
+
+Get the material identified by its id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The material id. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material identified by the id. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1material__cache_a7d913ebcd23f10e53620790e383f60c2}\label{classmoka_1_1material__cache_a7d913ebcd23f10e53620790e383f60c2}} 
+\index{moka::material\_cache@{moka::material\_cache}!get\_material@{get\_material}}
+\index{get\_material@{get\_material}!moka::material\_cache@{moka::material\_cache}}
+\subsubsection{\texorpdfstring{get\_material()}{get\_material()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classmoka_1_1material}{material}}$\ast$ moka\+::material\+\_\+cache\+::get\+\_\+material (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1material__handle}{material\+\_\+handle}}}]{handle }\end{DoxyParamCaption}) const}
+
+
+
+Get the material identified by its id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The material id. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The material identified by the id. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/device/\mbox{\hyperlink{graphics__device_8hpp}{graphics\+\_\+device.\+hpp}}\end{DoxyCompactItemize}

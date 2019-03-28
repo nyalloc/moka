@@ -1,0 +1,172 @@
+\hypertarget{classmoka_1_1signal}{}\section{moka\+::signal$<$ Args $>$ Class Template Reference}
+\label{classmoka_1_1signal}\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+
+
+Basic signal class. Allows you to write observer patterns while avoiding boilerplate code.  
+
+
+
+
+{\ttfamily \#include $<$signal.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1signal_ad71e1fffe02c33c1b62dd26c60f03577}{signal}} ()
+\begin{DoxyCompactList}\small\item\em Create a new signal object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}} \mbox{\hyperlink{classmoka_1_1signal_a63de4b64ffe3208549cc7497ec2852b6}{connect}} (slot \&\&slot) const
+\begin{DoxyCompactList}\small\item\em Connect a slot to this signal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1signal_a69af1b997c17ea3cb311e1b7f3b24bf4}{disconnect}} (\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}} id) const
+\begin{DoxyCompactList}\small\item\em Disconnect a slot from the signal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1signal_a47b68d9f992a1b17feb7c230a32fdde4}{clear}} () const
+\begin{DoxyCompactList}\small\item\em Destroy all slots connected to this signal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1signal_a3c01a7532eb7940725ae92413fe2fcc7}{operator()}} (const Args \&... args) const
+\begin{DoxyCompactList}\small\item\em Invoke the signal and notify all connected slots. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1signal_a908b81c71f100e074ead0def1f02a9c7}{notify}} (const Args \&... args) const
+\begin{DoxyCompactList}\small\item\em Invoke the signal and notify all connected slots. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::mutex \mbox{\hyperlink{classmoka_1_1signal_ab7a1d48d55a437002b8e7e6cd50c3ea7}{mutex\+\_\+}}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}}, slot $>$ \mbox{\hyperlink{classmoka_1_1signal_a786a40361180f9f294b57be412ddaaa9}{slots\+\_\+}}
+\item 
+\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}} \mbox{\hyperlink{classmoka_1_1signal_ab8da1469fee78f6b05bf414685f42912}{id\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename... Args$>$\newline
+class moka\+::signal$<$ Args $>$}
+
+Basic signal class. Allows you to write observer patterns while avoiding boilerplate code. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & Parameter pack. The arguments you want to pass to the slots when calling notify. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1signal_ad71e1fffe02c33c1b62dd26c60f03577}\label{classmoka_1_1signal_ad71e1fffe02c33c1b62dd26c60f03577}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!signal@{signal}}
+\index{signal@{signal}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{signal()}{signal()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+\mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::\mbox{\hyperlink{classmoka_1_1signal}{signal}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a new signal object. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1signal_a47b68d9f992a1b17feb7c230a32fdde4}\label{classmoka_1_1signal_a47b68d9f992a1b17feb7c230a32fdde4}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!clear@{clear}}
+\index{clear@{clear}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Destroy all slots connected to this signal. 
+
+\mbox{\Hypertarget{classmoka_1_1signal_a63de4b64ffe3208549cc7497ec2852b6}\label{classmoka_1_1signal_a63de4b64ffe3208549cc7497ec2852b6}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!connect@{connect}}
+\index{connect@{connect}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}} \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::connect (\begin{DoxyParamCaption}\item[{slot \&\&}]{slot }\end{DoxyParamCaption}) const}
+
+
+
+Connect a slot to this signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em slot} & The slot this signal should connect to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An id identifying the slot, so that objects that own the slot may disconnect from the signal upon destruction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1signal_a69af1b997c17ea3cb311e1b7f3b24bf4}\label{classmoka_1_1signal_a69af1b997c17ea3cb311e1b7f3b24bf4}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{disconnect()}{disconnect()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::disconnect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}}}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Disconnect a slot from the signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The id identifying the slot, as returned from \mbox{\hyperlink{classmoka_1_1signal_a63de4b64ffe3208549cc7497ec2852b6}{connect()}} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1signal_a908b81c71f100e074ead0def1f02a9c7}\label{classmoka_1_1signal_a908b81c71f100e074ead0def1f02a9c7}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!notify@{notify}}
+\index{notify@{notify}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{notify()}{notify()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::notify (\begin{DoxyParamCaption}\item[{const Args \&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Invoke the signal and notify all connected slots. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & The args that should be sent to all slots. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1signal_a3c01a7532eb7940725ae92413fe2fcc7}\label{classmoka_1_1signal_a3c01a7532eb7940725ae92413fe2fcc7}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::operator() (\begin{DoxyParamCaption}\item[{const Args \&...}]{args }\end{DoxyParamCaption}) const}
+
+
+
+Invoke the signal and notify all connected slots. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & The args that should be sent to all slots. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1signal_ab8da1469fee78f6b05bf414685f42912}\label{classmoka_1_1signal_ab8da1469fee78f6b05bf414685f42912}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!id\_@{id\_}}
+\index{id\_@{id\_}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{id\_}{id\_}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}} \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::id\+\_\+\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmoka_1_1signal_ab7a1d48d55a437002b8e7e6cd50c3ea7}\label{classmoka_1_1signal_ab7a1d48d55a437002b8e7e6cd50c3ea7}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!mutex\_@{mutex\_}}
+\index{mutex\_@{mutex\_}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{mutex\_}{mutex\_}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+std\+::mutex \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::mutex\+\_\+\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmoka_1_1signal_a786a40361180f9f294b57be412ddaaa9}\label{classmoka_1_1signal_a786a40361180f9f294b57be412ddaaa9}} 
+\index{moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}!slots\_@{slots\_}}
+\index{slots\_@{slots\_}!moka::signal$<$ Args $>$@{moka::signal$<$ Args $>$}}
+\subsubsection{\texorpdfstring{slots\_}{slots\_}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+std\+::unordered\+\_\+map$<$\mbox{\hyperlink{namespacemoka_a959d3112313fb589684e8b1e3df66385}{slot\+\_\+id}}, slot$>$ \mbox{\hyperlink{classmoka_1_1signal}{moka\+::signal}}$<$ Args $>$\+::slots\+\_\+\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/application/\mbox{\hyperlink{signal_8hpp}{signal.\+hpp}}\end{DoxyCompactItemize}

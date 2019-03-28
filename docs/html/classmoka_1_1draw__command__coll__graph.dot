@@ -1,0 +1,16 @@
+digraph "moka::draw_command"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2 [label="moka::draw_command",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Render primitives using the specified material. Contains vertex buffer, index buffer (optional) and m..."];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="moka::graphics_command",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1graphics__command.html",tooltip="Base type for graphics commands."];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" material" ,fontname="Helvetica"];
+  Node4 [label="moka::material_handle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmoka_1_1material__handle.html",tooltip="A unique identifier for a material."];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vertex_buffer" ,fontname="Helvetica"];
+  Node5 [label="moka::vertex_buffer\l_handle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmoka_1_1vertex__buffer__handle.html",tooltip="A handle to a vertex buffer object on the device."];
+  Node6 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" index_buffer" ,fontname="Helvetica"];
+  Node6 [label="moka::index_buffer\l_handle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmoka_1_1index__buffer__handle.html",tooltip="A handle to a index buffer object on the device."];
+}

@@ -1,0 +1,282 @@
+\hypertarget{classmoka_1_1basic__camera}{}\section{moka\+::basic\+\_\+camera Class Reference}
+\label{classmoka_1_1basic__camera}\index{moka::basic\_camera@{moka::basic\_camera}}
+
+
+a very basic camera -\/ contains only the necessary data members to get things drawing on your screen.  
+
+
+
+
+{\ttfamily \#include $<$basic\+\_\+camera.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::basic\+\_\+camera\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::basic\+\_\+camera\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1basic__camera_a1b7c245be603c3623e54583aebe12357}{$\sim$basic\+\_\+camera}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1basic__camera_a357eb167fe7dad8a1d65a92311e1342e}{basic\+\_\+camera}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1basic__camera_a3305373cc74a56d5b40cee482959172e}{basic\+\_\+camera}} (const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\mbox{\hyperlink{classmoka_1_1transform}{transform}}, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&projection)
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classmoka_1_1basic__camera}{basic\+\_\+camera}} object. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_a43891fadfe629d3306c3863255660556}{update}} (float delta\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Update this camera. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \mbox{\hyperlink{classmoka_1_1basic__camera_a50d26f0db9969b36b29103e8a743d4c6}{get\+\_\+view}} () const
+\begin{DoxyCompactList}\small\item\em Get the view matrix. \end{DoxyCompactList}\item 
+virtual const glm\+::quat \& \mbox{\hyperlink{classmoka_1_1basic__camera_a1222bd9104d5dbd03964a4a340d08b06}{get\+\_\+rotation}} () const
+\begin{DoxyCompactList}\small\item\em Get the rotation of the camera. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_ade33ff9968210e36f4235ad0b5a2aef5}{set\+\_\+rotation}} (const glm\+::quat \&rotation)
+\begin{DoxyCompactList}\small\item\em Set the rotation of the camera. \end{DoxyCompactList}\item 
+virtual const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \& \mbox{\hyperlink{classmoka_1_1basic__camera_afa49b769555a670396d178141376902e}{get\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Get the position of the camera. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_a48528f88bf5b5e06d4cab6f93183a62a}{set\+\_\+position}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&\mbox{\hyperlink{namespacemoka_a16a7bd7fc66f698dfcaf9bca1312a2bba4757fe07fd492a8be0ea6a760d683d6e}{position}})
+\begin{DoxyCompactList}\small\item\em Set the position of the camera. \end{DoxyCompactList}\item 
+virtual const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \& \mbox{\hyperlink{classmoka_1_1basic__camera_a444f348fa7557b80052fa2c2471cd1f8}{get\+\_\+projection}} () const
+\begin{DoxyCompactList}\small\item\em Get the projection of the camera. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_ac0cef3f49a34e3b63c6a58c8843768cd}{set\+\_\+projection}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&projection)
+\begin{DoxyCompactList}\small\item\em Set the projection of the camera. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_af33dd8db22f7da889a70507ae188fc24}{set\+\_\+transform}} (const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\mbox{\hyperlink{classmoka_1_1transform}{transform}})
+\begin{DoxyCompactList}\small\item\em Set the transform of the camera. \end{DoxyCompactList}\item 
+virtual const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \& \mbox{\hyperlink{classmoka_1_1basic__camera_a44867c4b5f360a4924350b66bdf387a9}{get\+\_\+transform}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform of the camera. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1basic__camera_aa396c162b5705bcdc3a02006c529d932}{set\+\_\+perspective}} (float radians, float aspect)
+\begin{DoxyCompactList}\small\item\em Set the perspective of the camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1transform}{transform}} \mbox{\hyperlink{classmoka_1_1basic__camera_a06bb674f79f4448a3980cb94c88bf0cb}{transform\+\_\+}}
+\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \mbox{\hyperlink{classmoka_1_1basic__camera_a6726e56b0b8b2279c948e5f94a0ace05}{projection\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+a very basic camera -\/ contains only the necessary data members to get things drawing on your screen. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a1b7c245be603c3623e54583aebe12357}\label{classmoka_1_1basic__camera_a1b7c245be603c3623e54583aebe12357}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!````~basic\_camera@{$\sim$basic\_camera}}
+\index{````~basic\_camera@{$\sim$basic\_camera}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{$\sim$basic\_camera()}{~basic\_camera()}}
+{\footnotesize\ttfamily virtual moka\+::basic\+\_\+camera\+::$\sim$basic\+\_\+camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a357eb167fe7dad8a1d65a92311e1342e}\label{classmoka_1_1basic__camera_a357eb167fe7dad8a1d65a92311e1342e}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!basic\_camera@{basic\_camera}}
+\index{basic\_camera@{basic\_camera}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{basic\_camera()}{basic\_camera()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily moka\+::basic\+\_\+camera\+::basic\+\_\+camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a3305373cc74a56d5b40cee482959172e}\label{classmoka_1_1basic__camera_a3305373cc74a56d5b40cee482959172e}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!basic\_camera@{basic\_camera}}
+\index{basic\_camera@{basic\_camera}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{basic\_camera()}{basic\_camera()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily moka\+::basic\+\_\+camera\+::basic\+\_\+camera (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&}]{transform,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{projection }\end{DoxyParamCaption})}
+
+
+
+Create a new \mbox{\hyperlink{classmoka_1_1basic__camera}{basic\+\_\+camera}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transform} & The transform of this camera. \\
+\hline
+{\em projection} & The projection of this camera. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_afa49b769555a670396d178141376902e}\label{classmoka_1_1basic__camera_afa49b769555a670396d178141376902e}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}}\& moka\+::basic\+\_\+camera\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the position of the camera. 
+
+\begin{DoxyReturn}{Returns}
+The position of the camera. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a444f348fa7557b80052fa2c2471cd1f8}\label{classmoka_1_1basic__camera_a444f348fa7557b80052fa2c2471cd1f8}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!get\_projection@{get\_projection}}
+\index{get\_projection@{get\_projection}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{get\_projection()}{get\_projection()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}}\& moka\+::basic\+\_\+camera\+::get\+\_\+projection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the projection of the camera. 
+
+\begin{DoxyReturn}{Returns}
+The projection of the camera. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a1222bd9104d5dbd03964a4a340d08b06}\label{classmoka_1_1basic__camera_a1222bd9104d5dbd03964a4a340d08b06}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!get\_rotation@{get\_rotation}}
+\index{get\_rotation@{get\_rotation}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{get\_rotation()}{get\_rotation()}}
+{\footnotesize\ttfamily virtual const glm\+::quat\& moka\+::basic\+\_\+camera\+::get\+\_\+rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the rotation of the camera. 
+
+\begin{DoxyReturn}{Returns}
+The rotation of the camera as a quaternion. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a44867c4b5f360a4924350b66bdf387a9}\label{classmoka_1_1basic__camera_a44867c4b5f360a4924350b66bdf387a9}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!get\_transform@{get\_transform}}
+\index{get\_transform@{get\_transform}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{get\_transform()}{get\_transform()}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{classmoka_1_1transform}{transform}}\& moka\+::basic\+\_\+camera\+::get\+\_\+transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the transform of the camera. 
+
+\begin{DoxyReturn}{Returns}
+The camera\textquotesingle{}s transform. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a50d26f0db9969b36b29103e8a743d4c6}\label{classmoka_1_1basic__camera_a50d26f0db9969b36b29103e8a743d4c6}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!get\_view@{get\_view}}
+\index{get\_view@{get\_view}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{get\_view()}{get\_view()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} moka\+::basic\+\_\+camera\+::get\+\_\+view (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the view matrix. 
+
+\begin{DoxyReturn}{Returns}
+The view matrix. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classmoka_1_1basic__camera_aa396c162b5705bcdc3a02006c529d932}\label{classmoka_1_1basic__camera_aa396c162b5705bcdc3a02006c529d932}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!set\_perspective@{set\_perspective}}
+\index{set\_perspective@{set\_perspective}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{set\_perspective()}{set\_perspective()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::set\+\_\+perspective (\begin{DoxyParamCaption}\item[{float}]{radians,  }\item[{float}]{aspect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the perspective of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radians} & Specifies the field of view angle in the y direction. Expressed in radians. \\
+\hline
+{\em aspect} & Specifies the aspect ratio that determines the field of view in the x direction. The aspect ratio is the ratio of x (width) to y (height). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a48528f88bf5b5e06d4cab6f93183a62a}\label{classmoka_1_1basic__camera_a48528f88bf5b5e06d4cab6f93183a62a}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!set\_position@{set\_position}}
+\index{set\_position@{set\_position}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{set\_position()}{set\_position()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the position of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & A vec3 defining the new position of the camera. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_ac0cef3f49a34e3b63c6a58c8843768cd}\label{classmoka_1_1basic__camera_ac0cef3f49a34e3b63c6a58c8843768cd}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!set\_projection@{set\_projection}}
+\index{set\_projection@{set\_projection}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{set\_projection()}{set\_projection()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::set\+\_\+projection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{projection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the projection of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em projection} & A mat4 defining the new projection of the camera. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_ade33ff9968210e36f4235ad0b5a2aef5}\label{classmoka_1_1basic__camera_ade33ff9968210e36f4235ad0b5a2aef5}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!set\_rotation@{set\_rotation}}
+\index{set\_rotation@{set\_rotation}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{set\_rotation()}{set\_rotation()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::set\+\_\+rotation (\begin{DoxyParamCaption}\item[{const glm\+::quat \&}]{rotation }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the rotation of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & A quaternion defining the new rotation of the camera. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_af33dd8db22f7da889a70507ae188fc24}\label{classmoka_1_1basic__camera_af33dd8db22f7da889a70507ae188fc24}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!set\_transform@{set\_transform}}
+\index{set\_transform@{set\_transform}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{set\_transform()}{set\_transform()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::set\+\_\+transform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&}]{transform }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the transform of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transform} & The new transform of the camera. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a43891fadfe629d3306c3863255660556}\label{classmoka_1_1basic__camera_a43891fadfe629d3306c3863255660556}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!update@{update}}
+\index{update@{update}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual void moka\+::basic\+\_\+camera\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update this camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The current delta time. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classmoka_1_1camera__mouse__controller_a088d8d1f491895f394e67253d4ee4a76}{moka\+::camera\+\_\+mouse\+\_\+controller}}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1basic__camera_a6726e56b0b8b2279c948e5f94a0ace05}\label{classmoka_1_1basic__camera_a6726e56b0b8b2279c948e5f94a0ace05}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!projection\_@{projection\_}}
+\index{projection\_@{projection\_}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{projection\_}{projection\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} moka\+::basic\+\_\+camera\+::projection\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+The projection of this camera. \mbox{\Hypertarget{classmoka_1_1basic__camera_a06bb674f79f4448a3980cb94c88bf0cb}\label{classmoka_1_1basic__camera_a06bb674f79f4448a3980cb94c88bf0cb}} 
+\index{moka::basic\_camera@{moka::basic\_camera}!transform\_@{transform\_}}
+\index{transform\_@{transform\_}!moka::basic\_camera@{moka::basic\_camera}}
+\subsubsection{\texorpdfstring{transform\_}{transform\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1transform}{transform}} moka\+::basic\+\_\+camera\+::transform\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+The transform of this camera. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/camera/\mbox{\hyperlink{basic__camera_8hpp}{basic\+\_\+camera.\+hpp}}\end{DoxyCompactItemize}

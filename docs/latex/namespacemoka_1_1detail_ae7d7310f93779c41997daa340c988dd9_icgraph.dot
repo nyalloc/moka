@@ -1,0 +1,18 @@
+digraph "moka::detail::float_to_byte"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node12 [label="moka::detail::float\l_to_byte",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node13 [label="moka::colour::colour",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ad01b6d1af210de8289c0add5a3d1be04",tooltip=" "];
+  Node12 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node14 [label="moka::colour::set_r",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a5c03d583bf2b0d33e46b9c17defab90d",tooltip=" "];
+  Node12 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node15 [label="moka::colour::set_g",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#af0e845db8ecc3a17e371fb3f9523273f",tooltip=" "];
+  Node12 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node16 [label="moka::colour::set_b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#a60b29bebff89e6507b5af40d8cc8ffb5",tooltip=" "];
+  Node12 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node17 [label="moka::colour::set_a",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1colour.html#ac4ff9c1b4848a555ec4e6c6d471a2209",tooltip=" "];
+}

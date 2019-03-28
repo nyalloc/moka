@@ -1,0 +1,178 @@
+\hypertarget{classmoka_1_1parameter__collection}{}\section{moka\+::parameter\+\_\+collection Class Reference}
+\label{classmoka_1_1parameter__collection}\index{moka::parameter\_collection@{moka::parameter\_collection}}
+
+
+A collection of material parameters.  
+
+
+
+
+{\ttfamily \#include $<$parameter\+\_\+collection.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}} = std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} $>$\+::\mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}} = std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} $>$\+::\mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1parameter__collection_a0dad35309be55314f72215c04fff209b}{begin}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1parameter__collection_a8fb5d245c9f90146b866ed0128eb693b}{end}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}} \mbox{\hyperlink{classmoka_1_1parameter__collection_a5bd7e953bcc4a075aea8299b16f9f40a}{begin}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}} \mbox{\hyperlink{classmoka_1_1parameter__collection_a3f4a4ceed264f9fcb280be268f471323}{end}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1parameter__collection_ae8bf8ef669a0542baae8693c2daebe2f}{generate\+\_\+index\+\_\+lookup}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a09e421cbc4ecbd317341c1e7625bc24e}{parameter\+\_\+collection}} (std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} $>$ parameters)
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_ae260d9fd4479a2e25b838bff6e8d1e0d}{parameter\+\_\+collection}} (const \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \& \mbox{\hyperlink{classmoka_1_1parameter__collection_afe67eefd0d63d71999b9451ebf95c564}{operator=}} (const \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a1d3e96c869b3a52dd757216cea4d5c1b}{parameter\+\_\+collection}} (\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \& \mbox{\hyperlink{classmoka_1_1parameter__collection_a1bc00e9569052d8851e54997ef1dcc5c}{operator=}} (\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a1b0d2b9b9b86e1de98ceb2262cf14935}{$\sim$parameter\+\_\+collection}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1parameter__collection_a95759ce039eba581957b9f87bc163000}{parameter\+\_\+collection}} ()
+\item 
+const \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1parameter__collection_a594b3fe2f55babcc56b1edb35994b789}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index) const
+\item 
+\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1parameter__collection_a0ffaa248546c9de9d9b8abf9bb125ad8}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index)
+\item 
+\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} \& \mbox{\hyperlink{classmoka_1_1parameter__collection_a9053cc6ee2a14d347b3ca12b2a23f4b3}{operator\mbox{[}$\,$\mbox{]}}} (const std\+::string \&name)
+\item 
+size\+\_\+t \mbox{\hyperlink{classmoka_1_1parameter__collection_a4e553f37469125fc4191889134761ff7}{size}} () const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A collection of material parameters. 
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}\label{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!const\_iterator@{const\_iterator}}
+\index{const\_iterator@{const\_iterator}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{const\_iterator}{const\_iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{moka\+::parameter\+\_\+collection\+::const\+\_\+iterator}} =  std\+::vector$<$\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}$>$\+::\mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}}}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}\label{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!iterator@{iterator}}
+\index{iterator@{iterator}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{iterator}{iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{moka\+::parameter\+\_\+collection\+::iterator}} =  std\+::vector$<$\mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}$>$\+::\mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}}}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a09e421cbc4ecbd317341c1e7625bc24e}\label{classmoka_1_1parameter__collection_a09e421cbc4ecbd317341c1e7625bc24e}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!parameter\_collection@{parameter\_collection}}
+\index{parameter\_collection@{parameter\_collection}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{parameter\_collection()}{parameter\_collection()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily moka\+::parameter\+\_\+collection\+::parameter\+\_\+collection (\begin{DoxyParamCaption}\item[{std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}} $>$}]{parameters }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_ae260d9fd4479a2e25b838bff6e8d1e0d}\label{classmoka_1_1parameter__collection_ae260d9fd4479a2e25b838bff6e8d1e0d}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!parameter\_collection@{parameter\_collection}}
+\index{parameter\_collection@{parameter\_collection}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{parameter\_collection()}{parameter\_collection()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily moka\+::parameter\+\_\+collection\+::parameter\+\_\+collection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a1d3e96c869b3a52dd757216cea4d5c1b}\label{classmoka_1_1parameter__collection_a1d3e96c869b3a52dd757216cea4d5c1b}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!parameter\_collection@{parameter\_collection}}
+\index{parameter\_collection@{parameter\_collection}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{parameter\_collection()}{parameter\_collection()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily moka\+::parameter\+\_\+collection\+::parameter\+\_\+collection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a1b0d2b9b9b86e1de98ceb2262cf14935}\label{classmoka_1_1parameter__collection_a1b0d2b9b9b86e1de98ceb2262cf14935}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!````~parameter\_collection@{$\sim$parameter\_collection}}
+\index{````~parameter\_collection@{$\sim$parameter\_collection}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{$\sim$parameter\_collection()}{~parameter\_collection()}}
+{\footnotesize\ttfamily moka\+::parameter\+\_\+collection\+::$\sim$parameter\+\_\+collection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a95759ce039eba581957b9f87bc163000}\label{classmoka_1_1parameter__collection_a95759ce039eba581957b9f87bc163000}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!parameter\_collection@{parameter\_collection}}
+\index{parameter\_collection@{parameter\_collection}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{parameter\_collection()}{parameter\_collection()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily moka\+::parameter\+\_\+collection\+::parameter\+\_\+collection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a0dad35309be55314f72215c04fff209b}\label{classmoka_1_1parameter__collection_a0dad35309be55314f72215c04fff209b}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!begin@{begin}}
+\index{begin@{begin}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}} moka\+::parameter\+\_\+collection\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a5bd7e953bcc4a075aea8299b16f9f40a}\label{classmoka_1_1parameter__collection_a5bd7e953bcc4a075aea8299b16f9f40a}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!begin@{begin}}
+\index{begin@{begin}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}} moka\+::parameter\+\_\+collection\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a8fb5d245c9f90146b866ed0128eb693b}\label{classmoka_1_1parameter__collection_a8fb5d245c9f90146b866ed0128eb693b}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!end@{end}}
+\index{end@{end}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection_a6d2ad87d4e43742300cb9ded3beee731}{const\+\_\+iterator}} moka\+::parameter\+\_\+collection\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a3f4a4ceed264f9fcb280be268f471323}\label{classmoka_1_1parameter__collection_a3f4a4ceed264f9fcb280be268f471323}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!end@{end}}
+\index{end@{end}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection_a2ec8bed3c1d7de9e5c2199ede27aa919}{iterator}} moka\+::parameter\+\_\+collection\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_ae8bf8ef669a0542baae8693c2daebe2f}\label{classmoka_1_1parameter__collection_ae8bf8ef669a0542baae8693c2daebe2f}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!generate\_index\_lookup@{generate\_index\_lookup}}
+\index{generate\_index\_lookup@{generate\_index\_lookup}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{generate\_index\_lookup()}{generate\_index\_lookup()}}
+{\footnotesize\ttfamily void moka\+::parameter\+\_\+collection\+::generate\+\_\+index\+\_\+lookup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_afe67eefd0d63d71999b9451ebf95c564}\label{classmoka_1_1parameter__collection_afe67eefd0d63d71999b9451ebf95c564}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}}\& moka\+::parameter\+\_\+collection\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a1bc00e9569052d8851e54997ef1dcc5c}\label{classmoka_1_1parameter__collection_a1bc00e9569052d8851e54997ef1dcc5c}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}}\& moka\+::parameter\+\_\+collection\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1parameter__collection}{parameter\+\_\+collection}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a594b3fe2f55babcc56b1edb35994b789}\label{classmoka_1_1parameter__collection_a594b3fe2f55babcc56b1edb35994b789}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::parameter\+\_\+collection\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a0ffaa248546c9de9d9b8abf9bb125ad8}\label{classmoka_1_1parameter__collection_a0ffaa248546c9de9d9b8abf9bb125ad8}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::parameter\+\_\+collection\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a9053cc6ee2a14d347b3ca12b2a23f4b3}\label{classmoka_1_1parameter__collection_a9053cc6ee2a14d347b3ca12b2a23f4b3}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1material__parameter}{material\+\_\+parameter}}\& moka\+::parameter\+\_\+collection\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1parameter__collection_a4e553f37469125fc4191889134761ff7}\label{classmoka_1_1parameter__collection_a4e553f37469125fc4191889134761ff7}} 
+\index{moka::parameter\_collection@{moka::parameter\_collection}!size@{size}}
+\index{size@{size}!moka::parameter\_collection@{moka::parameter\_collection}}
+\subsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily size\+\_\+t moka\+::parameter\+\_\+collection\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/material/\mbox{\hyperlink{parameter__collection_8hpp}{parameter\+\_\+collection.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,10 @@
+digraph "moka::logger::warn"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node22 [label="moka::logger::warn",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Write some warn-level information to the log."];
+  Node22 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node23 [label="moka::logger::log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#a826aeeb2fcae75b99c72eb9c82b5fa13",tooltip="Write some information to the log."];
+}

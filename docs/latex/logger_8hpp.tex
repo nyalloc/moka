@@ -1,0 +1,36 @@
+\hypertarget{logger_8hpp}{}\section{engine/includes/application/logger.hpp File Reference}
+\label{logger_8hpp}\index{engine/includes/application/logger.hpp@{engine/includes/application/logger.hpp}}
+{\ttfamily \#include $<$spdlog/spdlog.\+h$>$}\newline
+Include dependency graph for logger.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1application__traits}{moka\+::application\+\_\+traits}}
+\begin{DoxyCompactList}\small\item\em A wrapper around compile-\/time constants that can be used for conditional compilation in the application. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classmoka_1_1logger}{moka\+::logger}}
+\begin{DoxyCompactList}\small\item\em A logging class. A simple wrapper around a spdlog\+::logger object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637d}{moka\+::log\+\_\+level}} \{ \newline
+\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637da04a75036e9d520bb983c5ed03b8d0182}{moka\+::log\+\_\+level\+::trace}}, 
+\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637daad42f6697b035b7580e4fef93be20b4d}{moka\+::log\+\_\+level\+::debug}}, 
+\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637dacaf9b6b99962bf5c2264824231d7a40c}{moka\+::log\+\_\+level\+::info}}, 
+\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637da1ea4c3ab05ee0c6d4de30740443769cb}{moka\+::log\+\_\+level\+::warn}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a7c4111664aee7737c54ab37376b2637dacb5e100e5a9a3e7f6d1fd97512215282}{moka\+::log\+\_\+level\+::error}}
+ \}
+\begin{DoxyCompactList}\small\item\em The severity of the item being logged. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr log\+\_\+level \mbox{\hyperlink{namespacemoka_ac3f7b72250cd352011df4f431c862df5}{moka\+::default\+\_\+log\+\_\+level}} ()
+\begin{DoxyCompactList}\small\item\em Get the default log level of the application. \end{DoxyCompactList}\end{DoxyCompactItemize}

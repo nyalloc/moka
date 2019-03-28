@@ -1,0 +1,139 @@
+\hypertarget{classmoka_1_1frame__buffer__command}{}\section{moka\+::frame\+\_\+buffer\+\_\+command Class Reference}
+\label{classmoka_1_1frame__buffer__command}\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+
+
+Set the current frame buffer. This will modify all subsequent draw commands in this list.  
+
+
+
+
+{\ttfamily \#include $<$frame\+\_\+buffer\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::frame\+\_\+buffer\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::frame\+\_\+buffer\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command_ad3094b980fd94b8fd11b26bafb1c9814}{frame\+\_\+buffer\+\_\+command}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command_a035a2963183c0b6dcf52b1c914fbdf6e}{$\sim$frame\+\_\+buffer\+\_\+command}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command_aa8d7409f8c0e07c78e1c65c49ea45b02}{frame\+\_\+buffer\+\_\+command}} (const \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a64f128f3ee73772fc196c68cd86346c6}{operator=}} (const \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command_a6a850723eaaca2e39df65b81f91f5813}{frame\+\_\+buffer\+\_\+command}} (\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a5d3890ff059f2859471d9d6d6b346ba6}{operator=}} (\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&\&rhs) noexcept
+\item 
+void \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a72a08b1f2f64f8f93458b4c70747f439}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1frame__buffer__command_ad56ea45eee3171897e0a15eb41acccf0}{set\+\_\+frame\+\_\+buffer}} (\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a914e3a4d2d80c5005f71706bb800bec6}{buffer}})
+\begin{DoxyCompactList}\small\item\em Set the current frame buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1frame__buffer__command_a914e3a4d2d80c5005f71706bb800bec6}{buffer}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Set the current frame buffer. This will modify all subsequent draw commands in this list. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_ad3094b980fd94b8fd11b26bafb1c9814}\label{classmoka_1_1frame__buffer__command_ad3094b980fd94b8fd11b26bafb1c9814}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!frame\_buffer\_command@{frame\_buffer\_command}}
+\index{frame\_buffer\_command@{frame\_buffer\_command}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{frame\_buffer\_command()}{frame\_buffer\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+command\+::frame\+\_\+buffer\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a035a2963183c0b6dcf52b1c914fbdf6e}\label{classmoka_1_1frame__buffer__command_a035a2963183c0b6dcf52b1c914fbdf6e}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!````~frame\_buffer\_command@{$\sim$frame\_buffer\_command}}
+\index{````~frame\_buffer\_command@{$\sim$frame\_buffer\_command}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{$\sim$frame\_buffer\_command()}{~frame\_buffer\_command()}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+command\+::$\sim$frame\+\_\+buffer\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_aa8d7409f8c0e07c78e1c65c49ea45b02}\label{classmoka_1_1frame__buffer__command_aa8d7409f8c0e07c78e1c65c49ea45b02}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!frame\_buffer\_command@{frame\_buffer\_command}}
+\index{frame\_buffer\_command@{frame\_buffer\_command}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{frame\_buffer\_command()}{frame\_buffer\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+command\+::frame\+\_\+buffer\+\_\+command (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a6a850723eaaca2e39df65b81f91f5813}\label{classmoka_1_1frame__buffer__command_a6a850723eaaca2e39df65b81f91f5813}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!frame\_buffer\_command@{frame\_buffer\_command}}
+\index{frame\_buffer\_command@{frame\_buffer\_command}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{frame\_buffer\_command()}{frame\_buffer\_command()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::frame\+\_\+buffer\+\_\+command\+::frame\+\_\+buffer\+\_\+command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a72a08b1f2f64f8f93458b4c70747f439}\label{classmoka_1_1frame__buffer__command_a72a08b1f2f64f8f93458b4c70747f439}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!accept@{accept}}
+\index{accept@{accept}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::frame\+\_\+buffer\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a64f128f3ee73772fc196c68cd86346c6}\label{classmoka_1_1frame__buffer__command_a64f128f3ee73772fc196c68cd86346c6}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+command\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a5d3890ff059f2859471d9d6d6b346ba6}\label{classmoka_1_1frame__buffer__command_a5d3890ff059f2859471d9d6d6b346ba6}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+command\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_ad56ea45eee3171897e0a15eb41acccf0}\label{classmoka_1_1frame__buffer__command_ad56ea45eee3171897e0a15eb41acccf0}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!set\_frame\_buffer@{set\_frame\_buffer}}
+\index{set\_frame\_buffer@{set\_frame\_buffer}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{set\_frame\_buffer()}{set\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::frame\+\_\+buffer\+\_\+command\+::set\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}}}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Set the current frame buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Set the current frame buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1frame__buffer__command_a914e3a4d2d80c5005f71706bb800bec6}\label{classmoka_1_1frame__buffer__command_a914e3a4d2d80c5005f71706bb800bec6}} 
+\index{moka::frame\_buffer\_command@{moka::frame\_buffer\_command}!buffer@{buffer}}
+\index{buffer@{buffer}!moka::frame\_buffer\_command@{moka::frame\_buffer\_command}}
+\subsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1frame__buffer__handle}{frame\+\_\+buffer\+\_\+handle}} moka\+::frame\+\_\+buffer\+\_\+command\+::buffer}
+
+The current frame buffer you want to use. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{frame__buffer__command_8hpp}{frame\+\_\+buffer\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

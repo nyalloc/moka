@@ -1,0 +1,222 @@
+\hypertarget{classmoka_1_1application}{}\section{moka\+::application Class Reference}
+\label{classmoka_1_1application}\index{moka::application@{moka::application}}
+
+
+The basic skeleton of a moka application. Contains all windowing, input-\/handling + rendering logic. Child classes define the fleshed out application-\/specific functionality.  
+
+
+
+
+{\ttfamily \#include $<$application.\+hpp$>$}
+
+
+
+Collaboration diagram for moka\+::application\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1application_ae33bd647d6f1405304d2a499ecc3177a}{application}} (const \mbox{\hyperlink{structmoka_1_1app__settings}{app\+\_\+settings}} \&settings)
+\begin{DoxyCompactList}\small\item\em Construct a new application object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1application_a7fd533f69ba906c8bfb6ffd5ebb72652}{application}} (const \mbox{\hyperlink{classmoka_1_1application}{application}} \&rhs)=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1application_abaa0f3743e92d92c9165118851322495}{application}} (\mbox{\hyperlink{classmoka_1_1application}{application}} \&\&rhs)=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1application}{application}} \& \mbox{\hyperlink{classmoka_1_1application_ad885d2917244949203f76c66719ce184}{operator=}} (const \mbox{\hyperlink{classmoka_1_1application}{application}} \&rhs)=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1application}{application}} \& \mbox{\hyperlink{classmoka_1_1application_a9398b1692b1c703e93ab4d5872744ab1}{operator=}} (\mbox{\hyperlink{classmoka_1_1application}{application}} \&\&rhs)=delete
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1application_a7fcffcadb51ae4d83834c14f8177f752}{$\sim$application}} ()
+\item 
+float \mbox{\hyperlink{classmoka_1_1application_a3db4349bae1c5c42e1107327641d1368}{seconds\+\_\+elapsed}} () const
+\begin{DoxyCompactList}\small\item\em Get the number of seconds since the application was started. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1application_a4ff779dd96996fa04cc391547b972519}{draw}} (\mbox{\hyperlink{namespacemoka_a4b8e94fbfa287169990f1cc8171c0984}{game\+\_\+time}} delta\+\_\+time)=0
+\begin{DoxyCompactList}\small\item\em A draw method that can be overriden by child classes to add application-\/specific rendering functionality. This function is called by the main game loop at a variable time rate to decouple the simulation from the rendering framerate. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmoka_1_1application_ab4c9190d4ffa3cdef1b184cac5b02b15}{update}} (\mbox{\hyperlink{namespacemoka_a4b8e94fbfa287169990f1cc8171c0984}{game\+\_\+time}} delta\+\_\+time)=0
+\begin{DoxyCompactList}\small\item\em An update method that can be overriden by child classes to add application-\/specific functionality. This function is called by the main game loop at a fixed rate of 60 times a second. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classmoka_1_1application_a14965b715fe146c3253a7fbdf53a9a98}{run}} ()
+\begin{DoxyCompactList}\small\item\em Starts the game loop. \end{DoxyCompactList}\item 
+virtual std\+::filesystem\+::path \mbox{\hyperlink{classmoka_1_1application_a8d1863a783aa5727af9612d56043118b}{data\+\_\+path}} ()=0
+\begin{DoxyCompactList}\small\item\em Get the absolute path to the root resources folder for this application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1logger}{logger}} \mbox{\hyperlink{classmoka_1_1application_a4c0a7386e9592e03cf892e727773bf18}{log\+\_\+}}
+\item 
+\mbox{\hyperlink{classmoka_1_1timer}{timer}} \mbox{\hyperlink{classmoka_1_1application_af888f59aa879423973a53500a4c12e1f}{timer\+\_\+}}
+\item 
+\mbox{\hyperlink{classmoka_1_1window}{window}} \mbox{\hyperlink{classmoka_1_1application_a13c9e8af519e045299e8993a0a928731}{window\+\_\+}}
+\item 
+\mbox{\hyperlink{classmoka_1_1mouse}{mouse}} \mbox{\hyperlink{classmoka_1_1application_a0723c3d9d05b50e59fc67e523e64e831}{mouse\+\_\+}}
+\item 
+\mbox{\hyperlink{classmoka_1_1keyboard}{keyboard}} \mbox{\hyperlink{classmoka_1_1application_ad7d5ace0349f00fb9df3760f61035ed8}{keyboard\+\_\+}}
+\item 
+\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \mbox{\hyperlink{classmoka_1_1application_a9b6a8978832111b4e8e23c57042396ba}{graphics\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The basic skeleton of a moka application. Contains all windowing, input-\/handling + rendering logic. Child classes define the fleshed out application-\/specific functionality. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1application_ae33bd647d6f1405304d2a499ecc3177a}\label{classmoka_1_1application_ae33bd647d6f1405304d2a499ecc3177a}} 
+\index{moka::application@{moka::application}!application@{application}}
+\index{application@{application}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{application()}{application()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::application\+::application (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmoka_1_1app__settings}{app\+\_\+settings}} \&}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new application object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & The application settings to be used when setting up the input, windowing and rendering systems. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1application_a7fd533f69ba906c8bfb6ffd5ebb72652}\label{classmoka_1_1application_a7fd533f69ba906c8bfb6ffd5ebb72652}} 
+\index{moka::application@{moka::application}!application@{application}}
+\index{application@{application}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{application()}{application()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::application\+::application (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1application}{application}} \&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1application_abaa0f3743e92d92c9165118851322495}\label{classmoka_1_1application_abaa0f3743e92d92c9165118851322495}} 
+\index{moka::application@{moka::application}!application@{application}}
+\index{application@{application}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{application()}{application()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::application\+::application (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1application}{application}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1application_a7fcffcadb51ae4d83834c14f8177f752}\label{classmoka_1_1application_a7fcffcadb51ae4d83834c14f8177f752}} 
+\index{moka::application@{moka::application}!````~application@{$\sim$application}}
+\index{````~application@{$\sim$application}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{$\sim$application()}{~application()}}
+{\footnotesize\ttfamily virtual moka\+::application\+::$\sim$application (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1application_a8d1863a783aa5727af9612d56043118b}\label{classmoka_1_1application_a8d1863a783aa5727af9612d56043118b}} 
+\index{moka::application@{moka::application}!data\_path@{data\_path}}
+\index{data\_path@{data\_path}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{data\_path()}{data\_path()}}
+{\footnotesize\ttfamily virtual std\+::filesystem\+::path moka\+::application\+::data\+\_\+path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the absolute path to the root resources folder for this application. 
+
+\begin{DoxyReturn}{Returns}
+The absolute path to the root resources folder for this application. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1application_a4ff779dd96996fa04cc391547b972519}\label{classmoka_1_1application_a4ff779dd96996fa04cc391547b972519}} 
+\index{moka::application@{moka::application}!draw@{draw}}
+\index{draw@{draw}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily virtual void moka\+::application\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a4b8e94fbfa287169990f1cc8171c0984}{game\+\_\+time}}}]{delta\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+A draw method that can be overriden by child classes to add application-\/specific rendering functionality. This function is called by the main game loop at a variable time rate to decouple the simulation from the rendering framerate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time in seconds since the last invocation of this function. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1application_ad885d2917244949203f76c66719ce184}\label{classmoka_1_1application_ad885d2917244949203f76c66719ce184}} 
+\index{moka::application@{moka::application}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1application}{application}}\& moka\+::application\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1application}{application}} \&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1application_a9398b1692b1c703e93ab4d5872744ab1}\label{classmoka_1_1application_a9398b1692b1c703e93ab4d5872744ab1}} 
+\index{moka::application@{moka::application}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1application}{application}}\& moka\+::application\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1application}{application}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1application_a14965b715fe146c3253a7fbdf53a9a98}\label{classmoka_1_1application_a14965b715fe146c3253a7fbdf53a9a98}} 
+\index{moka::application@{moka::application}!run@{run}}
+\index{run@{run}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily int moka\+::application\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Starts the game loop. 
+
+\begin{DoxyReturn}{Returns}
+0 if the application exits successfully, 1 if the application exits with an error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1application_a3db4349bae1c5c42e1107327641d1368}\label{classmoka_1_1application_a3db4349bae1c5c42e1107327641d1368}} 
+\index{moka::application@{moka::application}!seconds\_elapsed@{seconds\_elapsed}}
+\index{seconds\_elapsed@{seconds\_elapsed}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{seconds\_elapsed()}{seconds\_elapsed()}}
+{\footnotesize\ttfamily float moka\+::application\+::seconds\+\_\+elapsed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the number of seconds since the application was started. 
+
+\begin{DoxyReturn}{Returns}
+The number of seconds since the application started. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1application_ab4c9190d4ffa3cdef1b184cac5b02b15}\label{classmoka_1_1application_ab4c9190d4ffa3cdef1b184cac5b02b15}} 
+\index{moka::application@{moka::application}!update@{update}}
+\index{update@{update}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual void moka\+::application\+::update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_a4b8e94fbfa287169990f1cc8171c0984}{game\+\_\+time}}}]{delta\+\_\+time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+An update method that can be overriden by child classes to add application-\/specific functionality. This function is called by the main game loop at a fixed rate of 60 times a second. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+\_\+time} & The time in seconds since the last invocation of this function. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1application_a9b6a8978832111b4e8e23c57042396ba}\label{classmoka_1_1application_a9b6a8978832111b4e8e23c57042396ba}} 
+\index{moka::application@{moka::application}!graphics\_@{graphics\_}}
+\index{graphics\_@{graphics\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{graphics\_}{graphics\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} moka\+::application\+::graphics\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+An abstraction of the native rendering A\+PI. Resources can be created + destroyed, and drawing commands can be submitted through command lists. \mbox{\Hypertarget{classmoka_1_1application_ad7d5ace0349f00fb9df3760f61035ed8}\label{classmoka_1_1application_ad7d5ace0349f00fb9df3760f61035ed8}} 
+\index{moka::application@{moka::application}!keyboard\_@{keyboard\_}}
+\index{keyboard\_@{keyboard\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{keyboard\_}{keyboard\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1keyboard}{keyboard}} moka\+::application\+::keyboard\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+Contains the keyboard state as last reported by the native input A\+PI \mbox{\Hypertarget{classmoka_1_1application_a4c0a7386e9592e03cf892e727773bf18}\label{classmoka_1_1application_a4c0a7386e9592e03cf892e727773bf18}} 
+\index{moka::application@{moka::application}!log\_@{log\_}}
+\index{log\_@{log\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{log\_}{log\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1logger}{logger}} moka\+::application\+::log\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+A basic logger. \mbox{\Hypertarget{classmoka_1_1application_a0723c3d9d05b50e59fc67e523e64e831}\label{classmoka_1_1application_a0723c3d9d05b50e59fc67e523e64e831}} 
+\index{moka::application@{moka::application}!mouse\_@{mouse\_}}
+\index{mouse\_@{mouse\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{mouse\_}{mouse\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1mouse}{mouse}} moka\+::application\+::mouse\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+Contains the mouse state as last reported by the native input A\+PI \mbox{\Hypertarget{classmoka_1_1application_af888f59aa879423973a53500a4c12e1f}\label{classmoka_1_1application_af888f59aa879423973a53500a4c12e1f}} 
+\index{moka::application@{moka::application}!timer\_@{timer\_}}
+\index{timer\_@{timer\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{timer\_}{timer\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1timer}{timer}} moka\+::application\+::timer\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+A stopwatch-\/style timer with std\+::chrono support. \mbox{\Hypertarget{classmoka_1_1application_a13c9e8af519e045299e8993a0a928731}\label{classmoka_1_1application_a13c9e8af519e045299e8993a0a928731}} 
+\index{moka::application@{moka::application}!window\_@{window\_}}
+\index{window\_@{window\_}!moka::application@{moka::application}}
+\subsubsection{\texorpdfstring{window\_}{window\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1window}{window}} moka\+::application\+::window\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+Windowing class. Abstracts the native windowing A\+PI. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/application/\mbox{\hyperlink{application_8hpp}{application.\+hpp}}\end{DoxyCompactItemize}

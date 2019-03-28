@@ -1,0 +1,516 @@
+\hypertarget{classmoka_1_1transform}{}\section{moka\+::transform Class Reference}
+\label{classmoka_1_1transform}\index{moka::transform@{moka::transform}}
+
+
+A transform class enclosing a position, scale and rotation.  
+
+
+
+
+{\ttfamily \#include $<$transform.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1transform_aa6b24d02e183f22c5ae6a558f3b30c97}{transform}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&\mbox{\hyperlink{namespacemoka_a16a7bd7fc66f698dfcaf9bca1312a2bba4757fe07fd492a8be0ea6a760d683d6e}{position}}, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&scale, const glm\+::quat \&rotation)
+\begin{DoxyCompactList}\small\item\em Create a transform object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1transform_ab0f822acb5c704fb99f6066ba38ccbdd}{transform}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1transform_adfecd90714b971efe3ba8bea1ad41b83}{transform}} (const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1transform}{transform}} \& \mbox{\hyperlink{classmoka_1_1transform_ad7ea9908ebf679c89a5c329208791fcf}{operator=}} (const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&rhs)
+\item 
+\mbox{\hyperlink{classmoka_1_1transform_a321493f9e8b4013b7db93b719d471568}{transform}} (\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1transform}{transform}} \& \mbox{\hyperlink{classmoka_1_1transform_a78e08f231ced4f99808ba2a66eace1a0}{operator=}} (\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1transform_a4469fa3b4f998c8c008e2ca02fc54944}{$\sim$transform}} ()=default
+\item 
+const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \& \mbox{\hyperlink{classmoka_1_1transform_aa14faed346ff209df8181a6d75bd1654}{get\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s local position. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a1be839aea05acb7c03a393a3b9f9d776}{get\+\_\+world\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s world position. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \& \mbox{\hyperlink{classmoka_1_1transform_a029e29caae092f78166cd208137aae18}{get\+\_\+scale}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s local scale. \end{DoxyCompactList}\item 
+const glm\+::quat \& \mbox{\hyperlink{classmoka_1_1transform_a4bb68582d14ce69a418fceecc312a686}{get\+\_\+rotation}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s local rotation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \mbox{\hyperlink{classmoka_1_1transform_a01484fe05bd028cd37ceca8c1e95fbde}{to\+\_\+matrix}} () const
+\begin{DoxyCompactList}\small\item\em Convert this transform to a mat4. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1transform_a0283f5129ddc7c7bc12561b330729b26}{operator glm\+::mat4}} () const
+\begin{DoxyCompactList}\small\item\em Convert this transform to a mat4. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_ab0101bcceca6791ce8a60b20116455b1}{set\+\_\+position}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&\mbox{\hyperlink{namespacemoka_a16a7bd7fc66f698dfcaf9bca1312a2bba4757fe07fd492a8be0ea6a760d683d6e}{position}})
+\begin{DoxyCompactList}\small\item\em Set this transform\textquotesingle{}s position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_a2c047551ab0948aa8400f86d357619ce}{set\+\_\+scale}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&scale)
+\begin{DoxyCompactList}\small\item\em Set this transform\textquotesingle{}s scale. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_a53721bd0d33ca0b20fc76132d0b6457b}{set\+\_\+rotation}} (const glm\+::quat \&rotation)
+\begin{DoxyCompactList}\small\item\em Set this transform\textquotesingle{}s rotation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_ac7a59896b1574f7ce6ce9b7e9534fbd9}{front}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s front direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a2604b09d17efee979a6180763860ed81}{back}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s back direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a540766efeb8efe854972ec5f8fb41731}{right}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s right direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_ac5dbabdc02770433d351204cfbb199be}{left}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s left direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a0f118e1b139568b3ca6722472c6ccfbd}{up}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s up direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_aa639b098139d6b5283ae39c992d70ccf}{down}} () const
+\begin{DoxyCompactList}\small\item\em Get the transform\textquotesingle{}s down direction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_af21853480a4f772450364f8f39687054}{rotate\+\_\+around}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&point, const glm\+::quat \&rotation)
+\begin{DoxyCompactList}\small\item\em Rotate this transform around a point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_a1ff4249932d7b23580834c1ea0bd8717}{rotate\+\_\+around}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&point, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&axis, float angle)
+\begin{DoxyCompactList}\small\item\em Rotate this transform around a point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1transform_afbad251b87847b7d52dbbd360ebd62b3}{look\+\_\+at}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&world\+\_\+location, const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&\mbox{\hyperlink{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}{world\+\_\+up}}=\mbox{\hyperlink{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}{transform\+::world\+\_\+up}}())
+\begin{DoxyCompactList}\small\item\em Make the transform look at a point in world space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a4212585d4bde3be8fcf6d80122d8514d}{world\+\_\+front}} ()
+\begin{DoxyCompactList}\small\item\em Get the world front direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a661f13baaf1d034140bee8c053e54d2d}{world\+\_\+back}} ()
+\begin{DoxyCompactList}\small\item\em Get the world back direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}{world\+\_\+up}} ()
+\begin{DoxyCompactList}\small\item\em Get the world up direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_acf33dea012bcc221745c459be7060436}{world\+\_\+down}} ()
+\begin{DoxyCompactList}\small\item\em Get the world down direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a8f3d35d28a475aa3e232825cb335b6e1}{world\+\_\+right}} ()
+\begin{DoxyCompactList}\small\item\em Get the world right direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_a510f66a2be7fc5194417ed82262842c2}{world\+\_\+left}} ()
+\begin{DoxyCompactList}\small\item\em Get the world left direction. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \mbox{\hyperlink{classmoka_1_1transform_ab952e9b252cd2f5a0256e1aa0c9743c0}{world\+\_\+origin}} ()
+\begin{DoxyCompactList}\small\item\em Get the world origin. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{classmoka_1_1transform}{transform}} \mbox{\hyperlink{classmoka_1_1transform_a5bbbfa2b9efaeda3d2c11c6f16decf7e}{from\+\_\+matrix}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&\mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71da6f8f57715090da2632453988d9a1501b}{m}})
+\begin{DoxyCompactList}\small\item\em Generate a transform from a matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A transform class enclosing a position, scale and rotation. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1transform_aa6b24d02e183f22c5ae6a558f3b30c97}\label{classmoka_1_1transform_aa6b24d02e183f22c5ae6a558f3b30c97}} 
+\index{moka::transform@{moka::transform}!transform@{transform}}
+\index{transform@{transform}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{transform()}{transform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily moka\+::transform\+::transform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{position,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{scale,  }\item[{const glm\+::quat \&}]{rotation }\end{DoxyParamCaption})}
+
+
+
+Create a transform object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The transform position. \\
+\hline
+{\em scale} & The transform scale. \\
+\hline
+{\em rotation} & The transform rotation. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_ab0f822acb5c704fb99f6066ba38ccbdd}\label{classmoka_1_1transform_ab0f822acb5c704fb99f6066ba38ccbdd}} 
+\index{moka::transform@{moka::transform}!transform@{transform}}
+\index{transform@{transform}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{transform()}{transform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily moka\+::transform\+::transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1transform_adfecd90714b971efe3ba8bea1ad41b83}\label{classmoka_1_1transform_adfecd90714b971efe3ba8bea1ad41b83}} 
+\index{moka::transform@{moka::transform}!transform@{transform}}
+\index{transform@{transform}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{transform()}{transform()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily moka\+::transform\+::transform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1transform_a321493f9e8b4013b7db93b719d471568}\label{classmoka_1_1transform_a321493f9e8b4013b7db93b719d471568}} 
+\index{moka::transform@{moka::transform}!transform@{transform}}
+\index{transform@{transform}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{transform()}{transform()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily moka\+::transform\+::transform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1transform_a4469fa3b4f998c8c008e2ca02fc54944}\label{classmoka_1_1transform_a4469fa3b4f998c8c008e2ca02fc54944}} 
+\index{moka::transform@{moka::transform}!````~transform@{$\sim$transform}}
+\index{````~transform@{$\sim$transform}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{$\sim$transform()}{~transform()}}
+{\footnotesize\ttfamily moka\+::transform\+::$\sim$transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1transform_a2604b09d17efee979a6180763860ed81}\label{classmoka_1_1transform_a2604b09d17efee979a6180763860ed81}} 
+\index{moka::transform@{moka::transform}!back@{back}}
+\index{back@{back}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{back()}{back()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::back (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s back direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s back direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_aa639b098139d6b5283ae39c992d70ccf}\label{classmoka_1_1transform_aa639b098139d6b5283ae39c992d70ccf}} 
+\index{moka::transform@{moka::transform}!down@{down}}
+\index{down@{down}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{down()}{down()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s down direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s down direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a5bbbfa2b9efaeda3d2c11c6f16decf7e}\label{classmoka_1_1transform_a5bbbfa2b9efaeda3d2c11c6f16decf7e}} 
+\index{moka::transform@{moka::transform}!from\_matrix@{from\_matrix}}
+\index{from\_matrix@{from\_matrix}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{from\_matrix()}{from\_matrix()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classmoka_1_1transform}{transform}} moka\+::transform\+::from\+\_\+matrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Generate a transform from a matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The matrix you want to turn into a transform. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new transform object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_ac7a59896b1574f7ce6ce9b7e9534fbd9}\label{classmoka_1_1transform_ac7a59896b1574f7ce6ce9b7e9534fbd9}} 
+\index{moka::transform@{moka::transform}!front@{front}}
+\index{front@{front}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{front()}{front()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::front (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s front direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s front direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_aa14faed346ff209df8181a6d75bd1654}\label{classmoka_1_1transform_aa14faed346ff209df8181a6d75bd1654}} 
+\index{moka::transform@{moka::transform}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}}\& moka\+::transform\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s local position. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s local position. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a4bb68582d14ce69a418fceecc312a686}\label{classmoka_1_1transform_a4bb68582d14ce69a418fceecc312a686}} 
+\index{moka::transform@{moka::transform}!get\_rotation@{get\_rotation}}
+\index{get\_rotation@{get\_rotation}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{get\_rotation()}{get\_rotation()}}
+{\footnotesize\ttfamily const glm\+::quat\& moka\+::transform\+::get\+\_\+rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s local rotation. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s local rotation. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a029e29caae092f78166cd208137aae18}\label{classmoka_1_1transform_a029e29caae092f78166cd208137aae18}} 
+\index{moka::transform@{moka::transform}!get\_scale@{get\_scale}}
+\index{get\_scale@{get\_scale}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{get\_scale()}{get\_scale()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}}\& moka\+::transform\+::get\+\_\+scale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s local scale. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s local scale. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a1be839aea05acb7c03a393a3b9f9d776}\label{classmoka_1_1transform_a1be839aea05acb7c03a393a3b9f9d776}} 
+\index{moka::transform@{moka::transform}!get\_world\_position@{get\_world\_position}}
+\index{get\_world\_position@{get\_world\_position}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{get\_world\_position()}{get\_world\_position()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::get\+\_\+world\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s world position. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s world position. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1transform_ac5dbabdc02770433d351204cfbb199be}\label{classmoka_1_1transform_ac5dbabdc02770433d351204cfbb199be}} 
+\index{moka::transform@{moka::transform}!left@{left}}
+\index{left@{left}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{left()}{left()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s left direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s left direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_afbad251b87847b7d52dbbd360ebd62b3}\label{classmoka_1_1transform_afbad251b87847b7d52dbbd360ebd62b3}} 
+\index{moka::transform@{moka::transform}!look\_at@{look\_at}}
+\index{look\_at@{look\_at}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{look\_at()}{look\_at()}}
+{\footnotesize\ttfamily void moka\+::transform\+::look\+\_\+at (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{world\+\_\+location,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{world\+\_\+up = {\ttfamily \mbox{\hyperlink{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}{transform\+::world\+\_\+up}}()} }\end{DoxyParamCaption})}
+
+
+
+Make the transform look at a point in world space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+\_\+location} & The point you want this transform to look at. \\
+\hline
+{\em world\+\_\+up} & The world up direction. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_a0283f5129ddc7c7bc12561b330729b26}\label{classmoka_1_1transform_a0283f5129ddc7c7bc12561b330729b26}} 
+\index{moka::transform@{moka::transform}!operator glm::mat4@{operator glm::mat4}}
+\index{operator glm::mat4@{operator glm::mat4}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{operator glm::mat4()}{operator glm::mat4()}}
+{\footnotesize\ttfamily moka\+::transform\+::operator \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Convert this transform to a mat4. 
+
+\mbox{\Hypertarget{classmoka_1_1transform_ad7ea9908ebf679c89a5c329208791fcf}\label{classmoka_1_1transform_ad7ea9908ebf679c89a5c329208791fcf}} 
+\index{moka::transform@{moka::transform}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1transform}{transform}}\& moka\+::transform\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&}]{rhs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1transform_a78e08f231ced4f99808ba2a66eace1a0}\label{classmoka_1_1transform_a78e08f231ced4f99808ba2a66eace1a0}} 
+\index{moka::transform@{moka::transform}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1transform}{transform}}\& moka\+::transform\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1transform_a540766efeb8efe854972ec5f8fb41731}\label{classmoka_1_1transform_a540766efeb8efe854972ec5f8fb41731}} 
+\index{moka::transform@{moka::transform}!right@{right}}
+\index{right@{right}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{right()}{right()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s right direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s right direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_af21853480a4f772450364f8f39687054}\label{classmoka_1_1transform_af21853480a4f772450364f8f39687054}} 
+\index{moka::transform@{moka::transform}!rotate\_around@{rotate\_around}}
+\index{rotate\_around@{rotate\_around}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{rotate\_around()}{rotate\_around()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void moka\+::transform\+::rotate\+\_\+around (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{point,  }\item[{const glm\+::quat \&}]{rotation }\end{DoxyParamCaption})}
+
+
+
+Rotate this transform around a point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & The point you want to rotate around. \\
+\hline
+{\em rotation} & The rotation. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_a1ff4249932d7b23580834c1ea0bd8717}\label{classmoka_1_1transform_a1ff4249932d7b23580834c1ea0bd8717}} 
+\index{moka::transform@{moka::transform}!rotate\_around@{rotate\_around}}
+\index{rotate\_around@{rotate\_around}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{rotate\_around()}{rotate\_around()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void moka\+::transform\+::rotate\+\_\+around (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{point,  }\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{axis,  }\item[{float}]{angle }\end{DoxyParamCaption})}
+
+
+
+Rotate this transform around a point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & The point you want to rotate around. \\
+\hline
+{\em axis} & The rotation axis. \\
+\hline
+{\em angle} & The rotation angle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_ab0101bcceca6791ce8a60b20116455b1}\label{classmoka_1_1transform_ab0101bcceca6791ce8a60b20116455b1}} 
+\index{moka::transform@{moka::transform}!set\_position@{set\_position}}
+\index{set\_position@{set\_position}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{set\_position()}{set\_position()}}
+{\footnotesize\ttfamily void moka\+::transform\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Set this transform\textquotesingle{}s position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The new position. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_a53721bd0d33ca0b20fc76132d0b6457b}\label{classmoka_1_1transform_a53721bd0d33ca0b20fc76132d0b6457b}} 
+\index{moka::transform@{moka::transform}!set\_rotation@{set\_rotation}}
+\index{set\_rotation@{set\_rotation}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{set\_rotation()}{set\_rotation()}}
+{\footnotesize\ttfamily void moka\+::transform\+::set\+\_\+rotation (\begin{DoxyParamCaption}\item[{const glm\+::quat \&}]{rotation }\end{DoxyParamCaption})}
+
+
+
+Set this transform\textquotesingle{}s rotation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & The new rotation. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_a2c047551ab0948aa8400f86d357619ce}\label{classmoka_1_1transform_a2c047551ab0948aa8400f86d357619ce}} 
+\index{moka::transform@{moka::transform}!set\_scale@{set\_scale}}
+\index{set\_scale@{set\_scale}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{set\_scale()}{set\_scale()}}
+{\footnotesize\ttfamily void moka\+::transform\+::set\+\_\+scale (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{scale }\end{DoxyParamCaption})}
+
+
+
+Set this transform\textquotesingle{}s scale. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scale} & The new scale. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1transform_a01484fe05bd028cd37ceca8c1e95fbde}\label{classmoka_1_1transform_a01484fe05bd028cd37ceca8c1e95fbde}} 
+\index{moka::transform@{moka::transform}!to\_matrix@{to\_matrix}}
+\index{to\_matrix@{to\_matrix}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{to\_matrix()}{to\_matrix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaabe14b41eb96410ea28b32bc138d885ae}{glm\+::mat4}} moka\+::transform\+::to\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Convert this transform to a mat4. 
+
+\begin{DoxyReturn}{Returns}
+A mat4 defining the transform. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1transform_a0f118e1b139568b3ca6722472c6ccfbd}\label{classmoka_1_1transform_a0f118e1b139568b3ca6722472c6ccfbd}} 
+\index{moka::transform@{moka::transform}!up@{up}}
+\index{up@{up}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{up()}{up()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the transform\textquotesingle{}s up direction. 
+
+\begin{DoxyReturn}{Returns}
+The transform\textquotesingle{}s up direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a661f13baaf1d034140bee8c053e54d2d}\label{classmoka_1_1transform_a661f13baaf1d034140bee8c053e54d2d}} 
+\index{moka::transform@{moka::transform}!world\_back@{world\_back}}
+\index{world\_back@{world\_back}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_back()}{world\_back()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+back (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world back direction. 
+
+\begin{DoxyReturn}{Returns}
+The world back direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_acf33dea012bcc221745c459be7060436}\label{classmoka_1_1transform_acf33dea012bcc221745c459be7060436}} 
+\index{moka::transform@{moka::transform}!world\_down@{world\_down}}
+\index{world\_down@{world\_down}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_down()}{world\_down()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world down direction. 
+
+\begin{DoxyReturn}{Returns}
+The world down direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a4212585d4bde3be8fcf6d80122d8514d}\label{classmoka_1_1transform_a4212585d4bde3be8fcf6d80122d8514d}} 
+\index{moka::transform@{moka::transform}!world\_front@{world\_front}}
+\index{world\_front@{world\_front}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_front()}{world\_front()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+front (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world front direction. 
+
+\begin{DoxyReturn}{Returns}
+The world front direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a510f66a2be7fc5194417ed82262842c2}\label{classmoka_1_1transform_a510f66a2be7fc5194417ed82262842c2}} 
+\index{moka::transform@{moka::transform}!world\_left@{world\_left}}
+\index{world\_left@{world\_left}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_left()}{world\_left()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world left direction. 
+
+\begin{DoxyReturn}{Returns}
+The world left direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_ab952e9b252cd2f5a0256e1aa0c9743c0}\label{classmoka_1_1transform_ab952e9b252cd2f5a0256e1aa0c9743c0}} 
+\index{moka::transform@{moka::transform}!world\_origin@{world\_origin}}
+\index{world\_origin@{world\_origin}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_origin()}{world\_origin()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+origin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world origin. 
+
+\begin{DoxyReturn}{Returns}
+The world origin. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_a8f3d35d28a475aa3e232825cb335b6e1}\label{classmoka_1_1transform_a8f3d35d28a475aa3e232825cb335b6e1}} 
+\index{moka::transform@{moka::transform}!world\_right@{world\_right}}
+\index{world\_right@{world\_right}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_right()}{world\_right()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world right direction. 
+
+\begin{DoxyReturn}{Returns}
+The world right direction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}\label{classmoka_1_1transform_afb4410934686c722f0215a06a7984d61}} 
+\index{moka::transform@{moka::transform}!world\_up@{world\_up}}
+\index{world\_up@{world\_up}!moka::transform@{moka::transform}}
+\subsubsection{\texorpdfstring{world\_up()}{world\_up()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} moka\+::transform\+::world\+\_\+up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the world up direction. 
+
+\begin{DoxyReturn}{Returns}
+The world up direction. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{transform_8hpp}{transform.\+hpp}}\end{DoxyCompactItemize}

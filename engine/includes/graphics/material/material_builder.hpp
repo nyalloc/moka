@@ -63,6 +63,8 @@ namespace moka
 
         static bool replace(std::string& source, const std::string& target, const std::string& replacement);
 
+        void build_shader_source();
+
     public:
         /**
          * \brief Create a material builder.

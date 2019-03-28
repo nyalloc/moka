@@ -1,0 +1,9 @@
+digraph "moka::window"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="moka::window",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Windowing class. Abstracts the native windowing API. Exposes a high-level interface to interact with ..."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" exit" ];
+  Node2 [label="moka::signal\< Args \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1signal.html",tooltip="Basic signal class. Allows you to write observer patterns while avoiding boilerplate code."];
+}

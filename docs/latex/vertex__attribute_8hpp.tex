@@ -1,0 +1,43 @@
+\hypertarget{vertex__attribute_8hpp}{}\section{engine/includes/graphics/buffer/vertex\+\_\+attribute.hpp File Reference}
+\label{vertex__attribute_8hpp}\index{engine/includes/graphics/buffer/vertex\_attribute.hpp@{engine/includes/graphics/buffer/vertex\_attribute.hpp}}
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+Include dependency graph for vertex\+\_\+attribute.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1vertex__attribute}{moka\+::vertex\+\_\+attribute}}
+\begin{DoxyCompactList}\small\item\em A vertex attribute. Defines one vertex attribute as part of a vertex layout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5}{moka\+::attribute\+\_\+type}} \{ \newline
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a27c006cc56b1ba88f960cf8b5144fcac}{moka\+::attribute\+\_\+type\+::int8}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5ace80d5ec65b1d2a2f1049eadc100db23}{moka\+::attribute\+\_\+type\+::int16}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a0241adbbd83925f051b694d40f02747f}{moka\+::attribute\+\_\+type\+::int32}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5aff9b3f96d37353c528517bc3656a00a8}{moka\+::attribute\+\_\+type\+::int64}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a5f423e669d0a8f4ab7c4c3e6da27161a}{moka\+::attribute\+\_\+type\+::uint8}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5aa00ef2ef85ff67b7b39339886f19044f}{moka\+::attribute\+\_\+type\+::uint16}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a3de84ad0700f2a1571f633d399e1900e}{moka\+::attribute\+\_\+type\+::uint32}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a2e8d31865e5d4b9d8611e1b991baed07}{moka\+::attribute\+\_\+type\+::uint64}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a098e7844282e240fdee28a9dac11c1c6}{moka\+::attribute\+\_\+type\+::float16}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5ad33ec2b0bbea6d471a4706cea030e1e3}{moka\+::attribute\+\_\+type\+::float32}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5afb7fa22ede616c04c68a7663d0f81e92}{moka\+::attribute\+\_\+type\+::float64}}, 
+\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5a84e2c64f38f78ba3ea5c905ab5a2da27}{moka\+::attribute\+\_\+type\+::boolean}}
+ \}
+\begin{DoxyCompactList}\small\item\em The type of a vertex attribute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{moka\+::size}} (const attribute\+\_\+type attr\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Get the size of a vertex attribute in bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}

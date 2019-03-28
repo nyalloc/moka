@@ -1,0 +1,18 @@
+digraph "moka::logger::log"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11 [label="moka::logger::log",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Write some information to the log."];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="moka::logger::debug",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#ac8902f1eb4c4d77aad419dd765ccbac6",tooltip="Write some debug-level information to the log."];
+  Node11 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="moka::logger::error",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#a11b70dc17024e339eb34ee5cd9c87e53",tooltip="Write some error-level information to the log."];
+  Node11 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="moka::logger::info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#ab2b824435132d3e2231e6b54b5dc78fe",tooltip="Write some info-level information to the log."];
+  Node11 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="moka::logger::trace",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#abf4c4a0e30d47e947737273084c4d531",tooltip="Write some trace-level information to the log."];
+  Node11 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="moka::logger::warn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1logger.html#a6e1a76b91ec700ab2305e22ea96fe621",tooltip="Write some warn-level information to the log."];
+}

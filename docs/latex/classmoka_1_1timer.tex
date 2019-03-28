@@ -1,0 +1,142 @@
+\hypertarget{classmoka_1_1timer}{}\section{moka\+::timer Class Reference}
+\label{classmoka_1_1timer}\index{moka::timer@{moka::timer}}
+
+
+A stopwatch style timer. Defines high-\/level time functions so that you don\textquotesingle{}t have to go to a lot of effort just to find out how long something takes.  
+
+
+
+
+{\ttfamily \#include $<$timer.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1timer_a5149e986b24529d0dbb8f5ab2f0f19a6}{timer}} (const \mbox{\hyperlink{classmoka_1_1timer}{timer}} \&other)=default
+\item 
+\mbox{\hyperlink{classmoka_1_1timer_a527fcdb18531598d937ba2b193c4fdbc}{timer}} (\mbox{\hyperlink{classmoka_1_1timer}{timer}} \&\&other)=default
+\item 
+\mbox{\hyperlink{classmoka_1_1timer}{timer}} \& \mbox{\hyperlink{classmoka_1_1timer_a9afec3a2d5cda9c48b1fad91441ff547}{operator=}} (const \mbox{\hyperlink{classmoka_1_1timer}{timer}} \&other)=default
+\item 
+\mbox{\hyperlink{classmoka_1_1timer}{timer}} \& \mbox{\hyperlink{classmoka_1_1timer_ab301e83e7655cfbb816d958570307807}{operator=}} (\mbox{\hyperlink{classmoka_1_1timer}{timer}} \&\&other)=default
+\item 
+\mbox{\hyperlink{classmoka_1_1timer_ab78e8d9acc9e7577e3fa0db5fb3dde07}{$\sim$timer}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1timer_abfc5a3eaf59b009613f7e763b5d89da9}{timer}} (bool \mbox{\hyperlink{classmoka_1_1timer_a7b1073657d0a16b347c4e7c0291b2ef9}{start}})
+\begin{DoxyCompactList}\small\item\em Create a new timer object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1timer_a7b1073657d0a16b347c4e7c0291b2ef9}{start}} ()
+\begin{DoxyCompactList}\small\item\em Start the timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1timer_a1ef4c99828b76e137e7151688c94aa00}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop the timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1timer_a3690eb93f4f91c1650f9fd3589c3adb9}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Reset the timer\textquotesingle{}s state. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class duration\+\_\+t  = std\+::chrono\+::milliseconds$>$ }\\auto \mbox{\hyperlink{classmoka_1_1timer_a077bf849a8a901506c971a5f1287abea}{elapsed}} () const
+\begin{DoxyCompactList}\small\item\em Get the currently elapsed time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A stopwatch style timer. Defines high-\/level time functions so that you don\textquotesingle{}t have to go to a lot of effort just to find out how long something takes. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1timer_a5149e986b24529d0dbb8f5ab2f0f19a6}\label{classmoka_1_1timer_a5149e986b24529d0dbb8f5ab2f0f19a6}} 
+\index{moka::timer@{moka::timer}!timer@{timer}}
+\index{timer@{timer}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{timer()}{timer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::timer\+::timer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1timer}{timer}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1timer_a527fcdb18531598d937ba2b193c4fdbc}\label{classmoka_1_1timer_a527fcdb18531598d937ba2b193c4fdbc}} 
+\index{moka::timer@{moka::timer}!timer@{timer}}
+\index{timer@{timer}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{timer()}{timer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::timer\+::timer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1timer}{timer}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1timer_ab78e8d9acc9e7577e3fa0db5fb3dde07}\label{classmoka_1_1timer_ab78e8d9acc9e7577e3fa0db5fb3dde07}} 
+\index{moka::timer@{moka::timer}!````~timer@{$\sim$timer}}
+\index{````~timer@{$\sim$timer}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{$\sim$timer()}{~timer()}}
+{\footnotesize\ttfamily moka\+::timer\+::$\sim$timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1timer_abfc5a3eaf59b009613f7e763b5d89da9}\label{classmoka_1_1timer_abfc5a3eaf59b009613f7e763b5d89da9}} 
+\index{moka::timer@{moka::timer}!timer@{timer}}
+\index{timer@{timer}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{timer()}{timer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::timer\+::timer (\begin{DoxyParamCaption}\item[{bool}]{start }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new timer object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & Should the timer start straight away after being constructed? \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1timer_a077bf849a8a901506c971a5f1287abea}\label{classmoka_1_1timer_a077bf849a8a901506c971a5f1287abea}} 
+\index{moka::timer@{moka::timer}!elapsed@{elapsed}}
+\index{elapsed@{elapsed}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{elapsed()}{elapsed()}}
+{\footnotesize\ttfamily template$<$class duration\+\_\+t $>$ \\
+auto moka\+::timer\+::elapsed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the currently elapsed time. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em duration\+\_\+t} & Your preferred format of the elapsed time (defaults to milliseconds) \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+The elapsed time. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1timer_a9afec3a2d5cda9c48b1fad91441ff547}\label{classmoka_1_1timer_a9afec3a2d5cda9c48b1fad91441ff547}} 
+\index{moka::timer@{moka::timer}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1timer}{timer}}\& moka\+::timer\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1timer}{timer}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1timer_ab301e83e7655cfbb816d958570307807}\label{classmoka_1_1timer_ab301e83e7655cfbb816d958570307807}} 
+\index{moka::timer@{moka::timer}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1timer}{timer}}\& moka\+::timer\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1timer}{timer}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1timer_a3690eb93f4f91c1650f9fd3589c3adb9}\label{classmoka_1_1timer_a3690eb93f4f91c1650f9fd3589c3adb9}} 
+\index{moka::timer@{moka::timer}!reset@{reset}}
+\index{reset@{reset}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void moka\+::timer\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reset the timer\textquotesingle{}s state. 
+
+\mbox{\Hypertarget{classmoka_1_1timer_a7b1073657d0a16b347c4e7c0291b2ef9}\label{classmoka_1_1timer_a7b1073657d0a16b347c4e7c0291b2ef9}} 
+\index{moka::timer@{moka::timer}!start@{start}}
+\index{start@{start}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void moka\+::timer\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Start the timer. 
+
+\mbox{\Hypertarget{classmoka_1_1timer_a1ef4c99828b76e137e7151688c94aa00}\label{classmoka_1_1timer_a1ef4c99828b76e137e7151688c94aa00}} 
+\index{moka::timer@{moka::timer}!stop@{stop}}
+\index{stop@{stop}!moka::timer@{moka::timer}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void moka\+::timer\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop the timer. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/application/\mbox{\hyperlink{timer_8hpp}{timer.\+hpp}}\end{DoxyCompactItemize}

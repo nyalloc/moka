@@ -1,0 +1,9 @@
+digraph "moka::vertex_metadata"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="moka::vertex_metadata",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Contains data that describes the size, use and layout of a vertex buffer."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" layout" ,fontname="Helvetica"];
+  Node2 [label="moka::vertex_layout",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmoka_1_1vertex__layout.html",tooltip="Describes the layout of a single vertex in a vertex buffer."];
+}

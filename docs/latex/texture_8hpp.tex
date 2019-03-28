@@ -1,0 +1,198 @@
+\hypertarget{texture_8hpp}{}\section{engine/includes/graphics/texture.hpp File Reference}
+\label{texture_8hpp}\index{engine/includes/graphics/texture.hpp@{engine/includes/graphics/texture.hpp}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for texture.\+hpp\+:
+% FIG 0
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1wrap}{moka\+::wrap}}
+\begin{DoxyCompactList}\small\item\em x and y texture wrap modes. Both default to clamp\+\_\+to\+\_\+edge. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmoka_1_1filter}{moka\+::filter}}
+\begin{DoxyCompactList}\small\item\em Min and max texture filter modes. Both default to linear filtering. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmoka_1_1texture__handle}{moka\+::texture\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em A handle to a texture object on the device. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmoka_1_1image__metadata}{moka\+::image\+\_\+metadata}}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1host__image__data}{moka\+::host\+\_\+image\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{structmoka_1_1texture__metadata}{moka\+::texture\+\_\+metadata}}
+\item 
+class \mbox{\hyperlink{classmoka_1_1texture__builder}{moka\+::texture\+\_\+builder}}
+\begin{DoxyCompactList}\small\item\em A builder class to help you build a texture. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462}{moka\+::wrap\+\_\+mode}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a7ff5ead6fef18ca5f63119754ac76c3e}{moka\+::wrap\+\_\+mode\+::clamp\+\_\+to\+\_\+edge}}, 
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a301defc6e7425fc63ef35c7827d43b44}{moka\+::wrap\+\_\+mode\+::mirrored\+\_\+repeat}}, 
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a32cf6da134a8b268cf4ab6b79a9a5ad9}{moka\+::wrap\+\_\+mode\+::repeat}}, 
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a7ff5ead6fef18ca5f63119754ac76c3e}{moka\+::wrap\+\_\+mode\+::clamp\+\_\+to\+\_\+edge}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a301defc6e7425fc63ef35c7827d43b44}{moka\+::wrap\+\_\+mode\+::mirrored\+\_\+repeat}}, 
+\mbox{\hyperlink{namespacemoka_afda3faa87bacaacc6008d8c1f73f6462a32cf6da134a8b268cf4ab6b79a9a5ad9}{moka\+::wrap\+\_\+mode\+::repeat}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33c}{moka\+::mag\+\_\+filter}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33cad879c351426770bc0b13c3628db1e636}{moka\+::mag\+\_\+filter\+::nearest}}, 
+\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33ca9a932b3cb396238423eb2f33ec17d6aa}{moka\+::mag\+\_\+filter\+::linear}}, 
+\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33cad879c351426770bc0b13c3628db1e636}{moka\+::mag\+\_\+filter\+::nearest}}, 
+\mbox{\hyperlink{namespacemoka_a2391e4ae99494b70d0226ee0e586f33ca9a932b3cb396238423eb2f33ec17d6aa}{moka\+::mag\+\_\+filter\+::linear}}
+ \}
+\begin{DoxyCompactList}\small\item\em The texture magnification function is used whenever the level-\/of-\/detail function used when sampling from the texture determines that the texture should be magnified. It sets the texture magnification function to either nearest or linear. nearest is generally faster than linear, but it can produce textured images with sharper edges because the transition between texture elements is not as smooth. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77}{moka\+::min\+\_\+filter}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77ad879c351426770bc0b13c3628db1e636}{moka\+::min\+\_\+filter\+::nearest}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a9a932b3cb396238423eb2f33ec17d6aa}{moka\+::min\+\_\+filter\+::linear}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a250bf16c3da0b23fd429f9ee3beaad82}{moka\+::min\+\_\+filter\+::nearest\+\_\+mipmap\+\_\+nearest}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a6a86be4e956a2dad5b8fcbf557b144cc}{moka\+::min\+\_\+filter\+::linear\+\_\+mipmap\+\_\+nearest}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77aad58f1ac69ffd6aad90f37b79c187806}{moka\+::min\+\_\+filter\+::nearest\+\_\+mipmap\+\_\+linear}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a1bdd53f0fc057644ac46aa6a083d316f}{moka\+::min\+\_\+filter\+::linear\+\_\+mipmap\+\_\+linear}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77ad879c351426770bc0b13c3628db1e636}{moka\+::min\+\_\+filter\+::nearest}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a9a932b3cb396238423eb2f33ec17d6aa}{moka\+::min\+\_\+filter\+::linear}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a250bf16c3da0b23fd429f9ee3beaad82}{moka\+::min\+\_\+filter\+::nearest\+\_\+mipmap\+\_\+nearest}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a6a86be4e956a2dad5b8fcbf557b144cc}{moka\+::min\+\_\+filter\+::linear\+\_\+mipmap\+\_\+nearest}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77aad58f1ac69ffd6aad90f37b79c187806}{moka\+::min\+\_\+filter\+::nearest\+\_\+mipmap\+\_\+linear}}, 
+\mbox{\hyperlink{namespacemoka_afeea6a53d61ee8561c91c62f5a051a77a1bdd53f0fc057644ac46aa6a083d316f}{moka\+::min\+\_\+filter\+::linear\+\_\+mipmap\+\_\+linear}}
+ \}
+\begin{DoxyCompactList}\small\item\em The texture minifying function is used whenever the level-\/of-\/detail function used when sampling from the texture determines that the texture should be minified. There are six defined minifying functions. Two of them use either the nearest texture elements or a weighted average of multiple texture elements to compute the texture value. The other four use mipmaps. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623}{moka\+::texture\+\_\+target}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a438a533af2d646c9803e5e75c98b19a6}{moka\+::texture\+\_\+target\+::texture\+\_\+1d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ade86992194d08494a0a0e208a3660f31}{moka\+::texture\+\_\+target\+::texture\+\_\+2d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a26ba8c38820156a8b149b8f6fdf61520}{moka\+::texture\+\_\+target\+::texture\+\_\+3d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a5609f52155b2dcd93a3d1695e5dc153e}{moka\+::texture\+\_\+target\+::array\+\_\+1d}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a91edcc7de88cd1fc35873ad7df605e09}{moka\+::texture\+\_\+target\+::array\+\_\+2d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ad98492c62533926b6961f41406756a4e}{moka\+::texture\+\_\+target\+::rectangle}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a63469dd37fd256264ad46c84e2ff6986}{moka\+::texture\+\_\+target\+::cubemap}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ad8e509b14ad61b231f27dd8507ba4c5b}{moka\+::texture\+\_\+target\+::cubemap\+\_\+array}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a42f6abd6897bf7bf221ff58362f42cde}{moka\+::texture\+\_\+target\+::texture\+\_\+buffer}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a97fd573a15c041546b6628f4a44fbc6a}{moka\+::texture\+\_\+target\+::texture\+\_\+2d\+\_\+multisample}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a50d8c17e415f13b49a170c4b6aa7e97c}{moka\+::texture\+\_\+target\+::texture\+\_\+2d\+\_\+multisample\+\_\+array}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a438a533af2d646c9803e5e75c98b19a6}{moka\+::texture\+\_\+target\+::texture\+\_\+1d}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ade86992194d08494a0a0e208a3660f31}{moka\+::texture\+\_\+target\+::texture\+\_\+2d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a26ba8c38820156a8b149b8f6fdf61520}{moka\+::texture\+\_\+target\+::texture\+\_\+3d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a5609f52155b2dcd93a3d1695e5dc153e}{moka\+::texture\+\_\+target\+::array\+\_\+1d}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a91edcc7de88cd1fc35873ad7df605e09}{moka\+::texture\+\_\+target\+::array\+\_\+2d}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ad98492c62533926b6961f41406756a4e}{moka\+::texture\+\_\+target\+::rectangle}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a63469dd37fd256264ad46c84e2ff6986}{moka\+::texture\+\_\+target\+::cubemap}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623ad8e509b14ad61b231f27dd8507ba4c5b}{moka\+::texture\+\_\+target\+::cubemap\+\_\+array}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a42f6abd6897bf7bf221ff58362f42cde}{moka\+::texture\+\_\+target\+::texture\+\_\+buffer}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a97fd573a15c041546b6628f4a44fbc6a}{moka\+::texture\+\_\+target\+::texture\+\_\+2d\+\_\+multisample}}, 
+\mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a50d8c17e415f13b49a170c4b6aa7e97c}{moka\+::texture\+\_\+target\+::texture\+\_\+2d\+\_\+multisample\+\_\+array}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800e}{moka\+::image\+\_\+target}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eade86992194d08494a0a0e208a3660f31}{moka\+::image\+\_\+target\+::texture\+\_\+2d}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaf87083192a707290fa0e2fc451e8705a}{moka\+::image\+\_\+target\+::texture\+\_\+2d\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea5609f52155b2dcd93a3d1695e5dc153e}{moka\+::image\+\_\+target\+::array\+\_\+1d}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea064c38c6e310a06cc95c06d7eb50de5e}{moka\+::image\+\_\+target\+::array\+\_\+1d\+\_\+proxy}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ead98492c62533926b6961f41406756a4e}{moka\+::image\+\_\+target\+::rectangle}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea51bda662a2a29064ddd79a39d1694089}{moka\+::image\+\_\+target\+::rectangle\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea154ce82fe791206802829837e6068923}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+x}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea725aa7e73d2e524e889f7ca9776b4924}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+y}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaade2bd14ea99ae72a33b90d77e8c9cbd}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+z}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea30ae9f412fab7e3a7169238e8d9281b3}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+x}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaadecd057736b9b46eb45b8192ce54f34}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+y}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea97c27c0cdd49e55ad4af68a5c8c26ca7}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+z}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea877f97825c968bfed559368b9a9c0c56}{moka\+::image\+\_\+target\+::cubemap\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eade86992194d08494a0a0e208a3660f31}{moka\+::image\+\_\+target\+::texture\+\_\+2d}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaf87083192a707290fa0e2fc451e8705a}{moka\+::image\+\_\+target\+::texture\+\_\+2d\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea5609f52155b2dcd93a3d1695e5dc153e}{moka\+::image\+\_\+target\+::array\+\_\+1d}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea064c38c6e310a06cc95c06d7eb50de5e}{moka\+::image\+\_\+target\+::array\+\_\+1d\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ead98492c62533926b6961f41406756a4e}{moka\+::image\+\_\+target\+::rectangle}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea51bda662a2a29064ddd79a39d1694089}{moka\+::image\+\_\+target\+::rectangle\+\_\+proxy}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea154ce82fe791206802829837e6068923}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+x}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea725aa7e73d2e524e889f7ca9776b4924}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+y}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaade2bd14ea99ae72a33b90d77e8c9cbd}{moka\+::image\+\_\+target\+::cubemap\+\_\+positive\+\_\+z}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea30ae9f412fab7e3a7169238e8d9281b3}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+x}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800eaadecd057736b9b46eb45b8192ce54f34}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+y}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea97c27c0cdd49e55ad4af68a5c8c26ca7}{moka\+::image\+\_\+target\+::cubemap\+\_\+negative\+\_\+z}}, 
+\mbox{\hyperlink{namespacemoka_a6f402ae62a72ce17ff73fa94d526800ea877f97825c968bfed559368b9a9c0c56}{moka\+::image\+\_\+target\+::cubemap\+\_\+proxy}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130}{moka\+::host\+\_\+format}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a4b43b0aee35624cd95b910189b3dc231}{moka\+::host\+\_\+format\+::r}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a0ecb2b966eca6994910caee2947f6679}{moka\+::host\+\_\+format\+::rg}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130aef70a6546536ccd835479f6cddc0188e}{moka\+::host\+\_\+format\+::rgb}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a84746ad530563de3445efec60aa7ff59}{moka\+::host\+\_\+format\+::bgr}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a7082a31b8759c9d59795876351ec63aa}{moka\+::host\+\_\+format\+::rgba}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a657c0fdc8e544dcb7153dcf613e04e2d}{moka\+::host\+\_\+format\+::bgra}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a60db33599fbe80f2d536ce9ffb5f2377}{moka\+::host\+\_\+format\+::auto\+\_\+detect}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a4b43b0aee35624cd95b910189b3dc231}{moka\+::host\+\_\+format\+::r}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a0ecb2b966eca6994910caee2947f6679}{moka\+::host\+\_\+format\+::rg}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130aef70a6546536ccd835479f6cddc0188e}{moka\+::host\+\_\+format\+::rgb}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a84746ad530563de3445efec60aa7ff59}{moka\+::host\+\_\+format\+::bgr}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a7082a31b8759c9d59795876351ec63aa}{moka\+::host\+\_\+format\+::rgba}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a657c0fdc8e544dcb7153dcf613e04e2d}{moka\+::host\+\_\+format\+::bgra}}, 
+\mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a60db33599fbe80f2d536ce9ffb5f2377}{moka\+::host\+\_\+format\+::auto\+\_\+detect}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2d}{moka\+::device\+\_\+format}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da4b43b0aee35624cd95b910189b3dc231}{moka\+::device\+\_\+format\+::r}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da0ecb2b966eca6994910caee2947f6679}{moka\+::device\+\_\+format\+::rg}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da7c6b5ea55769f22a071e1a5f765d4540}{moka\+::device\+\_\+format\+::rg16f}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2daef70a6546536ccd835479f6cddc0188e}{moka\+::device\+\_\+format\+::rgb}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2dab8ccaa085604cef840f35055366195f1}{moka\+::device\+\_\+format\+::srgb8}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2dab12d911ea4cb5d45c7d4770008d8225a}{moka\+::device\+\_\+format\+::rgb16f}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da84746ad530563de3445efec60aa7ff59}{moka\+::device\+\_\+format\+::bgr}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da7082a31b8759c9d59795876351ec63aa}{moka\+::device\+\_\+format\+::rgba}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da4ca1079342df772f7231a412b00ba669}{moka\+::device\+\_\+format\+::srgb8\+\_\+alpha8}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da657c0fdc8e544dcb7153dcf613e04e2d}{moka\+::device\+\_\+format\+::bgra}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da4b43b0aee35624cd95b910189b3dc231}{moka\+::device\+\_\+format\+::r}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da0ecb2b966eca6994910caee2947f6679}{moka\+::device\+\_\+format\+::rg}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da7c6b5ea55769f22a071e1a5f765d4540}{moka\+::device\+\_\+format\+::rg16f}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2daef70a6546536ccd835479f6cddc0188e}{moka\+::device\+\_\+format\+::rgb}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2dab8ccaa085604cef840f35055366195f1}{moka\+::device\+\_\+format\+::srgb8}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2dab12d911ea4cb5d45c7d4770008d8225a}{moka\+::device\+\_\+format\+::rgb16f}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da84746ad530563de3445efec60aa7ff59}{moka\+::device\+\_\+format\+::bgr}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da7082a31b8759c9d59795876351ec63aa}{moka\+::device\+\_\+format\+::rgba}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da4ca1079342df772f7231a412b00ba669}{moka\+::device\+\_\+format\+::srgb8\+\_\+alpha8}}, 
+\mbox{\hyperlink{namespacemoka_ac2d188857be60286ff735744a33ebd2da657c0fdc8e544dcb7153dcf613e04e2d}{moka\+::device\+\_\+format\+::bgra}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770}{moka\+::pixel\+\_\+type}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a27c006cc56b1ba88f960cf8b5144fcac}{moka\+::pixel\+\_\+type\+::int8}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770ace80d5ec65b1d2a2f1049eadc100db23}{moka\+::pixel\+\_\+type\+::int16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a0241adbbd83925f051b694d40f02747f}{moka\+::pixel\+\_\+type\+::int32}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a5f423e669d0a8f4ab7c4c3e6da27161a}{moka\+::pixel\+\_\+type\+::uint8}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770aa00ef2ef85ff67b7b39339886f19044f}{moka\+::pixel\+\_\+type\+::uint16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a3de84ad0700f2a1571f633d399e1900e}{moka\+::pixel\+\_\+type\+::uint32}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a098e7844282e240fdee28a9dac11c1c6}{moka\+::pixel\+\_\+type\+::float16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770ad33ec2b0bbea6d471a4706cea030e1e3}{moka\+::pixel\+\_\+type\+::float32}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a27c006cc56b1ba88f960cf8b5144fcac}{moka\+::pixel\+\_\+type\+::int8}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770ace80d5ec65b1d2a2f1049eadc100db23}{moka\+::pixel\+\_\+type\+::int16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a0241adbbd83925f051b694d40f02747f}{moka\+::pixel\+\_\+type\+::int32}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a5f423e669d0a8f4ab7c4c3e6da27161a}{moka\+::pixel\+\_\+type\+::uint8}}, 
+\newline
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770aa00ef2ef85ff67b7b39339886f19044f}{moka\+::pixel\+\_\+type\+::uint16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a3de84ad0700f2a1571f633d399e1900e}{moka\+::pixel\+\_\+type\+::uint32}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770a098e7844282e240fdee28a9dac11c1c6}{moka\+::pixel\+\_\+type\+::float16}}, 
+\mbox{\hyperlink{namespacemoka_a067d388d48715c4e725cd426d5bf3770ad33ec2b0bbea6d471a4706cea030e1e3}{moka\+::pixel\+\_\+type\+::float32}}
+ \}
+\end{DoxyCompactItemize}

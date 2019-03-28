@@ -223,7 +223,7 @@ namespace moka
         return true;
     }
 
-    material_handle material_builder::build()
+    void material_builder::build_shader_source()
     {
         std::string compiler_flags;
 
@@ -254,18 +254,23 @@ namespace moka
             }
         }
 
-        program_handle program_handle;
-
         vertex_shader_src_.insert(0, compiler_flags);
         fragment_shader_src_.insert(0, compiler_flags);
         vertex_shader_src_.insert(0, "#version 330 core\n");
         fragment_shader_src_.insert(0, "#version 330 core\n");
+    }
+
+    material_handle material_builder::build()
+    {
+        build_shader_source();
 
         std::hash<std::string> hash;
 
         const auto key = hash(vertex_shader_src_ + fragment_shader_src_);
 
         auto& cache = graphics_device_.get_program_cache();
+
+        program_handle program_handle;
 
         if (cache.exists(key))
         {

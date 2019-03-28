@@ -1,0 +1,147 @@
+\hypertarget{classmoka_1_1vertex__layout}{}\section{moka\+::vertex\+\_\+layout Class Reference}
+\label{classmoka_1_1vertex__layout}\index{moka::vertex\_layout@{moka::vertex\_layout}}
+
+
+Describes the layout of a single vertex in a vertex buffer.  
+
+
+
+
+{\ttfamily \#include $<$vertex\+\_\+layout.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classmoka_1_1vertex__layout_a86a0831b6de104852cc46d38762a339d}{builder}} = \mbox{\hyperlink{structmoka_1_1vertex__layout__builder}{vertex\+\_\+layout\+\_\+builder}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}} = std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$\+::\mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}} = std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$\+::\mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_a926b9988d845d058fff534685e6d96a7}{vertex\+\_\+layout}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ad70128d474027c554da27cbcf1b3ec62}{vertex\+\_\+layout}} (std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$ layout)
+\begin{DoxyCompactList}\small\item\em Create a \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ac5a5fa1f71676e010832f049533bd5ef}{vertex\+\_\+layout}} (std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$ \&\&layout)
+\begin{DoxyCompactList}\small\item\em Create a \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}} \mbox{\hyperlink{classmoka_1_1vertex__layout_a4b36db21d5660940650759fc91b5697a}{begin}} () noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}} \mbox{\hyperlink{classmoka_1_1vertex__layout_ae7a46396dfd0bab6b7fd6e1e68d0b317}{end}} () noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1vertex__layout_aec84dfcd503dfa8546ecb32c443ac1b0}{begin}} () const noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1vertex__layout_a8a353c67a3878e14a76ff7bc985215f4}{end}} () const noexcept
+\item 
+size\+\_\+t \mbox{\hyperlink{classmoka_1_1vertex__layout_aa501fb01d39fcb5cb632f81e4b729e42}{total\+\_\+size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get the size of a single vertex in this vertex layout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Describes the layout of a single vertex in a vertex buffer. 
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_a86a0831b6de104852cc46d38762a339d}\label{classmoka_1_1vertex__layout_a86a0831b6de104852cc46d38762a339d}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!builder@{builder}}
+\index{builder@{builder}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{builder}{builder}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1vertex__layout_a86a0831b6de104852cc46d38762a339d}{moka\+::vertex\+\_\+layout\+::builder}} =  \mbox{\hyperlink{structmoka_1_1vertex__layout__builder}{vertex\+\_\+layout\+\_\+builder}}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}\label{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!const\_iterator@{const\_iterator}}
+\index{const\_iterator@{const\_iterator}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{const\_iterator}{const\_iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{moka\+::vertex\+\_\+layout\+::const\+\_\+iterator}} =  std\+::vector$<$\mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}}$>$\+::\mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}\label{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!iterator@{iterator}}
+\index{iterator@{iterator}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{iterator}{iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{moka\+::vertex\+\_\+layout\+::iterator}} =  std\+::vector$<$\mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}}$>$\+::\mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}}}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_a926b9988d845d058fff534685e6d96a7}\label{classmoka_1_1vertex__layout_a926b9988d845d058fff534685e6d96a7}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!vertex\_layout@{vertex\_layout}}
+\index{vertex\_layout@{vertex\_layout}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{vertex\_layout()}{vertex\_layout()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily moka\+::vertex\+\_\+layout\+::vertex\+\_\+layout (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_ad70128d474027c554da27cbcf1b3ec62}\label{classmoka_1_1vertex__layout_ad70128d474027c554da27cbcf1b3ec62}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!vertex\_layout@{vertex\_layout}}
+\index{vertex\_layout@{vertex\_layout}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{vertex\_layout()}{vertex\_layout()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily moka\+::vertex\+\_\+layout\+::vertex\+\_\+layout (\begin{DoxyParamCaption}\item[{std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$}]{layout }\end{DoxyParamCaption})}
+
+
+
+Create a \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & A initializer\+\_\+list of \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} objects. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_ac5a5fa1f71676e010832f049533bd5ef}\label{classmoka_1_1vertex__layout_ac5a5fa1f71676e010832f049533bd5ef}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!vertex\_layout@{vertex\_layout}}
+\index{vertex\_layout@{vertex\_layout}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{vertex\_layout()}{vertex\_layout()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily moka\+::vertex\+\_\+layout\+::vertex\+\_\+layout (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} $>$ \&\&}]{layout }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & A vector of \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} objects. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_a4b36db21d5660940650759fc91b5697a}\label{classmoka_1_1vertex__layout_a4b36db21d5660940650759fc91b5697a}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!begin@{begin}}
+\index{begin@{begin}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}} moka\+::vertex\+\_\+layout\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_aec84dfcd503dfa8546ecb32c443ac1b0}\label{classmoka_1_1vertex__layout_aec84dfcd503dfa8546ecb32c443ac1b0}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!begin@{begin}}
+\index{begin@{begin}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}} moka\+::vertex\+\_\+layout\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_ae7a46396dfd0bab6b7fd6e1e68d0b317}\label{classmoka_1_1vertex__layout_ae7a46396dfd0bab6b7fd6e1e68d0b317}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!end@{end}}
+\index{end@{end}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1vertex__layout_ae9f116229b2836d428a9d39d41028058}{iterator}} moka\+::vertex\+\_\+layout\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_a8a353c67a3878e14a76ff7bc985215f4}\label{classmoka_1_1vertex__layout_a8a353c67a3878e14a76ff7bc985215f4}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!end@{end}}
+\index{end@{end}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1vertex__layout_ab39e7bec44dbfcac3d5154f8574b198c}{const\+\_\+iterator}} moka\+::vertex\+\_\+layout\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1vertex__layout_aa501fb01d39fcb5cb632f81e4b729e42}\label{classmoka_1_1vertex__layout_aa501fb01d39fcb5cb632f81e4b729e42}} 
+\index{moka::vertex\_layout@{moka::vertex\_layout}!total\_size@{total\_size}}
+\index{total\_size@{total\_size}!moka::vertex\_layout@{moka::vertex\_layout}}
+\subsubsection{\texorpdfstring{total\_size()}{total\_size()}}
+{\footnotesize\ttfamily size\+\_\+t moka\+::vertex\+\_\+layout\+::total\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Get the size of a single vertex in this vertex layout. 
+
+\begin{DoxyReturn}{Returns}
+The total size of a single vertex in this layout 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/buffer/\mbox{\hyperlink{vertex__layout_8hpp}{vertex\+\_\+layout.\+hpp}}\end{DoxyCompactItemize}

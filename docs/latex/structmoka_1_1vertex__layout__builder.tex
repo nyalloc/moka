@@ -1,0 +1,70 @@
+\hypertarget{structmoka_1_1vertex__layout__builder}{}\section{moka\+::vertex\+\_\+layout\+\_\+builder Struct Reference}
+\label{structmoka_1_1vertex__layout__builder}\index{moka::vertex\_layout\_builder@{moka::vertex\_layout\_builder}}
+
+
+A builder class to help you build a vertex.  
+
+
+
+
+{\ttfamily \#include $<$vertex\+\_\+layout\+\_\+builder.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmoka_1_1vertex__layout__builder}{vertex\+\_\+layout\+\_\+builder}} \& \mbox{\hyperlink{structmoka_1_1vertex__layout__builder_a1842f3c5d25d3c5e8305ed12b2c19036}{add\+\_\+attribute}} (size\+\_\+t index, size\+\_\+t \mbox{\hyperlink{namespacemoka_a4f125ee95d9889b23c3259d1fba4c2e4}{size}}, \mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5}{attribute\+\_\+type}} type, bool normalized, size\+\_\+t stride, size\+\_\+t offset)
+\begin{DoxyCompactList}\small\item\em Add a vertex attribute to this layout. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} \mbox{\hyperlink{structmoka_1_1vertex__layout__builder_adf7d175b295be4df5e76d97d9ca661a2}{build}} ()
+\begin{DoxyCompactList}\small\item\em Build the final vertex layout, upload it to the device, and return the handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A builder class to help you build a vertex. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structmoka_1_1vertex__layout__builder_a1842f3c5d25d3c5e8305ed12b2c19036}\label{structmoka_1_1vertex__layout__builder_a1842f3c5d25d3c5e8305ed12b2c19036}} 
+\index{moka::vertex\_layout\_builder@{moka::vertex\_layout\_builder}!add\_attribute@{add\_attribute}}
+\index{add\_attribute@{add\_attribute}!moka::vertex\_layout\_builder@{moka::vertex\_layout\_builder}}
+\subsubsection{\texorpdfstring{add\_attribute()}{add\_attribute()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1vertex__layout__builder}{vertex\+\_\+layout\+\_\+builder}}\& moka\+::vertex\+\_\+layout\+\_\+builder\+::add\+\_\+attribute (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{namespacemoka_a1fe222f346eb65977e1069323023faa5}{attribute\+\_\+type}}}]{type,  }\item[{bool}]{normalized,  }\item[{size\+\_\+t}]{stride,  }\item[{size\+\_\+t}]{offset }\end{DoxyParamCaption})}
+
+
+
+Add a vertex attribute to this layout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} object. \\
+\hline
+{\em type} & The type of the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} object. \\
+\hline
+{\em size} & The size of the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} object. \\
+\hline
+{\em normalized} & Should the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} be normalized? \\
+\hline
+{\em stride} & The stride of the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} object. \\
+\hline
+{\em offset} & The offset of the new \mbox{\hyperlink{structmoka_1_1vertex__attribute}{vertex\+\_\+attribute}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{structmoka_1_1vertex__layout__builder}{vertex\+\_\+layout\+\_\+builder}} object to enable method chaining. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structmoka_1_1vertex__layout__builder_adf7d175b295be4df5e76d97d9ca661a2}\label{structmoka_1_1vertex__layout__builder_adf7d175b295be4df5e76d97d9ca661a2}} 
+\index{moka::vertex\_layout\_builder@{moka::vertex\_layout\_builder}!build@{build}}
+\index{build@{build}!moka::vertex\_layout\_builder@{moka::vertex\_layout\_builder}}
+\subsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1vertex__layout}{vertex\+\_\+layout}} moka\+::vertex\+\_\+layout\+\_\+builder\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Build the final vertex layout, upload it to the device, and return the handle. 
+
+\begin{DoxyReturn}{Returns}
+The handle to the new vertex layout. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/buffer/\mbox{\hyperlink{vertex__layout__builder_8hpp}{vertex\+\_\+layout\+\_\+builder.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\hypertarget{classmoka_1_1mesh}{}\section{moka\+::mesh Class Reference}
+\label{classmoka_1_1mesh}\index{moka::mesh@{moka::mesh}}
+
+
+A mesh class, a wrapper around multiple primitives and a transform.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}} = std\+::vector$<$ \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} $>$\+::\mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}}
+\item 
+using \mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}} = std\+::vector$<$ \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} $>$\+::\mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1transform}{transform}} \& \mbox{\hyperlink{classmoka_1_1mesh_a4068a7137917249d32c521d58c5754c4}{get\+\_\+transform}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}} \mbox{\hyperlink{classmoka_1_1mesh_a603006cd6a0e1fdf3ea52f7e5e4b1a94}{begin}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1mesh_a7be30acdc08f2cae714a95e18e94babb}{begin}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}} \mbox{\hyperlink{classmoka_1_1mesh_aa42c177ac5f937f9de4e01efc79d9bc0}{end}} ()
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}} \mbox{\hyperlink{classmoka_1_1mesh_a13510c06aa885a3fa1cb8eb3d998a67b}{end}} () const
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_a915acb830920bfea3dbae1d343048ada}{mesh}} (std\+::vector$<$ \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} $>$ \&\&primitives, \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&\mbox{\hyperlink{classmoka_1_1transform}{transform}}=\{\})
+\item 
+\mbox{\hyperlink{classmoka_1_1mesh_aa25225d3f0f48dad9367890e59fc5abb}{mesh}} (const \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} \&prim, \mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&\mbox{\hyperlink{classmoka_1_1transform}{transform}}=\{\})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A mesh class, a wrapper around multiple primitives and a transform. 
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}\label{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}} 
+\index{moka::mesh@{moka::mesh}!const\_iterator@{const\_iterator}}
+\index{const\_iterator@{const\_iterator}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{const\_iterator}{const\_iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{moka\+::mesh\+::const\+\_\+iterator}} =  std\+::vector$<$\mbox{\hyperlink{classmoka_1_1primitive}{primitive}}$>$\+::\mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}}}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}\label{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}} 
+\index{moka::mesh@{moka::mesh}!iterator@{iterator}}
+\index{iterator@{iterator}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{iterator}{iterator}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{moka\+::mesh\+::iterator}} =  std\+::vector$<$\mbox{\hyperlink{classmoka_1_1primitive}{primitive}}$>$\+::\mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}}}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1mesh_a915acb830920bfea3dbae1d343048ada}\label{classmoka_1_1mesh_a915acb830920bfea3dbae1d343048ada}} 
+\index{moka::mesh@{moka::mesh}!mesh@{mesh}}
+\index{mesh@{mesh}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{mesh()}{mesh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily moka\+::mesh\+::mesh (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} $>$ \&\&}]{primitives,  }\item[{\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&}]{transform = {\ttfamily \{\}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_aa25225d3f0f48dad9367890e59fc5abb}\label{classmoka_1_1mesh_aa25225d3f0f48dad9367890e59fc5abb}} 
+\index{moka::mesh@{moka::mesh}!mesh@{mesh}}
+\index{mesh@{mesh}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{mesh()}{mesh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily moka\+::mesh\+::mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1primitive}{primitive}} \&}]{prim,  }\item[{\mbox{\hyperlink{classmoka_1_1transform}{transform}} \&\&}]{transform = {\ttfamily \{\}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1mesh_a603006cd6a0e1fdf3ea52f7e5e4b1a94}\label{classmoka_1_1mesh_a603006cd6a0e1fdf3ea52f7e5e4b1a94}} 
+\index{moka::mesh@{moka::mesh}!begin@{begin}}
+\index{begin@{begin}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}} moka\+::mesh\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_a7be30acdc08f2cae714a95e18e94babb}\label{classmoka_1_1mesh_a7be30acdc08f2cae714a95e18e94babb}} 
+\index{moka::mesh@{moka::mesh}!begin@{begin}}
+\index{begin@{begin}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}} moka\+::mesh\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_aa42c177ac5f937f9de4e01efc79d9bc0}\label{classmoka_1_1mesh_aa42c177ac5f937f9de4e01efc79d9bc0}} 
+\index{moka::mesh@{moka::mesh}!end@{end}}
+\index{end@{end}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1mesh_a89827e48d6ebf6481c9a923042324756}{iterator}} moka\+::mesh\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_a13510c06aa885a3fa1cb8eb3d998a67b}\label{classmoka_1_1mesh_a13510c06aa885a3fa1cb8eb3d998a67b}} 
+\index{moka::mesh@{moka::mesh}!end@{end}}
+\index{end@{end}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1mesh_aea68be7cc8e79b9825775f199562bf90}{const\+\_\+iterator}} moka\+::mesh\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classmoka_1_1mesh_a4068a7137917249d32c521d58c5754c4}\label{classmoka_1_1mesh_a4068a7137917249d32c521d58c5754c4}} 
+\index{moka::mesh@{moka::mesh}!get\_transform@{get\_transform}}
+\index{get\_transform@{get\_transform}!moka::mesh@{moka::mesh}}
+\subsubsection{\texorpdfstring{get\_transform()}{get\_transform()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1transform}{transform}}\& moka\+::mesh\+::get\+\_\+transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+% FIG 0
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{model_8hpp}{model.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,29 @@
+\hypertarget{colour_8hpp}{}\section{engine/includes/graphics/colour.hpp File Reference}
+\label{colour_8hpp}\index{engine/includes/graphics/colour.hpp@{engine/includes/graphics/colour.hpp}}
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$glm/glm.\+hpp$>$}\newline
+Include dependency graph for colour.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmoka_1_1colour}{moka\+::colour}}
+\begin{DoxyCompactList}\small\item\em A colour class, a wrapper around four bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemoka}{moka}}
+\item 
+ \mbox{\hyperlink{namespacemoka_1_1detail}{moka\+::detail}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+floating\+\_\+point\+\_\+v$<$\+T$>$$>$$>$ }\\constexpr std\+::byte \mbox{\hyperlink{namespacemoka_1_1detail_ae7d7310f93779c41997daa340c988dd9}{moka\+::detail\+::float\+\_\+to\+\_\+byte}} (const T val) noexcept
+\item 
+{\footnotesize template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+integral\+\_\+v$<$\+T$>$$>$$>$ }\\constexpr std\+::byte \mbox{\hyperlink{namespacemoka_1_1detail_a366b546068df519a1f4295fe4705d5a8}{moka\+::detail\+::int\+\_\+to\+\_\+byte}} (const T val) noexcept
+\item 
+constexpr float \mbox{\hyperlink{namespacemoka_1_1detail_a1bd78521b2ac8afefe45a70068c60004}{moka\+::detail\+::byte\+\_\+to\+\_\+float}} (const std\+::byte val) noexcept
+\end{DoxyCompactItemize}

@@ -1,0 +1,277 @@
+\hypertarget{classmoka_1_1command__buffer}{}\section{moka\+::command\+\_\+buffer Class Reference}
+\label{classmoka_1_1command__buffer}\index{moka::command\_buffer@{moka::command\_buffer}}
+
+
+A \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} is a collection of render commands married by a sort\+\_\+key. Command buffers are owned by a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}.  
+
+
+
+
+{\ttfamily \#include $<$command\+\_\+buffer.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer_a8ed8ee9b65a14f30f249ca63e19ccb10}{command\+\_\+buffer}} (\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} id)
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer_a911db965f8ff1133a8916a893dc4d663}{command\+\_\+buffer}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer_a33e704c43852909e8ffd2bf415039eeb}{$\sim$command\+\_\+buffer}} ()=default
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer_a321cffef746d5dccd113f895ddb30890}{command\+\_\+buffer}} (const \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}})=delete
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer_a57ccb6f315b8ed5bd0c879d792bbef21}{command\+\_\+buffer}} (\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\&\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_af9b91d8223cd261be50f18fcd6b31efa}{operator=}} (\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\&\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}) noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a0f05e599238d1d0b184cb163cacf4e10}{operator=}} (const \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}})=delete
+\item 
+const \mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_ae9f8480f6f86739d0176b7646f699a85}{get\+\_\+key}} () const
+\begin{DoxyCompactList}\small\item\em Get the sort key of this \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmoka_1_1command__buffer_a9765709e0b8ba774d9f01bee0f99da29}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&device)
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object and pass every command to it. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a1424c63f7c6ed14cc9c7fe2b1a2b6400}{frame\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_ac440268877f7ed2297d2b7de4dac0e7a}{frame\+\_\+buffer\+\_\+texture}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_ad205979eec979fef0635c8f34ac53251}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a7015f06818636a80e846c0ce3bf4eea2}{draw}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a5185177f4b1c9606192a66a5804d30b9}{scissor}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a0c60e605038b5fe71beb200be502fb02}{viewport}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a0fe7a69cf32991748f49ce3d9d962c8d}{fill\+\_\+index\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_ac392f93e0677fd637ea243d82c06c64d}{fill\+\_\+vertex\+\_\+buffer}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_af16aae45ec53cf532bcc7c0bea412b80}{generate\+\_\+mipmaps}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1command__buffer_a5f727a7e4ff787fa3f222f680228afd9}{set\+\_\+material\+\_\+parameters}} ()
+\begin{DoxyCompactList}\small\item\em Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} is a collection of render commands married by a sort\+\_\+key. Command buffers are owned by a \mbox{\hyperlink{classmoka_1_1command__list}{command\+\_\+list}}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a8ed8ee9b65a14f30f249ca63e19ccb10}\label{classmoka_1_1command__buffer_a8ed8ee9b65a14f30f249ca63e19ccb10}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!command\_buffer@{command\_buffer}}
+\index{command\_buffer@{command\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{command\_buffer()}{command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+buffer\+::command\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create a new \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The sort key that we should use for this \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a911db965f8ff1133a8916a893dc4d663}\label{classmoka_1_1command__buffer_a911db965f8ff1133a8916a893dc4d663}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!command\_buffer@{command\_buffer}}
+\index{command\_buffer@{command\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{command\_buffer()}{command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+buffer\+::command\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a33e704c43852909e8ffd2bf415039eeb}\label{classmoka_1_1command__buffer_a33e704c43852909e8ffd2bf415039eeb}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!````~command\_buffer@{$\sim$command\_buffer}}
+\index{````~command\_buffer@{$\sim$command\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{$\sim$command\_buffer()}{~command\_buffer()}}
+{\footnotesize\ttfamily moka\+::command\+\_\+buffer\+::$\sim$command\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a321cffef746d5dccd113f895ddb30890}\label{classmoka_1_1command__buffer_a321cffef746d5dccd113f895ddb30890}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!command\_buffer@{command\_buffer}}
+\index{command\_buffer@{command\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{command\_buffer()}{command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+buffer\+::command\+\_\+buffer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&}]{command\+\_\+buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a57ccb6f315b8ed5bd0c879d792bbef21}\label{classmoka_1_1command__buffer_a57ccb6f315b8ed5bd0c879d792bbef21}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!command\_buffer@{command\_buffer}}
+\index{command\_buffer@{command\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{command\_buffer()}{command\_buffer()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily moka\+::command\+\_\+buffer\+::command\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\&}]{command\+\_\+buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a9765709e0b8ba774d9f01bee0f99da29}\label{classmoka_1_1command__buffer_a9765709e0b8ba774d9f01bee0f99da29}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!accept@{accept}}
+\index{accept@{accept}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::command\+\_\+buffer\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{device }\end{DoxyParamCaption})}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object and pass every command to it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_ad205979eec979fef0635c8f34ac53251}\label{classmoka_1_1command__buffer_ad205979eec979fef0635c8f34ac53251}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!clear@{clear}}
+\index{clear@{clear}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::command\+\_\+buffer\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a7015f06818636a80e846c0ce3bf4eea2}\label{classmoka_1_1command__buffer_a7015f06818636a80e846c0ce3bf4eea2}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!draw@{draw}}
+\index{draw@{draw}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}}\& moka\+::command\+\_\+buffer\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1draw__command}{draw\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a0fe7a69cf32991748f49ce3d9d962c8d}\label{classmoka_1_1command__buffer_a0fe7a69cf32991748f49ce3d9d962c8d}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!fill\_index\_buffer@{fill\_index\_buffer}}
+\index{fill\_index\_buffer@{fill\_index\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{fill\_index\_buffer()}{fill\_index\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+buffer\+::fill\+\_\+index\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__index__buffer__command}{fill\+\_\+index\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_ac392f93e0677fd637ea243d82c06c64d}\label{classmoka_1_1command__buffer_ac392f93e0677fd637ea243d82c06c64d}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!fill\_vertex\_buffer@{fill\_vertex\_buffer}}
+\index{fill\_vertex\_buffer@{fill\_vertex\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{fill\_vertex\_buffer()}{fill\_vertex\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+buffer\+::fill\+\_\+vertex\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1fill__vertex__buffer__command}{fill\+\_\+vertex\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a1424c63f7c6ed14cc9c7fe2b1a2b6400}\label{classmoka_1_1command__buffer_a1424c63f7c6ed14cc9c7fe2b1a2b6400}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!frame\_buffer@{frame\_buffer}}
+\index{frame\_buffer@{frame\_buffer}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{frame\_buffer()}{frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}}\& moka\+::command\+\_\+buffer\+::frame\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__command}{frame\+\_\+buffer\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_ac440268877f7ed2297d2b7de4dac0e7a}\label{classmoka_1_1command__buffer_ac440268877f7ed2297d2b7de4dac0e7a}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!frame\_buffer\_texture@{frame\_buffer\_texture}}
+\index{frame\_buffer\_texture@{frame\_buffer\_texture}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{frame\_buffer\_texture()}{frame\_buffer\_texture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}}\& moka\+::command\+\_\+buffer\+::frame\+\_\+buffer\+\_\+texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1frame__buffer__texture__command}{frame\+\_\+buffer\+\_\+texture\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_af16aae45ec53cf532bcc7c0bea412b80}\label{classmoka_1_1command__buffer_af16aae45ec53cf532bcc7c0bea412b80}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!generate\_mipmaps@{generate\_mipmaps}}
+\index{generate\_mipmaps@{generate\_mipmaps}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{generate\_mipmaps()}{generate\_mipmaps()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}}\& moka\+::command\+\_\+buffer\+::generate\+\_\+mipmaps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1generate__mipmaps__command}{generate\+\_\+mipmaps\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_ae9f8480f6f86739d0176b7646f699a85}\label{classmoka_1_1command__buffer_ae9f8480f6f86739d0176b7646f699a85}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!get\_key@{get\_key}}
+\index{get\_key@{get\_key}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{get\_key()}{get\_key()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacemoka_afa30a616e67b83113ebdb857555cf2bb}{sort\+\_\+key}}\& moka\+::command\+\_\+buffer\+::get\+\_\+key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the sort key of this \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}. 
+
+\begin{DoxyReturn}{Returns}
+The sort key of this \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_af9b91d8223cd261be50f18fcd6b31efa}\label{classmoka_1_1command__buffer_af9b91d8223cd261be50f18fcd6b31efa}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}\& moka\+::command\+\_\+buffer\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&\&}]{command\+\_\+buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a0f05e599238d1d0b184cb163cacf4e10}\label{classmoka_1_1command__buffer_a0f05e599238d1d0b184cb163cacf4e10}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!operator=@{operator=}}
+\index{operator=@{operator=}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}}\& moka\+::command\+\_\+buffer\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmoka_1_1command__buffer}{command\+\_\+buffer}} \&}]{command\+\_\+buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a5185177f4b1c9606192a66a5804d30b9}\label{classmoka_1_1command__buffer_a5185177f4b1c9606192a66a5804d30b9}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!scissor@{scissor}}
+\index{scissor@{scissor}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{scissor()}{scissor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}}\& moka\+::command\+\_\+buffer\+::scissor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1scissor__command}{scissor\+\_\+command}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a5f727a7e4ff787fa3f222f680228afd9}\label{classmoka_1_1command__buffer_a5f727a7e4ff787fa3f222f680228afd9}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!set\_material\_parameters@{set\_material\_parameters}}
+\index{set\_material\_parameters@{set\_material\_parameters}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{set\_material\_parameters()}{set\_material\_parameters()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}}\& moka\+::command\+\_\+buffer\+::set\+\_\+material\+\_\+parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1set__material__parameters__command}{set\+\_\+material\+\_\+parameters\+\_\+command}} object. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1command__buffer_a0c60e605038b5fe71beb200be502fb02}\label{classmoka_1_1command__buffer_a0c60e605038b5fe71beb200be502fb02}} 
+\index{moka::command\_buffer@{moka::command\_buffer}!viewport@{viewport}}
+\index{viewport@{viewport}!moka::command\_buffer@{moka::command\_buffer}}
+\subsubsection{\texorpdfstring{viewport()}{viewport()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}}\& moka\+::command\+\_\+buffer\+::viewport (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create and return a \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the new \mbox{\hyperlink{classmoka_1_1viewport__command}{viewport\+\_\+command}} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{command__buffer_8hpp}{command\+\_\+buffer.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,192 @@
+\hypertarget{classmoka_1_1pbr__util}{}\section{moka\+::pbr\+\_\+util Class Reference}
+\label{classmoka_1_1pbr__util}\index{moka::pbr\_util@{moka::pbr\_util}}
+
+
+{\ttfamily \#include $<$pbr.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1pbr__util_a2acd5e0c0e065f52e622d6e54cc6db65}{pbr\+\_\+util}} (\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&device, const std\+::filesystem\+::path \&root)
+\begin{DoxyCompactList}\small\item\em Create a P\+BR utility. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1model}{model}} \mbox{\hyperlink{classmoka_1_1pbr__util_a6284a2bd80b2007a9bd057cf809998c5}{load\+\_\+model}} (const std\+::filesystem\+::path \&gltf, const std\+::filesystem\+::path \&\mbox{\hyperlink{classmoka_1_1material}{material}}) const
+\begin{DoxyCompactList}\small\item\em Load a model. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1model}{model}} \mbox{\hyperlink{classmoka_1_1pbr__util_ae7e38f3efe0bc1b3f48e21b379d0750d}{make\+\_\+skybox}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{namespacemoka_a259bf395c8f07bd8d13515efcb542623a63469dd37fd256264ad46c84e2ff6986}{cubemap}}) const
+\begin{DoxyCompactList}\small\item\em Create a skybox model. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1pbr__util_a108ca0e7337f7282e6928c133c0d2315}{import\+\_\+equirectangular\+\_\+map}} (const std\+::filesystem\+::path \&texture\+\_\+path) const
+\begin{DoxyCompactList}\small\item\em Load an equirectangular H\+D\+RI envrironment map. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1pbr__util_ad0063494b8f2fc1e2b0a79b70facbdd0}{equirectangular\+\_\+to\+\_\+cubemap}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} equirectangular\+\_\+map, int environment\+\_\+size=1024) const
+\begin{DoxyCompactList}\small\item\em Create an H\+DR environment map from an equirectangular H\+DR texture. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1pbr__util_adec38254baf03a15c7c93ac871eac05e}{make\+\_\+irradiance\+\_\+environment\+\_\+map}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} hdr\+\_\+environment\+\_\+map) const
+\begin{DoxyCompactList}\small\item\em Create an irradiance environment map. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1pbr__util_ac9c1b434ca30091fd08191485a8de41e}{make\+\_\+specular\+\_\+environment\+\_\+map}} (\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} hdr\+\_\+environment\+\_\+map) const
+\begin{DoxyCompactList}\small\item\em Create a specular environment map. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} \mbox{\hyperlink{classmoka_1_1pbr__util_a89ff10257ac7d9cce23c2a3c44aaae4c}{make\+\_\+brdf\+\_\+integration\+\_\+map}} () const
+\begin{DoxyCompactList}\small\item\em Create a B\+R\+DF integration map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1pbr__util_a2acd5e0c0e065f52e622d6e54cc6db65}\label{classmoka_1_1pbr__util_a2acd5e0c0e065f52e622d6e54cc6db65}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!pbr\_util@{pbr\_util}}
+\index{pbr\_util@{pbr\_util}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{pbr\_util()}{pbr\_util()}}
+{\footnotesize\ttfamily moka\+::pbr\+\_\+util\+::pbr\+\_\+util (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__device}{graphics\+\_\+device}} \&}]{device,  }\item[{const std\+::filesystem\+::path \&}]{root }\end{DoxyParamCaption})}
+
+
+
+Create a P\+BR utility. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The graphics device to use when creating P\+BR resources. \\
+\hline
+{\em root} & The root resource folder. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1pbr__util_ad0063494b8f2fc1e2b0a79b70facbdd0}\label{classmoka_1_1pbr__util_ad0063494b8f2fc1e2b0a79b70facbdd0}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!equirectangular\_to\_cubemap@{equirectangular\_to\_cubemap}}
+\index{equirectangular\_to\_cubemap@{equirectangular\_to\_cubemap}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{equirectangular\_to\_cubemap()}{equirectangular\_to\_cubemap()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::pbr\+\_\+util\+::equirectangular\+\_\+to\+\_\+cubemap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{equirectangular\+\_\+map,  }\item[{int}]{environment\+\_\+size = {\ttfamily 1024} }\end{DoxyParamCaption}) const}
+
+
+
+Create an H\+DR environment map from an equirectangular H\+DR texture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equirectangular\+\_\+map} & The equirectangular map you want to render to a cubemap.\\
+\hline
+{\em environment\+\_\+size} & The size of the cubemap to render. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cubemap texture. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1pbr__util_a108ca0e7337f7282e6928c133c0d2315}\label{classmoka_1_1pbr__util_a108ca0e7337f7282e6928c133c0d2315}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!import\_equirectangular\_map@{import\_equirectangular\_map}}
+\index{import\_equirectangular\_map@{import\_equirectangular\_map}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{import\_equirectangular\_map()}{import\_equirectangular\_map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::pbr\+\_\+util\+::import\+\_\+equirectangular\+\_\+map (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{texture\+\_\+path }\end{DoxyParamCaption}) const}
+
+
+
+Load an equirectangular H\+D\+RI envrironment map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture\+\_\+path} & Relative path to the H\+DR texture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The H\+DR texture. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1pbr__util_a6284a2bd80b2007a9bd057cf809998c5}\label{classmoka_1_1pbr__util_a6284a2bd80b2007a9bd057cf809998c5}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!load\_model@{load\_model}}
+\index{load\_model@{load\_model}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{load\_model()}{load\_model()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1model}{model}} moka\+::pbr\+\_\+util\+::load\+\_\+model (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{gltf,  }\item[{const std\+::filesystem\+::path \&}]{material }\end{DoxyParamCaption}) const}
+
+
+
+Load a model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gltf} & Relative path to the gl\+TF asset. \\
+\hline
+{\em material} & Relative path to the material file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The imported model asset. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1pbr__util_a89ff10257ac7d9cce23c2a3c44aaae4c}\label{classmoka_1_1pbr__util_a89ff10257ac7d9cce23c2a3c44aaae4c}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!make\_brdf\_integration\_map@{make\_brdf\_integration\_map}}
+\index{make\_brdf\_integration\_map@{make\_brdf\_integration\_map}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{make\_brdf\_integration\_map()}{make\_brdf\_integration\_map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::pbr\+\_\+util\+::make\+\_\+brdf\+\_\+integration\+\_\+map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Create a B\+R\+DF integration map. 
+
+\begin{DoxyReturn}{Returns}
+The B\+R\+DF integration map. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1pbr__util_adec38254baf03a15c7c93ac871eac05e}\label{classmoka_1_1pbr__util_adec38254baf03a15c7c93ac871eac05e}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!make\_irradiance\_environment\_map@{make\_irradiance\_environment\_map}}
+\index{make\_irradiance\_environment\_map@{make\_irradiance\_environment\_map}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{make\_irradiance\_environment\_map()}{make\_irradiance\_environment\_map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::pbr\+\_\+util\+::make\+\_\+irradiance\+\_\+environment\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{hdr\+\_\+environment\+\_\+map }\end{DoxyParamCaption}) const}
+
+
+
+Create an irradiance environment map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hdr\+\_\+environment\+\_\+map} & The source H\+DR cubemap to blur + turn into an irradiance map. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The irradiance environment map. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classmoka_1_1pbr__util_ae7e38f3efe0bc1b3f48e21b379d0750d}\label{classmoka_1_1pbr__util_ae7e38f3efe0bc1b3f48e21b379d0750d}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!make\_skybox@{make\_skybox}}
+\index{make\_skybox@{make\_skybox}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{make\_skybox()}{make\_skybox()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1model}{model}} moka\+::pbr\+\_\+util\+::make\+\_\+skybox (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{cubemap }\end{DoxyParamCaption}) const}
+
+
+
+Create a skybox model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cubemap} & The cubemap texture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The skybox model. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 5
+\mbox{\Hypertarget{classmoka_1_1pbr__util_ac9c1b434ca30091fd08191485a8de41e}\label{classmoka_1_1pbr__util_ac9c1b434ca30091fd08191485a8de41e}} 
+\index{moka::pbr\_util@{moka::pbr\_util}!make\_specular\_environment\_map@{make\_specular\_environment\_map}}
+\index{make\_specular\_environment\_map@{make\_specular\_environment\_map}!moka::pbr\_util@{moka::pbr\_util}}
+\subsubsection{\texorpdfstring{make\_specular\_environment\_map()}{make\_specular\_environment\_map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}} moka\+::pbr\+\_\+util\+::make\+\_\+specular\+\_\+environment\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmoka_1_1texture__handle}{texture\+\_\+handle}}}]{hdr\+\_\+environment\+\_\+map }\end{DoxyParamCaption}) const}
+
+
+
+Create a specular environment map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hdr\+\_\+environment\+\_\+map} & The source H\+DR cubemap to blur + turn into an specular map. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The specular environment map. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 6
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{pbr_8hpp}{pbr.\+hpp}}\end{DoxyCompactItemize}

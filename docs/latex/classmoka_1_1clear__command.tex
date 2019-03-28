@@ -1,0 +1,187 @@
+\hypertarget{classmoka_1_1clear__command}{}\section{moka\+::clear\+\_\+command Class Reference}
+\label{classmoka_1_1clear__command}\index{moka::clear\_command@{moka::clear\_command}}
+
+
+Clear the current frame buffer.  
+
+
+
+
+{\ttfamily \#include $<$clear\+\_\+command.\+hpp$>$}
+
+
+
+Inheritance diagram for moka\+::clear\+\_\+command\+:
+% FIG 0
+
+
+Collaboration diagram for moka\+::clear\+\_\+command\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classmoka_1_1clear__command_a08e1abf9988fdabf7e9f85705614fbd4}{$\sim$clear\+\_\+command}} ()
+\item 
+void \mbox{\hyperlink{classmoka_1_1clear__command_a321fa172131c9219f1a8a57e228215fb}{accept}} (\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&visitor) override
+\begin{DoxyCompactList}\small\item\em Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1clear__command_a444e7779e89f6818d99be5a5ec901dc1}{set\+\_\+color}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&\mbox{\hyperlink{namespacemoka_a8fbd522082ce6449bc1e307f785aafe5}{color}})
+\begin{DoxyCompactList}\small\item\em Set the color of the \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1clear__command_a3a7771ccad1fda309a857617687d81a6}{set\+\_\+color}} (float \mbox{\hyperlink{namespacemoka_a1989c05aecf3bb10bbf8a7027e3df130a4b43b0aee35624cd95b910189b3dc231}{r}}, float \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71dab2f5ff47436671b6e533d8dc3614845d}{g}}, float \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71da92eb5ffee6ae2fec3ad71c777531578f}{b}}, float \mbox{\hyperlink{namespacemoka_a45a36b05a9b9eddb028d6c60305ae71da0cc175b9c0f1b6a831c399e269772661}{a}})
+\begin{DoxyCompactList}\small\item\em Set the color of the \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1clear__command_a0dab48e1983dbafdacb2d06d68fdfc92}{set\+\_\+clear\+\_\+color}} (bool val)
+\begin{DoxyCompactList}\small\item\em Should this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} clear the color buffer? \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} \& \mbox{\hyperlink{classmoka_1_1clear__command_a6d6b5e04ad90cd6117900a8cc78d6a33}{set\+\_\+clear\+\_\+depth}} (bool val)
+\begin{DoxyCompactList}\small\item\em Should this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} clear the depth buffer? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \mbox{\hyperlink{classmoka_1_1clear__command_a867d78366e722acd2305ee78181b2748}{color}}
+\item 
+bool \mbox{\hyperlink{classmoka_1_1clear__command_abd51ab75be7795fe788558f30553b356}{clear\+\_\+depth}} = false
+\item 
+bool \mbox{\hyperlink{classmoka_1_1clear__command_acacddddcbe3c124fbd9655b0377cc4eb}{clear\+\_\+color}} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Clear the current frame buffer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1clear__command_a08e1abf9988fdabf7e9f85705614fbd4}\label{classmoka_1_1clear__command_a08e1abf9988fdabf7e9f85705614fbd4}} 
+\index{moka::clear\_command@{moka::clear\_command}!````~clear\_command@{$\sim$clear\_command}}
+\index{````~clear\_command@{$\sim$clear\_command}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{$\sim$clear\_command()}{~clear\_command()}}
+{\footnotesize\ttfamily virtual moka\+::clear\+\_\+command\+::$\sim$clear\+\_\+command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1clear__command_a321fa172131c9219f1a8a57e228215fb}\label{classmoka_1_1clear__command_a321fa172131c9219f1a8a57e228215fb}} 
+\index{moka::clear\_command@{moka::clear\_command}!accept@{accept}}
+\index{accept@{accept}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void moka\+::clear\+\_\+command\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} \&}]{visitor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accept a \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. Invoke this command using the \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & A \mbox{\hyperlink{classmoka_1_1graphics__visitor}{graphics\+\_\+visitor}} object. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classmoka_1_1graphics__command_a7affaeceb1019ab358c62185bce4e654}{moka\+::graphics\+\_\+command}}.
+
+\mbox{\Hypertarget{classmoka_1_1clear__command_a0dab48e1983dbafdacb2d06d68fdfc92}\label{classmoka_1_1clear__command_a0dab48e1983dbafdacb2d06d68fdfc92}} 
+\index{moka::clear\_command@{moka::clear\_command}!set\_clear\_color@{set\_clear\_color}}
+\index{set\_clear\_color@{set\_clear\_color}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{set\_clear\_color()}{set\_clear\_color()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::clear\+\_\+command\+::set\+\_\+clear\+\_\+color (\begin{DoxyParamCaption}\item[{bool}]{val }\end{DoxyParamCaption})}
+
+
+
+Should this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} clear the color buffer? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em val} & True if the color should be cleared, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classmoka_1_1clear__command_a6d6b5e04ad90cd6117900a8cc78d6a33}\label{classmoka_1_1clear__command_a6d6b5e04ad90cd6117900a8cc78d6a33}} 
+\index{moka::clear\_command@{moka::clear\_command}!set\_clear\_depth@{set\_clear\_depth}}
+\index{set\_clear\_depth@{set\_clear\_depth}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{set\_clear\_depth()}{set\_clear\_depth()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::clear\+\_\+command\+::set\+\_\+clear\+\_\+depth (\begin{DoxyParamCaption}\item[{bool}]{val }\end{DoxyParamCaption})}
+
+
+
+Should this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} clear the depth buffer? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em val} & True if the depth should be cleared, otherwise false. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classmoka_1_1clear__command_a444e7779e89f6818d99be5a5ec901dc1}\label{classmoka_1_1clear__command_a444e7779e89f6818d99be5a5ec901dc1}} 
+\index{moka::clear\_command@{moka::clear\_command}!set\_color@{set\_color}}
+\index{set\_color@{set\_color}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{set\_color()}{set\_color()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::clear\+\_\+command\+::set\+\_\+color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&}]{color }\end{DoxyParamCaption})}
+
+
+
+Set the color of the \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The color that should be used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classmoka_1_1clear__command_a3a7771ccad1fda309a857617687d81a6}\label{classmoka_1_1clear__command_a3a7771ccad1fda309a857617687d81a6}} 
+\index{moka::clear\_command@{moka::clear\_command}!set\_color@{set\_color}}
+\index{set\_color@{set\_color}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{set\_color()}{set\_color()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}\& moka\+::clear\+\_\+command\+::set\+\_\+color (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{g,  }\item[{float}]{b,  }\item[{float}]{a }\end{DoxyParamCaption})}
+
+
+
+Set the color of the \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The r component of the color. \\
+\hline
+{\em g} & The g component of the color. \\
+\hline
+{\em b} & The b component of the color. \\
+\hline
+{\em a} & The a component of the color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \mbox{\hyperlink{classmoka_1_1clear__command}{clear\+\_\+command}} object to enable method chaining. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmoka_1_1clear__command_acacddddcbe3c124fbd9655b0377cc4eb}\label{classmoka_1_1clear__command_acacddddcbe3c124fbd9655b0377cc4eb}} 
+\index{moka::clear\_command@{moka::clear\_command}!clear\_color@{clear\_color}}
+\index{clear\_color@{clear\_color}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{clear\_color}{clear\_color}}
+{\footnotesize\ttfamily bool moka\+::clear\+\_\+command\+::clear\+\_\+color = false}
+
+Should we clear the color buffer? \mbox{\Hypertarget{classmoka_1_1clear__command_abd51ab75be7795fe788558f30553b356}\label{classmoka_1_1clear__command_abd51ab75be7795fe788558f30553b356}} 
+\index{moka::clear\_command@{moka::clear\_command}!clear\_depth@{clear\_depth}}
+\index{clear\_depth@{clear\_depth}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{clear\_depth}{clear\_depth}}
+{\footnotesize\ttfamily bool moka\+::clear\+\_\+command\+::clear\+\_\+depth = false}
+
+Should we clear the depth information? \mbox{\Hypertarget{classmoka_1_1clear__command_a867d78366e722acd2305ee78181b2748}\label{classmoka_1_1clear__command_a867d78366e722acd2305ee78181b2748}} 
+\index{moka::clear\_command@{moka::clear\_command}!color@{color}}
+\index{color@{color}!moka::clear\_command@{moka::clear\_command}}
+\subsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} moka\+::clear\+\_\+command\+::color}
+
+The color that should be used to clear the buffer. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/command/\mbox{\hyperlink{clear__command_8hpp}{clear\+\_\+command.\+hpp}}\end{DoxyCompactItemize}

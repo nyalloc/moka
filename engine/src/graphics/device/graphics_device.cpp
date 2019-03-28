@@ -90,25 +90,25 @@ namespace moka
     {
         const auto index = materials_.size();
         materials_.emplace_back(std::move(material));
-        return material_handle(index);
+        return material_handle{uint16_t(index)};
     }
 
     material* material_cache::get_material(const material_handle handle)
     {
-        if (handle == std::numeric_limits<material_handle>::max())
+        if (handle.id == std::numeric_limits<uint16_t>::max())
         {
             return nullptr;
         }
-        return &materials_[handle];
+        return &materials_[handle.id];
     }
 
     const material* material_cache::get_material(const material_handle handle) const
     {
-        if (handle == std::numeric_limits<material_handle>::max())
+        if (handle.id == std::numeric_limits<uint16_t>::max())
         {
             return nullptr;
         }
-        return &materials_[handle];
+        return &materials_[handle.id];
     }
 
     texture_cache& graphics_device::get_texture_cache()

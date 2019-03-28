@@ -1,0 +1,1463 @@
+\hypertarget{classmoka_1_1colour}{}\section{moka\+::colour Class Reference}
+\label{classmoka_1_1colour}\index{moka::colour@{moka::colour}}
+
+
+A colour class, a wrapper around four bytes.  
+
+
+
+
+{\ttfamily \#include $<$colour.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmoka_1_1colour_ae61f128c67947c870a5daa830de23d67}{operator glm\+::vec4}} () const noexcept
+\item 
+\mbox{\hyperlink{classmoka_1_1colour_a7c6fc079f1689c2e47d698b913d16a07}{operator glm\+::vec3}} () const noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_a69c484d6aa34beda220712e751ad99f3}{colour}} (const std\+::byte \mbox{\hyperlink{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}{r}}, const std\+::byte \mbox{\hyperlink{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}{g}}, const std\+::byte \mbox{\hyperlink{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}{b}}, const std\+::byte \mbox{\hyperlink{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}{a}}=static\+\_\+cast$<$ std\+::byte $>$(255)) noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_a63b2943ce195433250366a55fae7a404}{colour}} (const int \mbox{\hyperlink{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}{r}}, const int \mbox{\hyperlink{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}{g}}, const int \mbox{\hyperlink{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}{b}}, const int \mbox{\hyperlink{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}{a}}=255) noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_a0b699c63f210e7965fab183a3bbf74b4}{colour}} (const float \mbox{\hyperlink{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}{r}}, const float \mbox{\hyperlink{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}{g}}, const float \mbox{\hyperlink{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}{b}}, const float \mbox{\hyperlink{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}{a}}=1.\+0f) noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_ad09262ca992f6ce84ea945b5efedffe0}{colour}} () noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_ad01b6d1af210de8289c0add5a3d1be04}{colour}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&\mbox{\hyperlink{classmoka_1_1colour}{colour}}) noexcept
+\item 
+constexpr \mbox{\hyperlink{classmoka_1_1colour_aadf7f1fda733557fd18fac24081b75e5}{colour}} (const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&\mbox{\hyperlink{classmoka_1_1colour}{colour}}) noexcept
+\item 
+constexpr float \mbox{\hyperlink{classmoka_1_1colour_ae28feff4fd8815b6612ef4cf16b026b8}{operator\mbox{[}$\,$\mbox{]}}} (const size\+\_\+t pos) const noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_acf6a295464965ba7da438056c3b93986}{set\+\_\+r}} (const int val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_a5c03d583bf2b0d33e46b9c17defab90d}{set\+\_\+r}} (const float val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_ad5e756d118fe5d7fddca8fba8d826b0a}{set\+\_\+g}} (const int val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_af0e845db8ecc3a17e371fb3f9523273f}{set\+\_\+g}} (const float val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_a7cf8baff4073bf0ad69103cd663d6972}{set\+\_\+b}} (const int val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_a60b29bebff89e6507b5af40d8cc8ffb5}{set\+\_\+b}} (const float val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_a700d904dd083ebbbc73b1aee6645d58c}{set\+\_\+a}} (const int val) noexcept
+\item 
+constexpr void \mbox{\hyperlink{classmoka_1_1colour_ac4ff9c1b4848a555ec4e6c6d471a2209}{set\+\_\+a}} (const float val) noexcept
+\item 
+constexpr float \mbox{\hyperlink{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}{r}} () const noexcept
+\item 
+constexpr float \mbox{\hyperlink{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}{g}} () const noexcept
+\item 
+constexpr float \mbox{\hyperlink{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}{b}} () const noexcept
+\item 
+constexpr float \mbox{\hyperlink{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}{a}} () const noexcept
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af1c552c481818c9378f5abeb2214889b}{alice\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a532d207410adfcd06b0f451ac95c666c}{antique\+\_\+white}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4e2f27f7832857daeef115f66549e6bb}{aqua}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aee9c426d760827fc9f707ff40b8b84db}{aquamarine}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a185e9a1f0990b11ca59fd8040b3c3559}{azure}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_afb2ce945acaca00e4fbfdfaafbf93133}{beige}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_adfb3cf8ca44c804f0bec28a94917d125}{bisque}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a9a13c40cfd103597ad9fe270e6eedc99}{black}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a6d76417a9430cf492b4288fdcee2b6d0}{blanched\+\_\+almond}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a38dd73ca19580132063e3a2c1e4862bf}{blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a95909c5c6b37b9147c4667d83341060c}{blue\+\_\+violet}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0de74dcc468f847e87c04fc8ae30e144}{brown}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a59fe41d1e1b8fc4ff70128b19846b327}{burly\+\_\+wood}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_adf150ab92519483a781f5f42e5161284}{burnt\+\_\+sienna}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa86055bbe26e45c22cd34985d40bb387}{cadet\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a98168a4da0885dd4c5c9a227be3474f0}{chartreuse}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af979c0134340a8cc899217613406a7b9}{chocolate}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a12c66d8c9645354719866e301fcaa29b}{coral}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a8a5bb984d5d031bde9c0c7beb1f5cf3a}{cornflower\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_abf7f389449cbe46d41dea47c7b7fa841}{cornsilk}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a5d1bf668084bbf8bbc7f1f71a9832659}{crimson}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac079b7ba0870353c46fe83e2f17f9794}{cyan}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4d323bb1bbdd9fa105f0cb5d02b9461f}{dark\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a741a01928dbbfedbcb07a48be38e3ff5}{dark\+\_\+cyan}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_abcfa7067af326bc6f598efd98bcf45af}{dark\+\_\+goldenrod}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a58c5c69b0ce342644b52c52d72f2ed4e}{dark\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ae78de5b8b572127105aeb5b0629b8a19}{nero}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0eaa40808e68b8be13b5596220feefb7}{night\+\_\+rider}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aab7da28ff616de53d7480c280025a9ce}{charcoal}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ab00385039989ca5e1728e3e4fb10db43}{studio}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a49aa7fd7973c1953755efa5b88031ca5}{dark\+\_\+grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_abb39a0579f25b25a2884486afcff19bc}{dark\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a57d7a46d18cbc113703aafd4f2be9c20}{dark\+\_\+khaki}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a473b1241ff0bdf245e529bdc5d03968a}{dark\+\_\+magenta}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7cfa9a05e5a65672accc670fa4d34d5b}{dark\+\_\+olive\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4fa1623f5c554b6869f0d712f0349ac8}{dark\+\_\+orange}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa53a5fba8189045f620560aade5731d3}{dark\+\_\+orchid}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a2c0fe66d73cef636ae8667b81d1d707c}{dark\+\_\+red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a024727ccdbca1f7fff9e8504356bcb3e}{dark\+\_\+salmon}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a877558c45f1d9d85231df2dddfd896a0}{dark\+\_\+sea\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a1b85c3a0e0eb6da70cc17a82f8072e5d}{dark\+\_\+slate\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7570e8f845cb434a44d4101c08382248}{dark\+\_\+slate\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a82712d48f1c5a611bffe7c0e8d2195f2}{dark\+\_\+turquoise}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa106ab839ce65b31b3f58c1b1844a926}{dark\+\_\+violet}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0821345901f797126f4169eeea3ed75a}{deep\+\_\+pink}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a935483a6bc1930d7d84c6dd0b7f1353f}{deep\+\_\+sky\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a9a864e4849feee6ccb73f8f6b95d6dc8}{dim\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a92fa8002004604d641f9ba491e7ab17c}{dim\+\_\+grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7699a78883a1ca7228aa6ad708f0d5a6}{dodger\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ace02c8f9aca135461aacccc6a7774d9e}{firebrick}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4cd964a1fab43bf0c7bb3d007428d043}{floral\+\_\+white}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ad3f3234e6667e4d9eb33bcf8ea082df1}{forest\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac20a5ec45c83c8bbc89fdec5fcb3fc29}{fuchsia}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7c5975a37f7aa5bbbdfc4abc78002552}{gainsboro}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a599a544493ece8acc2ee62bdd2604e0e}{ghost\+\_\+white}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7827508c0ecde383148625dc72c355d9}{gold}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ab65b1a933564a789803b5db12cc6a752}{goldenrod}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a46a3131f856463932995c8ef2b49ac29}{gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4819e4a97e8f14db03406a3944db843c}{green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a637f81ba82ccaec1cd6fc6a52f707d80}{green\+\_\+yellow}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a362aa56326932673cafebb0253545a40}{grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0f335fdc74d79479b429174aa01233f8}{honeydew}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a903c5603cd83d439a79d27aa7baec33b}{hot\+\_\+pink}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a808f0790d09569dfa2536ebc91a189c1}{indian\+\_\+red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a1654854532d2dd5af3143edaaf95a5ca}{indigo}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a89c362959da67bdb0900b26966611ecf}{ivory}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a1e92a40a2b17059f3687fdb4ad28a903}{khaki}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a46763102fc27ba8ead1c3b51462d0722}{lavender}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa49ab82953f6b5120105bab3c5a7cbb3}{lavender\+\_\+blush}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa78d9ebdf53e2a9544c000b41049383b}{lawn\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a8089dc3cdbf507cad1267670e9a6908a}{lemon\+\_\+chiffon}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a93f0616ef85c6092d04ce72c65002fe6}{light\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ab63863d1a2c98380a5e053005d5ef49b}{light\+\_\+coral}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a12b432469d965a7925083d7764599f3e}{light\+\_\+cyan}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aebe01473b0f4a8a01367e12379f97f8e}{light\+\_\+goldenrod\+\_\+yellow}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7ca64849f564ebb7f3b57d48c5559607}{light\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af776482fd76aeb8ab41587fd1ff11912}{light\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0b1fc6cd85e9d91c145fc43eac785b7c}{light\+\_\+grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a32ba9d7e567cdc58f25c1056ab059762}{light\+\_\+pink}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a8ef2d0e1678c2bff8471ea8777396d23}{light\+\_\+salmon}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7b358ca1ba1208b73dd2c3d9846462eb}{light\+\_\+sea\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a98d46f4acb076b3c8631de7ed28cd9ff}{light\+\_\+sky\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4411364de773b18b5f7be4e0c493d815}{light\+\_\+slate\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac1cbcc5b6e956fbfbeca6a625430c40e}{light\+\_\+slate\+\_\+grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a74d7ec0257e479a7255c31c23f820759}{light\+\_\+steel\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a1a9dea13046af27b7d1b43d9d4c5113d}{light\+\_\+yellow}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7337e615ca2d82c820e1cb12dcbfafba}{lime}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a47cbf0375a2ca712b398b35518787c96}{lime\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4ec7680384f8e5cb605e1f4841e04eba}{linen}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ad6fb2a2ae44257c285f191398a51303f}{magenta}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7d81cd638c65e535c64adfe73fc4b91f}{maroon}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4985cc7638b3548343bf4d7bb7d0150a}{medium\+\_\+aquamarine}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac83767e582c0f0c1189958789d2e5f78}{medium\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af005c75898bb6fe21cef0b7a6b98da52}{medium\+\_\+orchid}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a789925f497faf5d74422cb82697cbf2a}{medium\+\_\+purple}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ad8ddb747e935e376dac4584546b465c3}{medium\+\_\+sea\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a05b97af96e7840d17f41b7c44eae71f9}{medium\+\_\+slate\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a50c874851964ba13bb4c0b3f8c1aca85}{medium\+\_\+spring\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a24f1d3a557f9ae55e4ba70a166893000}{medium\+\_\+turquoise}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a65612bcc537f83b7973fd7639d26a22a}{medium\+\_\+violet\+\_\+red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a3bfea780e8f0f1d4c79716c1890362d6}{midnight\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a146279b6490d141db7643651fe501693}{mint\+\_\+cream}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ade045aa0ed34003700a03432da5d072a}{misty\+\_\+rose}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ae642c04d3915e7cffa71e69173391773}{moccasin}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_adde5b40c475fd858ba3fe3ee134ed2cb}{navajo\+\_\+white}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a57040c8ecd0e0aae65ab46ecfce017a2}{navy}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a6ea7a59513953cc67947369cdaa4acaa}{old\+\_\+lace}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_abecfd112bd69cfe1bab12859666df631}{olive}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a94992b07e270d1c1fe68e335257bd273}{olive\+\_\+drab}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0a1c8669c878810ccdf468d90d598882}{orange}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_abcc8eb871af80fc99257d93f8bda3fcd}{orange\+\_\+red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aad4bf4e3bb3af8b61fca846655435d00}{orchid}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a258f63765e7938cef739980ffca65a8b}{pale\+\_\+goldenrod}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7945c8658d3ea970de965adb1e1bdc4b}{pale\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a17f2b2cbdbf81c008b0ce8749938adb4}{pale\+\_\+turquoise}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ad1eb86dfd7ae69aff716e8382b485fb8}{pale\+\_\+violet\+\_\+red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af2a0d1b024940bd4e96aa2a3646ee3e3}{papaya\+\_\+whip}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a3deed650e8a98223fa851c43bfed4b30}{peach\+\_\+puff}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a12542a9ad99c5eb16b9b8ddb33d29936}{peru}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a983e2c19732e81d021a037475ea2289b}{pink}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a5fa6c66f8f6d7415c1b06e64eab4a72f}{plum}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a6a297bbcd3fa6afa2c7e58c0a5015e94}{powder\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af0e9e47e97a2b81d006c11077715786b}{purple}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_afda874e3c56a02d95685b4f11515a130}{red}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a7d35dcc77038c5ee24eb2d5f7bc7d071}{rosy\+\_\+brown}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a01e8353c6398f3b4348cdf1b30dd3ca4}{royal\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a3325d3ab6ddcba8bfd756ddadab901f9}{saddle\+\_\+brown}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a5213e584147379ed6803a9ea7de6152c}{salmon}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aa4464dcfc58ddc719455407163d27f73}{sandy\+\_\+brown}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ae0921dee800efb04f5c29391125860bf}{sea\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac9af1ded3280cef53f9e2c709865b9a5}{sea\+\_\+shell}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a016b25dff498d7fd2b8bbc8c4695a751}{sienna}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a23dce8ee8b640ba4865b3dcda926c555}{silver}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_af2fda876258bf121bb2a833be220c73b}{sky\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a1f4310526da720db40aebe43952105f7}{slate\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ac6022346709ec89fb86ff79af2cabd96}{slate\+\_\+gray}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_aafdbac070bb056e8efc65ed8d0061c8b}{slate\+\_\+grey}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a8e6a77758527c390aee243a253b494ef}{snow}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a95eaa33785dd3aa5591e236410916e5d}{spring\+\_\+green}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a83ed36e0f5d8372078f46948743ee244}{steel\+\_\+blue}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ad3ddc53fc9a16b7d6bc46d59ce3715c1}{tan}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4cf38120778f33cec9aaab9abd65b7c8}{teal}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a9783e6f125562a22a45330658763597d}{thistle}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ab4aaa71a65f87529dd18d088f4204559}{tomato}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a9b7dc38464956134c0fd56f4efcd69c8}{transparent\+\_\+black}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a011d812d61b7f9dbcf56a53454daa144}{turquoise}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a4c268c609b54c0fcb4e7dd9b288a5ed9}{violet}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a15e29561e4b6bd5157d2fbeb1c641172}{wheat}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a78d1ca0cbb00a90472e76c8841804db1}{white}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ae9bfa45ce6e6417ffb19b11c7461aa7d}{white\+\_\+smoke}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_a0f1203d05495c876fd24160e9b5a3de2}{yellow}} () noexcept
+\item 
+static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} \mbox{\hyperlink{classmoka_1_1colour_ab108e0b2bf391a04c825c9612a48c998}{yellow\+\_\+green}} () noexcept
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A colour class, a wrapper around four bytes. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmoka_1_1colour_a69c484d6aa34beda220712e751ad99f3}\label{classmoka_1_1colour_a69c484d6aa34beda220712e751ad99f3}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}\item[{const std\+::byte}]{r,  }\item[{const std\+::byte}]{g,  }\item[{const std\+::byte}]{b,  }\item[{const std\+::byte}]{a = {\ttfamily static\+\_\+cast$<$std\+:\+:byte$>$(255)} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{classmoka_1_1colour_a63b2943ce195433250366a55fae7a404}\label{classmoka_1_1colour_a63b2943ce195433250366a55fae7a404}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}\item[{const int}]{r,  }\item[{const int}]{g,  }\item[{const int}]{b,  }\item[{const int}]{a = {\ttfamily 255} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0b699c63f210e7965fab183a3bbf74b4}\label{classmoka_1_1colour_a0b699c63f210e7965fab183a3bbf74b4}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}\item[{const float}]{r,  }\item[{const float}]{g,  }\item[{const float}]{b,  }\item[{const float}]{a = {\ttfamily 1.0f} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad09262ca992f6ce84ea945b5efedffe0}\label{classmoka_1_1colour_ad09262ca992f6ce84ea945b5efedffe0}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad01b6d1af210de8289c0add5a3d1be04}\label{classmoka_1_1colour_ad01b6d1af210de8289c0add5a3d1be04}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} \&}]{colour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classmoka_1_1colour_aadf7f1fda733557fd18fac24081b75e5}\label{classmoka_1_1colour_aadf7f1fda733557fd18fac24081b75e5}} 
+\index{moka::colour@{moka::colour}!colour@{colour}}
+\index{colour@{colour}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{colour()}{colour()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily constexpr moka\+::colour\+::colour (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} \&}]{colour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 2
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}\label{classmoka_1_1colour_ac2a9d008b8201e9e2b3518f3e1d2de7e}} 
+\index{moka::colour@{moka::colour}!a@{a}}
+\index{a@{a}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{a()}{a()}}
+{\footnotesize\ttfamily constexpr float moka\+::colour\+::a (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 3
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classmoka_1_1colour_af1c552c481818c9378f5abeb2214889b}\label{classmoka_1_1colour_af1c552c481818c9378f5abeb2214889b}} 
+\index{moka::colour@{moka::colour}!alice\_blue@{alice\_blue}}
+\index{alice\_blue@{alice\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{alice\_blue()}{alice\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::alice\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a532d207410adfcd06b0f451ac95c666c}\label{classmoka_1_1colour_a532d207410adfcd06b0f451ac95c666c}} 
+\index{moka::colour@{moka::colour}!antique\_white@{antique\_white}}
+\index{antique\_white@{antique\_white}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{antique\_white()}{antique\_white()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::antique\+\_\+white (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4e2f27f7832857daeef115f66549e6bb}\label{classmoka_1_1colour_a4e2f27f7832857daeef115f66549e6bb}} 
+\index{moka::colour@{moka::colour}!aqua@{aqua}}
+\index{aqua@{aqua}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{aqua()}{aqua()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::aqua (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aee9c426d760827fc9f707ff40b8b84db}\label{classmoka_1_1colour_aee9c426d760827fc9f707ff40b8b84db}} 
+\index{moka::colour@{moka::colour}!aquamarine@{aquamarine}}
+\index{aquamarine@{aquamarine}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{aquamarine()}{aquamarine()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::aquamarine (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a185e9a1f0990b11ca59fd8040b3c3559}\label{classmoka_1_1colour_a185e9a1f0990b11ca59fd8040b3c3559}} 
+\index{moka::colour@{moka::colour}!azure@{azure}}
+\index{azure@{azure}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{azure()}{azure()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::azure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}\label{classmoka_1_1colour_a091a6fe2b9364663da19e7b561739411}} 
+\index{moka::colour@{moka::colour}!b@{b}}
+\index{b@{b}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{b()}{b()}}
+{\footnotesize\ttfamily constexpr float moka\+::colour\+::b (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 5
+Here is the caller graph for this function\+:
+% FIG 6
+\mbox{\Hypertarget{classmoka_1_1colour_afb2ce945acaca00e4fbfdfaafbf93133}\label{classmoka_1_1colour_afb2ce945acaca00e4fbfdfaafbf93133}} 
+\index{moka::colour@{moka::colour}!beige@{beige}}
+\index{beige@{beige}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{beige()}{beige()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::beige (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_adfb3cf8ca44c804f0bec28a94917d125}\label{classmoka_1_1colour_adfb3cf8ca44c804f0bec28a94917d125}} 
+\index{moka::colour@{moka::colour}!bisque@{bisque}}
+\index{bisque@{bisque}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{bisque()}{bisque()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::bisque (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a9a13c40cfd103597ad9fe270e6eedc99}\label{classmoka_1_1colour_a9a13c40cfd103597ad9fe270e6eedc99}} 
+\index{moka::colour@{moka::colour}!black@{black}}
+\index{black@{black}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{black()}{black()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::black (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a6d76417a9430cf492b4288fdcee2b6d0}\label{classmoka_1_1colour_a6d76417a9430cf492b4288fdcee2b6d0}} 
+\index{moka::colour@{moka::colour}!blanched\_almond@{blanched\_almond}}
+\index{blanched\_almond@{blanched\_almond}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{blanched\_almond()}{blanched\_almond()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::blanched\+\_\+almond (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a38dd73ca19580132063e3a2c1e4862bf}\label{classmoka_1_1colour_a38dd73ca19580132063e3a2c1e4862bf}} 
+\index{moka::colour@{moka::colour}!blue@{blue}}
+\index{blue@{blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{blue()}{blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a95909c5c6b37b9147c4667d83341060c}\label{classmoka_1_1colour_a95909c5c6b37b9147c4667d83341060c}} 
+\index{moka::colour@{moka::colour}!blue\_violet@{blue\_violet}}
+\index{blue\_violet@{blue\_violet}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{blue\_violet()}{blue\_violet()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::blue\+\_\+violet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0de74dcc468f847e87c04fc8ae30e144}\label{classmoka_1_1colour_a0de74dcc468f847e87c04fc8ae30e144}} 
+\index{moka::colour@{moka::colour}!brown@{brown}}
+\index{brown@{brown}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{brown()}{brown()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::brown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a59fe41d1e1b8fc4ff70128b19846b327}\label{classmoka_1_1colour_a59fe41d1e1b8fc4ff70128b19846b327}} 
+\index{moka::colour@{moka::colour}!burly\_wood@{burly\_wood}}
+\index{burly\_wood@{burly\_wood}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{burly\_wood()}{burly\_wood()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::burly\+\_\+wood (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_adf150ab92519483a781f5f42e5161284}\label{classmoka_1_1colour_adf150ab92519483a781f5f42e5161284}} 
+\index{moka::colour@{moka::colour}!burnt\_sienna@{burnt\_sienna}}
+\index{burnt\_sienna@{burnt\_sienna}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{burnt\_sienna()}{burnt\_sienna()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::burnt\+\_\+sienna (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa86055bbe26e45c22cd34985d40bb387}\label{classmoka_1_1colour_aa86055bbe26e45c22cd34985d40bb387}} 
+\index{moka::colour@{moka::colour}!cadet\_blue@{cadet\_blue}}
+\index{cadet\_blue@{cadet\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{cadet\_blue()}{cadet\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::cadet\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aab7da28ff616de53d7480c280025a9ce}\label{classmoka_1_1colour_aab7da28ff616de53d7480c280025a9ce}} 
+\index{moka::colour@{moka::colour}!charcoal@{charcoal}}
+\index{charcoal@{charcoal}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{charcoal()}{charcoal()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::charcoal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a98168a4da0885dd4c5c9a227be3474f0}\label{classmoka_1_1colour_a98168a4da0885dd4c5c9a227be3474f0}} 
+\index{moka::colour@{moka::colour}!chartreuse@{chartreuse}}
+\index{chartreuse@{chartreuse}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{chartreuse()}{chartreuse()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::chartreuse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af979c0134340a8cc899217613406a7b9}\label{classmoka_1_1colour_af979c0134340a8cc899217613406a7b9}} 
+\index{moka::colour@{moka::colour}!chocolate@{chocolate}}
+\index{chocolate@{chocolate}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{chocolate()}{chocolate()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::chocolate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a12c66d8c9645354719866e301fcaa29b}\label{classmoka_1_1colour_a12c66d8c9645354719866e301fcaa29b}} 
+\index{moka::colour@{moka::colour}!coral@{coral}}
+\index{coral@{coral}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{coral()}{coral()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::coral (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a8a5bb984d5d031bde9c0c7beb1f5cf3a}\label{classmoka_1_1colour_a8a5bb984d5d031bde9c0c7beb1f5cf3a}} 
+\index{moka::colour@{moka::colour}!cornflower\_blue@{cornflower\_blue}}
+\index{cornflower\_blue@{cornflower\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{cornflower\_blue()}{cornflower\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::cornflower\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_abf7f389449cbe46d41dea47c7b7fa841}\label{classmoka_1_1colour_abf7f389449cbe46d41dea47c7b7fa841}} 
+\index{moka::colour@{moka::colour}!cornsilk@{cornsilk}}
+\index{cornsilk@{cornsilk}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{cornsilk()}{cornsilk()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::cornsilk (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a5d1bf668084bbf8bbc7f1f71a9832659}\label{classmoka_1_1colour_a5d1bf668084bbf8bbc7f1f71a9832659}} 
+\index{moka::colour@{moka::colour}!crimson@{crimson}}
+\index{crimson@{crimson}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{crimson()}{crimson()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::crimson (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac079b7ba0870353c46fe83e2f17f9794}\label{classmoka_1_1colour_ac079b7ba0870353c46fe83e2f17f9794}} 
+\index{moka::colour@{moka::colour}!cyan@{cyan}}
+\index{cyan@{cyan}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{cyan()}{cyan()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::cyan (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4d323bb1bbdd9fa105f0cb5d02b9461f}\label{classmoka_1_1colour_a4d323bb1bbdd9fa105f0cb5d02b9461f}} 
+\index{moka::colour@{moka::colour}!dark\_blue@{dark\_blue}}
+\index{dark\_blue@{dark\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_blue()}{dark\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a741a01928dbbfedbcb07a48be38e3ff5}\label{classmoka_1_1colour_a741a01928dbbfedbcb07a48be38e3ff5}} 
+\index{moka::colour@{moka::colour}!dark\_cyan@{dark\_cyan}}
+\index{dark\_cyan@{dark\_cyan}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_cyan()}{dark\_cyan()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+cyan (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_abcfa7067af326bc6f598efd98bcf45af}\label{classmoka_1_1colour_abcfa7067af326bc6f598efd98bcf45af}} 
+\index{moka::colour@{moka::colour}!dark\_goldenrod@{dark\_goldenrod}}
+\index{dark\_goldenrod@{dark\_goldenrod}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_goldenrod()}{dark\_goldenrod()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+goldenrod (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a58c5c69b0ce342644b52c52d72f2ed4e}\label{classmoka_1_1colour_a58c5c69b0ce342644b52c52d72f2ed4e}} 
+\index{moka::colour@{moka::colour}!dark\_gray@{dark\_gray}}
+\index{dark\_gray@{dark\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_gray()}{dark\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+Here is the caller graph for this function\+:
+% FIG 7
+\mbox{\Hypertarget{classmoka_1_1colour_abb39a0579f25b25a2884486afcff19bc}\label{classmoka_1_1colour_abb39a0579f25b25a2884486afcff19bc}} 
+\index{moka::colour@{moka::colour}!dark\_green@{dark\_green}}
+\index{dark\_green@{dark\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_green()}{dark\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a49aa7fd7973c1953755efa5b88031ca5}\label{classmoka_1_1colour_a49aa7fd7973c1953755efa5b88031ca5}} 
+\index{moka::colour@{moka::colour}!dark\_grey@{dark\_grey}}
+\index{dark\_grey@{dark\_grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_grey()}{dark\_grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 8
+\mbox{\Hypertarget{classmoka_1_1colour_a57d7a46d18cbc113703aafd4f2be9c20}\label{classmoka_1_1colour_a57d7a46d18cbc113703aafd4f2be9c20}} 
+\index{moka::colour@{moka::colour}!dark\_khaki@{dark\_khaki}}
+\index{dark\_khaki@{dark\_khaki}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_khaki()}{dark\_khaki()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+khaki (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a473b1241ff0bdf245e529bdc5d03968a}\label{classmoka_1_1colour_a473b1241ff0bdf245e529bdc5d03968a}} 
+\index{moka::colour@{moka::colour}!dark\_magenta@{dark\_magenta}}
+\index{dark\_magenta@{dark\_magenta}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_magenta()}{dark\_magenta()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+magenta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7cfa9a05e5a65672accc670fa4d34d5b}\label{classmoka_1_1colour_a7cfa9a05e5a65672accc670fa4d34d5b}} 
+\index{moka::colour@{moka::colour}!dark\_olive\_green@{dark\_olive\_green}}
+\index{dark\_olive\_green@{dark\_olive\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_olive\_green()}{dark\_olive\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+olive\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4fa1623f5c554b6869f0d712f0349ac8}\label{classmoka_1_1colour_a4fa1623f5c554b6869f0d712f0349ac8}} 
+\index{moka::colour@{moka::colour}!dark\_orange@{dark\_orange}}
+\index{dark\_orange@{dark\_orange}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_orange()}{dark\_orange()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+orange (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa53a5fba8189045f620560aade5731d3}\label{classmoka_1_1colour_aa53a5fba8189045f620560aade5731d3}} 
+\index{moka::colour@{moka::colour}!dark\_orchid@{dark\_orchid}}
+\index{dark\_orchid@{dark\_orchid}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_orchid()}{dark\_orchid()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+orchid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a2c0fe66d73cef636ae8667b81d1d707c}\label{classmoka_1_1colour_a2c0fe66d73cef636ae8667b81d1d707c}} 
+\index{moka::colour@{moka::colour}!dark\_red@{dark\_red}}
+\index{dark\_red@{dark\_red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_red()}{dark\_red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a024727ccdbca1f7fff9e8504356bcb3e}\label{classmoka_1_1colour_a024727ccdbca1f7fff9e8504356bcb3e}} 
+\index{moka::colour@{moka::colour}!dark\_salmon@{dark\_salmon}}
+\index{dark\_salmon@{dark\_salmon}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_salmon()}{dark\_salmon()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+salmon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a877558c45f1d9d85231df2dddfd896a0}\label{classmoka_1_1colour_a877558c45f1d9d85231df2dddfd896a0}} 
+\index{moka::colour@{moka::colour}!dark\_sea\_green@{dark\_sea\_green}}
+\index{dark\_sea\_green@{dark\_sea\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_sea\_green()}{dark\_sea\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+sea\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a1b85c3a0e0eb6da70cc17a82f8072e5d}\label{classmoka_1_1colour_a1b85c3a0e0eb6da70cc17a82f8072e5d}} 
+\index{moka::colour@{moka::colour}!dark\_slate\_blue@{dark\_slate\_blue}}
+\index{dark\_slate\_blue@{dark\_slate\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_slate\_blue()}{dark\_slate\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+slate\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7570e8f845cb434a44d4101c08382248}\label{classmoka_1_1colour_a7570e8f845cb434a44d4101c08382248}} 
+\index{moka::colour@{moka::colour}!dark\_slate\_gray@{dark\_slate\_gray}}
+\index{dark\_slate\_gray@{dark\_slate\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_slate\_gray()}{dark\_slate\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+slate\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a82712d48f1c5a611bffe7c0e8d2195f2}\label{classmoka_1_1colour_a82712d48f1c5a611bffe7c0e8d2195f2}} 
+\index{moka::colour@{moka::colour}!dark\_turquoise@{dark\_turquoise}}
+\index{dark\_turquoise@{dark\_turquoise}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_turquoise()}{dark\_turquoise()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+turquoise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa106ab839ce65b31b3f58c1b1844a926}\label{classmoka_1_1colour_aa106ab839ce65b31b3f58c1b1844a926}} 
+\index{moka::colour@{moka::colour}!dark\_violet@{dark\_violet}}
+\index{dark\_violet@{dark\_violet}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dark\_violet()}{dark\_violet()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dark\+\_\+violet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0821345901f797126f4169eeea3ed75a}\label{classmoka_1_1colour_a0821345901f797126f4169eeea3ed75a}} 
+\index{moka::colour@{moka::colour}!deep\_pink@{deep\_pink}}
+\index{deep\_pink@{deep\_pink}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{deep\_pink()}{deep\_pink()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::deep\+\_\+pink (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a935483a6bc1930d7d84c6dd0b7f1353f}\label{classmoka_1_1colour_a935483a6bc1930d7d84c6dd0b7f1353f}} 
+\index{moka::colour@{moka::colour}!deep\_sky\_blue@{deep\_sky\_blue}}
+\index{deep\_sky\_blue@{deep\_sky\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{deep\_sky\_blue()}{deep\_sky\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::deep\+\_\+sky\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a9a864e4849feee6ccb73f8f6b95d6dc8}\label{classmoka_1_1colour_a9a864e4849feee6ccb73f8f6b95d6dc8}} 
+\index{moka::colour@{moka::colour}!dim\_gray@{dim\_gray}}
+\index{dim\_gray@{dim\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dim\_gray()}{dim\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dim\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a92fa8002004604d641f9ba491e7ab17c}\label{classmoka_1_1colour_a92fa8002004604d641f9ba491e7ab17c}} 
+\index{moka::colour@{moka::colour}!dim\_grey@{dim\_grey}}
+\index{dim\_grey@{dim\_grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dim\_grey()}{dim\_grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dim\+\_\+grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7699a78883a1ca7228aa6ad708f0d5a6}\label{classmoka_1_1colour_a7699a78883a1ca7228aa6ad708f0d5a6}} 
+\index{moka::colour@{moka::colour}!dodger\_blue@{dodger\_blue}}
+\index{dodger\_blue@{dodger\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{dodger\_blue()}{dodger\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::dodger\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ace02c8f9aca135461aacccc6a7774d9e}\label{classmoka_1_1colour_ace02c8f9aca135461aacccc6a7774d9e}} 
+\index{moka::colour@{moka::colour}!firebrick@{firebrick}}
+\index{firebrick@{firebrick}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{firebrick()}{firebrick()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::firebrick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4cd964a1fab43bf0c7bb3d007428d043}\label{classmoka_1_1colour_a4cd964a1fab43bf0c7bb3d007428d043}} 
+\index{moka::colour@{moka::colour}!floral\_white@{floral\_white}}
+\index{floral\_white@{floral\_white}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{floral\_white()}{floral\_white()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::floral\+\_\+white (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad3f3234e6667e4d9eb33bcf8ea082df1}\label{classmoka_1_1colour_ad3f3234e6667e4d9eb33bcf8ea082df1}} 
+\index{moka::colour@{moka::colour}!forest\_green@{forest\_green}}
+\index{forest\_green@{forest\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{forest\_green()}{forest\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::forest\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac20a5ec45c83c8bbc89fdec5fcb3fc29}\label{classmoka_1_1colour_ac20a5ec45c83c8bbc89fdec5fcb3fc29}} 
+\index{moka::colour@{moka::colour}!fuchsia@{fuchsia}}
+\index{fuchsia@{fuchsia}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{fuchsia()}{fuchsia()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::fuchsia (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}\label{classmoka_1_1colour_a884fe789032a1e3a1d40c55f5cf852bd}} 
+\index{moka::colour@{moka::colour}!g@{g}}
+\index{g@{g}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{g()}{g()}}
+{\footnotesize\ttfamily constexpr float moka\+::colour\+::g (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 9
+Here is the caller graph for this function\+:
+% FIG 10
+\mbox{\Hypertarget{classmoka_1_1colour_a7c5975a37f7aa5bbbdfc4abc78002552}\label{classmoka_1_1colour_a7c5975a37f7aa5bbbdfc4abc78002552}} 
+\index{moka::colour@{moka::colour}!gainsboro@{gainsboro}}
+\index{gainsboro@{gainsboro}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{gainsboro()}{gainsboro()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::gainsboro (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a599a544493ece8acc2ee62bdd2604e0e}\label{classmoka_1_1colour_a599a544493ece8acc2ee62bdd2604e0e}} 
+\index{moka::colour@{moka::colour}!ghost\_white@{ghost\_white}}
+\index{ghost\_white@{ghost\_white}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{ghost\_white()}{ghost\_white()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::ghost\+\_\+white (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7827508c0ecde383148625dc72c355d9}\label{classmoka_1_1colour_a7827508c0ecde383148625dc72c355d9}} 
+\index{moka::colour@{moka::colour}!gold@{gold}}
+\index{gold@{gold}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{gold()}{gold()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::gold (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ab65b1a933564a789803b5db12cc6a752}\label{classmoka_1_1colour_ab65b1a933564a789803b5db12cc6a752}} 
+\index{moka::colour@{moka::colour}!goldenrod@{goldenrod}}
+\index{goldenrod@{goldenrod}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{goldenrod()}{goldenrod()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::goldenrod (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a46a3131f856463932995c8ef2b49ac29}\label{classmoka_1_1colour_a46a3131f856463932995c8ef2b49ac29}} 
+\index{moka::colour@{moka::colour}!gray@{gray}}
+\index{gray@{gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{gray()}{gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4819e4a97e8f14db03406a3944db843c}\label{classmoka_1_1colour_a4819e4a97e8f14db03406a3944db843c}} 
+\index{moka::colour@{moka::colour}!green@{green}}
+\index{green@{green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{green()}{green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a637f81ba82ccaec1cd6fc6a52f707d80}\label{classmoka_1_1colour_a637f81ba82ccaec1cd6fc6a52f707d80}} 
+\index{moka::colour@{moka::colour}!green\_yellow@{green\_yellow}}
+\index{green\_yellow@{green\_yellow}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{green\_yellow()}{green\_yellow()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::green\+\_\+yellow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a362aa56326932673cafebb0253545a40}\label{classmoka_1_1colour_a362aa56326932673cafebb0253545a40}} 
+\index{moka::colour@{moka::colour}!grey@{grey}}
+\index{grey@{grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{grey()}{grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0f335fdc74d79479b429174aa01233f8}\label{classmoka_1_1colour_a0f335fdc74d79479b429174aa01233f8}} 
+\index{moka::colour@{moka::colour}!honeydew@{honeydew}}
+\index{honeydew@{honeydew}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{honeydew()}{honeydew()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::honeydew (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a903c5603cd83d439a79d27aa7baec33b}\label{classmoka_1_1colour_a903c5603cd83d439a79d27aa7baec33b}} 
+\index{moka::colour@{moka::colour}!hot\_pink@{hot\_pink}}
+\index{hot\_pink@{hot\_pink}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{hot\_pink()}{hot\_pink()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::hot\+\_\+pink (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a808f0790d09569dfa2536ebc91a189c1}\label{classmoka_1_1colour_a808f0790d09569dfa2536ebc91a189c1}} 
+\index{moka::colour@{moka::colour}!indian\_red@{indian\_red}}
+\index{indian\_red@{indian\_red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{indian\_red()}{indian\_red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::indian\+\_\+red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a1654854532d2dd5af3143edaaf95a5ca}\label{classmoka_1_1colour_a1654854532d2dd5af3143edaaf95a5ca}} 
+\index{moka::colour@{moka::colour}!indigo@{indigo}}
+\index{indigo@{indigo}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{indigo()}{indigo()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::indigo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a89c362959da67bdb0900b26966611ecf}\label{classmoka_1_1colour_a89c362959da67bdb0900b26966611ecf}} 
+\index{moka::colour@{moka::colour}!ivory@{ivory}}
+\index{ivory@{ivory}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{ivory()}{ivory()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::ivory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a1e92a40a2b17059f3687fdb4ad28a903}\label{classmoka_1_1colour_a1e92a40a2b17059f3687fdb4ad28a903}} 
+\index{moka::colour@{moka::colour}!khaki@{khaki}}
+\index{khaki@{khaki}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{khaki()}{khaki()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::khaki (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a46763102fc27ba8ead1c3b51462d0722}\label{classmoka_1_1colour_a46763102fc27ba8ead1c3b51462d0722}} 
+\index{moka::colour@{moka::colour}!lavender@{lavender}}
+\index{lavender@{lavender}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lavender()}{lavender()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lavender (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa49ab82953f6b5120105bab3c5a7cbb3}\label{classmoka_1_1colour_aa49ab82953f6b5120105bab3c5a7cbb3}} 
+\index{moka::colour@{moka::colour}!lavender\_blush@{lavender\_blush}}
+\index{lavender\_blush@{lavender\_blush}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lavender\_blush()}{lavender\_blush()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lavender\+\_\+blush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa78d9ebdf53e2a9544c000b41049383b}\label{classmoka_1_1colour_aa78d9ebdf53e2a9544c000b41049383b}} 
+\index{moka::colour@{moka::colour}!lawn\_green@{lawn\_green}}
+\index{lawn\_green@{lawn\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lawn\_green()}{lawn\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lawn\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a8089dc3cdbf507cad1267670e9a6908a}\label{classmoka_1_1colour_a8089dc3cdbf507cad1267670e9a6908a}} 
+\index{moka::colour@{moka::colour}!lemon\_chiffon@{lemon\_chiffon}}
+\index{lemon\_chiffon@{lemon\_chiffon}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lemon\_chiffon()}{lemon\_chiffon()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lemon\+\_\+chiffon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a93f0616ef85c6092d04ce72c65002fe6}\label{classmoka_1_1colour_a93f0616ef85c6092d04ce72c65002fe6}} 
+\index{moka::colour@{moka::colour}!light\_blue@{light\_blue}}
+\index{light\_blue@{light\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_blue()}{light\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ab63863d1a2c98380a5e053005d5ef49b}\label{classmoka_1_1colour_ab63863d1a2c98380a5e053005d5ef49b}} 
+\index{moka::colour@{moka::colour}!light\_coral@{light\_coral}}
+\index{light\_coral@{light\_coral}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_coral()}{light\_coral()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+coral (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a12b432469d965a7925083d7764599f3e}\label{classmoka_1_1colour_a12b432469d965a7925083d7764599f3e}} 
+\index{moka::colour@{moka::colour}!light\_cyan@{light\_cyan}}
+\index{light\_cyan@{light\_cyan}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_cyan()}{light\_cyan()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+cyan (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aebe01473b0f4a8a01367e12379f97f8e}\label{classmoka_1_1colour_aebe01473b0f4a8a01367e12379f97f8e}} 
+\index{moka::colour@{moka::colour}!light\_goldenrod\_yellow@{light\_goldenrod\_yellow}}
+\index{light\_goldenrod\_yellow@{light\_goldenrod\_yellow}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_goldenrod\_yellow()}{light\_goldenrod\_yellow()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+goldenrod\+\_\+yellow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7ca64849f564ebb7f3b57d48c5559607}\label{classmoka_1_1colour_a7ca64849f564ebb7f3b57d48c5559607}} 
+\index{moka::colour@{moka::colour}!light\_gray@{light\_gray}}
+\index{light\_gray@{light\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_gray()}{light\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af776482fd76aeb8ab41587fd1ff11912}\label{classmoka_1_1colour_af776482fd76aeb8ab41587fd1ff11912}} 
+\index{moka::colour@{moka::colour}!light\_green@{light\_green}}
+\index{light\_green@{light\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_green()}{light\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0b1fc6cd85e9d91c145fc43eac785b7c}\label{classmoka_1_1colour_a0b1fc6cd85e9d91c145fc43eac785b7c}} 
+\index{moka::colour@{moka::colour}!light\_grey@{light\_grey}}
+\index{light\_grey@{light\_grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_grey()}{light\_grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a32ba9d7e567cdc58f25c1056ab059762}\label{classmoka_1_1colour_a32ba9d7e567cdc58f25c1056ab059762}} 
+\index{moka::colour@{moka::colour}!light\_pink@{light\_pink}}
+\index{light\_pink@{light\_pink}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_pink()}{light\_pink()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+pink (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a8ef2d0e1678c2bff8471ea8777396d23}\label{classmoka_1_1colour_a8ef2d0e1678c2bff8471ea8777396d23}} 
+\index{moka::colour@{moka::colour}!light\_salmon@{light\_salmon}}
+\index{light\_salmon@{light\_salmon}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_salmon()}{light\_salmon()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+salmon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7b358ca1ba1208b73dd2c3d9846462eb}\label{classmoka_1_1colour_a7b358ca1ba1208b73dd2c3d9846462eb}} 
+\index{moka::colour@{moka::colour}!light\_sea\_green@{light\_sea\_green}}
+\index{light\_sea\_green@{light\_sea\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_sea\_green()}{light\_sea\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+sea\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a98d46f4acb076b3c8631de7ed28cd9ff}\label{classmoka_1_1colour_a98d46f4acb076b3c8631de7ed28cd9ff}} 
+\index{moka::colour@{moka::colour}!light\_sky\_blue@{light\_sky\_blue}}
+\index{light\_sky\_blue@{light\_sky\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_sky\_blue()}{light\_sky\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+sky\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4411364de773b18b5f7be4e0c493d815}\label{classmoka_1_1colour_a4411364de773b18b5f7be4e0c493d815}} 
+\index{moka::colour@{moka::colour}!light\_slate\_gray@{light\_slate\_gray}}
+\index{light\_slate\_gray@{light\_slate\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_slate\_gray()}{light\_slate\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+slate\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac1cbcc5b6e956fbfbeca6a625430c40e}\label{classmoka_1_1colour_ac1cbcc5b6e956fbfbeca6a625430c40e}} 
+\index{moka::colour@{moka::colour}!light\_slate\_grey@{light\_slate\_grey}}
+\index{light\_slate\_grey@{light\_slate\_grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_slate\_grey()}{light\_slate\_grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+slate\+\_\+grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a74d7ec0257e479a7255c31c23f820759}\label{classmoka_1_1colour_a74d7ec0257e479a7255c31c23f820759}} 
+\index{moka::colour@{moka::colour}!light\_steel\_blue@{light\_steel\_blue}}
+\index{light\_steel\_blue@{light\_steel\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_steel\_blue()}{light\_steel\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+steel\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a1a9dea13046af27b7d1b43d9d4c5113d}\label{classmoka_1_1colour_a1a9dea13046af27b7d1b43d9d4c5113d}} 
+\index{moka::colour@{moka::colour}!light\_yellow@{light\_yellow}}
+\index{light\_yellow@{light\_yellow}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{light\_yellow()}{light\_yellow()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::light\+\_\+yellow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7337e615ca2d82c820e1cb12dcbfafba}\label{classmoka_1_1colour_a7337e615ca2d82c820e1cb12dcbfafba}} 
+\index{moka::colour@{moka::colour}!lime@{lime}}
+\index{lime@{lime}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lime()}{lime()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lime (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a47cbf0375a2ca712b398b35518787c96}\label{classmoka_1_1colour_a47cbf0375a2ca712b398b35518787c96}} 
+\index{moka::colour@{moka::colour}!lime\_green@{lime\_green}}
+\index{lime\_green@{lime\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{lime\_green()}{lime\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::lime\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4ec7680384f8e5cb605e1f4841e04eba}\label{classmoka_1_1colour_a4ec7680384f8e5cb605e1f4841e04eba}} 
+\index{moka::colour@{moka::colour}!linen@{linen}}
+\index{linen@{linen}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{linen()}{linen()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::linen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad6fb2a2ae44257c285f191398a51303f}\label{classmoka_1_1colour_ad6fb2a2ae44257c285f191398a51303f}} 
+\index{moka::colour@{moka::colour}!magenta@{magenta}}
+\index{magenta@{magenta}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{magenta()}{magenta()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::magenta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7d81cd638c65e535c64adfe73fc4b91f}\label{classmoka_1_1colour_a7d81cd638c65e535c64adfe73fc4b91f}} 
+\index{moka::colour@{moka::colour}!maroon@{maroon}}
+\index{maroon@{maroon}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{maroon()}{maroon()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::maroon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4985cc7638b3548343bf4d7bb7d0150a}\label{classmoka_1_1colour_a4985cc7638b3548343bf4d7bb7d0150a}} 
+\index{moka::colour@{moka::colour}!medium\_aquamarine@{medium\_aquamarine}}
+\index{medium\_aquamarine@{medium\_aquamarine}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_aquamarine()}{medium\_aquamarine()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+aquamarine (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac83767e582c0f0c1189958789d2e5f78}\label{classmoka_1_1colour_ac83767e582c0f0c1189958789d2e5f78}} 
+\index{moka::colour@{moka::colour}!medium\_blue@{medium\_blue}}
+\index{medium\_blue@{medium\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_blue()}{medium\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af005c75898bb6fe21cef0b7a6b98da52}\label{classmoka_1_1colour_af005c75898bb6fe21cef0b7a6b98da52}} 
+\index{moka::colour@{moka::colour}!medium\_orchid@{medium\_orchid}}
+\index{medium\_orchid@{medium\_orchid}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_orchid()}{medium\_orchid()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+orchid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a789925f497faf5d74422cb82697cbf2a}\label{classmoka_1_1colour_a789925f497faf5d74422cb82697cbf2a}} 
+\index{moka::colour@{moka::colour}!medium\_purple@{medium\_purple}}
+\index{medium\_purple@{medium\_purple}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_purple()}{medium\_purple()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+purple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad8ddb747e935e376dac4584546b465c3}\label{classmoka_1_1colour_ad8ddb747e935e376dac4584546b465c3}} 
+\index{moka::colour@{moka::colour}!medium\_sea\_green@{medium\_sea\_green}}
+\index{medium\_sea\_green@{medium\_sea\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_sea\_green()}{medium\_sea\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+sea\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a05b97af96e7840d17f41b7c44eae71f9}\label{classmoka_1_1colour_a05b97af96e7840d17f41b7c44eae71f9}} 
+\index{moka::colour@{moka::colour}!medium\_slate\_blue@{medium\_slate\_blue}}
+\index{medium\_slate\_blue@{medium\_slate\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_slate\_blue()}{medium\_slate\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+slate\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a50c874851964ba13bb4c0b3f8c1aca85}\label{classmoka_1_1colour_a50c874851964ba13bb4c0b3f8c1aca85}} 
+\index{moka::colour@{moka::colour}!medium\_spring\_green@{medium\_spring\_green}}
+\index{medium\_spring\_green@{medium\_spring\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_spring\_green()}{medium\_spring\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+spring\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a24f1d3a557f9ae55e4ba70a166893000}\label{classmoka_1_1colour_a24f1d3a557f9ae55e4ba70a166893000}} 
+\index{moka::colour@{moka::colour}!medium\_turquoise@{medium\_turquoise}}
+\index{medium\_turquoise@{medium\_turquoise}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_turquoise()}{medium\_turquoise()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+turquoise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a65612bcc537f83b7973fd7639d26a22a}\label{classmoka_1_1colour_a65612bcc537f83b7973fd7639d26a22a}} 
+\index{moka::colour@{moka::colour}!medium\_violet\_red@{medium\_violet\_red}}
+\index{medium\_violet\_red@{medium\_violet\_red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{medium\_violet\_red()}{medium\_violet\_red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::medium\+\_\+violet\+\_\+red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a3bfea780e8f0f1d4c79716c1890362d6}\label{classmoka_1_1colour_a3bfea780e8f0f1d4c79716c1890362d6}} 
+\index{moka::colour@{moka::colour}!midnight\_blue@{midnight\_blue}}
+\index{midnight\_blue@{midnight\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{midnight\_blue()}{midnight\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::midnight\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a146279b6490d141db7643651fe501693}\label{classmoka_1_1colour_a146279b6490d141db7643651fe501693}} 
+\index{moka::colour@{moka::colour}!mint\_cream@{mint\_cream}}
+\index{mint\_cream@{mint\_cream}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{mint\_cream()}{mint\_cream()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::mint\+\_\+cream (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ade045aa0ed34003700a03432da5d072a}\label{classmoka_1_1colour_ade045aa0ed34003700a03432da5d072a}} 
+\index{moka::colour@{moka::colour}!misty\_rose@{misty\_rose}}
+\index{misty\_rose@{misty\_rose}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{misty\_rose()}{misty\_rose()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::misty\+\_\+rose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ae642c04d3915e7cffa71e69173391773}\label{classmoka_1_1colour_ae642c04d3915e7cffa71e69173391773}} 
+\index{moka::colour@{moka::colour}!moccasin@{moccasin}}
+\index{moccasin@{moccasin}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{moccasin()}{moccasin()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::moccasin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_adde5b40c475fd858ba3fe3ee134ed2cb}\label{classmoka_1_1colour_adde5b40c475fd858ba3fe3ee134ed2cb}} 
+\index{moka::colour@{moka::colour}!navajo\_white@{navajo\_white}}
+\index{navajo\_white@{navajo\_white}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{navajo\_white()}{navajo\_white()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::navajo\+\_\+white (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a57040c8ecd0e0aae65ab46ecfce017a2}\label{classmoka_1_1colour_a57040c8ecd0e0aae65ab46ecfce017a2}} 
+\index{moka::colour@{moka::colour}!navy@{navy}}
+\index{navy@{navy}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{navy()}{navy()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::navy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ae78de5b8b572127105aeb5b0629b8a19}\label{classmoka_1_1colour_ae78de5b8b572127105aeb5b0629b8a19}} 
+\index{moka::colour@{moka::colour}!nero@{nero}}
+\index{nero@{nero}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{nero()}{nero()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::nero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0eaa40808e68b8be13b5596220feefb7}\label{classmoka_1_1colour_a0eaa40808e68b8be13b5596220feefb7}} 
+\index{moka::colour@{moka::colour}!night\_rider@{night\_rider}}
+\index{night\_rider@{night\_rider}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{night\_rider()}{night\_rider()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::night\+\_\+rider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a6ea7a59513953cc67947369cdaa4acaa}\label{classmoka_1_1colour_a6ea7a59513953cc67947369cdaa4acaa}} 
+\index{moka::colour@{moka::colour}!old\_lace@{old\_lace}}
+\index{old\_lace@{old\_lace}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{old\_lace()}{old\_lace()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::old\+\_\+lace (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_abecfd112bd69cfe1bab12859666df631}\label{classmoka_1_1colour_abecfd112bd69cfe1bab12859666df631}} 
+\index{moka::colour@{moka::colour}!olive@{olive}}
+\index{olive@{olive}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{olive()}{olive()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::olive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a94992b07e270d1c1fe68e335257bd273}\label{classmoka_1_1colour_a94992b07e270d1c1fe68e335257bd273}} 
+\index{moka::colour@{moka::colour}!olive\_drab@{olive\_drab}}
+\index{olive\_drab@{olive\_drab}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{olive\_drab()}{olive\_drab()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::olive\+\_\+drab (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7c6fc079f1689c2e47d698b913d16a07}\label{classmoka_1_1colour_a7c6fc079f1689c2e47d698b913d16a07}} 
+\index{moka::colour@{moka::colour}!operator glm::vec3@{operator glm::vec3}}
+\index{operator glm::vec3@{operator glm::vec3}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{operator glm::vec3()}{operator glm::vec3()}}
+{\footnotesize\ttfamily moka\+::colour\+::operator \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa97ade28e93c0de60adc075bdbe07ca36}{glm\+::vec3}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 11
+\mbox{\Hypertarget{classmoka_1_1colour_ae61f128c67947c870a5daa830de23d67}\label{classmoka_1_1colour_ae61f128c67947c870a5daa830de23d67}} 
+\index{moka::colour@{moka::colour}!operator glm::vec4@{operator glm::vec4}}
+\index{operator glm::vec4@{operator glm::vec4}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{operator glm::vec4()}{operator glm::vec4()}}
+{\footnotesize\ttfamily moka\+::colour\+::operator \mbox{\hyperlink{namespacemoka_aed2224bc0e5b79e57a8975ded94ee1aaa1a9028fd802c481a99491a418ca2fe86}{glm\+::vec4}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 12
+\mbox{\Hypertarget{classmoka_1_1colour_ae28feff4fd8815b6612ef4cf16b026b8}\label{classmoka_1_1colour_ae28feff4fd8815b6612ef4cf16b026b8}} 
+\index{moka::colour@{moka::colour}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily constexpr float moka\+::colour\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const size\+\_\+t}]{pos }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 13
+\mbox{\Hypertarget{classmoka_1_1colour_a0a1c8669c878810ccdf468d90d598882}\label{classmoka_1_1colour_a0a1c8669c878810ccdf468d90d598882}} 
+\index{moka::colour@{moka::colour}!orange@{orange}}
+\index{orange@{orange}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{orange()}{orange()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::orange (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_abcc8eb871af80fc99257d93f8bda3fcd}\label{classmoka_1_1colour_abcc8eb871af80fc99257d93f8bda3fcd}} 
+\index{moka::colour@{moka::colour}!orange\_red@{orange\_red}}
+\index{orange\_red@{orange\_red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{orange\_red()}{orange\_red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::orange\+\_\+red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aad4bf4e3bb3af8b61fca846655435d00}\label{classmoka_1_1colour_aad4bf4e3bb3af8b61fca846655435d00}} 
+\index{moka::colour@{moka::colour}!orchid@{orchid}}
+\index{orchid@{orchid}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{orchid()}{orchid()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::orchid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a258f63765e7938cef739980ffca65a8b}\label{classmoka_1_1colour_a258f63765e7938cef739980ffca65a8b}} 
+\index{moka::colour@{moka::colour}!pale\_goldenrod@{pale\_goldenrod}}
+\index{pale\_goldenrod@{pale\_goldenrod}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{pale\_goldenrod()}{pale\_goldenrod()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::pale\+\_\+goldenrod (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7945c8658d3ea970de965adb1e1bdc4b}\label{classmoka_1_1colour_a7945c8658d3ea970de965adb1e1bdc4b}} 
+\index{moka::colour@{moka::colour}!pale\_green@{pale\_green}}
+\index{pale\_green@{pale\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{pale\_green()}{pale\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::pale\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a17f2b2cbdbf81c008b0ce8749938adb4}\label{classmoka_1_1colour_a17f2b2cbdbf81c008b0ce8749938adb4}} 
+\index{moka::colour@{moka::colour}!pale\_turquoise@{pale\_turquoise}}
+\index{pale\_turquoise@{pale\_turquoise}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{pale\_turquoise()}{pale\_turquoise()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::pale\+\_\+turquoise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad1eb86dfd7ae69aff716e8382b485fb8}\label{classmoka_1_1colour_ad1eb86dfd7ae69aff716e8382b485fb8}} 
+\index{moka::colour@{moka::colour}!pale\_violet\_red@{pale\_violet\_red}}
+\index{pale\_violet\_red@{pale\_violet\_red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{pale\_violet\_red()}{pale\_violet\_red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::pale\+\_\+violet\+\_\+red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af2a0d1b024940bd4e96aa2a3646ee3e3}\label{classmoka_1_1colour_af2a0d1b024940bd4e96aa2a3646ee3e3}} 
+\index{moka::colour@{moka::colour}!papaya\_whip@{papaya\_whip}}
+\index{papaya\_whip@{papaya\_whip}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{papaya\_whip()}{papaya\_whip()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::papaya\+\_\+whip (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a3deed650e8a98223fa851c43bfed4b30}\label{classmoka_1_1colour_a3deed650e8a98223fa851c43bfed4b30}} 
+\index{moka::colour@{moka::colour}!peach\_puff@{peach\_puff}}
+\index{peach\_puff@{peach\_puff}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{peach\_puff()}{peach\_puff()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::peach\+\_\+puff (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a12542a9ad99c5eb16b9b8ddb33d29936}\label{classmoka_1_1colour_a12542a9ad99c5eb16b9b8ddb33d29936}} 
+\index{moka::colour@{moka::colour}!peru@{peru}}
+\index{peru@{peru}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{peru()}{peru()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::peru (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a983e2c19732e81d021a037475ea2289b}\label{classmoka_1_1colour_a983e2c19732e81d021a037475ea2289b}} 
+\index{moka::colour@{moka::colour}!pink@{pink}}
+\index{pink@{pink}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{pink()}{pink()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::pink (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a5fa6c66f8f6d7415c1b06e64eab4a72f}\label{classmoka_1_1colour_a5fa6c66f8f6d7415c1b06e64eab4a72f}} 
+\index{moka::colour@{moka::colour}!plum@{plum}}
+\index{plum@{plum}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{plum()}{plum()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::plum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a6a297bbcd3fa6afa2c7e58c0a5015e94}\label{classmoka_1_1colour_a6a297bbcd3fa6afa2c7e58c0a5015e94}} 
+\index{moka::colour@{moka::colour}!powder\_blue@{powder\_blue}}
+\index{powder\_blue@{powder\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{powder\_blue()}{powder\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::powder\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af0e9e47e97a2b81d006c11077715786b}\label{classmoka_1_1colour_af0e9e47e97a2b81d006c11077715786b}} 
+\index{moka::colour@{moka::colour}!purple@{purple}}
+\index{purple@{purple}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{purple()}{purple()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::purple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}\label{classmoka_1_1colour_a2ec71fd89ba133142c84c3a7a0ce35eb}} 
+\index{moka::colour@{moka::colour}!r@{r}}
+\index{r@{r}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{r()}{r()}}
+{\footnotesize\ttfamily constexpr float moka\+::colour\+::r (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 14
+Here is the caller graph for this function\+:
+% FIG 15
+\mbox{\Hypertarget{classmoka_1_1colour_afda874e3c56a02d95685b4f11515a130}\label{classmoka_1_1colour_afda874e3c56a02d95685b4f11515a130}} 
+\index{moka::colour@{moka::colour}!red@{red}}
+\index{red@{red}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{red()}{red()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::red (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a7d35dcc77038c5ee24eb2d5f7bc7d071}\label{classmoka_1_1colour_a7d35dcc77038c5ee24eb2d5f7bc7d071}} 
+\index{moka::colour@{moka::colour}!rosy\_brown@{rosy\_brown}}
+\index{rosy\_brown@{rosy\_brown}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{rosy\_brown()}{rosy\_brown()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::rosy\+\_\+brown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a01e8353c6398f3b4348cdf1b30dd3ca4}\label{classmoka_1_1colour_a01e8353c6398f3b4348cdf1b30dd3ca4}} 
+\index{moka::colour@{moka::colour}!royal\_blue@{royal\_blue}}
+\index{royal\_blue@{royal\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{royal\_blue()}{royal\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::royal\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a3325d3ab6ddcba8bfd756ddadab901f9}\label{classmoka_1_1colour_a3325d3ab6ddcba8bfd756ddadab901f9}} 
+\index{moka::colour@{moka::colour}!saddle\_brown@{saddle\_brown}}
+\index{saddle\_brown@{saddle\_brown}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{saddle\_brown()}{saddle\_brown()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::saddle\+\_\+brown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a5213e584147379ed6803a9ea7de6152c}\label{classmoka_1_1colour_a5213e584147379ed6803a9ea7de6152c}} 
+\index{moka::colour@{moka::colour}!salmon@{salmon}}
+\index{salmon@{salmon}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{salmon()}{salmon()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::salmon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aa4464dcfc58ddc719455407163d27f73}\label{classmoka_1_1colour_aa4464dcfc58ddc719455407163d27f73}} 
+\index{moka::colour@{moka::colour}!sandy\_brown@{sandy\_brown}}
+\index{sandy\_brown@{sandy\_brown}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{sandy\_brown()}{sandy\_brown()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::sandy\+\_\+brown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ae0921dee800efb04f5c29391125860bf}\label{classmoka_1_1colour_ae0921dee800efb04f5c29391125860bf}} 
+\index{moka::colour@{moka::colour}!sea\_green@{sea\_green}}
+\index{sea\_green@{sea\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{sea\_green()}{sea\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::sea\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac9af1ded3280cef53f9e2c709865b9a5}\label{classmoka_1_1colour_ac9af1ded3280cef53f9e2c709865b9a5}} 
+\index{moka::colour@{moka::colour}!sea\_shell@{sea\_shell}}
+\index{sea\_shell@{sea\_shell}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{sea\_shell()}{sea\_shell()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::sea\+\_\+shell (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a700d904dd083ebbbc73b1aee6645d58c}\label{classmoka_1_1colour_a700d904dd083ebbbc73b1aee6645d58c}} 
+\index{moka::colour@{moka::colour}!set\_a@{set\_a}}
+\index{set\_a@{set\_a}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_a()}{set\_a()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+a (\begin{DoxyParamCaption}\item[{const int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 16
+\mbox{\Hypertarget{classmoka_1_1colour_ac4ff9c1b4848a555ec4e6c6d471a2209}\label{classmoka_1_1colour_ac4ff9c1b4848a555ec4e6c6d471a2209}} 
+\index{moka::colour@{moka::colour}!set\_a@{set\_a}}
+\index{set\_a@{set\_a}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_a()}{set\_a()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+a (\begin{DoxyParamCaption}\item[{const float}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 17
+\mbox{\Hypertarget{classmoka_1_1colour_a7cf8baff4073bf0ad69103cd663d6972}\label{classmoka_1_1colour_a7cf8baff4073bf0ad69103cd663d6972}} 
+\index{moka::colour@{moka::colour}!set\_b@{set\_b}}
+\index{set\_b@{set\_b}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_b()}{set\_b()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+b (\begin{DoxyParamCaption}\item[{const int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 18
+\mbox{\Hypertarget{classmoka_1_1colour_a60b29bebff89e6507b5af40d8cc8ffb5}\label{classmoka_1_1colour_a60b29bebff89e6507b5af40d8cc8ffb5}} 
+\index{moka::colour@{moka::colour}!set\_b@{set\_b}}
+\index{set\_b@{set\_b}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_b()}{set\_b()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+b (\begin{DoxyParamCaption}\item[{const float}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 19
+\mbox{\Hypertarget{classmoka_1_1colour_ad5e756d118fe5d7fddca8fba8d826b0a}\label{classmoka_1_1colour_ad5e756d118fe5d7fddca8fba8d826b0a}} 
+\index{moka::colour@{moka::colour}!set\_g@{set\_g}}
+\index{set\_g@{set\_g}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_g()}{set\_g()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+g (\begin{DoxyParamCaption}\item[{const int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 20
+\mbox{\Hypertarget{classmoka_1_1colour_af0e845db8ecc3a17e371fb3f9523273f}\label{classmoka_1_1colour_af0e845db8ecc3a17e371fb3f9523273f}} 
+\index{moka::colour@{moka::colour}!set\_g@{set\_g}}
+\index{set\_g@{set\_g}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_g()}{set\_g()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+g (\begin{DoxyParamCaption}\item[{const float}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 21
+\mbox{\Hypertarget{classmoka_1_1colour_acf6a295464965ba7da438056c3b93986}\label{classmoka_1_1colour_acf6a295464965ba7da438056c3b93986}} 
+\index{moka::colour@{moka::colour}!set\_r@{set\_r}}
+\index{set\_r@{set\_r}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_r()}{set\_r()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+r (\begin{DoxyParamCaption}\item[{const int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 22
+\mbox{\Hypertarget{classmoka_1_1colour_a5c03d583bf2b0d33e46b9c17defab90d}\label{classmoka_1_1colour_a5c03d583bf2b0d33e46b9c17defab90d}} 
+\index{moka::colour@{moka::colour}!set\_r@{set\_r}}
+\index{set\_r@{set\_r}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{set\_r()}{set\_r()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr void moka\+::colour\+::set\+\_\+r (\begin{DoxyParamCaption}\item[{const float}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Here is the call graph for this function\+:
+% FIG 23
+\mbox{\Hypertarget{classmoka_1_1colour_a016b25dff498d7fd2b8bbc8c4695a751}\label{classmoka_1_1colour_a016b25dff498d7fd2b8bbc8c4695a751}} 
+\index{moka::colour@{moka::colour}!sienna@{sienna}}
+\index{sienna@{sienna}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{sienna()}{sienna()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::sienna (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a23dce8ee8b640ba4865b3dcda926c555}\label{classmoka_1_1colour_a23dce8ee8b640ba4865b3dcda926c555}} 
+\index{moka::colour@{moka::colour}!silver@{silver}}
+\index{silver@{silver}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{silver()}{silver()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::silver (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_af2fda876258bf121bb2a833be220c73b}\label{classmoka_1_1colour_af2fda876258bf121bb2a833be220c73b}} 
+\index{moka::colour@{moka::colour}!sky\_blue@{sky\_blue}}
+\index{sky\_blue@{sky\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{sky\_blue()}{sky\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::sky\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a1f4310526da720db40aebe43952105f7}\label{classmoka_1_1colour_a1f4310526da720db40aebe43952105f7}} 
+\index{moka::colour@{moka::colour}!slate\_blue@{slate\_blue}}
+\index{slate\_blue@{slate\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{slate\_blue()}{slate\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::slate\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ac6022346709ec89fb86ff79af2cabd96}\label{classmoka_1_1colour_ac6022346709ec89fb86ff79af2cabd96}} 
+\index{moka::colour@{moka::colour}!slate\_gray@{slate\_gray}}
+\index{slate\_gray@{slate\_gray}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{slate\_gray()}{slate\_gray()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::slate\+\_\+gray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_aafdbac070bb056e8efc65ed8d0061c8b}\label{classmoka_1_1colour_aafdbac070bb056e8efc65ed8d0061c8b}} 
+\index{moka::colour@{moka::colour}!slate\_grey@{slate\_grey}}
+\index{slate\_grey@{slate\_grey}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{slate\_grey()}{slate\_grey()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::slate\+\_\+grey (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a8e6a77758527c390aee243a253b494ef}\label{classmoka_1_1colour_a8e6a77758527c390aee243a253b494ef}} 
+\index{moka::colour@{moka::colour}!snow@{snow}}
+\index{snow@{snow}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{snow()}{snow()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::snow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a95eaa33785dd3aa5591e236410916e5d}\label{classmoka_1_1colour_a95eaa33785dd3aa5591e236410916e5d}} 
+\index{moka::colour@{moka::colour}!spring\_green@{spring\_green}}
+\index{spring\_green@{spring\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{spring\_green()}{spring\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::spring\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a83ed36e0f5d8372078f46948743ee244}\label{classmoka_1_1colour_a83ed36e0f5d8372078f46948743ee244}} 
+\index{moka::colour@{moka::colour}!steel\_blue@{steel\_blue}}
+\index{steel\_blue@{steel\_blue}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{steel\_blue()}{steel\_blue()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::steel\+\_\+blue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ab00385039989ca5e1728e3e4fb10db43}\label{classmoka_1_1colour_ab00385039989ca5e1728e3e4fb10db43}} 
+\index{moka::colour@{moka::colour}!studio@{studio}}
+\index{studio@{studio}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{studio()}{studio()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::studio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ad3ddc53fc9a16b7d6bc46d59ce3715c1}\label{classmoka_1_1colour_ad3ddc53fc9a16b7d6bc46d59ce3715c1}} 
+\index{moka::colour@{moka::colour}!tan@{tan}}
+\index{tan@{tan}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{tan()}{tan()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::tan (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4cf38120778f33cec9aaab9abd65b7c8}\label{classmoka_1_1colour_a4cf38120778f33cec9aaab9abd65b7c8}} 
+\index{moka::colour@{moka::colour}!teal@{teal}}
+\index{teal@{teal}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{teal()}{teal()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::teal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a9783e6f125562a22a45330658763597d}\label{classmoka_1_1colour_a9783e6f125562a22a45330658763597d}} 
+\index{moka::colour@{moka::colour}!thistle@{thistle}}
+\index{thistle@{thistle}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{thistle()}{thistle()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::thistle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ab4aaa71a65f87529dd18d088f4204559}\label{classmoka_1_1colour_ab4aaa71a65f87529dd18d088f4204559}} 
+\index{moka::colour@{moka::colour}!tomato@{tomato}}
+\index{tomato@{tomato}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{tomato()}{tomato()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::tomato (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a9b7dc38464956134c0fd56f4efcd69c8}\label{classmoka_1_1colour_a9b7dc38464956134c0fd56f4efcd69c8}} 
+\index{moka::colour@{moka::colour}!transparent\_black@{transparent\_black}}
+\index{transparent\_black@{transparent\_black}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{transparent\_black()}{transparent\_black()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::transparent\+\_\+black (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a011d812d61b7f9dbcf56a53454daa144}\label{classmoka_1_1colour_a011d812d61b7f9dbcf56a53454daa144}} 
+\index{moka::colour@{moka::colour}!turquoise@{turquoise}}
+\index{turquoise@{turquoise}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{turquoise()}{turquoise()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::turquoise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a4c268c609b54c0fcb4e7dd9b288a5ed9}\label{classmoka_1_1colour_a4c268c609b54c0fcb4e7dd9b288a5ed9}} 
+\index{moka::colour@{moka::colour}!violet@{violet}}
+\index{violet@{violet}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{violet()}{violet()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::violet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a15e29561e4b6bd5157d2fbeb1c641172}\label{classmoka_1_1colour_a15e29561e4b6bd5157d2fbeb1c641172}} 
+\index{moka::colour@{moka::colour}!wheat@{wheat}}
+\index{wheat@{wheat}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{wheat()}{wheat()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::wheat (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a78d1ca0cbb00a90472e76c8841804db1}\label{classmoka_1_1colour_a78d1ca0cbb00a90472e76c8841804db1}} 
+\index{moka::colour@{moka::colour}!white@{white}}
+\index{white@{white}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{white()}{white()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::white (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ae9bfa45ce6e6417ffb19b11c7461aa7d}\label{classmoka_1_1colour_ae9bfa45ce6e6417ffb19b11c7461aa7d}} 
+\index{moka::colour@{moka::colour}!white\_smoke@{white\_smoke}}
+\index{white\_smoke@{white\_smoke}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{white\_smoke()}{white\_smoke()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::white\+\_\+smoke (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_a0f1203d05495c876fd24160e9b5a3de2}\label{classmoka_1_1colour_a0f1203d05495c876fd24160e9b5a3de2}} 
+\index{moka::colour@{moka::colour}!yellow@{yellow}}
+\index{yellow@{yellow}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{yellow()}{yellow()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::yellow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+\mbox{\Hypertarget{classmoka_1_1colour_ab108e0b2bf391a04c825c9612a48c998}\label{classmoka_1_1colour_ab108e0b2bf391a04c825c9612a48c998}} 
+\index{moka::colour@{moka::colour}!yellow\_green@{yellow\_green}}
+\index{yellow\_green@{yellow\_green}!moka::colour@{moka::colour}}
+\subsubsection{\texorpdfstring{yellow\_green()}{yellow\_green()}}
+{\footnotesize\ttfamily static constexpr \mbox{\hyperlink{classmoka_1_1colour}{colour}} moka\+::colour\+::yellow\+\_\+green (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+engine/includes/graphics/\mbox{\hyperlink{colour_8hpp}{colour.\+hpp}}\end{DoxyCompactItemize}
