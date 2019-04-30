@@ -41,6 +41,13 @@ SOFTWARE.
 
 namespace moka
 {
+    struct directional_light
+    {
+        glm::vec3 direction = {0.0f, -0.8f, -0.5f};
+        glm::vec3 diffuse = color::white();
+        glm::vec3 ambient = color::mine_shaft();
+    };
+
     class pbr_scene
     {
         texture_handle hdr_{};
@@ -84,9 +91,13 @@ namespace moka
     public:
         // need to expose these to bind them to imgui - might re-evaluate this later!
         glm::vec4 color = color::burnt_sienna();
-        bool environment = true;
+        bool draw_environment = true;
+        bool use_ibl = true;
+        bool use_directional_light = true;
         float gamma = 2.2f;
         float exposure = 1.0f;
+        size_t active_program = 0;
+        directional_light light;
 
         /**
          * \brief Create a new scene object.
@@ -102,12 +113,13 @@ namespace moka
             nlohmann::json j;
             i >> j;
 
-            const auto model = j["config"]["model"].get<std::string>();
-            const auto environment = j["config"]["environment"].get<std::string>();
+            const auto& model = j["config"]["model"].get<std::string>();
+            const auto& draw_environment = j["config"]["environment"].get<std::string>();
 
             model_ = util.load_model(model, "Materials/pbr.material");
 
-            hdr_ = util.equirectangular_to_cubemap(util.import_equirectangular_map(environment));
+            hdr_ = util.equirectangular_to_cubemap(
+                util.import_equirectangular_map(draw_environment));
 
             irradiance_ = util.make_irradiance_environment_map(hdr_);
 
@@ -145,6 +157,8 @@ namespace moka
 
                     if (mat)
                     {
+                        mat->set_active_program(active_program);
+
                         auto pos = mesh.get_transform().get_world_position();
 
                         const auto distance = glm::distance2(pos, view_pos);
@@ -164,14 +178,18 @@ namespace moka
                             .set_parameter("model", mesh.get_transform().to_matrix())
                             .set_parameter("view", camera.get_view())
                             .set_parameter("projection", camera.get_projection())
-                            .set_parameter("view_pos", view_pos);
-
+                            .set_parameter("view_pos", view_pos)
+                            .set_parameter("light.direction", light.direction)
+                            .set_parameter("light.ambient", light.ambient)
+                            .set_parameter("light.diffuse", light.diffuse)
+                            .set_parameter("use_ibl", use_ibl)
+                            .set_parameter("use_directional_light", use_directional_light);
                         primitive.draw(buffer);
                     }
                 }
             }
 
-            if (environment)
+            if (draw_environment)
             {
                 for (auto& mesh : cube_)
                 {

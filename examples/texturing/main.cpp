@@ -117,8 +117,8 @@ public:
 
         material_ = graphics_.build_material()
                         .add_material_parameter("transform", parameter_type::mat4)
-                        .set_vertex_shader(vertex_source_)
-                        .set_fragment_shader(fragment_source_)
+                        .add_vertex_shader(vertex_source_)
+                        .add_fragment_shader(fragment_source_)
                         .set_culling_enabled(false)
                         .build();
 

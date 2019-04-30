@@ -1,8 +1,20 @@
 {
-  "vertex": {
-    "file": "Materials/Shaders/pbr.vert"
-  },
-  "fragment": {
-    "file": "Materials/Shaders/pbr.frag"
-  }
+  "programs": [
+    {
+	  "vertex": {
+	    "file": "Materials/Shaders/gltf.vert"
+	  },
+	  "fragment": {
+	    "file": "Materials/Shaders/pbr.frag"
+	  }
+	},
+	{
+	  "vertex": {
+	    "file": "Materials/Shaders/gltf.vert"
+	  },
+	  "fragment": {
+	    "file": "Materials/Shaders/phong.frag"
+	  }
+	}
+  ]
 }

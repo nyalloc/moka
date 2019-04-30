@@ -59,39 +59,39 @@ namespace moka
     {
     }
 
-    material_builder& material_builder::set_vertex_shader(const std::filesystem::path& vertex_shader)
+    material_builder& material_builder::add_vertex_shader(const std::filesystem::path& vertex_shader)
     {
         std::ifstream vert(vertex_shader);
         std::stringstream src;
         src << vert.rdbuf();
-        vertex_shader_src_ = src.str();
+        vertex_shaders_src_.emplace_back(src.str());
         return *this;
     }
 
-    material_builder& material_builder::set_fragment_shader(const std::filesystem::path& fragment_shader)
+    material_builder& material_builder::add_fragment_shader(const std::filesystem::path& fragment_shader)
     {
         std::ifstream frag(fragment_shader);
         std::stringstream src;
         src << frag.rdbuf();
-        fragment_shader_src_ = src.str();
+        fragment_shaders_src_.emplace_back(src.str());
         return *this;
     }
 
-    material_builder& material_builder::set_fragment_shader(const char* fragment_shader)
+    material_builder& material_builder::add_fragment_shader(const char* fragment_shader)
     {
-        fragment_shader_src_ = fragment_shader;
+        fragment_shaders_src_.emplace_back(fragment_shader);
         return *this;
     }
 
-    material_builder& material_builder::set_vertex_shader(const char* vertex_shader)
+    material_builder& material_builder::add_vertex_shader(const char* vertex_shader)
     {
-        vertex_shader_src_ = vertex_shader;
+        vertex_shaders_src_.emplace_back(vertex_shader);
         return *this;
     }
 
-    material_builder& material_builder::set_vertex_shader(const std::string& vertex_shader)
+    material_builder& material_builder::add_vertex_shader(const std::string& vertex_shader)
     {
-        vertex_shader_src_ = vertex_shader;
+        vertex_shaders_src_.emplace_back(vertex_shader);
         return *this;
     }
 
@@ -139,9 +139,9 @@ namespace moka
         return *this;
     }
 
-    material_builder& material_builder::set_fragment_shader(const std::string& fragment_shader)
+    material_builder& material_builder::add_fragment_shader(const std::string& fragment_shader)
     {
-        fragment_shader_src_ = fragment_shader;
+        fragment_shaders_src_.emplace_back(fragment_shader);
         return *this;
     }
 
@@ -254,10 +254,17 @@ namespace moka
             }
         }
 
-        vertex_shader_src_.insert(0, compiler_flags);
-        fragment_shader_src_.insert(0, compiler_flags);
-        vertex_shader_src_.insert(0, "#version 330 core\n");
-        fragment_shader_src_.insert(0, "#version 330 core\n");
+        for (auto& src : vertex_shaders_src_)
+        {
+            src.insert(0, compiler_flags);
+            src.insert(0, "#version 330 core\n");
+        }
+
+        for (auto& src : fragment_shaders_src_)
+        {
+            src.insert(0, compiler_flags);
+            src.insert(0, "#version 330 core\n");
+        }
     }
 
     material_handle material_builder::build()
@@ -266,31 +273,41 @@ namespace moka
 
         std::hash<std::string> hash;
 
-        const auto key = hash(vertex_shader_src_ + fragment_shader_src_);
+        std::vector<program_handle> programs;
 
-        auto& cache = graphics_device_.get_program_cache();
-
-        program_handle program_handle;
-
-        if (cache.exists(key))
+        for (size_t i = 0; i < vertex_shaders_src_.size(); ++i)
         {
-            program_handle = cache.get_program(key);
+            const auto key = hash(vertex_shaders_src_[i] + fragment_shaders_src_[i]);
+
+            auto& cache = graphics_device_.get_program_cache();
+
+            if (cache.exists(key))
+            {
+                programs.emplace_back(cache.get_program(key));
+            }
+            else
+            {
+                const auto vertex_shader = graphics_device_.make_shader(
+                    shader_type::vertex, vertex_shaders_src_[i]);
+
+                const auto fragment_shader = graphics_device_.make_shader(
+                    shader_type::fragment, fragment_shaders_src_[i]);
+
+                auto& handle = programs.emplace_back(
+                    graphics_device_.make_program(vertex_shader, fragment_shader));
+
+                cache.add_program(handle, key);
+            }
         }
-        else
-        {
-            const auto vertex_shader =
-                graphics_device_.make_shader(shader_type::vertex, vertex_shader_src_);
 
-            const auto fragment_shader = graphics_device_.make_shader(
-                shader_type::fragment, fragment_shader_src_);
-
-            program_handle = graphics_device_.make_program(vertex_shader, fragment_shader);
-
-            cache.add_program(program_handle, key);
-        }
-
-        material mat = {
-            program_handle, std::move(parameters_), alpha_mode_, blend_, culling_, polygon_mode_, depth_test_, scissor_test_};
+        material mat = {std::move(programs),
+                        std::move(parameters_),
+                        alpha_mode_,
+                        blend_,
+                        culling_,
+                        polygon_mode_,
+                        depth_test_,
+                        scissor_test_};
 
         return graphics_device_.get_material_cache().add_material(std::move(mat));
     }

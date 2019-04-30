@@ -89,7 +89,8 @@ namespace moka
     class material final
     {
         alpha_mode alpha_mode_ = alpha_mode::opaque;
-        program_handle program_ = {std::numeric_limits<uint16_t>::max()};
+        std::vector<program_handle> programs_ = {{std::numeric_limits<uint16_t>::max()}};
+        size_t active_program_ = 0;
         parameter_collection parameters_;
         blend blend_;
         culling culling_;
@@ -117,8 +118,8 @@ namespace moka
 
         /**
          * \brief Create a new material object.
-         * \param program_handle The program to use with this material.
-         * \param parameters The parameters to use with the material.
+         * \param program_handles The programs that can be used to render this
+         * material. \param parameters The parameters to use with the material.
          * \param alpha_mode The alpha mode to use with the material.
          * \param blend The blend mode to use with the material.
          * \param culling The culling mode to use with the material.
@@ -127,7 +128,7 @@ namespace moka
          * \param scissor_test Does this material require the scissor test?
          */
         material(
-            program_handle program_handle,
+            std::vector<program_handle>&& program_handles,
             parameter_collection&& parameters,
             alpha_mode alpha_mode,
             const blend& blend,
@@ -218,5 +219,11 @@ namespace moka
          * \return The polygon mode of this material.
          */
         const polygon_mode& get_polygon_mode() const;
+
+        /**
+         * \brief Set this material's active program.
+         * \param index The index of the program you want to use to render this material.
+         */
+        void set_active_program(size_t active_program);
     };
 } // namespace moka

@@ -471,11 +471,16 @@ namespace moka
             json j;
             i >> j;
 
-            auto vertex = j["vertex"]["file"].get<std::string>();
-            auto fragment = j["fragment"]["file"].get<std::string>();
+            auto& programs = j["programs"];
 
-            mat_builder.set_vertex_shader(root_directory / vertex);
-            mat_builder.set_fragment_shader(root_directory / fragment);
+            for (const auto& program : programs)
+            {
+                auto& vertex = program["vertex"]["file"].get<std::string>();
+                auto& fragment = program["fragment"]["file"].get<std::string>();
+
+                mat_builder.add_vertex_shader(root_directory / vertex);
+                mat_builder.add_fragment_shader(root_directory / fragment);
+            }
 
             if (primitive.material != -1)
             {

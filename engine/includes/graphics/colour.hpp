@@ -696,6 +696,11 @@ namespace moka
             return {25, 25, 112};
         }
 
+        static constexpr colour mine_shaft() noexcept
+        {
+            return {34, 34, 34};
+        }
+
         static constexpr colour mint_cream() noexcept
         {
             return {245, 255, 250};

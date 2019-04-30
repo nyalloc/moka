@@ -49,8 +49,9 @@ namespace moka
         std::vector<material_property> texture_maps_;
 
         parameter_collection parameters_;
-        std::string fragment_shader_src_;
-        std::string vertex_shader_src_;
+        std::vector<std::string> fragment_shaders_src_;
+        std::vector<std::string> vertex_shaders_src_;
+        size_t active_program_ = 0;
 
         alpha_mode alpha_mode_ = alpha_mode::opaque;
         blend blend_;
@@ -77,42 +78,42 @@ namespace moka
          * \param vertex_shader The path to the vertex shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_vertex_shader(const std::filesystem::path& vertex_shader);
+        material_builder& add_vertex_shader(const std::filesystem::path& vertex_shader);
 
         /**
          * \brief Set the vertex shader for use in this material.
          * \param vertex_shader The source code of the shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_vertex_shader(const char* vertex_shader);
+        material_builder& add_vertex_shader(const char* vertex_shader);
 
         /**
          * \brief Set the vertex shader for use in this material.
          * \param vertex_shader The source code of the shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_vertex_shader(const std::string& vertex_shader);
+        material_builder& add_vertex_shader(const std::string& vertex_shader);
 
         /**
          * \brief Set the fragment shader for use in this material.
          * \param fragment_shader The path to the fragment shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_fragment_shader(const std::filesystem::path& fragment_shader);
+        material_builder& add_fragment_shader(const std::filesystem::path& fragment_shader);
 
         /**
          * \brief Set the fragment shader for use in this material.
          * \param fragment_shader The source code of the shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_fragment_shader(const char* fragment_shader);
+        material_builder& add_fragment_shader(const char* fragment_shader);
 
         /**
          * \brief Set the fragment shader for use in this material.
          * \param fragment_shader The source code of the shader.
          * \return A reference to this material_builder object to enable method chaining.
          */
-        material_builder& set_fragment_shader(const std::string& fragment_shader);
+        material_builder& add_fragment_shader(const std::string& fragment_shader);
 
         /**
          * \brief Set the blend equation for use in this material.

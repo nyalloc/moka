@@ -71,8 +71,8 @@ struct pbr_material {
 
 struct directional_light {
     vec3 direction;
+    vec3 ambient;
     vec3 diffuse;
-	vec3 ambient;
 };
 
 uniform samplerCube irradiance_map;
@@ -83,9 +83,7 @@ uniform float exposure;
 uniform vec3 view_pos;
 uniform pbr_material material;
 uniform directional_light light;
-uniform bool use_ibl;
 uniform bool use_directional_light;
-
 in vec3 in_frag_pos;  
 in vec3 in_normal;  
 in vec2 in_texture_coord;
@@ -190,73 +188,43 @@ vec3 fresnel_schlick(float cos_theta, vec3 f0) {
 
 vec3 fresnel_schlick_roughness(float cos_theta, vec3 f0, float roughness) {
     return f0 + (max(vec3(1.0 - roughness), f0) - f0) * pow(1.0 - cos_theta, 5.0);
-}
-   
+}   
 
 void main() {
     if(discard_fragment()) {
         discard;
     }
-
+    // fetch the material properties
     vec4 albedo = get_albedo();
     vec4 emissive = get_emissive();
     float metallic = get_metallic();
     float roughness = get_roughness();
     float ao = get_ao();	
-
+    // fetch input lighting data
     vec3 n = get_normal();
     vec3 v = normalize(view_pos - in_frag_pos);
     vec3 r = reflect(-v, n);	
 	vec3 l = normalize(-light.direction);  
-	vec3 h = normalize(v + l);
-	float n_dot_v = max(dot(n, v), 0.0);
-	float n_dot_l = max(dot(n, l), 0.0); 
-
-    vec3 f0 = vec3(0.04);
-    f0 = mix(f0, albedo.rgb, metallic);	
+		
+	float n_dot_v = dot(n, v);
+	float n_dot_l = dot(n, l);
 	
-	vec3 Lo = vec3(0.0);
- 
+	vec4 diffuse = vec4(0.0);
+    vec4 specular = vec4(0.0);
+	vec4 ambient = vec4(light.ambient * albedo.rgb, 1.0);
+  	
 	if(use_directional_light)
 	{
-		float ndf = distribution_ggx(n, h, roughness);   
-		float g   = geometry_smith(n, v, l, roughness);    
-		vec3 f    = fresnel_schlick(max(dot(h, v), 0.0), f0);        
-			
-		vec3 nominator    = ndf * g * f;
-		float denominator = 4 * n_dot_v * n_dot_l + 0.001;
-		vec3 light_specular = nominator / denominator;
-			
-		vec3 kS = f;
-		vec3 kD = vec3(1.0) - kS;
-		kD *= 1.0 - metallic;	                
-				
-		Lo = (kD * albedo.rgb / PI + light_specular) * light.diffuse * n_dot_l;
+		float diff = max(n_dot_l, 0.0);
+		diffuse = vec4(light.diffuse * diff * albedo.rgb, 1.0);  
+    
+		vec3 reflect_dir = reflect(-l, n);  
+		float spec = pow(max(dot(v, reflect_dir), 0.0), 64.0f);
+		specular = vec4(vec3(1.0) * spec * roughness, 1.0);  
 	}
 	
-	vec4 ambient = vec4(0.0);
-	
-	if(use_ibl)
-	{
-	    vec4 irradiance = texture(irradiance_map, n);
-		vec4 diffuse = (irradiance * albedo);
-			
-		vec3 kS = fresnel_schlick_roughness(n_dot_v, f0, roughness);
-		vec3 kD = 1.0 - kS;
-		kD *= 1.0 - metallic;	  		
-
-		vec3 prefiltered_color = textureLod(prefilter_map, r, roughness * mip_count).rgb;   	
-		vec2 brdf  = texture(brdf_lut, vec2(n_dot_v, roughness)).rg;
-		vec4 specular = vec4(prefiltered_color * (kS * brdf.x + brdf.y), 1.0);
-		ambient = (vec4(kD, 1.0) * diffuse + specular) * ao;
-	}
-	else
-	{
-		ambient = vec4(light.ambient * albedo.rgb, 1.0);
-	}
-
-    vec4 color = ambient + vec4(Lo, 1.0) + emissive;
-
+    vec4 color = ambient + diffuse + specular + emissive;
+    // gamma correction + HDR tone mapping
     vec4 mapped = vec4(1.0) - exp(-color * exposure);
     vec3 corrected_color = vec3(1.0 / gamma);
     frag_color = vec4(pow(mapped.xyz, corrected_color), albedo.a);
