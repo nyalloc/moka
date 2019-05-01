@@ -219,7 +219,7 @@ void main() {
 		diffuse = vec4(light.diffuse * diff * albedo.rgb, 1.0);  
     
 		vec3 reflect_dir = reflect(-l, n);  
-		float spec = pow(max(dot(v, reflect_dir), 0.0), 64.0f);
+		float spec = pow(max(dot(v, reflect_dir), 0.0), 16.0f);
 		specular = vec4(vec3(1.0) * spec * roughness, 1.0);  
 	}
 	

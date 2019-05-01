@@ -86,25 +86,34 @@ public:
         ImGui::Begin("Render Settings");
         {
             ImGui::Checkbox("PBR", &pbr_);
-            ImGui::Checkbox("Directional Light", &scene_.use_directional_light);
-
-            if (scene_.use_directional_light)
-            {
-                ImGui::DragFloat3(
-                    "Light Colour", reinterpret_cast<float*>(&scene_.light.direction), 0.01f, -1.0f, 1.0f);
-
-                scene_.light.direction = glm::normalize(scene_.light.direction);
-
-                ImGui::ColorEdit3(
-                    "Directional Light Color",
-                    reinterpret_cast<float*>(&scene_.light.diffuse),
-                    ImGuiColorEditFlags_PickerHueWheel);
-            }
 
             if (pbr_)
             {
                 ImGui::Checkbox("Image-Based Lighting", &scene_.use_ibl);
             }
+
+            ImGui::Separator();
+            ImGui::Checkbox("Directional Light", &scene_.use_directional_light);
+
+            if (scene_.use_directional_light)
+            {
+                ImGui::DragFloat3(
+                    "Direction", reinterpret_cast<float*>(&scene_.light.direction), 0.01f, -1.0f, 1.0f);
+
+                scene_.light.direction = glm::normalize(scene_.light.direction);
+
+                glm::vec4 diffuse = glm::vec4(scene_.light.diffuse, 1.0f);
+
+                ImGui::ColorEdit3(
+                    "Color",
+                    reinterpret_cast<float*>(&diffuse),
+                    ImGuiColorEditFlags_PickerHueWheel |
+                        ImGuiColorEditFlags_Float | ImGuiColorEditFlags_HDR);
+
+                scene_.light.diffuse = diffuse;
+            }
+
+            ImGui::Separator();
 
             ImGui::Checkbox("Draw Environment", &scene_.draw_environment);
             if (!scene_.draw_environment)
@@ -113,13 +122,14 @@ public:
                     "Clear Color", reinterpret_cast<float*>(&scene_.color), ImGuiColorEditFlags_PickerHueWheel);
             }
 
+            ImGui::Separator();
+
+            ImGui::Checkbox("Camera Auto Rotate", &rotate_);
+            ImGui::SliderFloat(
+                "Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
             ImGui::SliderFloat("Gamma", &scene_.gamma, 0.0f, 10.0f, "%.3f");
             ImGui::SliderFloat(
                 "Exposure", &scene_.exposure, 0.0f, 10.0f, "%.3f");
-
-            ImGui::SliderFloat(
-                "Camera FOV", &fov_, 20.0f, 150.0f, "%.3f degrees");
-            ImGui::Checkbox("Camera Auto Rotate", &rotate_);
 
             scene_.active_program = pbr_ ? 0 : 1;
         }
