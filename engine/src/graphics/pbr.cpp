@@ -97,8 +97,8 @@ namespace moka
 
         const auto cubemap_material =
             device_.build_material()
-                .set_vertex_shader(shaders::shade_cubemap::vert)
-                .set_fragment_shader(shaders::shade_cubemap::frag)
+                .add_vertex_shader(shaders::shade_cubemap::vert)
+                .add_fragment_shader(shaders::shade_cubemap::frag)
                 .add_material_parameter("projection", parameter_type::mat4)
                 .add_material_parameter("view", parameter_type::mat4)
                 .add_material_parameter("environment_map", cubemap)
@@ -221,8 +221,8 @@ namespace moka
     {
         const auto hdr_material =
             device_.build_material()
-                .set_vertex_shader(shaders::equirectangular_to_cube::vert)
-                .set_fragment_shader(shaders::equirectangular_to_cube::frag)
+                .add_vertex_shader(shaders::equirectangular_to_cube::vert)
+                .add_fragment_shader(shaders::equirectangular_to_cube::frag)
                 .add_material_parameter("projection", constants::projection)
                 .add_material_parameter("view", glm::mat4{})
                 .add_material_parameter("map", equirectangular_map)
@@ -250,8 +250,8 @@ namespace moka
     {
         const auto irradiance_material =
             device_.build_material()
-                .set_vertex_shader(shaders::make_irradiance_map::vert)
-                .set_fragment_shader(shaders::make_irradiance_map::frag)
+                .add_vertex_shader(shaders::make_irradiance_map::vert)
+                .add_fragment_shader(shaders::make_irradiance_map::frag)
                 .add_material_parameter("projection", constants::projection)
                 .add_material_parameter("view", glm::mat4{})
                 .add_material_parameter("environment_map", hdr_environment_map)
@@ -277,8 +277,8 @@ namespace moka
 
         const auto prefilter_material =
             device_.build_material()
-                .set_vertex_shader(shaders::make_specular_map::vert)
-                .set_fragment_shader(shaders::make_specular_map::frag)
+                .add_vertex_shader(shaders::make_specular_map::vert)
+                .add_fragment_shader(shaders::make_specular_map::frag)
                 .add_material_parameter("roughness", 0.0f)
                 .add_material_parameter("environment_map", hdr_environment_map)
                 .add_material_parameter("projection", constants::projection)
@@ -310,8 +310,8 @@ namespace moka
     {
         const auto brdf_material =
             device_.build_material()
-                .set_vertex_shader(shaders::make_brdf_map::vert)
-                .set_fragment_shader(shaders::make_brdf_map::frag)
+                .add_vertex_shader(shaders::make_brdf_map::vert)
+                .add_fragment_shader(shaders::make_brdf_map::frag)
                 .build();
 
         command_list brdf_list;

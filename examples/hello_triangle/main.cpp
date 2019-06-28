@@ -72,8 +72,8 @@ public:
             vertices_, sizeof vertices_, std::move(layout), buffer_usage::static_draw);
 
         material_ = graphics_.build_material()
-                        .set_vertex_shader(vertex_source_)
-                        .set_fragment_shader(fragment_source_)
+                        .add_vertex_shader(vertex_source_)
+                        .add_fragment_shader(fragment_source_)
                         .build();
     }
 

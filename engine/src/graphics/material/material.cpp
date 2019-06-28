@@ -38,7 +38,7 @@ namespace moka
 
     material::material(material&& rhs) noexcept
         : alpha_mode_(rhs.alpha_mode_),
-          program_(rhs.program_),
+          programs_(std::move(rhs.programs_)),
           parameters_(std::move(rhs.parameters_)),
           blend_(rhs.blend_),
           culling_(rhs.culling_),
@@ -51,7 +51,7 @@ namespace moka
     material& material::operator=(material&& rhs) noexcept
     {
         alpha_mode_ = rhs.alpha_mode_;
-        program_ = rhs.program_;
+        programs_ = std::move(rhs.programs_);
         parameters_ = std::move(rhs.parameters_);
         blend_ = rhs.blend_;
         culling_ = rhs.culling_;
@@ -62,7 +62,7 @@ namespace moka
     }
 
     material::material(
-        program_handle program_handle,
+        std::vector<program_handle>&& programs,
         parameter_collection&& parameters,
         alpha_mode alpha_mode,
         const blend& blend,
@@ -71,7 +71,7 @@ namespace moka
         bool depth_test,
         bool scissor_test)
         : alpha_mode_(alpha_mode),
-          program_(program_handle),
+          programs_(std::move(programs)),
           parameters_(std::move(parameters)),
           blend_(blend),
           culling_(culling),
@@ -81,7 +81,8 @@ namespace moka
     {
     }
 
-    material::material(program_handle program_handle) : program_(program_handle)
+    material::material(program_handle program_handle)
+        : programs_{program_handle}
     {
     }
 
@@ -92,7 +93,7 @@ namespace moka
 
     program_handle material::get_program() const
     {
-        return program_;
+        return programs_[active_program_];
     }
 
     size_t material::size() const
@@ -158,5 +159,10 @@ namespace moka
     const polygon_mode& material::get_polygon_mode() const
     {
         return polygon_mode_;
+    }
+
+    void material::set_active_program(size_t active_program)
+    {
+        active_program_ = active_program;
     }
 } // namespace moka

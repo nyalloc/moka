@@ -143,8 +143,8 @@ namespace moka
 
         material_ =
             graphics_device_.build_material()
-                .set_fragment_shader(fragment_shader)
-                .set_vertex_shader(vertex_shader)
+                .add_fragment_shader(fragment_shader)
+                .add_vertex_shader(vertex_shader)
                 .set_blend_enabled(true)
                 .set_blend_equation(blend_equation::func_add)
                 .set_blend_function(blend_function_factor::src_alpha, blend_function_factor::one_minus_src_alpha)
