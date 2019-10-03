@@ -997,9 +997,10 @@ namespace moka
         if (mesh_id == -1)
             return;
 
-        const auto trans = parent_transform * get_transform(model.nodes[node_id]);
+        // const auto trans = parent_transform * get_transform(model.nodes[node_id]);
+        auto trans = glm::mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
-        for (const auto i : model.nodes[node_id].children)
+            for (const auto i : model.nodes[node_id].children)
         {
             add_node(trans, meshes, i, model, device, root_directory, material_path, parent_path);
         }

@@ -61,7 +61,7 @@ class triangle_application final : public application
     material_handle material_;
 
 public:
-    triangle_application(const app_settings& app_settings)
+    explicit triangle_application(const app_settings& app_settings)
         : application(app_settings)
     {
         vertex_layout layout = {
@@ -87,9 +87,15 @@ public:
     {
         command_list list;
 
-        list.clear().set_color(1.0f, 0.0f, 0.0f, 1.0f).set_clear_color(true).set_clear_depth(true);
+        list.clear()
+            .set_color(1.0f, 0.0f, 0.0f, 1.0f)
+            .set_clear_color(true)
+            .set_clear_depth(true);
 
-        list.draw().set_vertex_buffer(vertex_buffer_).set_material(material_).set_vertex_count(3);
+        list.draw()
+            .set_vertex_buffer(vertex_buffer_)
+            .set_material(material_)
+            .set_vertex_count(3);
 
         graphics_.submit_and_swap(std::move(list));
     }

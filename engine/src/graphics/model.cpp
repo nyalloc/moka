@@ -63,12 +63,12 @@ namespace moka
     }
 
     mesh::mesh(std::vector<primitive>&& primitives, transform&& transform)
-        : primitives_(std::move(primitives)), transform_(transform)
+        : primitives_(std::move(primitives)), transform_(std::move(transform))
     {
     }
 
     mesh::mesh(const primitive& prim, transform&& transform)
-        : primitives_{prim}, transform_(transform)
+        : primitives_{prim}, transform_(std::move(transform))
     {
     }
 

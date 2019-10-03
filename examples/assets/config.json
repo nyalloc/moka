@@ -1,6 +1,6 @@
 {
   "config": {
-    "model": "Models/BoomBox/BoomBox.gltf",
-    "environment": "Textures/fireplace.hdr"
+    "model": "Models/MetalRoughSpheres/MetalRoughSpheres.gltf",
+    "environment": "Textures/bell_park_pier.hdr"
   }
 }

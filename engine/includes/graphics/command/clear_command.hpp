@@ -29,7 +29,7 @@ SOFTWARE.
 */
 #pragma once
 
-#include <glm/detail/type_vec4.hpp>
+#include <glm/glm.hpp>
 #include <graphics/command/graphics_command.hpp>
 
 namespace moka
