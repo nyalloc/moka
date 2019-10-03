@@ -1,7 +1,8 @@
 # moka
 Cross-Platform Real-Time Physically-Based Rendering for C++! glTF-friendly!
 
-As of 25/08/2019, the Hunter Package manager project has been closed. This project will be updated to use vcpkg soon!
+# status
+This project needs to be updated. As of 25/08/2019, the Hunter Package manager project has been closed. Many of the project's dependencies have been updated, breaking the uses in Moka. An updated version that uses vcpkg and with updated dependencies is under development. 
 
 Example Renders:
 ![alt text](examples/renders/render1.png "Current Build")
