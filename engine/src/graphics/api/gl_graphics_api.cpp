@@ -564,14 +564,14 @@ namespace moka
         for (const auto& attribute : layout)
         {
             glVertexAttribPointer(
-                GLuint(attribute.index),
-                GLint(attribute.size),
+                static_cast<GLuint>(attribute.index),
+                static_cast<GLint>(attribute.size),
                 moka_to_gl(attribute.type),
                 attribute.normalized,
-                GLsizei(attribute.stride),
+                static_cast<GLsizei>(attribute.stride),
                 reinterpret_cast<void*>(attribute.offset));
 
-            glEnableVertexAttribArray(GLuint(attribute.index));
+            glEnableVertexAttribArray(static_cast<GLuint>(attribute.index));
         }
 
         glEnableVertexAttribArray(0);
@@ -624,7 +624,7 @@ namespace moka
                 auto& parameter = (*material)[i];
 
                 const auto location = glGetUniformLocation(
-                    GLuint(material->get_program().id), parameter.name.c_str());
+                    static_cast<GLuint>(material->get_program().id), parameter.name.c_str());
 
                 if (location == -1)
                     continue;
@@ -634,12 +634,12 @@ namespace moka
                 case parameter_type::texture:
                 {
                     const auto data = std::get<texture_handle>(parameter.data);
-                    glUniform1i(location, GLint(current_texture_unit));
-                    glActiveTexture(GL_TEXTURE0 + GLenum(current_texture_unit));
+                    glUniform1i(location, static_cast<GLint>(current_texture_unit));
+                    glActiveTexture(GL_TEXTURE0 + static_cast<GLenum>(current_texture_unit));
 
                     auto& meta_data = texture_data_[data.id];
 
-                    glBindTexture(moka_to_gl(meta_data.target), GLuint(data.id));
+                    glBindTexture(moka_to_gl(meta_data.target), static_cast<GLuint>(data.id));
 
                     ++current_texture_unit;
                     break;
@@ -647,33 +647,33 @@ namespace moka
                 case parameter_type::float32:
                 {
                     auto data = std::get<float>(parameter.data);
-                    glUniform1fv(location, GLsizei(parameter.count), &data);
+                    glUniform1fv(location, static_cast<GLsizei>(parameter.count), &data);
                     break;
                 }
                 case parameter_type::vec3:
                 {
                     auto data = std::get<glm::vec3>(parameter.data);
-                    glUniform3fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+                    glUniform3fv(location, static_cast<GLsizei>(parameter.count), glm::value_ptr(data));
                     break;
                 }
                 case parameter_type::vec4:
                 {
                     auto data = std::get<glm::vec4>(parameter.data);
-                    glUniform4fv(location, GLsizei(parameter.count), glm::value_ptr(data));
+                    glUniform4fv(location, static_cast<GLsizei>(parameter.count), glm::value_ptr(data));
                     break;
                 }
                 case parameter_type::mat3:
                 {
                     auto data = std::get<glm::mat3>(parameter.data);
                     glUniformMatrix3fv(
-                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                        location, static_cast<GLsizei>(parameter.count), false, glm::value_ptr(data));
                     break;
                 }
                 case parameter_type::mat4:
                 {
                     auto data = std::get<glm::mat4>(parameter.data);
                     glUniformMatrix4fv(
-                        location, GLsizei(parameter.count), false, glm::value_ptr(data));
+                        location, static_cast<GLsizei>(parameter.count), false, glm::value_ptr(data));
                     break;
                 }
                 default:;
@@ -685,14 +685,14 @@ namespace moka
         {
             glDrawElements(
                 moka_to_gl(cmd.prim_type),
-                GLsizei(cmd.index_count),
+                static_cast<GLsizei>(cmd.index_count),
                 moka_to_gl(cmd.idx_type),
-                reinterpret_cast<void*>(cmd.index_buffer_offset));
+                reinterpret_cast<void*>(static_cast<std::uintptr_t>(cmd.index_buffer_offset)));
         }
         else
         {
             glDrawArrays(
-                moka_to_gl(cmd.prim_type), GLint(cmd.first_vertex), GLsizei(cmd.vertex_count));
+                moka_to_gl(cmd.prim_type), static_cast<GLint>(cmd.first_vertex), static_cast<GLsizei>(cmd.vertex_count));
         }
 
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -798,7 +798,7 @@ namespace moka
 
         glGenBuffers(1, &handle);
 
-        result.id = uint16_t(handle);
+        result.id = static_cast<uint16_t>(handle);
 
         vertex_buffer_data_[result.id] = std::move(data);
 
@@ -828,7 +828,7 @@ namespace moka
 
         glGenBuffers(1, &handle);
 
-        result.id = uint16_t(handle);
+        result.id = static_cast<uint16_t>(handle);
 
         index_buffer_data_[result.id] = data;
 
@@ -916,7 +916,7 @@ namespace moka
         }
     }
 
-    texture_handle gl_graphics_api::make_texture(void** data, texture_metadata&& metadata, const bool free_host_data)
+    texture_handle gl_graphics_api::make_texture(const void** data, texture_metadata&& metadata, const bool free_host_data)
     {
         const auto gl_target = moka_to_gl(metadata.target);
 
@@ -926,7 +926,7 @@ namespace moka
 
         for (size_t i = 0; i < metadata.data.size(); i++)
         {
-            const auto pixels = data[i];
+            const auto* pixels = data[i];
             const auto& tex_image = metadata.data[i];
 
             glTexImage2D(
@@ -1120,12 +1120,10 @@ namespace moka
     {
         auto& data = frame_buffer_data_[handle.id].attachments;
 
-        for (auto& handle : frame_buffer_data_)
-        {
-            glDeleteRenderbuffers(frame_buffer_data_.size(), data.data());
-        }
+        glDeleteRenderbuffers(static_cast<uint32_t>(data.size()), data.data());
 
-        glDeleteFramebuffers(1, (GLuint*)&handle.id);
+        const auto framebufferHandle = static_cast<GLuint>(handle.id);
+        glDeleteFramebuffers(1, &framebufferHandle);
 
         if constexpr (application_traits::is_debug_build)
         {

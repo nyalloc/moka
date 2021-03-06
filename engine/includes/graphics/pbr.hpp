@@ -59,9 +59,9 @@ namespace moka
          * \param set_mipmaps Should this cubemap build mipmaps?
          * \return The empty HDR cubemap.
          */
-        texture_handle make_empty_hdr_cubemap(int size, min_filter filter, bool set_mipmaps = false) const;
+        texture_handle make_empty_hdr_cubemap(uint32_t size, min_filter filter, bool set_mipmaps = false) const;
 
-        void draw_cubemap_faces(command_list& list, int mip_level, texture_handle cubemap, material_handle material) const;
+        void draw_cubemap_faces(command_list& list, uint32_t mip_level, texture_handle cubemap, material_handle material) const;
 
         /**
          * \brief Create an empty HDR cubemap texture.
@@ -70,8 +70,8 @@ namespace moka
          * \return The empty HDR cubemap.
          */
         void draw_to_cubemap(
-            int size,
-            int mip_level,
+            uint32_t size,
+            uint32_t mip_level,
             texture_handle cubemap,
             material_handle material,
             draw_callback&& pre = {},
@@ -114,7 +114,7 @@ namespace moka
          * cubemap to render. \return The cubemap texture.
          */
         texture_handle equirectangular_to_cubemap(
-            texture_handle equirectangular_map, int environment_size = 1024) const;
+            texture_handle equirectangular_map, uint32_t environment_size = 1024) const;
 
         /**
          * \brief Create an irradiance environment map.

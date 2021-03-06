@@ -107,7 +107,7 @@ namespace moka
         pbr_scene(graphics_device& device, const std::filesystem::path& root)
             : device_(device)
         {
-            pbr_util util(device, root);
+            const pbr_util util(device, root);
 
             std::ifstream i(root / "config.json");
             nlohmann::json j;

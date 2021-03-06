@@ -369,12 +369,12 @@ namespace moka
             int border,
             host_format base_format,
             pixel_type type,
-            void* data);
+            const void* data);
 
     private:
         bool free_host_data_ = false;
 
-        std::vector<void*> host_data_;
+        std::vector<const void*> host_data_;
 
         texture_metadata metadata_;
 

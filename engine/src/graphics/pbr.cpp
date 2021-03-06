@@ -108,11 +108,11 @@ namespace moka
         return model(mesh(primitive(cube_buffer_, 36, cubemap_material)));
     }
 
-    texture_handle pbr_util::make_empty_hdr_cubemap(const int size, min_filter filter, bool set_mipmaps) const
+    texture_handle pbr_util::make_empty_hdr_cubemap(const uint32_t size, min_filter filter, bool set_mipmaps) const
     {
         auto irradiance_texture_builder = device_.build_texture();
 
-        for (auto& image_target : constants::image_targets)
+        for (const auto& image_target : constants::image_targets)
         {
             irradiance_texture_builder.add_image_data(
                 image_target, 0, device_format::rgb16f, size, size, 0, host_format::rgb, pixel_type::float32, nullptr);
@@ -129,7 +129,7 @@ namespace moka
     }
 
     void pbr_util::draw_cubemap_faces(
-        command_list& list, int mip_level, texture_handle cubemap, material_handle material) const
+        command_list& list, uint32_t mip_level, texture_handle cubemap, material_handle material) const
     {
         for (auto i = 0; i < 6; i++)
         {
@@ -155,8 +155,8 @@ namespace moka
     }
 
     void pbr_util::draw_to_cubemap(
-        int size,
-        int mip_level,
+        uint32_t size,
+        uint32_t mip_level,
         texture_handle cubemap,
         material_handle material,
         draw_callback&& pre,
@@ -195,7 +195,7 @@ namespace moka
         auto width = 0;
         host_format format;
 
-        const auto data = texture_load_hdr(root_ / texture_path, width, height, format);
+        auto* data = texture_load_hdr(root_ / texture_path, width, height, format);
 
         return device_.build_texture()
             .add_image_data(
@@ -217,7 +217,7 @@ namespace moka
     }
 
     texture_handle pbr_util::equirectangular_to_cubemap(
-        texture_handle equirectangular_map, const int environment_size) const
+        texture_handle equirectangular_map, const uint32_t environment_size) const
     {
         const auto hdr_material =
             device_.build_material()
@@ -286,11 +286,10 @@ namespace moka
                 .set_culling_enabled(false)
                 .build();
 
-        const size_t max_mip_levels = 5;
-
-        for (size_t mip = 0; mip < max_mip_levels; ++mip)
+        const uint32_t max_mip_levels = 5;
+        for (uint32_t mip = 0; mip < max_mip_levels; ++mip)
         {
-            const auto mip_size = size_t(prefilter_size * std::pow(0.5, mip));
+            const auto mip_size = static_cast<uint32_t>(prefilter_size * std::pow(0.5, mip));
 
             draw_to_cubemap(
                 mip_size, mip, prefilter_cubemap, prefilter_material, [&](command_list& list) {

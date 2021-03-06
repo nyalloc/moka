@@ -1,6 +1,6 @@
 {
   "config": {
-    "model": "Models/MetalRoughSpheres/MetalRoughSpheres.gltf",
-    "environment": "Textures/bell_park_pier.hdr"
+    "model": "Models/FlightHelmet/FlightHelmet.gltf",
+    "environment": "Textures/courtyard_night.hdr"
   }
 }

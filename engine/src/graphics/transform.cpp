@@ -70,9 +70,9 @@ namespace moka
 
     glm::mat4 transform::to_matrix() const
     {
-        const auto translate = glm::translate(glm::mat4(), get_position());
+        const auto translate = glm::translate(glm::mat4(1.0f), get_position());
         const auto rotate = glm::mat4_cast(get_rotation());
-        const auto scale = glm::scale(glm::mat4(), get_scale());
+        const auto scale = glm::scale(glm::mat4(1.0f), get_scale());
 
         return translate * rotate * scale;
     }
@@ -190,7 +190,6 @@ namespace moka
         glm::vec3 skew;
         glm::vec4 perspective;
         glm::decompose(m, scale, rotation, translation, skew, perspective);
-        rotation = glm::conjugate(rotation);
 
         t.set_position(translation);
         t.set_scale(scale);
