@@ -31,6 +31,8 @@ SOFTWARE.
 #include <application/application.hpp>
 #include <filesystem>
 
+#include "graphics/color.hpp"
+
 using namespace moka;
 
 class triangle_application final : public application
@@ -38,30 +40,33 @@ class triangle_application final : public application
     float vertices_[18] = {
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
 
-    const char* vertex_source_ =
-        "    layout (location = 0) in vec3 position;         \n"
-        "    layout (location = 1) in vec4 color0;           \n"
-        "    out vec3 out_color0;                            \n"
-        "    void main()                                     \n"
-        "    {                                               \n"
-        "        gl_Position = vec4(position, 1.0);          \n"
-        "        out_color0 = color0.xyz;                    \n"
-        "    }                                               \0";
+    const char* vertex_source_ = R"(
+        layout (location = 0) in vec3 position;
+        layout (location = 1) in vec4 color0;
+        out vec3 out_color0;
+        void main()
+        {
+            gl_Position = vec4(position, 1.0);
+            out_color0 = color0.xyz;
+        }
+    )";
 
-    const char* fragment_source_ =
-        "    out vec4 FragColor;                             \n"
-        "    in vec3 out_color0;                             \n"
-        "    void main()                                     \n"
-        "    {                                               \n"
-        "        FragColor = vec4(out_color0, 1.0f);         \n"
-        "    }                                               \0";
+
+    const char* fragment_source_ = R"(
+        out vec4 FragColor;
+        in vec3 out_color0;
+        void main()
+        {
+            FragColor = vec4(out_color0, 1.0f);
+        }
+    )";
 
     vertex_buffer_handle vertex_buffer_;
     index_buffer_handle index_buffer_;
     material_handle material_;
 
 public:
-    triangle_application(const app_settings& app_settings)
+    explicit triangle_application(const app_settings& app_settings)
         : application(app_settings)
     {
         vertex_layout layout = {
@@ -87,9 +92,15 @@ public:
     {
         command_list list;
 
-        list.clear().set_color(1.0f, 0.0f, 0.0f, 1.0f).set_clear_color(true).set_clear_depth(true);
+        list.clear()
+            .set_color(color::cornflower_blue())
+            .set_clear_color(true)
+            .set_clear_depth(true);
 
-        list.draw().set_vertex_buffer(vertex_buffer_).set_material(material_).set_vertex_count(3);
+        list.draw()
+            .set_vertex_buffer(vertex_buffer_)
+            .set_material(material_)
+            .set_vertex_count(3);
 
         graphics_.submit_and_swap(std::move(list));
     }

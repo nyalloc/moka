@@ -120,15 +120,15 @@ namespace moka
     }
 
     texture_builder& texture_builder::add_image_data(
-        const image_target target,
-        const int mip_level,
-        const device_format internal_format,
-        const int width,
-        const int height,
-        const int border,
-        const host_format base_format,
-        const pixel_type type,
-        void* data)
+        image_target target,
+        int mip_level,
+        device_format internal_format,
+        int width,
+        int height,
+        int border,
+        host_format base_format,
+        pixel_type type,
+        const void* data)
     {
         metadata_.data.emplace_back(image_metadata{
             target, mip_level, type, internal_format, width, height, border, base_format});

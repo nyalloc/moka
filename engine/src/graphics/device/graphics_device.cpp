@@ -44,7 +44,7 @@ namespace moka
     {
         const auto index = textures_.size();
         textures_.emplace_back(handle);
-        texture_lookup_[id] = index;
+        texture_lookup_[id] = static_cast<int>(index);
     }
 
     bool texture_cache::exists(const texture_id& id) const
@@ -67,7 +67,7 @@ namespace moka
     {
         const auto index = shaders_.size();
         shaders_.emplace_back(handle);
-        shader_lookup_[id] = index;
+        shader_lookup_[id] = static_cast<int>(index);
     }
 
     bool program_cache::exists(const program_id& id) const
@@ -90,7 +90,7 @@ namespace moka
     {
         const auto index = materials_.size();
         materials_.emplace_back(std::move(material));
-        return material_handle{uint16_t(index)};
+        return material_handle{static_cast<uint16_t>(index)};
     }
 
     material* material_cache::get_material(const material_handle handle)
@@ -226,7 +226,7 @@ namespace moka
     }
 
     texture_handle graphics_device::make_texture(
-        void** data, texture_metadata&& metadata, const bool free_host_data) const
+        const void** data, texture_metadata&& metadata, const bool free_host_data) const
     {
         const auto size = metadata.data.size();
 
@@ -238,7 +238,7 @@ namespace moka
         {
             for (size_t i = 0; i < size; i++)
             {
-                free_texture(data[i]);
+                free_texture(const_cast<void*>(data[i]));
             }
         }
 

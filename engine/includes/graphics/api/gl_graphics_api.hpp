@@ -191,7 +191,7 @@ namespace moka
          * \param free_host_data If true, free the host memory after uploading to the device. Otherwise allow the calling code to free it.
          * \return A new texture_handle representing a texture on the device.
          */
-        texture_handle make_texture(void** data, texture_metadata&& metadata, bool free_host_data) override;
+        texture_handle make_texture(const void** data, texture_metadata&& metadata, bool free_host_data) override;
 
         /**
          * \brief Create a new frame buffer.

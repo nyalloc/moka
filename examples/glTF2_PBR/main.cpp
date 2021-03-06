@@ -78,8 +78,8 @@ public:
             ImGui::Text(
                 "Real-Time Physically-Based Rendering\n"
                 "Stuart Adams\n"
-                "@stuartdadams\n"
-                "www.stuartdadams.co.uk");
+                "@nyalloc\n"
+                "nyalloc.io");
         }
         ImGui::End();
 

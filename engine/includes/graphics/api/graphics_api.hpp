@@ -253,7 +253,7 @@ namespace moka
          * \return A new texture_handle representing a texture on the device.
          */
         virtual texture_handle make_texture(
-            void** data, texture_metadata&& metadata, bool free_host_data) = 0;
+            const void** data, texture_metadata&& metadata, bool free_host_data) = 0;
 
         /**
          * \brief Destroy a frame buffer.

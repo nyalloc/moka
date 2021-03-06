@@ -50,6 +50,7 @@ References:
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace moka
 {
@@ -189,6 +190,7 @@ namespace moka
     }
 
     mesh load_mesh(
+        const logger& log,
         const tinygltf::Model& model,
         const tinygltf::Mesh& mesh,
         graphics_device& device,
@@ -199,7 +201,7 @@ namespace moka
     {
         auto& texture_cache = device.get_texture_cache();
 
-        auto transform = trans;
+        const auto transform = trans;
 
         std::vector<primitive> primitives;
 
@@ -323,66 +325,7 @@ namespace moka
             }
             else
             {
-                // struct mikktspace_in
-                //{
-                //    const tinygltf::Model& model;
-                //    const tinygltf::Primitive& primitive;
-                //};
-
-                // SMikkTSpaceInterface i;
-                // i.m_getNumFaces = [](const SMikkTSpaceContext* x) -> int {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //    return 0;
-                //};
-                // i.m_getNumVerticesOfFace = [](const SMikkTSpaceContext* x,
-                //                              const int iface) -> int {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //    return 0;
-                //};
-                // i.m_getPosition = [](const SMikkTSpaceContext* x,
-                //                     float pos[],
-                //                     const int iface,
-                //                     const int ivert) -> void {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //};
-                // i.m_getNormal = [](const SMikkTSpaceContext* x,
-                //                   float pos[],
-                //                   const int iface,
-                //                   const int ivert) -> void {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //};
-                // i.m_getTexCoord = [](const SMikkTSpaceContext* x,
-                //                     float pos[],
-                //                     const int iface,
-                //                     const int ivert) -> void {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //};
-                // i.m_setTSpaceBasic = [](const SMikkTSpaceContext* x,
-                //                        const float tangent[],
-                //                        const float sign,
-                //                        const int iface,
-                //                        const int ivert) -> void {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //};
-                // i.m_setTSpace = [](const SMikkTSpaceContext* x,
-                //                   const float tangent[],
-                //                   const float bitangent[],
-                //                   const float mags,
-                //                   const float magt,
-                //                   const tbool orientation_preserving,
-                //                   const int iface,
-                //                   const int ivert) -> void {
-                //    auto in = static_cast<mikktspace_in*>(x->m_pUserData);
-                //};
-
-                // SMikkTSpaceContext context;
-                // context.m_pInterface = &i;
-
-                // mikktspace_in in{model, primitive};
-
-                // context.m_pUserData = (void*)&in;
-
-                // genTangSpaceDefault(&context);
+                log.warn("Model does not have tangents. In the future, the app can use MikkTSpace to calculate tangents when none are provided.");
             }
 
             auto normal = primitive.attributes.find("NORMAL");
@@ -475,8 +418,8 @@ namespace moka
 
             for (const auto& program : programs)
             {
-                auto& vertex = program["vertex"]["file"].get<std::string>();
-                auto& fragment = program["fragment"]["file"].get<std::string>();
+                const auto& vertex = program["vertex"]["file"].get<std::string>();
+                const auto& fragment = program["fragment"]["file"].get<std::string>();
 
                 mat_builder.add_vertex_shader(root_directory / vertex);
                 mat_builder.add_fragment_shader(root_directory / fragment);
@@ -484,7 +427,7 @@ namespace moka
 
             if (primitive.material != -1)
             {
-                auto& material = model.materials[primitive.material];
+                const auto& material = model.materials[primitive.material];
 
                 if (!material.values.empty())
                 {
@@ -492,7 +435,7 @@ namespace moka
                             material.values.find("baseColorFactor");
                         base_color_factor_itr != material.values.end())
                     {
-                        auto& data = base_color_factor_itr->second.number_array;
+                        const auto& data = base_color_factor_itr->second.number_array;
                         glm::vec4 diffuse_factor(data[0], data[1], data[2], data[3]);
                         mat_builder.add_material_parameter(
                             "material.diffuse_factor", diffuse_factor);
@@ -502,18 +445,18 @@ namespace moka
                             material.values.find("baseColorTexture");
                         base_color_texture_itr != material.values.end())
                     {
-                        auto& texture_value = base_color_texture_itr->second;
+                        const auto& texture_value = base_color_texture_itr->second;
 
                         auto properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto uri = parent_path / image_data.uri;
+                            const auto& index = index_itr->second;
+                            const auto& texture = model.textures[static_cast<size_t>(index)];
+                            const auto& texture_source = texture.source;
+                            const auto& image_data = model.images[texture_source];
+                            const auto uri = parent_path / image_data.uri;
 
                             if (!texture_cache.exists(uri.string()))
                             {
@@ -523,7 +466,7 @@ namespace moka
                                 auto mag = mag_filter::linear;
                                 if (texture.sampler != -1)
                                 {
-                                    auto& sampler = model.samplers[texture.sampler];
+                                    const auto& sampler = model.samplers[texture.sampler];
                                     wrap_s = gltf_wrap_to_moka(sampler.wrapS);
                                     wrap_t = gltf_wrap_to_moka(sampler.wrapT);
                                     min = gltf_min_filter_to_moka(sampler.minFilter);
@@ -541,7 +484,7 @@ namespace moka
                                             0,
                                             stb_to_moka(image_data.component),
                                             pixel_type::uint8,
-                                            (void*)image_data.image.data())
+                                            reinterpret_cast<const void*>(image_data.image.data()))
                                         .set_mipmaps(true)
                                         .set_wrap_s(wrap_s)
                                         .set_wrap_t(wrap_t)
@@ -579,7 +522,7 @@ namespace moka
                             material.values.find("roughnessFactor");
                         roughness_factor_itr != material.values.end())
                     {
-                        auto& data = roughness_factor_itr->second.number_value;
+                        const auto& data = roughness_factor_itr->second.number_value;
                         auto roughness_factor(static_cast<float>(data));
                         mat_builder.add_material_parameter(
                             "material.roughness_factor", roughness_factor);
@@ -589,18 +532,19 @@ namespace moka
                             material.values.find("metallicRoughnessTexture");
                         metallic_roughness_texture_itr != material.values.end())
                     {
-                        auto& texture_value = metallic_roughness_texture_itr->second;
+                        const auto& texture_value =
+                            metallic_roughness_texture_itr->second;
 
-                        auto& properties = texture_value.json_double_value;
+                        const auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto uri = parent_path / image_data.uri;
+                            const auto& index = index_itr->second;
+                            const auto& texture = model.textures[static_cast<size_t>(index)];
+                            const auto& texture_source = texture.source;
+                            const auto& image_data = model.images[texture_source];
+                            const auto uri = parent_path / image_data.uri;
 
                             if (!texture_cache.exists(uri.string()))
                             {
@@ -610,7 +554,7 @@ namespace moka
                                 auto mag = mag_filter::linear;
                                 if (texture.sampler != -1)
                                 {
-                                    auto& sampler = model.samplers[texture.sampler];
+                                    const auto& sampler = model.samplers[texture.sampler];
                                     wrap_s = gltf_wrap_to_moka(sampler.wrapS);
                                     wrap_t = gltf_wrap_to_moka(sampler.wrapT);
                                     min = gltf_min_filter_to_moka(sampler.minFilter);
@@ -628,7 +572,7 @@ namespace moka
                                             0,
                                             stb_to_moka(image_data.component),
                                             pixel_type::uint8,
-                                            (void*)image_data.image.data())
+                                            reinterpret_cast<const void*>(image_data.image.data()))
                                         .set_mipmaps(true)
                                         .set_wrap_s(wrap_s)
                                         .set_wrap_t(wrap_t)
@@ -666,18 +610,18 @@ namespace moka
                     if (auto normal_texture_itr = material.additionalValues.find("normalTexture");
                         normal_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_value = normal_texture_itr->second;
+                        const auto& texture_value = normal_texture_itr->second;
 
-                        auto& properties = texture_value.json_double_value;
+                        const auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto uri = parent_path / image_data.uri;
+                            const auto& index = index_itr->second;
+                            const auto& texture = model.textures[static_cast<size_t>(index)];
+                            const auto& texture_source = texture.source;
+                            const auto& image_data = model.images[texture_source];
+                            const auto uri = parent_path / image_data.uri;
 
                             if (!texture_cache.exists(uri.string()))
                             {
@@ -687,7 +631,7 @@ namespace moka
                                 auto mag = mag_filter::linear;
                                 if (texture.sampler != -1)
                                 {
-                                    auto& sampler = model.samplers[texture.sampler];
+                                    const auto& sampler = model.samplers[texture.sampler];
                                     wrap_s = gltf_wrap_to_moka(sampler.wrapS);
                                     wrap_t = gltf_wrap_to_moka(sampler.wrapT);
                                     min = gltf_min_filter_to_moka(sampler.minFilter);
@@ -705,7 +649,7 @@ namespace moka
                                             0,
                                             stb_to_moka(image_data.component),
                                             pixel_type::uint8,
-                                            (void*)image_data.image.data())
+                                            reinterpret_cast<const void*>(image_data.image.data()))
                                         .set_mipmaps(true)
                                         .set_wrap_s(wrap_s)
                                         .set_wrap_t(wrap_t)
@@ -733,18 +677,18 @@ namespace moka
                             material.additionalValues.find("occlusionTexture");
                         occlusion_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_value = occlusion_texture_itr->second;
+                        const auto& texture_value = occlusion_texture_itr->second;
 
-                        auto& properties = texture_value.json_double_value;
+                        const auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto uri = parent_path / image_data.uri;
+                            const auto& index = index_itr->second;
+                            const auto& texture = model.textures[static_cast<size_t>(index)];
+                            const auto& texture_source = texture.source;
+                            const auto& image_data = model.images[texture_source];
+                            const auto uri = parent_path / image_data.uri;
 
                             if (!texture_cache.exists(uri.string()))
                             {
@@ -754,7 +698,7 @@ namespace moka
                                 auto mag = mag_filter::linear;
                                 if (texture.sampler != -1)
                                 {
-                                    auto& sampler = model.samplers[texture.sampler];
+                                    const auto& sampler = model.samplers[texture.sampler];
                                     wrap_s = gltf_wrap_to_moka(sampler.wrapS);
                                     wrap_t = gltf_wrap_to_moka(sampler.wrapT);
                                     min = gltf_min_filter_to_moka(sampler.minFilter);
@@ -772,7 +716,7 @@ namespace moka
                                             0,
                                             stb_to_moka(image_data.component),
                                             pixel_type::uint8,
-                                            (void*)image_data.image.data())
+                                            reinterpret_cast<const void*>(image_data.image.data()))
                                         .set_mipmaps(true)
                                         .set_wrap_s(wrap_s)
                                         .set_wrap_t(wrap_t)
@@ -808,18 +752,18 @@ namespace moka
                             material.additionalValues.find("emissiveTexture");
                         emissive_texture_itr != material.additionalValues.end())
                     {
-                        auto& texture_value = emissive_texture_itr->second;
+                        const auto& texture_value = emissive_texture_itr->second;
 
-                        auto& properties = texture_value.json_double_value;
+                        const auto& properties = texture_value.json_double_value;
 
                         if (auto index_itr = properties.find("index");
                             index_itr != properties.end())
                         {
-                            auto& index = index_itr->second;
-                            auto& texture = model.textures[size_t(index)];
-                            auto& texture_source = texture.source;
-                            auto& image_data = model.images[texture_source];
-                            auto uri = parent_path / image_data.uri;
+                            const auto& index = index_itr->second;
+                            const auto& texture = model.textures[static_cast<size_t>(index)];
+                            const auto& texture_source = texture.source;
+                            const auto& image_data = model.images[texture_source];
+                            const auto uri = parent_path / image_data.uri;
 
                             if (!texture_cache.exists(uri.string()))
                             {
@@ -829,7 +773,7 @@ namespace moka
                                 auto mag = mag_filter::linear;
                                 if (texture.sampler != -1)
                                 {
-                                    auto& sampler = model.samplers[texture.sampler];
+                                    const auto& sampler = model.samplers[texture.sampler];
                                     wrap_s = gltf_wrap_to_moka(sampler.wrapS);
                                     wrap_t = gltf_wrap_to_moka(sampler.wrapT);
                                     min = gltf_min_filter_to_moka(sampler.minFilter);
@@ -847,7 +791,7 @@ namespace moka
                                             0,
                                             stb_to_moka(image_data.component),
                                             pixel_type::uint8,
-                                            (void*)image_data.image.data())
+                                            reinterpret_cast<const void*>(image_data.image.data()))
                                         .set_mipmaps(true)
                                         .set_wrap_s(wrap_s)
                                         .set_wrap_t(wrap_t)
@@ -934,31 +878,14 @@ namespace moka
 
     glm::mat4 get_transform(const tinygltf::Node& n)
     {
-        auto model_translation = n.translation;
-        auto model_rotation = n.rotation;
-        auto model_scale = n.scale;
-        auto model_matrix = n.matrix;
+        const auto model_translation = n.translation;
+        const auto model_rotation = n.rotation;
+        const auto model_scale = n.scale;
+        const auto model_matrix = n.matrix;
 
         if (!model_matrix.empty())
         {
-            glm::mat4 matrix(
-                model_matrix[0],
-                model_matrix[1],
-                model_matrix[2],
-                model_matrix[3],
-                model_matrix[4],
-                model_matrix[5],
-                model_matrix[6],
-                model_matrix[7],
-                model_matrix[8],
-                model_matrix[9],
-                model_matrix[10],
-                model_matrix[11],
-                model_matrix[12],
-                model_matrix[13],
-                model_matrix[14],
-                model_matrix[15]);
-            return matrix;
+            return glm::make_mat4x4(model_matrix.data());
         }
 
         transform trans;
@@ -983,6 +910,7 @@ namespace moka
     }
 
     void add_node(
+        const logger& log,
         const glm::mat4& parent_transform,
         std::vector<mesh>& meshes,
         const int node_id,
@@ -997,18 +925,20 @@ namespace moka
         if (mesh_id == -1)
             return;
 
-        const auto trans = parent_transform * get_transform(model.nodes[node_id]);
+        const auto transform = get_transform(model.nodes[node_id]);
+        const auto worldTransform = parent_transform * transform;
 
         for (const auto i : model.nodes[node_id].children)
         {
-            add_node(trans, meshes, i, model, device, root_directory, material_path, parent_path);
+            add_node(log, worldTransform, meshes, i, model, device, root_directory, material_path, parent_path);
         }
 
-        meshes.emplace_back(load_mesh(
-            model, model.meshes[mesh_id], device, trans, root_directory, material_path, parent_path));
+        meshes.emplace_back(load_mesh(log,
+            model, model.meshes[mesh_id], device, worldTransform, root_directory, material_path, parent_path));
     }
 
     model load_model(
+        const logger& log,
         const tinygltf::Model& model,
         graphics_device& device,
         const std::filesystem::path& root_directory,
@@ -1034,16 +964,16 @@ namespace moka
 
                     for (const auto i : model.nodes[node].children)
                     {
-                        add_node(trans, meshes, i, model, device, root_directory, material_path, parent_path);
+                        add_node(log, trans, meshes, i, model, device, root_directory, material_path, parent_path);
                     }
 
-                    meshes.emplace_back(load_mesh(
+                    meshes.emplace_back(load_mesh(log,
                         model, model.meshes[mesh_id], device, trans, root_directory, material_path, parent_path));
                 }
 
                 for (const auto i : model.nodes[node].children)
                 {
-                    add_node(transform, meshes, i, model, device, root_directory, material_path, parent_path);
+                    add_node(log, transform, meshes, i, model, device, root_directory, material_path, parent_path);
                 }
             }
         }
@@ -1103,6 +1033,7 @@ namespace moka
         }
 
         return load_model(
+            log_,
             model,
             device_,
             root_directory_,

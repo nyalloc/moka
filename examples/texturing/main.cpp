@@ -34,7 +34,7 @@ SOFTWARE.
 
 using namespace moka;
 
-class texture_application : public application
+class texture_application final : public application
 {
     float vertices_[32] = {0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
                            0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
@@ -48,30 +48,32 @@ class texture_application : public application
         {1, attribute_type::float32, 3, false, 8 * sizeof(float), 3 * sizeof(float)},
         {2, attribute_type::float32, 2, false, 8 * sizeof(float), 6 * sizeof(float)}};
 
-    const char* vertex_source_ =
-        "    layout (location = 0)  in vec3 position;           \n"
-        "    layout (location = 1)  in vec4 color0;             \n"
-        "    layout (location = 2)  in vec2 tex_coord0;         \n"
-        "    out vec2 tex_coord;                                \n"
-        "    uniform mat4 transform;                            \n"
-        "    void main()                                        \n"
-        "    {                                                  \n"
-        "        gl_Position = transform * vec4(position, 1.0); \n"
-        "        tex_coord = tex_coord0;                        \n"
-        "    }                                                  \0";
+    const char* vertex_source_ = R"(
+        layout (location = 0)  in vec3 position;
+        layout (location = 1)  in vec4 color0;
+        layout (location = 2)  in vec2 tex_coord0;
+        out vec2 tex_coord;
+        uniform mat4 transform;
+        void main()
+        {
+            gl_Position = transform * vec4(position, 1.0);
+            tex_coord = tex_coord0;
+        }
+    )";
 
-    const char* fragment_source_ =
-        "    out vec4 FragColor;                                    \n"
-        "    in vec2 tex_coord;                                     \n"
-        "    uniform sampler2D tile_texture;                        \n"
-        "    uniform sampler2D test_texture;                        \n"
-        "    void main()                                            \n"
-        "    {                                                      \n"
-        "        vec4 tex1 = texture(tile_texture, tex_coord).rgba;	\n"
-        "        vec4 tex2 = texture(test_texture, tex_coord).rgba;	\n"
-        "                                                           \n"
-        "        FragColor = mix(tex1, tex2, tex2.a);               \n"
-        "    }                                                      \0";
+
+    const char* fragment_source_ = R"(
+        out vec4 FragColor;
+        in vec2 tex_coord;
+        uniform sampler2D tile_texture;
+        uniform sampler2D test_texture;
+        void main()
+        {
+            vec4 tex1 = texture(tile_texture, tex_coord).rgba;
+            vec4 tex2 = texture(test_texture, tex_coord).rgba;
+            FragColor = mix(tex1, tex2, tex2.a);
+        }
+    )";
 
     vertex_buffer_handle vertex_buffer_;
     index_buffer_handle index_buffer_;
@@ -79,9 +81,9 @@ class texture_application : public application
     texture_handle tile_texture_{};
     texture_handle test_texture_{};
 
-    material_handle material_;
+    material_handle material_{};
 
-    glm::vec4 white_;
+    glm::vec4 white_{};
 
 public:
     explicit texture_application(const app_settings& settings)
@@ -131,9 +133,9 @@ public:
 
         command_list list;
 
-        list.clear().set_color(color::red()).set_clear_color(true).set_clear_depth(true);
+        list.clear().set_color(color::cornflower_blue()).set_clear_color(true).set_clear_depth(true);
 
-        glm::mat4 trans;
+        glm::mat4 trans(1.0f);
         trans = glm::rotate(trans, current_time, glm::vec3(0.0f, 0.0f, 1.0f));
 
         list.set_material_parameters()
